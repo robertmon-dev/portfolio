@@ -1,0 +1,78 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model GithubStats {
+  id          String   @id @default(uuid())
+  username    String   @unique
+  followers   Int
+  publicRepos Int
+  totalStars  Int
+  topRepos    Json
+  updatedAt   DateTime @updatedAt
+}
+
+model Project {
+  id          String  @id @default(uuid())
+  slug        String  @unique // Automatyczny Index
+  title       String
+  description String  @db.Text
+  content     String? @db.Text
+
+  imageUrl String?
+  demoUrl  String?
+  repoUrl  String?
+
+  isFeatured Boolean  @default(false)
+  isVisible  Boolean  @default(true)
+  createdAt  DateTime @default(now())
+
+  techStack TechStack[]
+  gallery   ProjectImage[]
+
+  @@index([isVisible, createdAt])
+  @@index([isFeatured])
+}
+
+model ProjectImage {
+  id    String  @id @default(uuid())
+  url   String
+  alt   String?
+  order Int     @default(0)
+
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@index([projectId, order])
+}
+
+model TechStack {
+  id       String  @id @default(uuid())
+  name     String  @unique
+  icon     String?
+  category String
+  color    String?
+
+  projects Project[]
+
+  @@index([category])
+}
+
+model Experience {
+  id          String    @id @default(uuid())
+  position    String
+  company     String
+  startDate   DateTime
+  endDate     DateTime?
+  description String    @db.Text
+  isCurrent   Boolean   @default(false)
+
+  createdAt DateTime @default(now())
+
+  @@index([startDate(sort: Desc)])
+}

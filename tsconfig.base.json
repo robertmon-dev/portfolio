@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "baseUrl": ".",
+    "paths": {
+      "@portfolio/shared": [
+        "./shared/src/index.ts"
+      ],
+      "@portfolio/app": [
+        "./app/src/index.ts"
+      ]
+    }
+  }
+}

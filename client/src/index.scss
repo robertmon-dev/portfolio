@@ -1,0 +1,77 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+
+  --toastify-color-dark: #{$bg-surface};
+
+  --toastify-text-color-dark: #{$text-main};
+  --toastify-color-progress-dark: #{$primary};
+  --toastify-color-info:    #{$info};
+  --toastify-color-success: #{$success};
+  --toastify-color-warning: #{$warning};
+  --toastify-color-error:   #{$danger};
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+
+  background-color: $bg-app;
+  color: $text-main;
+
+  font-family: $font-stack;
+  font-weight: 500;
+
+  font-variant-ligatures: common-ligatures;
+
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+button, input, textarea, select {
+  font-family: inherit;
+  font-feature-settings: "calt" 1;
+}
+
+.Toastify__toast {
+  font-family: $font-stack;
+  border-radius: 12px;
+  border: 1px solid rgba($primary, 0.1);
+  box-shadow: $shadow-surface-lg !important;
+}
+
+.Toastify__progress-bar {
+  height: 3px;
+  box-shadow: 0 0 8px var(--toastify-color-progress-dark);
+}
+
+$syntax-tokens: (
+  "keyword":     $token-keyword,
+  "function":    $token-function,
+  "string":      $token-string,
+  "number":      $token-number,
+  "comment":     $token-comment,
+  "doc":         $token-doc,
+  "operator":    $token-operator,
+  "class":       $token-class,
+  "variable":    $token-variable,
+  "property":    $token-property,
+  "parameter":   $token-parameter,
+  "tag":         $token-tag,
+  "punctuation": $token-punctuation,
+  "regex":       $token-regex
+);
+
+@each $name, $color in $syntax-tokens {
+  .token-#{$name} {
+    color: $color !important;
+  }
+}

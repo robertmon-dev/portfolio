@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "jsx": "react-jsx",
+    "moduleResolution": "Bundler",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "@portfolio/shared": [
+        "../shared/src/index.ts"
+      ],
+      "@portfolio/app": [
+        "../app/src/index.ts"
+      ]
+    }
+  }
+}

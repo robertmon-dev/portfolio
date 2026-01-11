@@ -1,0 +1,18 @@
+{
+  "name": "portfolio",
+  "private": true,
+  "workspaces": [
+    "client",
+    "app",
+    "shared"
+  ],
+  "scripts": {
+    "dev": "concurrently --kill-others-on-fail \"yarn workspace @portfolio/app dev\" \"yarn workspace @portfolio/client dev\"",
+    "build": "yarn workspaces run build",
+    "lint": "yarn workspaces run lint",
+    "typecheck": "yarn workspaces run typecheck"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
