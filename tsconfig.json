@@ -11,7 +11,13 @@
     "baseUrl": ".",
     "paths": {
       "@portfolio/shared": [
-        "../shared/src/index.ts"
+        "./shared/index.ts"
+      ],
+      "@portfolio/app": [
+        "./app/src/index.ts"
+      ],
+      "@portfolio/client": [
+        "./client/src/main.ts"
       ]
     }
   },

@@ -3,10 +3,8 @@ import { Logger } from '../../core/logger/logger';
 
 const logger = new Logger('tRPC');
 
-export const loggerMiddleware = middleware(async ({ path, type, next, rawInput }) => {
+export const loggerMiddleware = middleware(async ({ path, type, next }) => {
   const start = Date.now();
-
-  logger.debug(`Incoming ${type} '${path}'`, { input: rawInput });
 
   try {
     const result = await next();

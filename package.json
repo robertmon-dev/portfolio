@@ -7,12 +7,20 @@
     "shared"
   ],
   "scripts": {
-    "dev": "concurrently --kill-others-on-fail \"yarn workspace @portfolio/app dev\" \"yarn workspace @portfolio/client dev\"",
-    "build": "yarn workspaces run build",
-    "lint": "yarn workspaces run lint",
-    "typecheck": "yarn workspaces run typecheck"
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "clean": "turbo run clean",
+    "db:generate": "turbo run db:generate"
+  },
+  "resolutions": {
+    "vite": "^6.0.0",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2"
-  }
+    "concurrently": "^8.2.2",
+    "turbo": "^2.7.4"
+  },
+  "packageManager": "yarn@1.22.22"
 }

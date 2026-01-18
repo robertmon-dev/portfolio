@@ -1,7 +1,7 @@
 import type { ButtonProps } from './types';
-import { bem } from '../../utility/bem'; // Importujemy generyk
+import { bem } from '../../utility/bem';
 
-type StyleProps = Pick<ButtonProps, 'variant' | 'size' | 'fullWidth' | 'isLoading' | 'className'>;
+type StyleProps = Pick<ButtonProps, 'variant' | 'size' | 'fullWidth' | 'isLoading' | 'className' | 'isIcon'>;
 
 export const getButtonClasses = ({
   variant = 'primary',
@@ -9,6 +9,7 @@ export const getButtonClasses = ({
   fullWidth,
   isLoading,
   className,
+  isIcon,
 }: StyleProps): string => {
   return bem(
     'btn',
@@ -16,7 +17,8 @@ export const getButtonClasses = ({
       variant,
       size,
       fullWidth && 'full-width',
-      isLoading && 'loading'
+      isLoading && 'loading',
+      isIcon && 'icon'
     ],
     className
   );

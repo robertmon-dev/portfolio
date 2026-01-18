@@ -48,9 +48,9 @@ export class GithubService {
         type: 'owner',
       });
 
-      const totalStars = repos.reduce((acc, repo) => acc + (repo.stargazers_count || 0), 0);
+      const totalStars = repos.reduce((acc: number, repo: any) => acc + (repo.stargazers_count || 0), 0);
 
-      const topReposData: GithubRepo[] = repos.slice(0, 6).map((repo) => ({
+      const topReposData: GithubRepo[] = repos.slice(0, 6).map((repo: any) => ({
         name: repo.name,
         url: repo.html_url,
         stars: repo.stargazers_count ?? 0,
@@ -92,7 +92,6 @@ export class GithubService {
 
     return {
       ...stats,
-
       topRepos: stats.topRepos as GithubRepo[]
     };
   }

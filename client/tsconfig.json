@@ -3,18 +3,29 @@
     "target": "ESNext",
     "module": "ESNext",
     "jsx": "react-jsx",
-    "moduleResolution": "Bundler",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+    "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
       "@/*": [
         "./src/*"
       ],
       "@portfolio/shared": [
-        "../shared/src/index.ts"
+        "../shared/dist"
       ],
       "@portfolio/app": [
         "../app/src/index.ts"
       ]
     }
-  }
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.spec.ts",
+    "**/*.test.ts"
+  ]
 }

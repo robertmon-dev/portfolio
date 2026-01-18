@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
 import type { ButtonProps } from './types';
 import { getButtonClasses } from './styles';
+export type { ButtonVariant } from './types';
 import './Button.scss'
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
@@ -10,9 +11,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
     rightIcon,
     children,
     disabled,
+    isIcon = false,
     ...rest
   } = props;
-  const classes = getButtonClasses({ isLoading, ...rest });
+
+  const classes = getButtonClasses({ isLoading, isIcon, ...rest });
 
   return (
     <button
@@ -21,19 +24,24 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
       disabled={disabled || isLoading}
       {...rest}
     >
-      {isLoading && <span className="btn-spinner" />}
-
-      {!isLoading && leftIcon && (
-        <span className="btn-icon mr-2">{leftIcon}</span>
-      )}
-
-      <span>{children}</span>
-
-      {!isLoading && rightIcon && (
-        <span className="btn-icon ml-2">{rightIcon}</span>
+      {isLoading ? (
+        <span className="btn-spinner" />
+      ) : (
+        <>
+          {isIcon ? (
+            children || leftIcon || rightIcon
+          ) : (
+            <>
+              {leftIcon && <span className="btn-icon mr-2">{leftIcon}</span>}
+              <span>{children}</span>
+              {rightIcon && <span className="btn-icon ml-2">{rightIcon}</span>}
+            </>
+          )}
+        </>
       )}
     </button>
   );
 });
+
 
 Button.displayName = 'Button';

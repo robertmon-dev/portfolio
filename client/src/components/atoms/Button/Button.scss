@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .btn {
   position: relative;
   display: inline-flex;
@@ -35,30 +37,56 @@
   }
 
   &--primary {
-    background: linear-gradient(135deg, lighten($primary, 5%) 0%, $primary-hover 100%);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+
+    background: linear-gradient(135deg, color.adjust($primary, $lightness: 5%) 0%, $primary-hover 100%);
     color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    border: 1px solid color.change(#ffffff, $alpha: 0.1);
 
     box-shadow:
-      0 4px 14px -4px rgba($primary, 0.5),
+      0 4px 8px -4px color.change($primary, $alpha: 0.5),
       $glow-rim-top;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+
+      background: linear-gradient(135deg, color.adjust($primary, $lightness: 10%) 0%, $primary 100%);
+
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
 
     &:hover {
       transform: translateY(-2px);
+
       box-shadow:
-        0 8px 20px -4px rgba($primary, 0.6),
-        0 0 10px rgba($primary, 0.4),
+        0 1px 8px -4px color.change($primary, $alpha: 0.5),
+        0 0 1px color.change($primary, $alpha: 0.3),
         $glow-rim-top;
 
-      background: linear-gradient(135deg, lighten($primary, 10%) 0%, $primary 100%);
-      border-color: rgba(255, 255, 255, 0.2);
+      border-color: color.change(#ffffff, $alpha: 0.2);
+
+      &::before {
+        opacity: 1;
+      }
     }
 
     &:active {
       transform: translateY(0) scale(0.98);
+
       box-shadow:
-        0 2px 8px -2px rgba($primary, 0.5),
+        0 2px 8px -2px color.change($primary, $alpha: 0.5),
         $glow-rim-top;
+
+      &::before {
+        opacity: 1;
+      }
     }
   }
 
@@ -69,7 +97,7 @@
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 
     &:hover {
-      background-color: lighten($bg-storm-light, 5%);
+      background-color: color.adjust($bg-storm-light, $lightness: 5%);
 
       color: $tn-cyan-dim;
       border-color: $tn-cyan-dim;
@@ -133,8 +161,8 @@
       border-color: $danger;
       transform: translateY(-1px);
       box-shadow:
-        0 4px 12px rgba($danger, 0.25),
-        0 0 5px rgba($danger, 0.2);
+        0 2px 3px rgba($danger, 0.25),
+        0 0 2px rgba($danger, 0.2);
     }
 
     &:active {
@@ -143,7 +171,7 @@
     }
 
     &.btn--solid {
-        background: linear-gradient(135deg, $danger 0%, darken($danger, 10%) 100%);
+        background: linear-gradient(135deg, $danger 0%, color.adjust($danger, $lightness: -10%) 100%);
         color: white;
         border: none;
         &:hover {
@@ -153,61 +181,138 @@
   }
 
   &--success {
-    background: linear-gradient(135deg, $tn-green 0%, darken($tn-green, 5%) 100%);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+
+    background: linear-gradient(135deg, $tn-green 0%, color.adjust($tn-green, $lightness: -5%) 100%);
     color: $text-on-accent;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    border: 1px solid color.change(#ffffff, $alpha: 0.2);
 
     box-shadow:
-      0 4px 14px -4px rgba($tn-green, 0.3),
+      0 4px 8px -4px color.change($tn-green, $alpha: 0.4),
       $glow-rim-top;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+
+      background: linear-gradient(135deg, color.adjust($tn-green, $lightness: 5%) 0%, $tn-green 100%);
+
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
 
     &:hover {
       transform: translateY(-2px);
 
-      background: linear-gradient(135deg, lighten($tn-green, 5%) 0%, $tn-green 100%);
-
       box-shadow:
-        0 8px 20px -4px rgba($tn-green, 0.4),
-        0 0 12px rgba($tn-green, 0.25),
+        0 1px 8px -4px color.change($tn-green, $alpha: 0.5),
+        0 0 1px color.change($tn-green, $alpha: 0.3),
         $glow-rim-top;
 
-      border-color: rgba(255, 255, 255, 0.3);
+      border-color: color.change(#ffffff, $alpha: 0.3);
+
+      &::before {
+        opacity: 1;
+      }
     }
 
     &:active {
       transform: translateY(0) scale(0.98);
+
       box-shadow:
-        0 2px 8px -2px rgba($tn-green, 0.3),
+        0 2px 8px -2px color.change($tn-green, $alpha: 0.3),
         $glow-rim-top;
+
+      &::before {
+        opacity: 1;
+      }
     }
   }
 
   &--purple {
-    background: linear-gradient(135deg, $tn-purple 0%, darken($tn-purple, 10%) 100%);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    background: linear-gradient(135deg, $tn-purple 0%, color.adjust($tn-purple, $lightness: -10%) 100%);
     color: #ffffff;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    border: 1px solid color.change(#ffffff, $alpha: 0.1);
 
     box-shadow:
-      0 4px 14px -4px rgba($tn-purple, 0.4),
+      0 4px 10px -4px color.change($tn-purple, $alpha: 0.4),
       $glow-rim-top;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+
+      background: linear-gradient(135deg, color.adjust($tn-purple, $lightness: 5%) 0%, $tn-purple 100%);
+
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
 
     &:hover {
       transform: translateY(-2px);
-
-      background: linear-gradient(135deg, lighten($tn-purple, 5%) 0%, $tn-purple 100%);
       box-shadow:
-        0 8px 20px -4px rgba($tn-purple, 0.5),
-        0 0 15px rgba($tn-purple, 0.3),
+        0 4px 12px -4px color.change($tn-purple, $alpha: 0.5),
+        0 0 8px color.change($tn-purple, $alpha: 0.25),
+
         $glow-rim-top;
 
-      border-color: rgba(255, 255, 255, 0.25);
+      border-color: color.change(#ffffff, $alpha: 0.25);
+
+      &::before {
+        opacity: 1;
+      }
     }
 
     &:active {
       transform: translateY(0) scale(0.98);
+
       box-shadow:
-        0 2px 8px -2px rgba($tn-purple, 0.4),
+        0 2px 8px -2px color.change($tn-purple, $alpha: 0.4),
         $glow-rim-top;
+
+      &::before {
+        opacity: 1;
+      }
+    }
+  }
+
+  &--icon {
+    padding: 0;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    &.btn--sm { width: 2rem; height: 2rem; }
+    &.btn--md { width: 2.5rem; height: 2.5rem; }
+    &.btn--lg { width: 3rem; height: 3rem; }
+
+    svg {
+      transform: scale(3);
+      stroke-width: 2.5px;
+
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    &.btn--outline {
+        border-width: 2px;
+    }
+
+    &:hover svg {
+       transform: scale(3.1);
     }
   }
 

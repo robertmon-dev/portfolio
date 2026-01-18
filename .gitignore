@@ -1,4 +1,10 @@
 .env
+./app/dist/
+./client/dist/
+./shared/dist/
+./dist/
+*.log
+mprocs.yaml
 node_modules/
 .node_modules/
 built/*

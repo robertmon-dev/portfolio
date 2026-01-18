@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
@@ -8,8 +9,9 @@ export default defineConfig({
 
   resolve: {
     alias: {
-      '@portfolio/shared': path.resolve(__dirname, '../shared/src/index.ts'),
+      '@portfolio/shared': path.resolve(__dirname, '../shared/dist/index.js'),
       '@portfolio/app': path.resolve(__dirname, '../app/src/index.ts'),
+
       '@': path.resolve(__dirname, './src'),
     },
   },
@@ -20,5 +22,10 @@ export default defineConfig({
         additionalData: `@use "@/styles/palette.scss" as *;`
       }
     }
+  },
+
+  build: {
+    outDir: 'dist',
+    emptyOutDir: true,
   }
 })
