@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .switch {
   position: relative;
   display: inline-flex;
@@ -52,7 +54,8 @@
     border-radius: 999px;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.4), $glow-rim-top;
+    // ZMIANA: rgba(0,0,0,0.4) -> color.change
+    box-shadow: inset 0 2px 4px color.change(#000000, $alpha: 0.4), $glow-rim-top;
 
     overflow: hidden;
 
@@ -102,7 +105,8 @@
       background-color: #ffffff;
 
       border-radius: 50%;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      // ZMIANA: rgba(0,0,0,0.5) -> color.change
+      box-shadow: 0 2px 4px color.change(#000000, $alpha: 0.5);
 
       transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
     }
@@ -111,6 +115,8 @@
   input:checked + .switch-slider {
     background-color: var(--switch-color-on, $primary);
 
+    // UWAGA: Tutaj musimy zostawić color-mix, ponieważ color.change
+    // nie obsługuje zmiennych CSS (var(--...)). Jest to w pełni poprawne.
     box-shadow:
       0 0 8px color-mix(in srgb, var(--switch-color-on, $primary), transparent 50%),
       $glow-rim-top;

@@ -1,0 +1,38 @@
+@use "sass:color";
+
+.menu-portal {
+  position: absolute;
+  z-index: 9999;
+  background: color.change($bg-surface, $alpha: 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid color.change($border-color, $alpha: 0.8);
+  border-radius: $radius-md;
+  box-shadow: 0 10px 30px color.change(#000000, $alpha: 0.5);
+  padding: $spacing-xs;
+  min-width: 160px;
+  overflow: hidden;
+
+  .generic-list {
+    gap: 2px;
+  }
+}
+
+.menu-portal-anim {
+  &-enter {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+  &-enter-active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transition: opacity 200ms ease, transform 200ms cubic-bezier(0.2, 0, 0, 1);
+  }
+  &-exit {
+    opacity: 1;
+  }
+  &-exit-active {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 150ms ease, transform 150ms ease;
+  }
+}

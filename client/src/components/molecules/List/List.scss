@@ -1,0 +1,31 @@
+@use "sass:color";
+
+.generic-list {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  gap: $spacing-xs;
+
+  &--column {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  &--row {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  &--footer {
+    gap: $spacing-md;
+  }
+
+  &--nav {
+    gap: $spacing-xs;
+  }
+
+  &--side {
+    gap: 4px;
+  }
+}

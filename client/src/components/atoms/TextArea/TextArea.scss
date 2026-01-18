@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .textarea-container {
   display: flex;
   flex-direction: column;
@@ -17,8 +19,9 @@
 
 .textarea-wrapper {
   display: flex;
-  background-color: lighten($bg-surface, 4%);
-  border: 2px solid rgba($primary, 0);
+
+  background-color: color.adjust($bg-surface, $lightness: 4%);
+  border: 2px solid color.change($primary, $alpha: 0);
 
   border-radius: 1.5rem;
   padding: 0.75rem 1.25rem;
@@ -28,27 +31,124 @@
 
 
   &:focus-within {
-    border: 2px solid rgba($primary, 0.3);
+    border: 2px solid color.change($primary, $alpha: 0.3);
   }
 
   &--error {
     border-color: $danger;
+    color: $danger;
 
     &:focus-within {
       border-color: $danger;
-      box-shadow: 0 0 0 1.56px rgba($danger, 0.25);
+      box-shadow: 0 0 0 1.56px color.change($danger, $alpha: 0.25);
     }
 
     &:hover {
-      border-color: lighten($danger, 5%);
+      border-color: color.adjust($danger, $lightness: 5%);
+    }
+
+    textarea {
+      &::placeholder {
+        color: color.change($danger, $alpha: 0.5);
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: color.change($danger, $alpha: 0.3);
+        border-color: color.adjust($bg-surface, $lightness: 4%);
+      }
+      &::-webkit-scrollbar-thumb:hover {
+        background-color: color.change($danger, $alpha: 0.5);
+      }
+    }
+  }
+
+  &--success {
+    border-color: $success;
+    color: $success;
+
+    &:focus-within {
+      border-color: $success;
+      box-shadow: 0 0 0 1.56px color.change($success, $alpha: 0.25);
+    }
+
+    &:hover {
+      border-color: color.adjust($success, $lightness: 5%);
+    }
+
+    textarea {
+      &::placeholder {
+        color: color.change($success, $alpha: 0.5);
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: color.change($success, $alpha: 0.3);
+        border-color: color.adjust($bg-surface, $lightness: 4%);
+      }
+      &::-webkit-scrollbar-thumb:hover {
+        background-color: color.change($success, $alpha: 0.5);
+      }
+    }
+  }
+
+  &--warning {
+    border-color: $warning;
+    color: $warning;
+
+    &:focus-within {
+      border-color: $warning;
+      box-shadow: 0 0 0 1.56px color.change($warning, $alpha: 0.25);
+    }
+
+    &:hover {
+      border-color: color.adjust($warning, $lightness: 5%);
+    }
+
+    textarea {
+      &::placeholder {
+        color: color.change($warning, $alpha: 0.5);
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: color.change($warning, $alpha: 0.3);
+        border-color: color.adjust($bg-surface, $lightness: 4%);
+      }
+      &::-webkit-scrollbar-thumb:hover {
+        background-color: color.change($warning, $alpha: 0.5);
+      }
+    }
+  }
+
+  &--info {
+    border-color: $info;
+    color: $info;
+
+    &:focus-within {
+      border-color: $info;
+      box-shadow: 0 0 0 1.56px color.change($info, $alpha: 0.25);
+    }
+
+    &:hover {
+      border-color: color.adjust($info, $lightness: 5%);
+    }
+
+    textarea {
+      &::placeholder {
+        color: color.change($info, $alpha: 0.5);
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: color.change($info, $alpha: 0.3);
+        border-color: color.adjust($bg-surface, $lightness: 4%);
+      }
+      &::-webkit-scrollbar-thumb:hover {
+        background-color: color.change($info, $alpha: 0.5);
+      }
     }
   }
 
   &--disabled {
     opacity: 0.6;
     pointer-events: none;
-    background-color: darken($bg-surface, 2%);
+
+    background-color: color.adjust($bg-surface, $lightness: -2%);
     border-color: transparent;
+    color: $text-muted;
   }
 
   &--full-width {
@@ -72,6 +172,7 @@
     }
 
     color: inherit;
+
     font-family: inherit;
     font-size: 0.95rem;
     width: 100%;
@@ -81,6 +182,7 @@
 
     &::placeholder {
       color: $text-muted;
+      transition: color 0.2s ease;
     }
 
     &::-webkit-scrollbar {
@@ -90,12 +192,13 @@
       background: transparent;
     }
     &::-webkit-scrollbar-thumb {
-      background-color: rgba($text-muted, 0.3);
+      background-color: color.change($text-muted, $alpha: 0.3);
       border-radius: 4px;
-      border: 2px solid lighten($bg-surface, 4%);
+      border: 2px solid color.adjust($bg-surface, $lightness: 4%);
+      transition: background-color 0.2s ease;
     }
     &::-webkit-scrollbar-thumb:hover {
-      background-color: rgba($text-muted, 0.5);
+      background-color: color.change($text-muted, $alpha: 0.5);
     }
   }
 }

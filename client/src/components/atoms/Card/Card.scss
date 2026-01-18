@@ -1,25 +1,29 @@
+@use "sass:color";
+
 .card {
+  position: relative;
   background-color: $bg-surface;
-  border-radius: 1.95rem;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  border-radius: $radius-md;
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.2s ease,
+              border-color 0.2s ease;
   overflow: hidden;
   color: $text-main;
+  border: 2px solid transparent;
 
   &--elevated {
-    border: 2px solid transparent;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    border-color: color.change($border-color, $alpha: 0.5);
+    box-shadow: 0 4px 20px color.change(#000000, $alpha: 0.25);
   }
 
   &--outlined {
     background-color: transparent;
     border: 2px solid $border-color;
-    box-shadow: none;
   }
 
   &--flat {
     background-color: $bg-sidebar;
-    border: 1px solid transparent;
-    box-shadow: none;
+    border: 1px solid color.change($border-color, $alpha: 0.3);
   }
 
   &--interactive {
@@ -28,109 +32,77 @@
     &:hover {
       transform: translateY(-4px);
       border-color: $primary;
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 8px 24px color.change($primary, $alpha: 0.15);
     }
   }
 
   &--transparent {
-    background: linear-gradient(
-      180deg,
-      rgba($bg-surface, 0.15) 0%,
-      rgba($bg-surface, 0.05) 100%
-    );
+    background: color.change($bg-surface, $alpha: 0.07);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 2px solid color.change($border-color, $alpha: 0.1);
 
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-
-    border: 2px solid rgba(255, 255, 255, 0.05);
-
-    box-shadow:
-      0 8px 32px 0 rgba(0, 0, 0, 0.1),
-      $glow-rim-top;
+    box-shadow: 0 4px 16px 0 color.change(#000000, $alpha: 0.15);
 
     &.card--interactive:hover {
-      transform: translateY(-4px);
-      border-color: rgba($primary, 0.4);
+      background: color.change($bg-surface, $alpha: 0.12);
 
-      box-shadow:
-        0 15px 35px -5px rgba(0, 0, 0, 0.15),
-        0 0 20px rgba($primary, 0.1),
-        $glow-rim-top;
+      border-color: color.change($primary, $alpha: 0.4);
+
+      box-shadow: 0 8px 20px color.change(#000000, $alpha: 0.1);
+      transform: translateY(-2px);
     }
   }
 
   &--levitating {
     background-color: $bg-surface;
-    border: 2px solid rgba($primary, 0);
     animation: levitate 4s ease-in-out infinite;
 
     &:hover {
       animation-play-state: paused;
       transform: translateY(-10px);
-      box-shadow: 0 20px 40px -5px rgba($primary, 0.3);
       border-color: $primary;
-      border: 2px solid rgba($primary, 0.2);
+      box-shadow: 0 0 20px color.change($primary, $alpha: 0.2);
     }
   }
 
-  &--levitating-transparent {
-    background: linear-gradient(
-      145deg,
-      rgba($bg-surface, 0.1) 0%,
-      rgba($bg-surface, 0.1) 100%
-    );
-
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-
-    border: 1px solid rgba(255, 255, 255, 0.08);
-
-    box-shadow:
-        0 4px 8px 0 rgba(0, 0, 0, 0.15),
-        $glow-rim-top;
-
-    animation: levitate 5s ease-in-out infinite;
+  &--floating {
+    background-color: $bg-surface;
+    animation: float-clean 5s ease-in-out infinite;
 
     &:hover {
-      animation-play-state: paused;
-      transform: translateY(-8px) scale(1.02);
-
-      border-color: rgba($primary, 0.4);
-      box-shadow:
-        0 20px 40px -10px rgba($primary, 0.15),
-        0 8px 32px 0 rgba(0, 0, 0, 0.4),
-        $glow-rim-top;
+      transform: none;
+      border-color: color.change($border-color, $alpha: 0.4);
+      box-shadow: 0 5px 15px color.change(#000000, $alpha: 0.3);
     }
   }
 
   @keyframes levitate {
-    0% {
+    0%, 100% {
       transform: translateY(0);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 5px 15px color.change(#000000, $alpha: 0.3);
+      border-color: transparent;
     }
     50% {
       transform: translateY(-12px);
-      box-shadow: 0 25px 30px -5px rgba($primary, 0.15);
+      box-shadow: 0 15px 30px color.change($primary, $alpha: 0.1);
+      border-color: color.change($primary, $alpha: 0.3);
     }
-    100% {
+  }
+
+  @keyframes float-clean {
+    0%, 100% {
       transform: translateY(0);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 5px 15px color.change(#000000, $alpha: 0.3);
+    }
+    50% {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 25px -5px color.change(#000000, $alpha: 0.4);
     }
   }
 
-  &--padding-none {
-    padding: $spacing-none;
-  }
-
-  &--padding-sm {
-    padding: $spacing-sm;
-  }
-
-  &--padding-md {
-    padding: $spacing-md;
-  }
-
-  &--padding-lg {
-    padding: $spacing-lg;
-  }
+  &--padding-none { padding: 0; }
+  &--padding-sm { padding: $spacing-sm; }
+  &--padding-md { padding: $spacing-md; }
+  &--padding-lg { padding: $spacing-lg; }
 }

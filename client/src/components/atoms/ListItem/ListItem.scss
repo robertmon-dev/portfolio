@@ -1,0 +1,273 @@
+@use "sass:color";
+
+.list-item {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  font-family: $font-stack;
+
+  color: $text-muted;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &--disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+
+  &__link,
+  &__content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+
+  &__text {
+    position: relative;
+    z-index: 1;
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: $spacing-xs;
+    transition: transform 0.2s ease, color 0.2s ease;
+    color: color.change($text-muted, $alpha: 0.8);
+
+    svg {
+      stroke: currentColor;
+      vector-effect: non-scaling-stroke;
+    }
+  }
+
+  &:hover:not(.list-item--disabled) {
+    color: $text-main;
+
+    &:not([class*="--success"]):not([class*="--warning"]):not([class*="--error"]):not([class*="--info"]) {
+      .list-item__icon {
+        color: $primary;
+      }
+    }
+
+    .list-item__icon {
+      transform: translateX(2px);
+    }
+  }
+
+  &--active {
+    color: $primary;
+    font-weight: 500;
+
+    .list-item__icon {
+      color: $primary;
+    }
+
+    text-shadow: 0 0 12px color.change($primary, $alpha: 0.25);
+  }
+
+  &--default {
+    font-size: 0.95rem;
+    margin-bottom: 2px;
+    border-radius: $radius-sm;
+
+    .list-item__link,
+    .list-item__content {
+      padding: $spacing-xs $spacing-sm;
+      border-radius: $radius-sm;
+    }
+
+    &:hover {
+      background-color: color.change($tn-storm, $alpha: 0.4);
+    }
+
+    &.list-item--active {
+      background-color: color.change($tn-storm, $alpha: 0.6);
+    }
+  }
+
+  &--nav {
+    display: inline-flex;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: $radius-md;
+
+    .list-item__link,
+    .list-item__content {
+      padding: $spacing-xs $spacing-sm;
+      border-radius: $radius-md;
+    }
+
+    .list-item__indicator {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 4px;
+      background-color: $primary;
+      border-radius: 50%;
+      box-shadow: 0 0 8px $primary;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    &.list-item--active .list-item__indicator {
+      opacity: 1;
+    }
+
+    &:hover {
+      color: $primary;
+      background-color: color.change($tn-storm, $alpha: 0.5);
+    }
+  }
+
+  &--side {
+    display: flex;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: $radius-md;
+    margin-bottom: 2px;
+
+    .list-item__link,
+    .list-item__content {
+      padding: 0.6rem $spacing-sm;
+      border-radius: $radius-md;
+    }
+
+    .list-item__indicator {
+      position: absolute;
+      left: 2px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 0;
+      background-color: $primary;
+      border-radius: $radius-sm;
+      box-shadow: 0 0 8px color.change($primary, $alpha: 0.6);
+      opacity: 0;
+      transition: opacity 0.2s, height 0.2s;
+    }
+
+    &.list-item--active {
+      background-color: color.change($tn-storm, $alpha: 0.5);
+      .list-item__indicator {
+        opacity: 1;
+        height: 1.25rem;
+      }
+    }
+
+    &:hover {
+      background-color: color.change($tn-storm, $alpha: 0.3);
+      .list-item__indicator {
+        opacity: 0.5;
+        height: 8px;
+      }
+    }
+  }
+
+  &--success {
+    $col: $success;
+    color: $col;
+    .list-item__icon { color: $col; }
+    .list-item__indicator {
+      background-color: $col;
+      box-shadow: 0 0 8px color.change($col, $alpha: 0.6);
+    }
+
+    &:hover:not(.list-item--disabled) {
+      $hover-col: color.adjust($col, $lightness: 15%);
+      color: $hover-col;
+      background-color: color.change($col, $alpha: 0.12) !important;
+
+      .list-item__icon {
+        color: $hover-col;
+        transform: translateX(4px) scale(1.1);
+      }
+      .list-item__indicator {
+        opacity: 1;
+        box-shadow: 0 0 12px $col;
+      }
+    }
+  }
+
+  &--warning {
+    $col: $warning;
+    color: $col;
+    .list-item__icon { color: $col; }
+    .list-item__indicator {
+      background-color: $col;
+      box-shadow: 0 0 8px color.change($col, $alpha: 0.6);
+    }
+
+    &:hover:not(.list-item--disabled) {
+      $hover-col: color.adjust($col, $lightness: 15%);
+      color: $hover-col;
+      background-color: color.change($col, $alpha: 0.12) !important;
+
+      .list-item__icon {
+        color: $hover-col;
+        transform: translateX(4px) scale(1.1);
+      }
+      .list-item__indicator {
+        opacity: 1;
+        box-shadow: 0 0 12px $col;
+      }
+    }
+  }
+
+  &--error {
+    $col: $danger;
+    color: $col;
+    .list-item__icon { color: $col; }
+    .list-item__indicator {
+      background-color: $col;
+      box-shadow: 0 0 8px color.change($col, $alpha: 0.6);
+    }
+
+    &:hover:not(.list-item--disabled) {
+      $hover-col: color.adjust($col, $lightness: 18%);
+      color: $hover-col;
+      background-color: color.change($col, $alpha: 0.15) !important;
+
+      .list-item__icon {
+        color: $hover-col; // Nadpisuje niebieski
+        transform: translateX(4px) rotate(8deg);
+      }
+      .list-item__indicator {
+        opacity: 1;
+        box-shadow: 0 0 15px $col;
+      }
+    }
+  }
+
+  &--info {
+    $col: $info;
+    color: $col;
+    .list-item__icon { color: $col; }
+    .list-item__indicator {
+      background-color: $col;
+      box-shadow: 0 0 8px color.change($col, $alpha: 0.6);
+    }
+
+    &:hover:not(.list-item--disabled) {
+      $hover-col: color.adjust($col, $lightness: 15%);
+      color: $hover-col;
+      background-color: color.change($col, $alpha: 0.12) !important;
+
+      .list-item__icon {
+        color: $hover-col;
+        transform: translateX(4px);
+      }
+      .list-item__indicator {
+        opacity: 1;
+        box-shadow: 0 0 12px $col;
+      }
+    }
+  }
+}

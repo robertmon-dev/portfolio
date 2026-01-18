@@ -1,6 +1,6 @@
 import React from 'react';
 
-export type CardVariant = 'elevated' | 'outlined' | 'flat' | 'transparent' | 'levitating' | 'levitating-transparent';
+export type CardVariant = 'elevated' | 'outlined' | 'flat' | 'transparent' | 'levitating' | 'levitating-transparent' | 'floating';
 export type CardPadding = 'none' | 'sm' | 'md' | 'lg';
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
