@@ -1,0 +1,86 @@
+@use "sass:color";
+
+.select-molecule {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+  width: 100%;
+  font-family: $font-stack;
+
+  &__label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: $text-muted;
+  }
+
+  &__wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  &__trigger {
+    width: 100%;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: $radius-md;
+
+    background: $bg-surface;
+    border: 1px solid $border-color;
+    color: $text-main;
+    min-height: 2.5rem;
+    padding: 0 $spacing-md;
+
+    &--header-style {
+      background-color: color.adjust($bg-surface, $lightness: 3%);
+      border: 1px solid $border-color;
+      color: $text-muted;
+
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+
+      padding: $spacing-sm $spacing-md;
+      min-height: unset;
+
+      &:hover:not(.select-molecule__trigger--disabled) {
+        background-color: color.adjust($bg-surface, $lightness: 5%);
+        color: $text-main;
+      }
+    }
+
+    &--active {
+      border-color: $primary;
+      box-shadow: 0 0 0 1px color.change($primary, $alpha: 0.05);
+
+      span,
+      svg {
+        color: $primary;
+      }
+    }
+
+    &--error {
+      border-color: color.change($danger, $alpha: 0.5);
+    }
+
+    &--disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  &__trigger-content {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+  }
+
+  &__error-msg {
+    font-size: 0.75rem;
+    color: $danger;
+    margin-top: 2px;
+  }
+}
