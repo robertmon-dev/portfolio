@@ -2,6 +2,7 @@ import Modal from "../Modal";
 import { Button } from "@/components/atoms/Button/Button";
 import { CONFIRMATION_ICONS, CONFIRMATION_BUTTON_VARIANTS } from "./consts";
 import type { ConfirmationModalProps } from "./types";
+import { useTranslation } from "react-i18next";
 
 export const ConfirmationModal = ({
   isOpen,
@@ -12,6 +13,7 @@ export const ConfirmationModal = ({
   variant = "danger",
   isLoading
 }: ConfirmationModalProps) => {
+  const { t } = useTranslation();
 
   return (
     <Modal
@@ -33,7 +35,7 @@ export const ConfirmationModal = ({
             onClick={onClose}
             disabled={isLoading}
           >
-            Anuluj
+            {t('common.cancel')}
           </Button>
 
           <Button
@@ -41,7 +43,7 @@ export const ConfirmationModal = ({
             onClick={onConfirm}
             isLoading={isLoading}
           >
-            Potwierdź
+            {t('common.confirm')}
           </Button>
         </div>
       </div>
