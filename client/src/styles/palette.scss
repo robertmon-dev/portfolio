@@ -1,4 +1,4 @@
-
+@use "sass:color";
 
 // --- Main Palette ---
 $tn-red:        #f7768e;
@@ -40,11 +40,13 @@ $font-stack: 'JetBrains Mono', monospace;
 $bg-app:     $tn-bg-night;
 $bg-surface: $tn-bg-storm;
 $bg-sidebar: $tn-storm;
-$bg-input:   darken($tn-bg-night, 2%);
+$bg-input:   color.adjust($tn-bg-night, $lightness: -2%);
 
 // --- Interactions ---
 $primary:       $tn-blue;
-$primary-hover: lighten($tn-blue, 5%);
+
+$primary-hover: color.adjust($tn-blue, $lightness: 5%);
+
 $highlight:     $tn-cyan;
 $danger:        $tn-red;
 $success:       $tn-green;
@@ -58,33 +60,33 @@ $text-muted:     $tn-slate;
 $text-on-accent: #15161e;
 $text-link:      $tn-cyan-pale;
 
-$border-color:   rgba($tn-slate, 0.4);
+$border-color:   color.change($tn-slate, $alpha: 0.4);
 
-$glow-rim-top: inset 0 1px 0 0 rgba(122, 162, 247, 0.15);
-$glow-rim-soft: inset 0 0 12px -4px rgba(122, 162, 247, 0.08);
+$glow-rim-top: inset 0 1px 0 0 color.change(#7aa2f7, $alpha: 0.15);
+$glow-rim-soft: inset 0 0 12px -4px color.change(#7aa2f7, $alpha: 0.08);
 
 $shadow-primary-sm:
-    0 2px 4px -1px rgba($tn-blue, 0.4),
-    0 4px 8px -2px rgba($tn-blue, 0.2);
+    0 2px 4px -1px color.change($tn-blue, $alpha: 0.4),
+    0 4px 8px -2px color.change($tn-blue, $alpha: 0.2);
 
 $shadow-primary-md:
-    0 4px 6px -1px rgba($tn-blue, 0.5),
-    0 10px 24px -5px rgba($tn-blue, 0.3),
+    0 4px 6px -1px color.change($tn-blue, $alpha: 0.5),
+    0 10px 24px -5px color.change($tn-blue, $alpha: 0.3),
     $glow-rim-top;
 
 $shadow-surface-sm:
-    0 1px 2px 0 rgba(0, 0, 0, 0.4),
-    0 2px 4px -1px rgba(0, 0, 0, 0.3),
+    0 1px 2px 0 color.change(#000000, $alpha: 0.4),
+    0 2px 4px -1px color.change(#000000, $alpha: 0.3),
     $glow-rim-top;
 
 $shadow-surface-md:
-    0 4px 6px -1px rgba(0, 0, 0, 0.5),
-    0 12px 24px -6px rgba(0, 0, 0, 0.4),
+    0 4px 6px -1px color.change(#000000, $alpha: 0.5),
+    0 12px 24px -6px color.change(#000000, $alpha: 0.4),
     $glow-rim-top;
 
 $shadow-surface-lg:
-    0 20px 30px -8px rgba(0, 0, 0, 0.6),
-    0 40px 60px -15px rgba(0, 0, 0, 0.5),
+    0 20px 30px -8px color.change(#000000, $alpha: 0.6),
+    0 40px 60px -15px color.change(#000000, $alpha: 0.5),
     $glow-rim-soft;
 
 // --- Spacing & Radius ---
@@ -101,7 +103,7 @@ $radius-md:    12px;
 $radius-md-l:    16px;
 $radius-lg:    2.5rem;
 
-// --- syntax tokens, we will bring it on ---
+// --- syntax tokens ---
 $tn-operator:   #89ddff;
 $tn-punctuation:#9abdf5;
 $tn-comment:    #565f89;
@@ -122,4 +124,9 @@ $token-parameter:   $tn-yellow;
 $token-tag:         $tn-tag;
 $token-punctuation: $tn-punctuation;
 
-
+// --- Additional Token Colors ---
+$tn-operator-col: #89ddff;
+$tn-punct-col:    #9abdf5;
+$tn-doc-col:      #6f7bb0;
+$tn-regex-col:    #b4f9f8;
+$tn-constant-col: #ff9e64;
