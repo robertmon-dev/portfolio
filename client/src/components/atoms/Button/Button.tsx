@@ -32,9 +32,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
             children || leftIcon || rightIcon
           ) : (
             <>
-              {leftIcon && <span className="btn-icon mr-2">{leftIcon}</span>}
+              {leftIcon && <span className="btn-icon">{leftIcon}</span>}
               <span>{children}</span>
-              {rightIcon && <span className="btn-icon ml-2">{rightIcon}</span>}
+              {rightIcon && <span className="btn-icon">{rightIcon}</span>}
             </>
           )}
         </>
