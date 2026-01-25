@@ -8,5 +8,8 @@ export const HealthResponseSchema = z.object({
     connected: z.boolean(),
     message: z.string(),
   }),
+  redis: z.object({
+    connected: z.boolean()
+  })
 });
 

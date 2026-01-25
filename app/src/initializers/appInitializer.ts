@@ -5,7 +5,7 @@ import { Database } from '../core/database/database';
 import { Logger } from '../core/logger/logger';
 import { Metrics } from '../core/metrics/metrics';
 import { TrpcInitializer } from './tRPCInitializer';
-import { SchedulerInitializer } from './SchedulerInitializer';
+import { SchedulerInitializer } from './schedulerInitializer';
 
 export class AppInitializer {
   private app: Express;

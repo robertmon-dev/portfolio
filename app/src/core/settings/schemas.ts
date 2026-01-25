@@ -6,7 +6,13 @@ export const envSchema = z.object({
   DATABASE_URL: z.string().url(),
   GITHUB_TOKEN: z.string().optional(),
   LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace']).default('info'),
-  NICKNAME: z.string()
+  NICKNAME: z.string(),
+  JWT_SECRET: z.string(),
+  REDIS_TLS_ENABLED: z.boolean().default(false),
+  REDIS_CA_PATH: z.string().optional().nullable(),
+  REDIS_URL: z.string(),
+  DB_TLS_ENABLED: z.boolean(),
+  DB_CA_PATH: z.string().optional().nullable()
 });
 
 

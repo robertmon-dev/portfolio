@@ -1,0 +1,109 @@
+
+.loading-bar {
+  position: relative;
+  width: 100%;
+  background-color: rgba($tn-slate, 0.15);
+  border-radius: $radius-lg;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  height: 8px;
+
+  &__inner {
+    height: 100%;
+    width: 0;
+    border-radius: $radius-lg;
+    position: relative;
+
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.15) 50%
+        rgba(255, 255, 255, 0) 100%
+      );
+      transform: translateX(-100%);
+      animation: shimmer 2s infinite;
+    }
+  }
+
+  &--sm { height: 4px; }
+  &--md { height: 8px; }
+  &--lg { height: 12px; }
+
+  &--padding-sm { padding: 2px; }
+  &--padding-md { padding: 3px; }
+  &--padding-lg { padding: 4px; }
+
+  &--fullWidth {
+    width: 100%;
+    border-radius: 0;
+
+    .loading-bar__inner {
+      border-radius: 0;
+    }
+  }
+
+  &--default, &--primary {
+    .loading-bar__inner {
+      background-color: $primary;
+      box-shadow: 0 0 10px rgba($tn-blue, 0.4);
+    }
+  }
+
+  &--success {
+    .loading-bar__inner {
+      background-color: $success;
+      box-shadow: 0 0 10px rgba($tn-green, 0.4);
+    }
+  }
+
+  &--warning {
+    .loading-bar__inner {
+      background-color: $warning;
+      box-shadow: 0 0 10px rgba($tn-orange, 0.4);
+    }
+  }
+
+  &--danger, &--error {
+    .loading-bar__inner {
+      background-color: $danger;
+      box-shadow: 0 0 10px rgba($tn-red, 0.4);
+    }
+  }
+
+  &--info {
+    .loading-bar__inner {
+      background-color: $info;
+      box-shadow: 0 0 10px rgba($tn-yellow, 0.4);
+    }
+  }
+
+  &--purple {
+    .loading-bar__inner {
+      background-color: $tn-purple;
+      box-shadow: 0 0 12px rgba($tn-purple, 0.5);
+    }
+  }
+
+  &--cyan {
+    .loading-bar__inner {
+      background-color: $tn-cyan;
+      box-shadow: 0 0 12px rgba($tn-cyan, 0.5);
+    }
+  }
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}

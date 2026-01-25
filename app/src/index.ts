@@ -1,4 +1,4 @@
-import { AppInitializer } from './initializers/AppInitializer';
+import { AppInitializer } from './initializers/appInitializer';
 import { Logger } from './core/logger/logger';
 export type { AppRouter } from './routers/app';
 
