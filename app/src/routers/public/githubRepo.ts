@@ -1,14 +1,16 @@
 import { router } from '../../trpc/init';
 import { publicProcedure } from '../../trpc/procedures/public';
-import { GithubService } from '../../services/github/GithubService';
 import { GithubStatsSchema } from '@portfolio/shared';
+import { GetGithubStatsService } from '../../services/github/Get';
 
-const githubService = GithubService.getInstance();
 
-export const githubRouter = router({
+export const githubStatsPublicRouter = router({
   getStats: publicProcedure
     .output(GithubStatsSchema.nullable())
     .query(async () => {
-      return await githubService.getStats();
+      return await new GetGithubStatsService().execute();
     }),
+
+
 });
+

@@ -1,9 +1,5 @@
-export enum Role {
-  User = 'User',
-  Admin = 'Admin',
-  Moderator = 'Moderator',
-  Viewer = 'Viewer'
-}
+import { Role } from '@prisma/client';
+export { Role };
 
 export enum Flag {
   Read = 'read',

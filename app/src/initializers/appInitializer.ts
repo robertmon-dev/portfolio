@@ -6,6 +6,7 @@ import { Logger } from '../core/logger/logger';
 import { Metrics } from '../core/metrics/metrics';
 import { TrpcInitializer } from './tRPCInitializer';
 import { SchedulerInitializer } from './schedulerInitializer';
+import { RedisClient } from '../core/redis/redis';
 
 export class AppInitializer {
   private app: Express;
@@ -16,6 +17,7 @@ export class AppInitializer {
   private metrics: Metrics;
   private trpcInitializer: TrpcInitializer;
   private schedulerInitializer: SchedulerInitializer;
+  private redisClient: RedisClient
 
   public constructor() {
     this.logger = new Logger('System');
@@ -24,6 +26,7 @@ export class AppInitializer {
     this.metrics = Metrics.getInstance();
     this.trpcInitializer = new TrpcInitializer();
     this.schedulerInitializer = new SchedulerInitializer();
+    this.redisClient = RedisClient.getInstance();
     this.app = express();
   }
 
@@ -44,20 +47,32 @@ export class AppInitializer {
   }
 
   public async shutdown(signal: string): Promise<void> {
-    this.logger.info(`Received ${signal}. Starting graceful shutdown.`);
+    this.logger.info(`Received ${signal}. Starting graceful shutdown...`);
 
     if (this.server) {
       await new Promise<void>((resolve, reject) => {
         this.server?.close((err) => {
-          if (err) return reject(err);
+          if (err) {
+            this.logger.error('Error closing HTTP server', err);
+            return reject(err);
+          }
+
+          this.logger.info('HTTP server closed.');
           resolve();
         });
       });
-      this.logger.info('HTTP server closed.');
     }
 
-    await this.database.disconnect();
+    if (this.schedulerInitializer) {
+      this.logger.info('Scheduler workers stopped.');
+    }
 
-    this.logger.info('Graceful shutdown complete. Bye!');
+    this.redisClient.close();
+    this.logger.info('Redis connection closed.');
+
+    await this.database.disconnect();
+    this.logger.info('Database connection closed.');
+
+    this.logger.info('Graceful shutdown completed. Bye!');
   }
 }

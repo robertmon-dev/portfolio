@@ -1,14 +1,14 @@
 import cron from 'node-cron';
 import { Logger } from '../core/logger/logger';
-import { GithubService } from '../services/github/GithubService';
+import { GithubFetchService } from '../services/github/Fetch';
 
 export class SchedulerInitializer {
   private logger: Logger;
-  private githubService: GithubService;
+  private githubService: GithubFetchService;
 
   constructor() {
     this.logger = new Logger('Scheduler');
-    this.githubService = GithubService.getInstance();
+    this.githubService = GithubFetchService.getInstance();
   }
 
   public init(): void {

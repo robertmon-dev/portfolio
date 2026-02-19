@@ -21,7 +21,7 @@ export class Permission {
   }
 
   public can(endpointName: string, required: Flag): boolean {
-    if (this.role === Role.Admin) {
+    if (this.role === Role.ADMIN) {
       this.logger.debug(`Access granted: User is global Admin`, { endpointName, required });
       return true;
     }

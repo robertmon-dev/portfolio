@@ -7,26 +7,51 @@ datasource db {
   provider = "postgresql"
 }
 
+enum Role {
+  USER
+  ADMIN
+  MODERATOR
+  VIEWER
+}
+
+model GithubRepo {
+  id          String      @id @default(uuid())
+  name        String
+  url         String @unique
+  stars       Int
+  language    String?
+  description String?     @db.Text
+
+  statsId     String
+  stats       GithubStats @relation(fields: [statsId], references: [id], onDelete: Cascade)
+
+  project     Project?
+  order       Int         @default(0)
+
+  @@index([statsId])
+}
+
 model GithubStats {
   id          String   @id @default(uuid())
   username    String   @unique
   followers   Int
   publicRepos Int
   totalStars  Int
-  topRepos    Json
+
+  repos       GithubRepo[]
+
   updatedAt   DateTime @updatedAt
 }
 
 model Project {
   id          String  @id @default(uuid())
-  slug        String  @unique // Automatyczny Index
+  slug        String  @unique
   title       String
   description String  @db.Text
   content     String? @db.Text
 
   imageUrl String?
   demoUrl  String?
-  repoUrl  String?
 
   isFeatured Boolean  @default(false)
   isVisible  Boolean  @default(true)
@@ -34,6 +59,9 @@ model Project {
 
   techStack TechStack[]
   gallery   ProjectImage[]
+
+  githubRepoId String? @unique
+  githubRepo   GithubRepo? @relation(fields: [githubRepoId], references: [id], onDelete: SetNull)
 
   @@index([isVisible, createdAt])
   @@index([isFeatured])
@@ -76,3 +104,25 @@ model Experience {
 
   @@index([startDate(sort: Desc)])
 }
+
+model User {
+  id             String    @id @default(uuid())
+  email          String    @unique
+  username       String    @unique
+  passwordDigest String
+
+  name           String?
+  headline       String?
+  bio            String?   @db.Text
+  avatarUrl      String?
+
+  socials        Json?     @default("{}")
+
+  role           Role      @default(USER)
+
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@index([email])
+}
+

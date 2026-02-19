@@ -1,30 +1,27 @@
 import { AppInitializer } from './initializers/appInitializer';
 import { Logger } from './core/logger/logger';
-export type { AppRouter } from './routers/app';
 
-const logger = new Logger('Bootstrap');
-export const app = new AppInitializer();
+const logger = new Logger('Main');
+const app = new AppInitializer();
 
-const start = async () => {
-  try {
-    await app.bootstrap();
-  } catch (error) {
-    logger.error('Critical failure during startup', error);
-    process.exit(1);
-  }
-};
+async function start() {
+  await app.bootstrap();
+}
 
 start();
 
-const handleSignal = async (signal: string) => {
-  try {
-    await app.shutdown(signal);
-    process.exit(0);
-  } catch (error) {
-    logger.error('Error during graceful shutdown', error);
-    process.exit(1);
-  }
-};
+const signals: string[] = ['SIGINT', 'SIGTERM', 'SIGQUIT'];
 
-process.on('SIGINT', () => handleSignal('SIGINT'));
-process.on('SIGTERM', () => handleSignal('SIGTERM'));
+signals.forEach((signal) => {
+  process.on(signal, async () => {
+    const forceExit = setTimeout(() => {
+      logger.error('Shutdown timed out. Forcing exit.');
+      process.exit(1);
+    }, 10000);
+
+    await app.shutdown(signal);
+
+    clearTimeout(forceExit);
+    process.exit(0);
+  });
+});

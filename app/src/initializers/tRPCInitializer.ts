@@ -20,7 +20,7 @@ export class TrpcInitializer {
       '/trpc',
       trpcExpress.createExpressMiddleware({
         router: appRouter,
-        createContext: this.trpcContext.createContext,
+        createContext: this.trpcContext.create,
         onError: ({ path, error }) => {
           this.logger.error(`tRPC failed on '${path ?? '<no-path>'}'`, error);
         },

@@ -1,6 +1,7 @@
 import { z } from 'zod';
 
 export const GithubRepoSchema = z.object({
+  id: z.string().uuid(),
   name: z.string(),
   url: z.string().url(),
   stars: z.number(),
@@ -14,6 +15,6 @@ export const GithubStatsSchema = z.object({
   followers: z.number(),
   publicRepos: z.number(),
   totalStars: z.number(),
-  topRepos: z.array(GithubRepoSchema),
+  repos: z.array(GithubRepoSchema),
   updatedAt: z.date().or(z.string()),
 });

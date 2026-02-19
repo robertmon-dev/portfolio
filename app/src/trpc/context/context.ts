@@ -18,7 +18,7 @@ export class TrpcContext {
     this.logger = new Logger('request')
   }
 
-  public createContext = ({
+  public create = ({
     req,
     res,
   }: trpcExpress.CreateExpressContextOptions): Context => {
