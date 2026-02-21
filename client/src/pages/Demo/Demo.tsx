@@ -77,34 +77,34 @@ export const Demo = () => {
         anchorEl={menuAnchorEl}
       >
         <button className="demo-context-menu__item" onClick={handleCloseMenu}>
-          <Edit2 size={14} /> {t("common.edit", "Edytuj")}
+          <Edit2 size={14} /> {t("common.edit", "Edit")}
         </button>
         <button
           className="demo-context-menu__item demo-context-menu__item--danger"
           onClick={handleCloseMenu}
         >
-          <Trash2 size={14} /> {t("common.delete", "Usuń")}
+          <Trash2 size={14} /> {t("common.delete", "Delete")}
         </button>
       </MenuPortal>
 
       <Modal
         open={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        title={t("demo.modals.configTitle", "Konfiguracja agencji")}
+        title={t("demo.modals.configTitle", "Configuration")}
       >
         <div className="demo-modal-form">
-          <TextArea label={t("demo.modals.form.descLabel", "Opis")} fullWidth />
+          <TextArea label={t("demo.modals.form.descLabel", "Description")} fullWidth />
           <div className="demo-modal-form__settings">
-            <Switch label={t("demo.modals.form.publicLabel", "Publiczna")} />
+            <Switch label={t("demo.modals.form.publicLabel", "Public")} />
             <Checkbox
-              label={t("demo.modals.form.require2faLabel", "Wymagaj 2FA")}
+              label={t("demo.modals.form.require2faLabel", "2FA so be it")}
             />
           </div>
           <div className="demo-modal-form__footer">
             <Button variant="ghost" onClick={() => setIsModalOpen(false)}>
-              {t("common.cancel", "Anuluj")}
+              {t("common.cancel", "Cancel")}
             </Button>
-            <Button variant="primary">{t("common.save", "Zapisz")}</Button>
+            <Button variant="primary">{t("common.save", "Save")}</Button>
           </div>
         </div>
       </Modal>

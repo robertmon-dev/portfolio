@@ -52,6 +52,30 @@
       }
     }
 
+    &--footer-style {
+      background: rgba($bg-app, 0.5);
+      border: 1px solid color.change($border-color, $alpha: 0.3);
+      border-radius: 24px;
+      padding: $spacing-md $spacing-lg;
+      height: 3.5rem;
+
+      min-width: 380px;
+      width: 100%;
+      max-width: fit-content;
+
+      color: $text-main;
+
+      .select-molecule__trigger-content {
+        font-size: 1rem;
+        font-weight: 500;
+      }
+
+      &:hover:not(.select-molecule__trigger--disabled) {
+        background: rgba($bg-app, 0.7);
+        border-color: color.change($primary, $alpha: 0.5);
+      }
+    }
+
     &--active {
       border-color: $primary;
       box-shadow: 0 0 0 1px color.change($primary, $alpha: 0.05);

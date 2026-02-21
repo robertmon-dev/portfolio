@@ -1,0 +1,70 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "add": "Add",
+    "send": "Send",
+    "settings": "Settings",
+    "deleteItem": "Delete item"
+  },
+  "demo": {
+    "header": {
+      "title": "Courvogne Palette Demo",
+      "subtitle": "Tokyo Night by Courvogne"
+    },
+    "sections": {
+      "buttons": {
+        "title": "1. Buttons (Variants, Sizes, Icons)"
+      },
+      "tags": {
+        "title": "2. Tags (Variants, Sizes, Options)"
+      },
+      "lists": {
+        "title": "3. Lists"
+      },
+      "grid": {
+        "title": "4. Data Grid"
+      },
+      "forms": {
+        "title": "5. Forms & Selection"
+      },
+      "code": {
+        "title": "6. Code & Data Display"
+      },
+      "cards": {
+        "title": "7. Cards (Variants & Interactions)"
+      },
+      "modals": {
+        "title": "8. Modals"
+      },
+      "timeline": {
+        "title": "9. Timeline (Progress)"
+      }
+    },
+    "timeline": {
+      "step1": {
+        "title": "Project Initialization",
+        "desc": "Environment configuration, package installation, and Tokyo Night palette setup."
+      },
+      "step2": {
+        "title": "Building Atoms",
+        "desc": "Creating Buttons, Inputs, Checkboxes, and basic Tags with variants."
+      },
+      "step3": {
+        "title": "Molecule Integration",
+        "desc": "Combining atoms into complex components like modals, grids, and data lists."
+      },
+      "step4": {
+        "title": "SelectMolecule",
+        "desc": "Building an advanced dropdown with search and multi-select capabilities."
+      },
+      "status": {
+        "done": "Completed",
+        "inProgress": "In Progress",
+        "todo": "Pending"
+      }
+    }
+  }
+}

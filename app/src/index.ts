@@ -1,4 +1,5 @@
 import { AppInitializer } from './initializers/appInitializer';
+import { AppRouter } from './routers/app';
 import { Logger } from './core/logger/logger';
 
 const logger = new Logger('Main');
@@ -25,3 +26,5 @@ signals.forEach((signal) => {
     process.exit(0);
   });
 });
+
+export type { AppRouter };

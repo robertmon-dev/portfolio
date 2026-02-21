@@ -1,4 +1,6 @@
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -13,18 +15,19 @@
 
   --toastify-text-color-dark: #{$text-main};
   --toastify-color-progress-dark: #{$primary};
-  --toastify-color-info:    #{$info};
+  --toastify-color-info: #{$info};
   --toastify-color-success: #{$success};
   --toastify-color-warning: #{$warning};
-  --toastify-color-error:   #{$danger};
+  --toastify-color-error: #{$danger};
 }
 
 body {
   margin: 0;
+  padding: 0;
   min-width: 320px;
   min-height: 100vh;
+  background-color: transparent !important;
 
-  background-color: $bg-app;
   color: $text-main;
 
   font-family: $font-stack;
@@ -36,7 +39,17 @@ body {
   line-height: 1.5;
 }
 
-button, input, textarea, select {
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: transparent !important;
+}
+
+button,
+input,
+textarea,
+select {
   font-family: inherit;
   font-feature-settings: "calt" 1;
 }
@@ -54,20 +67,20 @@ button, input, textarea, select {
 }
 
 $syntax-tokens: (
-  "keyword":     $token-keyword,
-  "function":    $token-function,
-  "string":      $token-string,
-  "number":      $token-number,
-  "comment":     $token-comment,
-  "doc":         $token-doc,
-  "operator":    $token-operator,
-  "class":       $token-class,
-  "variable":    $token-variable,
-  "property":    $token-property,
-  "parameter":   $token-parameter,
-  "tag":         $token-tag,
+  "keyword": $token-keyword,
+  "function": $token-function,
+  "string": $token-string,
+  "number": $token-number,
+  "comment": $token-comment,
+  "doc": $token-doc,
+  "operator": $token-operator,
+  "class": $token-class,
+  "variable": $token-variable,
+  "property": $token-property,
+  "parameter": $token-parameter,
+  "tag": $token-tag,
   "punctuation": $token-punctuation,
-  "regex":       $token-regex
+  "regex": $token-regex
 );
 
 @each $name, $color in $syntax-tokens {

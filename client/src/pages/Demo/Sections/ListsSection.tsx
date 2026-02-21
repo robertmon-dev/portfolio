@@ -12,16 +12,16 @@ export const ListsSection = ({
   const { t } = useTranslation();
 
   return (
-    <DemoSection title={t("demo.sections.lists.title", "3. Listy")} columns={2}>
+    <DemoSection title={t("demo.sections.lists.title", "3. Lists")} columns={2}>
       <Card variant="elevated">
         <h3 className="demo-list-title">
-          {t("demo.lists.defaultColumn", "Domyślna w kolumnie")}
+          {t("demo.lists.defaultColumn", "Default Column")}
         </h3>
         <List items={demoListItems} direction="column" />
       </Card>
       <Card variant="elevated">
         <h3 className="demo-list-title">
-          {t("demo.lists.horizontalNav", "Wariant poziomy (nav)")}
+          {t("demo.lists.horizontalNav", "Horizontal Nav Variant")}
         </h3>
         <List items={demoListItems} variant="nav" direction="row" />
       </Card>

@@ -58,6 +58,76 @@
   }
 }
 
+.demo-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+  padding: $spacing-xs 0;
+
+  &__settings {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+    padding: $spacing-md;
+    background: color-mix(in srgb, $bg-surface, #fff 2%);
+    border-radius: $radius-md;
+    border: 1px solid $border-color;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: $spacing-md;
+    margin-top: $spacing-md;
+    padding-top: $spacing-lg;
+    border-top: 1px solid $border-color;
+  }
+}
+
+.demo-modal-trigger {
+  display: flex;
+  align-items: center;
+  gap: $spacing-lg;
+  color: $text-main;
+  transition: transform 0.2s ease;
+
+  &__icon {
+    color: $tn-blue;
+    filter: drop-shadow(0 0 8px rgba($tn-blue, 0.3));
+    flex-shrink: 0;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+  }
+
+  &__title {
+    font-size: 1.1rem;
+    color: $text-main;
+  }
+
+  &__text {
+    font-size: 0.9rem;
+    color: $text-muted;
+    margin: 0;
+  }
+}
+
+.demo-divider {
+  border: none;
+  border-top: 1px solid $border-color;
+  margin: $spacing-md 0;
+  width: 100%;
+}
+
+.demo-forms-card {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
 .demo-card--code {
   background-color: $tn-bg-night !important;
   border-color: color.change($tn-storm, $alpha: 0.5) !important;

@@ -12,23 +12,29 @@ export const MenuPortal = (props: MenuPortalProps) => {
     anchorEl,
     children,
     offset,
-    minWidth
+    minWidth,
+    variant = 'default'
   } = props;
 
   const { coords, menuRef } = useMenuPortal({ isOpen, onClose, anchorEl, offset });
 
   if (typeof document === 'undefined') return null;
 
+  const portalStyle = {
+    ...getStyle(coords, minWidth),
+    width: typeof minWidth === 'number' ? `${minWidth}px` : undefined,
+  };
+
   return createPortal(
     <AnimatePresence>
       {isOpen && (
         <motion.div
           ref={menuRef}
-          className="menu-portal"
-          style={getStyle(coords, minWidth)}
-          initial={{ opacity: 0, y: -10, scale: 0.95 }}
+          className={`menu-portal menu-portal--${variant}`}
+          style={portalStyle}
+          initial={{ opacity: 0, y: variant === 'footer' ? 10 : -10, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: -10, scale: 0.95 }}
+          exit={{ opacity: 0, y: variant === 'footer' ? 10 : -10, scale: 0.95 }}
           transition={{ duration: 0.15, ease: 'easeOut' }}
         >
           {children}

@@ -1,0 +1,36 @@
+{
+  "common": {
+    "save": "Zapisz",
+    "cancel": "Anuluj",
+    "edit": "Edytuj",
+    "delete": "Usuń",
+    "add": "Dodaj",
+    "send": "Wyślij",
+    "settings": "Ustawienia",
+    "deleteItem": "Usuń element"
+  },
+  "demo": {
+    "header": {
+      "title": "Demo courvogne palette",
+      "subtitle": "Tokyo night by Courvogne"
+    },
+    "sections": {
+      "buttons": {
+        "title": "1. Przyciski (Warianty, Rozmiary, Ikony)"
+      },
+      "tags": {
+        "title": "2. Tagi (Warianty, Rozmiary, Opcje)"
+      },
+      "timeline": {
+        "title": "9. Oś Czasu (Timeline)"
+      }
+    },
+    "timeline": {
+      "status": {
+        "done": "Zakończone",
+        "inProgress": "W trakcie",
+        "todo": "Oczekuje"
+      }
+    }
+  }
+}

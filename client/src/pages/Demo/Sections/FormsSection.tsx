@@ -19,23 +19,20 @@ export const FormsSection = ({
 
   return (
     <DemoSection
-      title={t("demo.sections.forms.title", "5. Formularze & Wybór")}
+      title={t("demo.sections.forms.title", "5. Forms & Selection")}
       columns={2}
     >
       <Card variant="elevated" className="demo-forms-card">
         <h3 className="demo-list-title">
-          {t("demo.forms.checkboxes.title", "Checkboxy (Stany i Kolory)")}
+          {t("demo.forms.checkboxes.title", "Checkboxes (States & Colors)")}
         </h3>
 
         <DemoRow>
           <Checkbox
-            label={t(
-              "demo.forms.checkboxes.default",
-              "Domyślny (uncontrolled)",
-            )}
+            label={t("demo.forms.checkboxes.default", "Default (uncontrolled)")}
           />
           <Checkbox
-            label={t("demo.forms.checkboxes.controlled", "Sterowany (aktywny)")}
+            label={t("demo.forms.checkboxes.controlled", "Controlled (active)")}
             checked={checked}
             onChange={(e) => setChecked(e.target.checked)}
           />
@@ -43,14 +40,11 @@ export const FormsSection = ({
 
         <DemoRow>
           <Checkbox
-            label={t("demo.forms.checkboxes.disabled", "Zablokowany")}
+            label={t("demo.forms.checkboxes.disabled", "Disabled")}
             disabled
           />
           <Checkbox
-            label={t(
-              "demo.forms.checkboxes.disabledChecked",
-              "Zablokowany (zaznaczony)",
-            )}
+            label={t("demo.forms.checkboxes.disabledChecked", "Disabled (checked)")}
             disabled
             defaultChecked
           />
@@ -63,11 +57,11 @@ export const FormsSection = ({
             }}
           />
           <Checkbox
-            label={t("demo.forms.checkboxes.error", "Błąd walidacji")}
+            label={t("demo.forms.checkboxes.error", "Validation error")}
             error
           />
           <Checkbox
-            label={t("demo.forms.checkboxes.errorChecked", "Błąd (zaznaczony)")}
+            label={t("demo.forms.checkboxes.errorChecked", "Error (checked)")}
             error
             defaultChecked
           />
@@ -75,20 +69,17 @@ export const FormsSection = ({
 
         <DemoRow>
           <Checkbox
-            label={t("demo.forms.checkboxes.colorSuccess", "Sukces (Zielony)")}
+            label={t("demo.forms.checkboxes.colorSuccess", "Success (Green)")}
             defaultChecked
             colorChecked="#9ece6a"
           />
           <Checkbox
-            label={t("demo.forms.checkboxes.colorPurple", "Fioletowy (Purple)")}
+            label={t("demo.forms.checkboxes.colorPurple", "Purple")}
             defaultChecked
             colorChecked="#bb9af7"
           />
           <Checkbox
-            label={t(
-              "demo.forms.checkboxes.colorWarning",
-              "Ostrzeżenie (Warning)",
-            )}
+            label={t("demo.forms.checkboxes.colorWarning", "Warning")}
             defaultChecked
             colorChecked="#e0af68"
           />
@@ -105,7 +96,7 @@ export const FormsSection = ({
           style={{ flex: 1 }}
         >
           <h3 className="demo-list-title">
-            {t("demo.forms.switches.title", "Switche")}
+            {t("demo.forms.switches.title", "Switches")}
           </h3>
           <Switch
             label={t("demo.forms.switches.darkMode", "Dark Mode")}
@@ -126,14 +117,14 @@ export const FormsSection = ({
 
         <Card variant="elevated" style={{ flex: 1 }}>
           <h3 className="demo-list-title">
-            {t("demo.forms.textFields.title", "Pola Tekstowe")}
+            {t("demo.forms.textFields.title", "Text Fields")}
           </h3>
           <TextArea
-            label={t("demo.forms.textFields.notesLabel", "Notatki")}
+            label={t("demo.forms.textFields.notesLabel", "Notes")}
             fullWidth
             placeholder={t(
               "demo.forms.textFields.notesPlaceholder",
-              "Dodaj opis agencji...",
+              "Add some description...",
             )}
           />
         </Card>

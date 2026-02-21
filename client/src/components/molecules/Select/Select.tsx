@@ -47,6 +47,7 @@ export const Select = ({
           onClose={() => onOpenChange(false)}
           anchorEl={triggerRef.current}
           minWidth={triggerRef.current?.offsetWidth}
+          variant={variant}
         >
           {children}
         </MenuPortal>

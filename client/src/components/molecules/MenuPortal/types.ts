@@ -1,5 +1,7 @@
 import { ReactNode } from 'react';
 
+
+export type MenuPortalVariant = 'default' | 'header' | 'footer';
 export type UseMenuPortalProps = Pick<MenuPortalProps, 'isOpen' | 'onClose' | 'anchorEl' | 'offset'>;
 
 export interface Position {
@@ -15,4 +17,5 @@ export interface MenuPortalProps {
   children: ReactNode;
   offset?: { x: number; y: number };
   minWidth?: number | 'anchor';
+  variant?: MenuPortalVariant;
 }

@@ -1,9 +1,9 @@
-import { ReactNode } from 'react';
-import type { HTMLAttributes } from 'react';
+import { ReactNode, HTMLAttributes } from 'react';
 
 export interface NavbarProps extends HTMLAttributes<HTMLElement> {
-  brand?: ReactNode;
-  children?: ReactNode;
-  actions?: ReactNode;
+  children: ReactNode;
 }
 
+export interface NavbarSectionProps extends HTMLAttributes<HTMLDivElement | HTMLElement> {
+  children: ReactNode;
+}

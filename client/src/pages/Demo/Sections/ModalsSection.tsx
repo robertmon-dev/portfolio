@@ -11,7 +11,7 @@ export const ModalsSection = ({
   const { t } = useTranslation();
 
   return (
-    <DemoSection title={t("demo.sections.modals.title", "8. Modale")}>
+    <DemoSection title={t("demo.sections.modals.title", "8. Modals")}>
       <Card
         variant="levitating"
         interactive
@@ -22,10 +22,10 @@ export const ModalsSection = ({
           <Cpu size={40} className="demo-modal-trigger__icon" />
           <div className="demo-modal-trigger__content">
             <strong className="demo-modal-trigger__title">
-              {t("demo.modals.triggerTitle", "Otwórz Modal Konfiguracyjny")}
+              {t("demo.modals.triggerTitle", "Open Configuration Modal")}
             </strong>
             <p className="demo-modal-trigger__text">
-              {t("demo.modals.triggerDesc", "Testowanie animacji i portali")}
+              {t("demo.modals.triggerDesc", "Testing animations and portals")}
             </p>
           </div>
         </div>

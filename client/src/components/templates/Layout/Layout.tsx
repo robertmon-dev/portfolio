@@ -1,49 +1,61 @@
 import { Navbar } from '@/components/organisms/NavBar/NavBar';
+import { NavbarMain } from './Sections/Navbar/Main';
+import { NavbarEdge } from './Sections/Navbar/Edge';
 import { Footer } from '@/components/organisms/Footer/Footer';
+import { FooterLeftSection } from './Sections/Footer/Left';
+import { FooterRightSection } from './Sections/Footer/Right';
 import { List } from '@/components/molecules/List/List';
 import { Button } from '@/components/atoms/Button/Button';
-import { Settings, Building } from 'lucide-react';
-import { useLayout } from './useLayout';
+import { Settings } from 'lucide-react';
+import { useLayout } from './hooks/useLayout';
+import { useFooterItems } from './hooks/useFooterItems';
 import type { LayoutProps } from './types';
+import { BRAND_NAME, LANGUAGES } from './consts';
 import './Layout.scss';
 
 export const Layout = ({ children }: LayoutProps) => {
-  const { navItems, sidebarItems, footerItems, t } = useLayout();
-  const currentYear = new Date().getFullYear();
+  const {
+    navItems, t, isLangOpen, setIsLangOpen, currentLangLabel, handleLangSelect
+  } = useLayout();
+  const { socialLinks, navLinks, currentYear } = useFooterItems();
 
   return (
     <div className="app-layout">
-      <Navbar
-        brand={
-          <div className="app-layout__brand">
-            <Building size={24} /> <span>AdminPanel</span>
-          </div>
-        }
-        actions={
-          <Button variant="ghost" isIcon aria-label={t('common.settings', 'Ustawienia')}>
+      <Navbar>
+        <NavbarMain>
+          <List items={navItems} variant="nav" direction="row" />
+        </NavbarMain>
+
+        <NavbarEdge>
+          <Button variant="ghost" isIcon aria-label={t('common.settings', 'Settings')}>
             <Settings size={20} />
           </Button>
-        }
-      >
-        <List items={navItems} variant="nav" direction="row" />
+        </NavbarEdge>
       </Navbar>
 
-      <div className="app-layout__wrapper">
-        <main className="app-layout__main">
+      <main className="app-layout__main">
+        <div className="app-layout__content-container">
           {children}
-        </main>
-      </div>
+        </div>
+      </main>
 
-      <Footer
-        brand={
-          <>
-            <Building size={16} />
-            <span style={{ marginLeft: '4px' }}>AdminPanel</span>
-          </>
-        }
-        copyright={`© ${currentYear} MojaFirma. ${t('footer.rights', 'Wszelkie prawa zastrzeżone.')}`}
-      >
-        <List items={footerItems} variant="footer" direction="row" />
+      <Footer>
+        <div className="app-footer__container">
+          <FooterLeftSection
+            isLangOpen={isLangOpen}
+            setIsLangOpen={setIsLangOpen}
+            currentLangLabel={currentLangLabel}
+            handleLangSelect={handleLangSelect}
+            socialLinks={socialLinks}
+            languages={LANGUAGES}
+          />
+
+          <FooterRightSection
+            navLinks={navLinks}
+            currentYear={currentYear}
+            brandName={BRAND_NAME}
+          />
+        </div>
       </Footer>
     </div>
   );

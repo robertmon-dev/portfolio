@@ -71,8 +71,8 @@ export const ButtonsSection = ({
         </Button>
         <Button variant="danger" onClick={toggleGlobalLoading}>
           {loading
-            ? t("demo.buttons.actions.stopLoading", "Zatrzymaj LoadingBar")
-            : t("demo.buttons.actions.testLoading", "Testuj LoadingBar")}
+            ? t("demo.buttons.actions.stopLoading", "Stop LoadingBar")
+            : t("demo.buttons.actions.testLoading", "Test LoadingBar")}
         </Button>
       </DemoRow>
 
@@ -82,11 +82,11 @@ export const ButtonsSection = ({
           position="top"
         >
           <Button variant="success" leftIcon={<Plus size={16} />}>
-            {t("common.add", "Dodaj")}
+            {t("common.add", "Add")}
           </Button>
         </ToolTip>
         <Button variant="purple" rightIcon={<Send size={16} />}>
-          {t("common.send", "Wyślij")}
+          {t("common.send", "Send")}
         </Button>
         <div
           style={{
@@ -96,13 +96,13 @@ export const ButtonsSection = ({
             margin: "0 8px",
           }}
         />
-        <ToolTip content={t("common.settings", "Ustawienia")} position="bottom">
+        <ToolTip content={t("common.settings", "Settings")} position="bottom">
           <Button variant="outline" isIcon>
             <Settings size={18} />
           </Button>
         </ToolTip>
         <ToolTip
-          content={t("common.deleteItem", "Usuń element")}
+          content={t("common.deleteItem", "Remove item")}
           position="right"
         >
           <Button variant="danger" isIcon>

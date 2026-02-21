@@ -28,6 +28,22 @@ export const CodeSection = ({ sampleCode }: { sampleCode: string }) => {
           state="info"
         >
           TOKEN_NJ92_X21_TOKYO
+          TOKEN_NJ92_X21_TOKYO
+          TOKEN_NJ92_X21_TOKYO
+          TOKEN_NJ92_X21_TOKYO
+          TOKEN_NJ92_X21_TOKYO
+          TOKEN_NJ92_X21_TOKYO
+          TOKEN_NJ92_X21_TOKYO
+          TOKEN_NJ92_X21_TOKYO
+          TOKEN_NJ92_X21_TOKYO
+          TOKEN_NJ92_X21_TOKYO
+          TOKEN_NJ92_X21_TOKYO
+          TOKEN_NJ92_X21_TOKYO
+          TOKEN_NJ92_X21_TOKYO
+          TOKEN_NJ92_X21_TOKYO
+          TOKEN_NJ92_X21_TOKYO
+          TOKEN_NJ92_X21_TOKYO
+          TOKEN_NJ92_X21_TOKYO
         </TextDisplay>
       </Card>
     </DemoSection>

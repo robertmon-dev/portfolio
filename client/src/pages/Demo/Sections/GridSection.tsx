@@ -10,11 +10,11 @@ export interface DemoGridItem {
   id: string | number;
   name: string;
   users: number;
-  status: "Aktywna" | "Wstrzymana" | string;
+  status: "Active" | "Paused" | string;
 }
 
 interface GridSectionProps {
-  demoGridData: DemoGridItem[]
+  demoGridData: DemoGridItem[];
   isGridLoading: boolean;
   handleSimulateLoading: () => void;
   handleOpenMenu: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -30,10 +30,10 @@ export const GridSection = ({
 
   return (
     <DemoSection
-      title={t("demo.sections.grid.title", "4. Siatka Danych")}
+      title={t("demo.sections.grid.title", "4. Data Grid")}
       action={
         <Button variant="outline" size="sm" onClick={handleSimulateLoading}>
-          {t("demo.grid.simulateLoading", "Symuluj Ładowanie")}
+          {t("demo.grid.simulateLoading", "Simulate Loading")}
         </Button>
       }
     >
@@ -56,11 +56,11 @@ export const GridSection = ({
               </Button>
             </div>
             <p className="demo-grid-card__text">
-              {t("demo.grid.usersCount", "Użytkownicy:")} {item.users}
+              {t("demo.grid.usersCount", "Users:")} {item.users}
             </p>
             <div className="demo-grid-card__footer">
               <Tag
-                variant={item.status === "Aktywna" ? "success" : "warning"}
+                variant={item.status === "Active" ? "success" : "warning"}
                 size="sm"
               >
                 {item.status}

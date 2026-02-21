@@ -7,7 +7,7 @@ export const CardsSection = () => {
 
   return (
     <DemoSection
-      title={t("demo.sections.cards.title", "7. Karty (Warianty i Interakcje)")}
+      title={t("demo.sections.cards.title", "7. Cards (Variants & Interactions)")}
     >
       <div
         className="demo-section__grid demo-section__grid--3col"
@@ -24,7 +24,7 @@ export const CardsSection = () => {
           <p className="text-muted m-0" style={{ fontSize: "0.85rem" }}>
             {t(
               "demo.cards.elevatedDesc",
-              "Domyślny wariant z delikatnym cieniem i tłem.",
+              "Default variant with a subtle shadow and background.",
             )}
           </p>
         </Card>
@@ -36,7 +36,7 @@ export const CardsSection = () => {
           <p className="text-muted m-0" style={{ fontSize: "0.85rem" }}>
             {t(
               "demo.cards.outlinedDesc",
-              "Bez tła, sam border. Idealna do zgrupowania treści.",
+              "No background, border only. Perfect for grouping content.",
             )}
           </p>
         </Card>
@@ -48,7 +48,7 @@ export const CardsSection = () => {
           <p className="text-muted m-0" style={{ fontSize: "0.85rem" }}>
             {t(
               "demo.cards.flatDesc",
-              "Płaska, lekko przyciemnione tło. Dobra do zagnieżdżania.",
+              "Flat, slightly darkened background. Good for nesting.",
             )}
           </p>
         </Card>
@@ -60,7 +60,7 @@ export const CardsSection = () => {
           <p className="text-muted m-0" style={{ fontSize: "0.85rem" }}>
             {t(
               "demo.cards.transparentDesc",
-              "Całkowicie przezroczysta, zachowuje tylko padding.",
+              "Completely transparent, preserves only padding.",
             )}
           </p>
         </Card>
@@ -72,7 +72,7 @@ export const CardsSection = () => {
           <p className="text-muted m-0" style={{ fontSize: "0.85rem" }}>
             {t(
               "demo.cards.floatingDesc",
-              "Mocny drop-shadow. Świetna do modali lub dropdownów.",
+              "Strong drop-shadow. Great for modals or dropdowns.",
             )}
           </p>
         </Card>
@@ -92,7 +92,7 @@ export const CardsSection = () => {
           <p className="text-muted m-0" style={{ fontSize: "0.85rem" }}>
             {t(
               "demo.cards.levitatingDesc",
-              "Najedź na mnie! Karta unosi się i zyskuje poświatę.",
+              "Hover over me! The card lifts and gains a glow.",
             )}
           </p>
         </Card>
