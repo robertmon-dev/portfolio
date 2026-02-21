@@ -9,11 +9,7 @@ export interface GridColumns {
 export interface EntityGridProps<T> {
   data: T[];
   renderItem: (item: T) => ReactNode;
-  columns?: {
-    default?: number;
-    md?: number;
-    lg?: number;
-  };
+  columns?: GridColumns;
   gap?: string;
   isLoading?: boolean;
   loadingItemsCount?: number;

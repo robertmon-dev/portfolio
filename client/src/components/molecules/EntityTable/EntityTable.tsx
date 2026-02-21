@@ -1,84 +1,84 @@
-import type { ReactNode } from 'react';
-import { useTranslation } from 'react-i18next';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { Spinner } from '../../atoms/Spinner/Spinner';
-import type { EntityTableProps } from './types';
-import './EntityTable.scss';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Spinner } from '@/components/atoms/Spinner/Spinner';
+import type { EntityGridProps } from './types';
+import './EntityGrid.scss';
 
-export const EntityTable = <T extends { id: string | number }>({
+export const EntityGrid = <T extends { id: string | number }>({
   data,
   columns,
   isLoading,
-  loadingVariant = 'hash',
+  loadingVariant,
   onRowClick,
   className = ''
-}: EntityTableProps<T>) => {
-  const { t } = useTranslation();
+}: EntityGridProps<T>) => {
 
   return (
-    <div className={`entity-table-container ${className}`}>
-      <table className="entity-table">
-        <thead>
-          <tr>
-            {columns.map((col) => (
-              <th
-                key={col.key}
-                className={`text-${col.align || 'left'}`}
-                style={{ width: col.width }}
-              >
-                {col.header}
-              </th>
-            ))}
-          </tr>
-        </thead>
+    <div className={`entity-grid-container ${className}`} aria-busy={isLoading}>
 
-        <TransitionGroup component="tbody">
+      <div className="entity-grid__header">
+        {columns.map((col) => (
+          <div
+            key={col.key}
+            className="entity-grid__header-cell"
+            style={{
+              flexBasis: col.width,
+              flexGrow: col.width ? 0 : 1,
+              textAlign: col.align || 'left'
+            }}
+          >
+            {col.header}
+          </div>
+        ))}
+      </div>
 
+      <div className="entity-grid__body">
+        <AnimatePresence mode="wait">
           {isLoading ? (
-            <tr key="loading-row">
-              <td colSpan={columns.length} className="entity-table__cell--loading">
-                <div className="loading-content">
-                  <Spinner variant={loadingVariant} size={40} />
-
-                  <span style={{ marginTop: '1rem', display: 'block', opacity: 0.7 }}>
-                    {t('common.loading', 'Ładowanie danych...')}
-                  </span>
-                </div>
-              </td>
-            </tr>
-          ) : data.length === 0 ? (
-            <tr key="empty-row">
-              <td colSpan={columns.length} className="entity-table__cell--empty">
-                {t('table.noData', 'Brak danych do wyświetlenia.')}
-              </td>
-            </tr>
+            <motion.div
+              key="loading-state"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="entity-grid__loading"
+            >
+              <Spinner variant={loadingVariant} />
+            </motion.div>
           ) : (
-            data.map((row) => (
-              <CSSTransition
-                key={row.id}
-                timeout={300}
-                classNames="table-row"
-              >
-                <tr
-                  onClick={() => onRowClick?.(row)}
-                  className={onRowClick ? 'clickable' : ''}
-                >
-                  {columns.map((col) => (
-                    <td key={`${row.id}-${col.key}`} className={`text-${col.align || 'left'}`}>
-                      {col.render
-                        ? col.render(row)
-                        : (row[col.key as keyof T] as ReactNode)
-                      }
-                    </td>
-                  ))}
-                </tr>
-              </CSSTransition>
-            ))
+            <motion.div key="data-state" className="entity-grid__content">
+              <AnimatePresence mode="popLayout">
+                {data.map((item) => (
+                  <motion.div
+                    key={item.id}
+                    layout
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.2 }}
+                    className={`entity-grid__row ${onRowClick ? 'entity-grid__row--clickable' : ''}`}
+                    onClick={() => onRowClick?.(item)}
+                  >
+                    {columns.map((col) => (
+                      <div
+                        key={`${item.id}-${col.key}`}
+                        className="entity-grid__cell"
+                        style={{
+                          flexBasis: col.width,
+                          flexGrow: col.width ? 0 : 1,
+                          textAlign: col.align || 'left'
+                        }}
+                      >
+                        {col.render
+                          ? col.render(item)
+                          : String(item[col.key as keyof T] ?? "")}
+                      </div>
+                    ))}
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </motion.div>
           )}
-        </TransitionGroup>
-      </table>
+        </AnimatePresence>
+      </div>
     </div>
   );
 };
-
-export type { Column } from './types';

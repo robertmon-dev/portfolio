@@ -4,7 +4,6 @@ import type { TagProps } from './types';
 import { getTagClasses } from './styles';
 import './Tag.scss';
 
-
 export const Tag = forwardRef<HTMLDivElement, TagProps>((props, ref) => {
   const {
     children,

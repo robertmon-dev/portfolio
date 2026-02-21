@@ -1,0 +1,94 @@
+@use "sass:color";
+
+.demo-page {
+  padding: $spacing-xl $spacing-md;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xl;
+  }
+}
+
+.demo-context-menu {
+  display: flex;
+  flex-direction: column;
+  background: $bg-surface;
+  border: 1px solid $border-color;
+  border-radius: $radius-md;
+  box-shadow: $shadow-surface-md;
+  padding: $spacing-xs;
+  min-width: 150px;
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-sm $spacing-md;
+    border: none;
+    background: transparent;
+    color: $text-main;
+    font-family: inherit;
+    font-size: 0.85rem;
+    cursor: pointer;
+    border-radius: $radius-sm;
+    transition: background-color 0.2s, color 0.2s;
+    text-align: left;
+
+    &:hover {
+      background: color.change($tn-blue, $alpha: 0.1);
+      color: $tn-blue;
+    }
+
+    &--danger {
+      color: $danger;
+
+      &:hover {
+        background: color.change($danger, $alpha: 0.1);
+        color: $danger;
+      }
+    }
+  }
+}
+
+.demo-card--code {
+  background-color: $tn-bg-night !important;
+  border-color: color.change($tn-storm, $alpha: 0.5) !important;
+}
+
+.demo-code-wrapper {
+  padding: $spacing-sm;
+  background: color.adjust($tn-bg-night, $lightness: -2%);
+  border-radius: $radius-sm;
+  font-family: $font-stack;
+  font-size: 0.85rem;
+  overflow-x: auto;
+  margin: 0;
+
+  .token-keyword {
+    color: $tn-purple;
+  }
+
+  .token-string {
+    color: $tn-green;
+  }
+
+  .token-function {
+    color: $tn-blue;
+  }
+
+  .token-operator {
+    color: $tn-cyan;
+  }
+
+  .token-punctuation {
+    color: $text-muted;
+  }
+}

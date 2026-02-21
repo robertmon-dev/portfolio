@@ -1,0 +1,53 @@
+@use "sass:color";
+
+.app-footer {
+  width: 100%;
+  background-color: $bg-app;
+  border-top: 1px solid $border-color;
+  padding: $spacing-md 0;
+  font-family: $font-stack;
+  margin-top: auto;
+
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 $spacing-md;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $spacing-md;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    color: $text-muted;
+    font-weight: 600;
+  }
+
+  &__nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+
+    .generic-list--footer {
+      gap: $spacing-md;
+      margin: 0;
+      padding: 0;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+
+  &__copyright {
+    font-size: 0.75rem;
+    color: $text-muted;
+    text-align: center;
+  }
+}

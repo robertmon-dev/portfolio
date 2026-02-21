@@ -6,6 +6,9 @@
 
 .tooltip-body {
   position: absolute;
+  user-select: none;
+  -webkit-user-drag: none;
+
   z-index: 9999;
 
   opacity: 0;
@@ -49,7 +52,6 @@
 .tooltip-wrapper:focus-within .tooltip-body {
   opacity: 1;
   visibility: visible;
-  transform: scale(1);
 }
 
 .tooltip-wrapper--delay:hover .tooltip-body {

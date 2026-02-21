@@ -20,6 +20,17 @@
   user-select: none;
   -webkit-tap-highlight-color: transparent;
 
+  .btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      display: block;
+      stroke-width: 2px;
+    }
+  }
+
   &:disabled,
   &--loading {
     opacity: 0.6;

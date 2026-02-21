@@ -59,7 +59,7 @@
     line-height: 1;
   }
 
-  input:checked + .checkbox-box {
+  input:checked+.checkbox-box {
     background-color: var(--checkbox-color, $primary);
     border-color: transparent;
 
@@ -73,7 +73,7 @@
     }
   }
 
-  input:focus-visible + .checkbox-box {
+  input:focus-visible+.checkbox-box {
     box-shadow:
       0 0 0 2px $bg-app,
       0 0 0 4px $highlight;
@@ -92,9 +92,10 @@
       color: $danger;
     }
 
-    input:checked + .checkbox-box {
+    input:checked+.checkbox-box {
       background-color: $danger;
       box-shadow: 0 0 5px color.change($danger, $alpha: 0.3);
     }
   }
+
 }

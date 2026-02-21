@@ -1,0 +1,13 @@
+@use "sass:color";
+
+.demo-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $spacing-md;
+
+  &--vertical {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

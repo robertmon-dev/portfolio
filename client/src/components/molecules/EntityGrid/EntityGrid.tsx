@@ -1,4 +1,4 @@
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import { motion, AnimatePresence } from 'framer-motion';
 import { getGridStyles } from './utils';
 import type { EntityGridProps } from './types';
 import './EntityGrid.scss';
@@ -16,26 +16,36 @@ export const EntityGrid = <T extends { id: string | number }>({
   const gridStyles = getGridStyles(columns, gap);
 
   return (
-    <div className={`entity-grid-container ${className}`} style={gridStyles}>
-      <TransitionGroup className="entity-grid">
-        {isLoading ? (
-          Array.from({ length: loadingItemsCount }).map((_, idx) => (
-            <div key={`skeleton-${idx}`} className="entity-grid__skeleton" />
-          ))
-        ) : (
-          data.map((item) => (
-            <CSSTransition
-              key={item.id}
-              timeout={300}
-              classNames="grid-item-anim"
-            >
-              <div className="entity-grid__item">
+    <div className={`entity-grid-container ${className}`} style={gridStyles} aria-busy={isLoading}>
+      <div className="entity-grid">
+        <AnimatePresence mode="popLayout">
+          {isLoading ? (
+            Array.from({ length: loadingItemsCount }).map((_, idx) => (
+              <motion.div
+                key={`skeleton-${idx}`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="entity-grid__skeleton"
+              />
+            ))
+          ) : (
+            data.map((item) => (
+              <motion.div
+                key={item.id}
+                layout
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.2 }}
+                className="entity-grid__item"
+              >
                 {renderItem(item)}
-              </div>
-            </CSSTransition>
-          ))
-        )}
-      </TransitionGroup>
+              </motion.div>
+            ))
+          )}
+        </AnimatePresence>
+      </div>
     </div>
   );
 };
