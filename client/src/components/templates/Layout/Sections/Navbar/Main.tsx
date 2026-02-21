@@ -7,7 +7,7 @@ export const NavbarMain = ({ children, className = '', ...rest }: NavbarSectionP
   return (
     <nav
       className={`navbar__nav ${className}`.trim()}
-      aria-label={t('navbar.menuAria', 'Menu główne')}
+      aria-label={t('navbar.menuAria', 'Main menu')}
       {...rest}
     >
       {children}

@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
 
-
 export type MenuPortalVariant = 'default' | 'header' | 'footer';
 export type UseMenuPortalProps = Pick<MenuPortalProps, 'isOpen' | 'onClose' | 'anchorEl' | 'offset'>;
 
