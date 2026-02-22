@@ -1,36 +1,31 @@
-import { Database } from '../../core/database/database';
-import { Logger } from '../../core/logger/logger';
-import type { Prisma } from '@prisma/client';
+import { BaseService } from '../service';
+import { UpdateProjectInput, ProjectWithRelations } from '@portfolio/shared';
+import { ProjectUpdating } from './types';
 
-export interface UpdateProjectInput extends Omit<Prisma.ProjectUpdateInput, 'techStack' | 'gallery' | 'githubRepo'> {
-  techStackIds?: string[];
-  githubRepoId?: string | null;
-}
-
-export class UpdateProjectService {
-  private db = Database.getInstance();
-  private logger = new Logger('UpdateProjectService');
-
-  public async execute(id: string, data: UpdateProjectInput) {
+export class UpdateProjectService extends BaseService implements ProjectUpdating {
+  public async execute(id: string, data: UpdateProjectInput): Promise<ProjectWithRelations> {
     this.logger.info(`Updating project: ${id}`);
 
     const { techStackIds, githubRepoId, ...rest } = data;
-
-    return await this.db.client.project.update({
+    const project = await this.db.project.update({
       where: { id },
       data: {
         ...rest,
-
         techStack: techStackIds ? {
           set: techStackIds.map(id => ({ id }))
         } : undefined,
-
         githubRepo: githubRepoId === null
           ? { disconnect: true }
           : githubRepoId
             ? { connect: { id: githubRepoId } }
             : undefined
-      }
+      },
+      include: { techStack: true, githubRepo: true, gallery: true }
     });
+
+    await this.cache.del(`project:slug:${project.slug}`);
+    await this.cache.del('projects:list:*');
+
+    return project;
   }
 }

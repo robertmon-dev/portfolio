@@ -1,25 +1,28 @@
-import { Database } from '../../core/database/database';
-import { Logger } from '../../core/logger/logger';
-import { Settings } from '../../core/settings/settings';
+import { BaseService } from '../service';
 
-export class GetGithubStatsService {
-  private db = Database.getInstance();
-  private logger = new Logger('GetGithubStatsService');
-  private defaultUsername = Settings.getInstance().config.NICKNAME;
+export class GetGithubStatsService extends BaseService {
+  public async execute(username: string = this.settings.NICKNAME) {
+    const cacheKey = `github:stats:${username}`;
 
-  public async execute(username: string = this.defaultUsername) {
-    this.logger.debug(`Fetching stats for: ${username}`);
+    return this.cache.wrap(cacheKey, 3600, async () => {
+      this.logger.debug(`Fetching GitHub stats for: ${username} (cache miss)`);
 
-    return await this.db.client.githubStats.findUnique({
-      where: { username },
-      include: {
-        repos: {
-          orderBy: { order: 'asc' },
-          include: {
-            project: { select: { slug: true, title: true } }
+      return await this.db.githubStats.findUnique({
+        where: { username },
+        include: {
+          repos: {
+            orderBy: { order: 'asc' },
+            include: {
+              project: {
+                select: {
+                  slug: true,
+                  title: true
+                }
+              }
+            }
           }
         }
-      }
+      });
     });
   }
 }

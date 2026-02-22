@@ -1,28 +1,21 @@
-import { Database } from '../../core/database/database';
-import { Logger } from '../../core/logger/logger';
+import { BaseService } from '../service';
+import type { ProjectRetrieving } from './types';
 
-export class GetProjectBySlugService {
-  private db = Database.getInstance();
-  private logger = new Logger('GetProjectBySlugService');
-
+export class GetProjectBySlugService extends BaseService implements ProjectRetrieving {
   public async execute(slug: string) {
-    this.logger.debug(`Fetching project: ${slug}`);
+    const cacheKey = `project:slug:${slug}`;
 
-    const project = await this.db.client.project.findUnique({
-      where: { slug },
-      include: {
-        techStack: {
-          orderBy: { name: 'asc' }
-        },
-        gallery: {
-          orderBy: { order: 'asc' }
-        },
-        githubRepo: true,
-      }
+    return this.cache.wrap(cacheKey, 300, async () => {
+      this.logger.debug(`Fetching project by slug: ${slug}`);
+
+      return await this.db.project.findUnique({
+        where: { slug },
+        include: {
+          techStack: { orderBy: { name: 'asc' } },
+          gallery: { orderBy: { order: 'asc' } },
+          githubRepo: true,
+        }
+      });
     });
-
-    if (!project) return null;
-
-    return project;
   }
 }

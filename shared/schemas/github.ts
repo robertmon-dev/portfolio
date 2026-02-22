@@ -9,6 +9,19 @@ export const GithubRepoSchema = z.object({
   description: z.string().nullable(),
 });
 
+export const UpdateGithubRepoInputSchema = z.object({
+  name: z.string().min(1).optional(),
+  stars: z.number().int().nonnegative().optional(),
+  language: z.string().nullable().optional(),
+  description: z.string().nullable().optional(),
+  order: z.number().int().optional(),
+});
+
+export const LinkRepoProjectInputSchema = z.object({
+  repoId: z.string().uuid(),
+  projectId: z.string().uuid(),
+});
+
 export const GithubStatsSchema = z.object({
   id: z.string().uuid(),
   username: z.string(),

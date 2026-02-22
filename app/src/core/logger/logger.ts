@@ -1,8 +1,8 @@
 import pino from 'pino';
 import { Settings } from '../settings/settings';
-import type { LogMeta } from './types';
+import type { LogMeta, Logging } from './types';
 
-export class Logger {
+export class Logger implements Logging {
   private static rootPino: pino.Logger;
   private logger: pino.Logger;
 

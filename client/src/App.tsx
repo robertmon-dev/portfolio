@@ -8,11 +8,9 @@ const App = () => {
   return (
     <BrowserRouter>
       <Layout>
-
         <Routes>
           <Route path="/demo" element={<Demo />} />
         </Routes>
-
       </Layout>
 
       <ToastContainer

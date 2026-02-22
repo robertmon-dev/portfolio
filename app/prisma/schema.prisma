@@ -14,33 +14,38 @@ enum Role {
   VIEWER
 }
 
+enum CodeType {
+  TWO_FACTOR
+  PASSWORD_RESET
+}
+
 model GithubRepo {
-  id          String      @id @default(uuid())
+  id          String  @id @default(uuid())
   name        String
-  url         String @unique
+  url         String  @unique
   stars       Int
   language    String?
-  description String?     @db.Text
+  description String? @db.Text
 
-  statsId     String
-  stats       GithubStats @relation(fields: [statsId], references: [id], onDelete: Cascade)
+  statsId String
+  stats   GithubStats @relation(fields: [statsId], references: [id], onDelete: Cascade)
 
-  project     Project?
-  order       Int         @default(0)
+  project Project?
+  order   Int      @default(0)
 
   @@index([statsId])
 }
 
 model GithubStats {
-  id          String   @id @default(uuid())
-  username    String   @unique
+  id          String @id @default(uuid())
+  username    String @unique
   followers   Int
   publicRepos Int
   totalStars  Int
 
-  repos       GithubRepo[]
+  repos GithubRepo[]
 
-  updatedAt   DateTime @updatedAt
+  updatedAt DateTime @updatedAt
 }
 
 model Project {
@@ -60,7 +65,7 @@ model Project {
   techStack TechStack[]
   gallery   ProjectImage[]
 
-  githubRepoId String? @unique
+  githubRepoId String?     @unique
   githubRepo   GithubRepo? @relation(fields: [githubRepoId], references: [id], onDelete: SetNull)
 
   @@index([isVisible, createdAt])
@@ -106,23 +111,38 @@ model Experience {
 }
 
 model User {
-  id             String    @id @default(uuid())
-  email          String    @unique
-  username       String    @unique
-  passwordDigest String
+  id               String  @id @default(uuid())
+  email            String  @unique
+  username         String  @unique
+  passwordDigest   String
+  twoFactorEnabled Boolean @default(false)
 
-  name           String?
-  headline       String?
-  bio            String?   @db.Text
-  avatarUrl      String?
+  name      String?
+  headline  String?
+  bio       String? @db.Text
+  avatarUrl String?
 
-  socials        Json?     @default("{}")
+  socials Json? @default("{}")
 
-  role           Role      @default(USER)
+  role Role @default(USER)
 
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  VerificationCode VerificationCode[]
 
   @@index([email])
 }
 
+model VerificationCode {
+  id        String   @id @default(uuid())
+  code      String
+  type      CodeType
+  expiresAt DateTime
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([userId, type])
+}

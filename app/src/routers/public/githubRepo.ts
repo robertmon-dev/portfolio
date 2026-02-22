@@ -1,16 +1,17 @@
 import { router } from '../../trpc/init';
 import { publicProcedure } from '../../trpc/procedures/public';
-import { GithubStatsSchema } from '@portfolio/shared';
-import { GetGithubStatsService } from '../../services/github/Get';
+import { ListGithubReposService } from '../../services/github/List';
 
+export const githubRepoPublicRouter = router({
+  listRepos: publicProcedure
+    .query(async ({ ctx }) => {
+      const service = new ListGithubReposService(
+        ctx.db,
+        ctx.cache,
+        ctx.logger,
+        ctx.settings
+      );
 
-export const githubStatsPublicRouter = router({
-  getStats: publicProcedure
-    .output(GithubStatsSchema.nullable())
-    .query(async () => {
-      return await new GetGithubStatsService().execute();
+      return await service.execute();
     }),
-
-
 });
-

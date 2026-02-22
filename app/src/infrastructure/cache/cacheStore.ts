@@ -1,7 +1,8 @@
 import { RedisClient } from '../../core/redis/redis';
 import { Logger } from '../../core/logger/logger';
+import type { Caching } from './types';
 
-export class CacheStore {
+export class CacheStore implements Caching {
   private redis = RedisClient.getInstance().client;
   private logger = new Logger('CacheStore');
   private static instance: CacheStore;
@@ -36,6 +37,43 @@ export class CacheStore {
   }
 
   public async del(key: string): Promise<void> {
+  try {
+    if (key.includes('*')) {
+      this.logger.debug(`Deleting keys by pattern: ${key}`);
+
+      const stream = this.redis.scanStream({
+        match: key,
+        count: 100,
+      });
+
+      stream.on('data', async (keys: string[]) => {
+        if (keys.length > 0) {
+          await this.redis.del(...keys);
+        }
+      });
+
+      return new Promise((resolve, reject) => {
+        stream.on('end', resolve);
+        stream.on('error', reject);
+      });
+    }
+
     await this.redis.del(key);
+  } catch (err) {
+    this.logger.error(`Failed to delete cache for key/pattern: ${key}`, err);
+  }
+}
+
+  public async wrap<T>(
+    key: string,
+    ttl: number,
+    fetcher: () => Promise<T>
+  ): Promise<T> {
+    const cached = await this.get(key);
+    if (cached) return cached as T;
+
+    const fresh = await fetcher();
+    await this.set(key, fresh, ttl);
+    return fresh;
   }
 }

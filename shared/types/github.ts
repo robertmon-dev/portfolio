@@ -1,5 +1,6 @@
 import { z } from 'zod';
-import * as s from '../schemas/github';
+import * as g from '../schemas/github';
 
-export type GithubStats = z.infer<typeof s.GithubStatsSchema>;
-export type GithubRepo = z.infer<typeof s.GithubRepoSchema>;
+export type GithubStats = z.infer<typeof g.GithubStatsSchema>;
+export type GithubRepo = z.infer<typeof g.GithubRepoSchema>;
+export type UpdateGithubRepoInput = z.infer<typeof g.UpdateGithubRepoInputSchema>;

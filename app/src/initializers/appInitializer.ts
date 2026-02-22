@@ -6,7 +6,9 @@ import { Logger } from '../core/logger/logger';
 import { Metrics } from '../core/metrics/metrics';
 import { TrpcInitializer } from './tRPCInitializer';
 import { SchedulerInitializer } from './schedulerInitializer';
+import { WorkerInitializer } from './workerInitializer';
 import { RedisClient } from '../core/redis/redis';
+import { CacheStore } from '../infrastructure/cache/cacheStore';
 
 export class AppInitializer {
   private app: Express;
@@ -17,16 +19,25 @@ export class AppInitializer {
   private metrics: Metrics;
   private trpcInitializer: TrpcInitializer;
   private schedulerInitializer: SchedulerInitializer;
-  private redisClient: RedisClient
+  private workerInitializer: WorkerInitializer;
+  private redisClient: RedisClient;
+  private cache: CacheStore;
 
   public constructor() {
     this.logger = new Logger('System');
     this.settings = Settings.getInstance();
     this.database = Database.getInstance();
+    this.redisClient = RedisClient.getInstance();
+    this.cache = CacheStore.getInstance();
     this.metrics = Metrics.getInstance();
     this.trpcInitializer = new TrpcInitializer();
-    this.schedulerInitializer = new SchedulerInitializer();
-    this.redisClient = RedisClient.getInstance();
+    this.schedulerInitializer = new SchedulerInitializer(
+      this.database.client,
+      this.cache,
+      this.settings.config
+    );
+    this.workerInitializer = new WorkerInitializer();
+
     this.app = express();
   }
 
@@ -36,8 +47,10 @@ export class AppInitializer {
     await this.database.connect();
 
     this.app.use(express.json());
+
     this.trpcInitializer.setup(this.app);
     this.schedulerInitializer.init();
+    this.workerInitializer.init();
 
     const port = this.settings.config.PORT;
 
@@ -47,16 +60,16 @@ export class AppInitializer {
   }
 
   public async shutdown(signal: string): Promise<void> {
-    this.logger.info(`Received ${signal}. Starting graceful shutdown...`);
-
+    this.logger.warn(`Received ${signal}. Starting graceful shutdown...`);
     if (this.server) {
+      this.server.closeAllConnections();
+
       await new Promise<void>((resolve, reject) => {
         this.server?.close((err) => {
           if (err) {
             this.logger.error('Error closing HTTP server', err);
             return reject(err);
           }
-
           this.logger.info('HTTP server closed.');
           resolve();
         });
@@ -64,15 +77,16 @@ export class AppInitializer {
     }
 
     if (this.schedulerInitializer) {
-      this.logger.info('Scheduler workers stopped.');
+      this.schedulerInitializer.stop();
+      this.logger.info('Scheduler jobs stopped.');
     }
 
-    this.redisClient.close();
+    await this.redisClient.close();
     this.logger.info('Redis connection closed.');
 
     await this.database.disconnect();
     this.logger.info('Database connection closed.');
 
-    this.logger.info('Graceful shutdown completed. Bye!');
+    this.logger.info('Graceful shutdown completed');
   }
 }

@@ -1,12 +1,14 @@
 import { router } from '../trpc/init';
-import { githubPublicRouter } from './public/github';
+import { githubRepoPublicRouter } from './public/githubRepo';
+import { githubStatsPublicRouter } from './public/githubStats';
 import { projectsRouter } from './public/projects';
 import { healthRouter } from './diagnostics/health';
 
 export const appRouter = router({
   diagnostics: healthRouter,
 
-  github: githubPublicRouter,
+  githubStats: githubStatsPublicRouter,
+  githubRepo: githubRepoPublicRouter,
   projects: projectsRouter,
 
   admin: router({

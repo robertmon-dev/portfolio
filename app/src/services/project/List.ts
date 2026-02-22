@@ -1,29 +1,28 @@
-import { Database } from '../../../core/database/database';
+import { Prisma } from '@prisma/client';
+import { BaseService } from '../service';
+import type { ListProjectsOptions } from '@portfolio/shared';
+import type { ProjectListing } from './types';
 
-interface ListProjectsOptions {
-  onlyVisible?: boolean;
-  onlyFeatured?: boolean;
-}
+export class ListProjectsService extends BaseService implements ProjectListing {
+  public async execute(options: ListProjectsOptions) {
+    const where: Prisma.ProjectWhereInput = {};
+    if (options.onlyVisible) where.isVisible = true;
+    if (options.onlyFeatured) where.isFeatured = true;
 
-export class ListProjectsService {
-  private db = Database.getInstance();
+    const cacheKey = `projects:list:${JSON.stringify(options)}`;
 
-  public async execute(options: ListProjectsOptions = {}) {
-    const where: any = {};
+    return this.cache.wrap(cacheKey, 600, async () => {
+      this.logger.debug('Fetching and mapping projects');
 
-    if (options.onlyVisible) {
-      where.isVisible = true;
-    }
-    if (options.onlyFeatured) {
-      where.isFeatured = true;
-    }
-
-    return await this.db.client.project.findMany({
-      where,
-      orderBy: { createdAt: 'desc' },
-      include: {
-        techStack: true,
-      }
+      return await this.db.project.findMany({
+        where,
+        orderBy: { createdAt: 'desc' },
+        include: {
+          techStack: true,
+          githubRepo: true,
+          gallery: true,
+        }
+      });
     });
   }
 }

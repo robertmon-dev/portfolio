@@ -4,9 +4,9 @@ import pg from 'pg';
 import fs from 'fs';
 import { Logger } from '../logger/logger';
 import { Settings } from '../settings/settings';
-import type { LogLevel } from './types';
+import type { LogLevel, Persisting } from './types';
 
-export class Database {
+export class Database implements Persisting {
   private static instance: Database;
   public readonly client: PrismaClient<Prisma.PrismaClientOptions, LogLevel>;
   private logger: Logger;

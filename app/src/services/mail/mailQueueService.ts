@@ -1,8 +1,10 @@
 import { BulkJobOptions, Job, QueueOptions } from "bullmq";
 import { QueueService } from "../../infrastructure/queue/QueueService";
-import type { MailSend, MailSendJob, MailSendResult } from "./types";
+import type { MailSend, MailSendJob, MailSendResult, Queueing } from "./types";
 
-export class MailQueueService extends QueueService<MailSendJob, MailSendResult, MailSend> {
+export class MailQueueService
+  extends QueueService<MailSendJob, MailSendResult, MailSend>
+  implements Queueing<MailSendJob, MailSendResult, MailSend> {
   private static instance: MailQueueService;
 
   private constructor(options?: Partial<QueueOptions>) {

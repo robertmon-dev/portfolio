@@ -2,6 +2,7 @@ import * as trpcExpress from '@trpc/server/adapters/express';
 import { Database } from '../../core/database/database';
 import { Settings } from '../../core/settings/settings';
 import { Logger } from '../../core/logger/logger';
+import { CacheStore } from '../../infrastructure/cache/cacheStore';
 import type { Context, AuthorizedContext } from './types';
 import { Permission } from '../permission/permission';
 import { Authenticator } from '../auth/authenticator';
@@ -11,11 +12,13 @@ export class TrpcContext {
   private db: Database;
   private settings: Settings;
   private logger: Logger;
+  private cache: CacheStore;
 
   public constructor() {
     this.db = Database.getInstance();
     this.settings = Settings.getInstance();
-    this.logger = new Logger('request')
+    this.logger = new Logger('request');
+    this.cache = CacheStore.getInstance();
   }
 
   public create = ({
@@ -28,6 +31,7 @@ export class TrpcContext {
 
     return {
       db: this.db.client,
+      cache: this.cache,
       settings: this.settings.config,
       req,
       res,

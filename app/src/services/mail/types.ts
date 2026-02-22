@@ -1,20 +1,34 @@
+import { BulkJobOptions, Job } from "bullmq";
 import type { User } from '@prisma/client';
 
-export type MailUser = Omit<User, 'passwordDigest' | 'createdAt' | 'updatedAt'>;
+export const MAIL_ACTIONS = {
+  WELCOME: 'WELCOME_EMAIL',
+  PASSWORD_RESET: 'PASSWORD_RESET',
+  MARKETING: 'MARKETING_AD',
+  CONTACT_CONFIRMATION: 'CONTACT_FORM_CONFIRMATION',
+  TWO_FACTOR_CODE: 'TWO_FACTOR_CODE',
+} as const;
+
+export type MailActionName = typeof MAIL_ACTIONS[keyof typeof MAIL_ACTIONS];
+
+interface TwoFactorEmailData {
+  user: User;
+  code: string;
+}
 
 interface WelcomeEmailData {
-  user: MailUser;
+  user: User;
   verificationUrl: string;
 }
 
 interface PasswordResetData {
-  user: MailUser;
+  user: User;
   resetToken: string;
   expiryMinutes: number;
 }
 
 interface MarketingEmailData {
-  user: MailUser;
+  user: User;
   campaignName: string;
   offerTitle: string;
   discountCode?: string;
@@ -30,10 +44,11 @@ interface ContactFormConfirmationData {
 }
 
 export interface MailActionMap {
-  WELCOME_EMAIL: WelcomeEmailData;
-  PASSWORD_RESET: PasswordResetData;
-  MARKETING_AD: MarketingEmailData;
-  CONTACT_FORM_CONFIRMATION: ContactFormConfirmationData;
+  [MAIL_ACTIONS.WELCOME]: WelcomeEmailData;
+  [MAIL_ACTIONS.PASSWORD_RESET]: PasswordResetData;
+  [MAIL_ACTIONS.MARKETING]: MarketingEmailData;
+  [MAIL_ACTIONS.CONTACT_CONFIRMATION]: ContactFormConfirmationData;
+  [MAIL_ACTIONS.TWO_FACTOR_CODE]: TwoFactorEmailData;
 }
 
 export type MailSend = keyof MailActionMap;
@@ -46,3 +61,8 @@ export type MailSendResult =
 export type MailJobUnion = {
   [K in MailSend]: { name: K; data: MailActionMap[K] }
 }[MailSend];
+
+export interface Queueing<TData, TResult, TName extends string> {
+  addJob(name: TName, data: TData, opts?: BulkJobOptions): Promise<Job<TData, TResult, TName>>;
+  addBulk(jobs: { name: TName; data: TData; opts?: BulkJobOptions }[]): Promise<Job<TData, TResult, TName>[]>;
+}
