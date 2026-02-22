@@ -1,11 +1,14 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import './i18n';
-import './index.scss'
+import { TRPCProvider } from './lib/trpc/Provider'
 import App from './App'
+import './i18n'
+import './index.scss'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <TRPCProvider>
+      <App />
+    </TRPCProvider>
   </StrictMode>,
 )

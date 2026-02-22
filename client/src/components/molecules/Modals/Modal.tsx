@@ -1,6 +1,6 @@
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
-import { useId, useRef } from "react";
+import { useId, forwardRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/atoms/Button/Button";
 import { useModalTranslations } from "./useModalTranslations";
@@ -8,19 +8,20 @@ import { useModalEffects } from "./useModal";
 import type { ModalProps } from "./types";
 import "./Modal.scss";
 
-const Modal = ({
-  open,
-  title,
-  children,
-  onClose,
-  size = "default",
-  role = "dialog",
-  ariaDescribedById,
-  titleId,
-  className = "",
-}: ModalProps) => {
+const Modal = forwardRef<HTMLDivElement, ModalProps>((props, ref) => {
+  const {
+    open,
+    title,
+    children,
+    onClose,
+    size = "default",
+    role = "dialog",
+    ariaDescribedById,
+    titleId,
+    className = "",
+  } = props;
+
   const { closeAria } = useModalTranslations();
-  const nodeRef = useRef<HTMLDivElement>(null);
   const generatedTitleId = useId();
   const dialogTitleId = titleId ?? generatedTitleId;
 
@@ -33,7 +34,7 @@ const Modal = ({
       {open && (
         <motion.div
           className="modal-wrapper"
-          ref={nodeRef}
+          ref={ref}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -80,6 +81,8 @@ const Modal = ({
     </AnimatePresence>,
     document.body
   );
-};
+});
+
+Modal.displayName = 'Modal';
 
 export default Modal;

@@ -9,7 +9,7 @@ import { DeleteGithubRepoService } from '../../services/github/Delete';
 import { LinkRepoProjectService } from '../../services/github/Link';
 import { UpdateGithubRepoService } from '../../services/github/Update';
 
-export const githubAdminRouter = router({
+export const githubPrivateRouter = router({
   update: protectedProcedure
     .input(z.object({
       id: z.string().uuid(),

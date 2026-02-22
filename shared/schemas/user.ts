@@ -12,6 +12,7 @@ export const UserProfileSchema = z.object({
   avatarUrl: z.string().nullable(),
   socials: z.record(z.any()).nullable(),
   role: RoleEnum,
+  permissions: z.array(z.string()).default([]),
   createdAt: z.date(),
   updatedAt: z.date(),
   twoFactorEnabled: z.boolean().default(false).optional(),

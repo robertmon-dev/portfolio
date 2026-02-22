@@ -1,0 +1,35 @@
+.login-form-step {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+
+  &__options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin: -0.25rem 0;
+  }
+
+  &__forgot-btn {
+    padding: 0 4px !important;
+    height: auto !important;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: color 0.2s ease;
+
+    &:hover {
+      background: transparent !important;
+      color: var(--primary-color);
+      text-decoration: underline;
+    }
+  }
+}
+
+.checkbox-container {
+  .checkbox-label {
+    font-size: 0.8125rem;
+    white-space: nowrap;
+  }
+}

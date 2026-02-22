@@ -7,6 +7,9 @@ import { FooterRightSection } from './Sections/Footer/Right';
 import { List } from '@/components/molecules/List/List';
 import { Button } from '@/components/atoms/Button/Button';
 import { Settings } from 'lucide-react';
+import { LoginModal } from '@/components/molecules/Modals/Login/Modal';
+import { useLoginModal } from '@/components/molecules/Modals/Login/useLoginModal';
+
 import { useLayout } from './hooks/useLayout';
 import { useFooterItems } from './hooks/useFooterItems';
 import type { LayoutProps } from './types';
@@ -18,6 +21,7 @@ export const Layout = ({ children }: LayoutProps) => {
     navItems, t, isLangOpen, setIsLangOpen, currentLangLabel, handleLangSelect
   } = useLayout();
   const { socialLinks, navLinks, currentYear } = useFooterItems();
+  const loginModal = useLoginModal();
 
   return (
     <div className="app-layout">
@@ -27,7 +31,12 @@ export const Layout = ({ children }: LayoutProps) => {
         </NavbarMain>
 
         <NavbarEdge>
-          <Button variant="ghost" isIcon aria-label={t('common.settings', 'Settings')}>
+          <Button
+            variant="ghost"
+            isIcon
+            aria-label={t('common.login', 'Login to Admin Panel')}
+            onClick={loginModal.open}
+          >
             <Settings size={20} />
           </Button>
         </NavbarEdge>
@@ -57,6 +66,14 @@ export const Layout = ({ children }: LayoutProps) => {
           />
         </div>
       </Footer>
+
+      <LoginModal
+        open={loginModal.isOpen}
+        onClose={loginModal.close}
+        form={loginModal.form}
+        isLoading={loginModal.isLoggingIn}
+        step={loginModal.step}
+      />
     </div>
   );
 };

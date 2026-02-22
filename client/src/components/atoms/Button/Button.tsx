@@ -12,10 +12,19 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
     children,
     disabled,
     isIcon = false,
+    variant = 'primary',
+    fullWidth = false,
+    className,
     ...rest
   } = props;
 
-  const classes = getButtonClasses({ isLoading, isIcon, ...rest });
+  const classes = getButtonClasses({
+    isLoading,
+    isIcon,
+    variant,
+    fullWidth,
+    className
+  });
 
   return (
     <button
@@ -25,7 +34,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
       {...rest}
     >
       {isLoading ? (
-        <span className="btn-spinner" />
+        <span className="btn-spinner" aria-hidden="true" />
       ) : (
         <>
           {isIcon ? (
@@ -33,7 +42,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
           ) : (
             <>
               {leftIcon && <span className="btn-icon">{leftIcon}</span>}
-              <span>{children}</span>
+              <span className="btn-label">{children}</span>
               {rightIcon && <span className="btn-icon">{rightIcon}</span>}
             </>
           )}
@@ -42,6 +51,5 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) =>
     </button>
   );
 });
-
 
 Button.displayName = 'Button';
