@@ -36,7 +36,11 @@ export class AppInitializer {
       this.cache,
       this.settings.config
     );
-    this.workerInitializer = new WorkerInitializer();
+    this.workerInitializer = new WorkerInitializer(
+      this.database.client,
+      this.cache,
+      this.settings.config
+    );
 
     this.app = express();
   }

@@ -8,47 +8,21 @@ import {
   CreateProjectSchema,
   UpdateProjectSchema
 } from '@portfolio/shared';
+import { executeService } from '../../trpc/executers/base';
 
 export const projectPrivateRouter = router({
   create: protectedProcedure
     .input(CreateProjectSchema)
-    .mutation(async ({ ctx, input }) => {
-      const service = new CreateProjectService(
-        ctx.db,
-        ctx.cache,
-        ctx.logger,
-        ctx.settings
-      );
-
-      return service.execute(input);
-    }),
+    .mutation(async ({ ctx, input }) => executeService(CreateProjectService, ctx, input)),
 
   update: protectedProcedure
     .input(z.object({
       id: z.string().uuid(),
       data: UpdateProjectSchema
     }))
-    .mutation(async ({ ctx, input }) => {
-      const service = new UpdateProjectService(
-        ctx.db,
-        ctx.cache,
-        ctx.logger,
-        ctx.settings
-      );
-
-      return service.execute(input.id, input.data);
-    }),
+    .mutation(async ({ ctx, input }) => executeService(UpdateProjectService, ctx, input)),
 
   delete: protectedProcedure
     .input(z.object({ id: z.string().uuid() }))
-    .mutation(async ({ ctx, input }) => {
-      const service = new DeleteProjectService(
-        ctx.db,
-        ctx.cache,
-        ctx.logger,
-        ctx.settings
-      );
-
-      return service.execute(input.id);
-    }),
+    .mutation(async ({ ctx, input }) => executeService(DeleteProjectService, ctx, input.id)),
 });

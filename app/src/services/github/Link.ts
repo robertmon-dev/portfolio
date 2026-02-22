@@ -1,7 +1,9 @@
 import { BaseService } from '../service';
 
 export class LinkRepoProjectService extends BaseService {
-  public async execute(repoId: string, projectId: string) {
+  public async execute(input: { repoId: string; projectId: string }) {
+    const { repoId, projectId } = input;
+
     this.logger.info(`Linking repo ${repoId} to project ${projectId}`);
 
     const updatedRepo = await this.db.githubRepo.update({

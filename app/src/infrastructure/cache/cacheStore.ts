@@ -37,32 +37,40 @@ export class CacheStore implements Caching {
   }
 
   public async del(key: string): Promise<void> {
-  try {
-    if (key.includes('*')) {
-      this.logger.debug(`Deleting keys by pattern: ${key}`);
+    try {
+      if (key.includes('*')) {
+        this.logger.debug(`Deleting keys by pattern: ${key}`);
 
-      const stream = this.redis.scanStream({
-        match: key,
-        count: 100,
-      });
+        const stream = this.redis.scanStream({
+          match: key,
+          count: 100,
+        });
 
-      stream.on('data', async (keys: string[]) => {
-        if (keys.length > 0) {
-          await this.redis.del(...keys);
-        }
-      });
+        return new Promise((resolve, reject) => {
+          stream.on('data', (keys: string[]) => {
+            if (keys.length > 0) {
+              stream.pause();
 
-      return new Promise((resolve, reject) => {
-        stream.on('end', resolve);
-        stream.on('error', reject);
-      });
+              this.redis.del(...keys)
+                .then(() => {
+                  stream.resume();
+                })
+                .catch((err) => {
+                  stream.emit('error', err);
+                });
+            }
+          });
+
+          stream.on('end', resolve);
+          stream.on('error', reject);
+        });
+      }
+
+      await this.redis.del(key);
+    } catch (err) {
+      this.logger.error(`Failed to delete cache for key/pattern: ${key}`, err);
     }
-
-    await this.redis.del(key);
-  } catch (err) {
-    this.logger.error(`Failed to delete cache for key/pattern: ${key}`, err);
   }
-}
 
   public async wrap<T>(
     key: string,

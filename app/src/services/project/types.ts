@@ -18,7 +18,7 @@ export interface ProjectCreating {
 }
 
 export interface ProjectUpdating {
-  execute(id: string, data: UpdateProjectInput): Promise<ProjectWithRelations>;
+  execute(input: { id: string; data: UpdateProjectInput }): Promise<ProjectWithRelations>;
 }
 
 export interface ProjectDeleting {

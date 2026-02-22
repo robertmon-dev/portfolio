@@ -3,16 +3,19 @@ import { UpdateProjectInput, ProjectWithRelations } from '@portfolio/shared';
 import { ProjectUpdating } from './types';
 
 export class UpdateProjectService extends BaseService implements ProjectUpdating {
-  public async execute(id: string, data: UpdateProjectInput): Promise<ProjectWithRelations> {
+  public async execute(input: { id: string; data: UpdateProjectInput }): Promise<ProjectWithRelations> {
+    const { id, data } = input;
+
     this.logger.info(`Updating project: ${id}`);
 
     const { techStackIds, githubRepoId, ...rest } = data;
+
     const project = await this.db.project.update({
       where: { id },
       data: {
         ...rest,
         techStack: techStackIds ? {
-          set: techStackIds.map(id => ({ id }))
+          set: techStackIds.map(techId => ({ id: techId }))
         } : undefined,
         githubRepo: githubRepoId === null
           ? { disconnect: true }
@@ -23,8 +26,10 @@ export class UpdateProjectService extends BaseService implements ProjectUpdating
       include: { techStack: true, githubRepo: true, gallery: true }
     });
 
-    await this.cache.del(`project:slug:${project.slug}`);
-    await this.cache.del('projects:list:*');
+    await Promise.all([
+      this.cache.del(`project:slug:${project.slug}`),
+      this.cache.del('projects:list:*')
+    ]);
 
     return project;
   }
