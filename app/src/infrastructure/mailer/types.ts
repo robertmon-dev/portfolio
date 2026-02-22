@@ -1,3 +1,5 @@
+import type { SentMessageInfo } from 'nodemailer';
+
 export interface MailOptions {
   to: string;
   subject: string;
@@ -7,5 +9,8 @@ export interface MailOptions {
 }
 
 export interface Mailing {
-  send(options: MailOptions): Promise<{ messageId: string; provider: string }>;
+  sendWelcomeEmail(to: string, name: string | null, url: string): Promise<SentMessageInfo>;
+  sendResetPassword(to: string, name: string | null, url: string): Promise<SentMessageInfo>;
+  send2FACode(to: string, code: string): Promise<SentMessageInfo>;
+  sendContactConfirmation(to: string, name: string | null, message: string): Promise<SentMessageInfo>;
 }

@@ -1,10 +1,12 @@
+import jwt from "jsonwebtoken";
 import { Permission } from "../permission/permission";
 import { Settings } from "../../core/settings/settings"
 import type { Endpoint, Role } from "../permission/types";
-import jwt from "jsonwebtoken";
+import type { Caching } from "../../infrastructure/cache/types";
 import { Logger } from "../../core/logger/logger";
+import type { Authorizing } from "./types";
 
-export class Authenticator {
+export class Authenticator implements Authorizing {
   private logger: Logger;
   private jwtSecret: string;
   private settings: Settings;
@@ -20,12 +22,26 @@ export class Authenticator {
     }
   }
 
-  public authenticate(authHeader: string | undefined): Permission | null {
+  public extractToken(authHeader: string | undefined): string | null {
     if (!authHeader?.startsWith('Bearer ')) {
       return null;
     }
-
     const token = authHeader.split(' ')[1];
+    return token || null;
+  }
+
+  public async authenticate(authHeader: string | undefined, cache: Caching): Promise<Permission | null> {
+    const token = this.extractToken(authHeader);
+
+    if (!token) return null;
+
+    const isBlacklisted = await cache.get(`blacklist:${token}`);
+    if (isBlacklisted) {
+      this.logger.warn('Attempt to use blacklisted token', {
+        tokenSnippet: `${token.substring(0, 8)}...`
+      });
+      return null;
+    }
 
     try {
       const decoded = jwt.verify(token, this.jwtSecret) as {
@@ -66,11 +82,22 @@ export class Authenticator {
     }
   }
 
+  public getTokenRemainingTTL(token: string): number {
+    try {
+      const decoded = jwt.decode(token) as { exp: number };
+      if (!decoded || !decoded.exp) return 28800;
+
+      const now = Math.floor(Date.now() / 1000);
+      return Math.max(decoded.exp - now, 0);
+    } catch {
+      return 28800;
+    }
+  }
+
   public static getInstance(): Authenticator {
     if (!Authenticator.instance) {
       Authenticator.instance = new Authenticator();
     }
-
     return Authenticator.instance;
   }
 }

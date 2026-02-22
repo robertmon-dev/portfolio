@@ -19,3 +19,24 @@ export const LoginResponseSchema = z.discriminatedUnion('status', [
   }),
 ]);
 
+export const Verify2FASchema = z.object({
+  userId: z.string().uuid(),
+  code: z.string().length(6),
+});
+
+export const RequestPasswordResetSchema = z.object({
+  email: z.string().email("Invalid email format"),
+});
+
+export const ResetPasswordSchema = z.object({
+  token: z.string().min(1, "Token is required"),
+  password: z.string().min(8, "Password must be at least 8 characters long"),
+  confirmPassword: z.string()
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords don't match",
+  path: ["confirmPassword"],
+});
+
+export const Resend2FASchema = z.object({
+  userId: z.string().uuid(),
+});

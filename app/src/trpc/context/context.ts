@@ -21,13 +21,13 @@ export class TrpcContext {
     this.cache = CacheStore.getInstance();
   }
 
-  public create = ({
+  public create = async ({
     req,
     res,
-  }: trpcExpress.CreateExpressContextOptions): Context => {
+  }: trpcExpress.CreateExpressContextOptions): Promise<Context> => {
     const authHeader: string | undefined = req.headers.authorization;
     const authenticator: Authenticator = Authenticator.getInstance();
-    const permissions: Permission | null = authenticator.authenticate(authHeader);
+    const permissions: Permission | null = await authenticator.authenticate(authHeader, this.cache);
 
     return {
       db: this.db.client,

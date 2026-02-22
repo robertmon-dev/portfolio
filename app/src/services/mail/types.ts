@@ -66,3 +66,5 @@ export interface Queueing<TData, TResult, TName extends string> {
   addJob(name: TName, data: TData, opts?: BulkJobOptions): Promise<Job<TData, TResult, TName>>;
   addBulk(jobs: { name: TName; data: TData; opts?: BulkJobOptions }[]): Promise<Job<TData, TResult, TName>[]>;
 }
+
+

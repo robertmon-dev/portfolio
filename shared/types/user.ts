@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import * as t from '../schemas/user';
+import * as u from '../schemas/user';
 
 
-export type UserProfile = z.infer<typeof t.UserProfileSchema>;
-
+export type UserProfile = z.infer<typeof u.UserProfileSchema>;
+export type MeResponse = z.infer<typeof u.MeResponseSchema>;

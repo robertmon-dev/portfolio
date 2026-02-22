@@ -10,10 +10,13 @@ export const UserProfileSchema = z.object({
   headline: z.string().nullable(),
   bio: z.string().nullable(),
   avatarUrl: z.string().nullable(),
-  socials: z.any().nullable(),
+  socials: z.record(z.any()).nullable(),
   role: RoleEnum,
   createdAt: z.date(),
   updatedAt: z.date(),
   twoFactorEnabled: z.boolean().default(false).optional(),
 });
 
+export const MeResponseSchema = z.object({
+  user: UserProfileSchema
+});

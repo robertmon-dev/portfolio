@@ -5,7 +5,7 @@ import { Authenticator } from '../../trpc/auth/authenticator';
 import { Permission } from '../../trpc/permission/permission';
 import { UserProfileSchema } from '@portfolio/shared';
 import { MailQueueService } from '../mail/mailQueueService';
-import type { LoginResponse, LoginInput } from '@portfolio/shared';
+import type { LoginResponse, LoginInput, VerifyTwoFactorInput, Resend2FAInput } from '@portfolio/shared';
 import { BaseService } from '../service';
 import { Authenticating } from './types';
 import { MAIL_ACTIONS } from '../mail/types';
@@ -37,6 +37,61 @@ export class AuthService extends BaseService implements Authenticating {
     }
 
     return this.generateSuccessResponse(user);
+  }
+
+  public async verify2FA(input: VerifyTwoFactorInput): Promise<LoginResponse> {
+    const { userId, code } = input;
+
+    const verification = await this.db.verificationCode.findFirst({
+      where: {
+        userId,
+        code,
+        type: CodeType.TWO_FACTOR,
+        expiresAt: { gt: new Date() },
+      },
+      include: { user: true }
+    });
+
+    if (!verification) {
+      this.logger.warn(`Invalid or expired 2FA code attempt`, { userId });
+      throw new TRPCError({
+        code: 'UNAUTHORIZED',
+        message: 'Invalid or expired verification code'
+      });
+    }
+
+    await this.db.verificationCode.delete({
+      where: { id: verification.id }
+    });
+
+    await this.cache.del(`2fa:${userId}`);
+
+    this.logger.info(`2FA verified successfully for user`, { userId });
+    return this.generateSuccessResponse(verification.user);
+  }
+
+  public async resend2FACode(input: Resend2FAInput): Promise<{ message: string }> {
+    const { userId } = input;
+
+    const lockKey = `resend_lock:2fa:${userId}`;
+    const isLocked = await this.cache.get(lockKey);
+
+    if (isLocked) {
+      throw new TRPCError({
+        code: 'TOO_MANY_REQUESTS',
+        message: 'Please wait a minute before requesting a new code.'
+      });
+    }
+
+    const user = await this.db.user.findUnique({ where: { id: userId } });
+    if (!user || !user.twoFactorEnabled) {
+      throw new TRPCError({ code: 'NOT_FOUND', message: 'User not found or 2FA disabled' });
+    }
+
+    await this.handleTwoFactorFlow(user);
+    await this.cache.set(lockKey, 'true', 60);
+
+    return { message: 'New verification code sent.' };
   }
 
   private async handleTwoFactorFlow(user: User): Promise<LoginResponse> {
@@ -74,6 +129,18 @@ export class AuthService extends BaseService implements Authenticating {
       userId: user.id,
       message: 'Two-factor authentication required',
     };
+  }
+
+  public async logout(token: string): Promise<{ success: true }> {
+    const authenticator = Authenticator.getInstance();
+    const ttl = authenticator.getTokenRemainingTTL(token);
+
+    if (ttl > 0) {
+      await this.cache.set(`blacklist:${token}`, '1', ttl);
+      this.logger.info('User logged out and token blacklisted', { ttl });
+    }
+
+    return { success: true };
   }
 
   private async generateSuccessResponse(user: User): Promise<LoginResponse> {
