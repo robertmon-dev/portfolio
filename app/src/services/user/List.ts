@@ -1,8 +1,10 @@
 import { BaseService } from '../service';
 import type { ListUsersInput } from '@portfolio/shared';
 import { Prisma } from '@prisma/client';
+import type { UserListing } from './types';
 
-export class ListUsersService extends BaseService {
+
+export class ListUsersService extends BaseService implements UserListing {
   public async execute(input: ListUsersInput) {
     const cacheKey = `users:list:${JSON.stringify(input || 'all')}`;
 

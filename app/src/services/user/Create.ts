@@ -4,8 +4,9 @@ import { BaseService } from '../service';
 import type { CreateUserInput } from '@portfolio/shared';
 import type { User } from '@prisma/client';
 import * as argon2 from 'argon2';
+import type { UserCreating } from './types';
 
-export class CreateUserService extends BaseService {
+export class CreateUserService extends BaseService implements UserCreating {
   public async execute(input: CreateUserInput): Promise<User> {
     const { password, ...data } = input;
     this.logger.info(`Creating new user: ${data.email} with hashing`);

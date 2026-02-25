@@ -1,4 +1,5 @@
 import express, { Express } from 'express';
+import cors from 'cors';
 import { Server } from 'http';
 import { Settings } from '../core/settings/settings';
 import { Database } from '../core/database/database';
@@ -50,6 +51,11 @@ export class AppInitializer {
 
     await this.database.connect();
 
+    this.app.use(cors({
+      origin: this.settings.config.CORS_ORIGIN.split(','),
+      credentials: true,
+    }));
+
     this.app.use(express.json());
 
     this.trpcInitializer.setup(this.app);
@@ -90,7 +96,6 @@ export class AppInitializer {
 
     await this.database.disconnect();
     this.logger.info('Database connection closed.');
-
     this.logger.info('Graceful shutdown completed');
   }
 }

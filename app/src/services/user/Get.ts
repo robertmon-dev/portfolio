@@ -1,8 +1,9 @@
 import { BaseService } from '../service';
 import type { GetUserInput } from '@portfolio/shared';
 import { Prisma } from '@prisma/client';
+import { UserRetrieving } from './types';
 
-export class GetUserService extends BaseService {
+export class GetUserService extends BaseService implements UserRetrieving {
   public async execute(input: GetUserInput) {
     const { id, email, username } = input;
 

@@ -18,7 +18,7 @@ export const ButtonsSection = ({
     <DemoSection
       title={t(
         "demo.sections.buttons.title",
-        "1. Przyciski (Warianty, Rozmiary, Ikony)",
+        "1. Buttons so on",
       )}
     >
       <DemoRow>

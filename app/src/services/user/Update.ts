@@ -1,13 +1,22 @@
 import { BaseService } from '../service';
-import type { Prisma, User } from '@prisma/client';
+import type { User } from '@prisma/client';
+import { UpdateUserInput } from '@portfolio/shared';
+import { Prisma } from '@prisma/client';
+import type { UserUpdating } from './types';
 
-export class UpdateUserService extends BaseService {
-  public async execute(id: string, data: Prisma.UserUpdateInput): Promise<User> {
+export class UpdateUserService extends BaseService implements UserUpdating {
+  public async execute(input: UpdateUserInput): Promise<User> {
+    const { id, ...data } = input;
     this.logger.info(`Updating user profile for ID: ${id}`);
+
+    const updateData: Prisma.UserUpdateInput = {
+      ...data,
+      socials: data.socials === null ? Prisma.DbNull : (data.socials as Prisma.InputJsonValue)
+    };
 
     const updated = await this.db.user.update({
       where: { id },
-      data
+      data: updateData
     });
 
     await Promise.all([

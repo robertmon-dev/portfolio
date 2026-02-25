@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 export const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
-  PORT: z.string().transform(Number).default('4000'),
+  PORT: z.string().transform(Number).default('8800'),
 
   DATABASE_URL: z.string().url(),
   GITHUB_TOKEN: z.string().optional(),
@@ -15,11 +15,19 @@ export const envSchema = z.object({
   REDIS_URL: z.string(),
   DB_TLS_ENABLED: z.string().default('false').transform((s) => s === 'true'),
   DB_CA_PATH: z.string().optional().nullable(),
-  APP_URL: z.string().url().default('http://localhost:3000'),
+  APP_URL: z.string().url().default('http://localhost:8800'),
 
   MAIL_HOST: z.string(),
   MAIL_PORT: z.string().transform(Number).default('587'),
   MAIL_USER: z.string(),
   MAIL_PASS: z.string(),
   MAIL_FROM: z.string().email(),
+
+  CORS_ORIGIN: z.string().optional(),
+}).transform((env) => {
+  if (env.NODE_ENV === 'development') {
+    return { ...env, CORS_ORIGIN: 'http://localhost:5173' };
+  }
+
+  return { ...env, CORS_ORIGIN: env.CORS_ORIGIN || env.APP_URL };
 });
