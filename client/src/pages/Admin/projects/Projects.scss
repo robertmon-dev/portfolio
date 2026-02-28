@@ -1,0 +1,33 @@
+@use "sass:color";
+
+.projects-management {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: $font-stack;
+
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+
+  .header {
+    padding: $spacing-xl $spacing-md $spacing-sm;
+    background: transparent;
+  }
+
+  &__loader-container {
+    height: 4px;
+    width: 100%;
+    position: relative;
+    z-index: 10;
+    padding: 0 $spacing-md;
+  }
+
+  &__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: $spacing-md;
+    width: 100%;
+  }
+}

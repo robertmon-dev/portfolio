@@ -30,22 +30,26 @@
   }
 
   &__icon-wrapper {
-    margin-bottom: 2rem;
+    background: none;
+    border-radius: 0;
+    box-shadow: none;
+
     color: var(--error-primary);
-    background: var(--error-glow);
-    padding: 2rem;
-    border-radius: 2.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 20px 40px -10px var(--error-glow);
+    filter: drop-shadow(0 0 20px var(--error-glow));
+
+    svg {
+      display: block;
+    }
   }
 
   &__code {
     font-size: clamp(4rem, 12vw, 8rem);
     font-weight: 900;
     line-height: 1;
-    margin-bottom: 1.5rem;
+    margin-bottom: -0.5rem;
     letter-spacing: -0.05em;
     background: linear-gradient(135deg, var(--text-primary) 30%, var(--error-primary));
     -webkit-background-clip: text;
@@ -98,5 +102,17 @@
     pointer-events: none;
     z-index: 1;
     opacity: 0.6;
+  }
+
+  &__button-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: $spacing-sm;
+    line-height: 1;
+
+    svg {
+      flex-shrink: 0;
+    }
   }
 }

@@ -1,5 +1,6 @@
 import i18n from '../../../i18n';
 import { TRPCClientError } from '@trpc/client';
+import { toast } from 'react-toastify';
 
 export const handleTrpcError = (error: unknown): string | null => {
   if (!(error instanceof TRPCClientError)) {
@@ -32,4 +33,11 @@ export const handleTrpcError = (error: unknown): string | null => {
   }
 
   return serverMessage || i18n.t('errors.codes.UNKNOWN_ERROR');
+};
+
+export const notifyError = (error: unknown) => {
+  const message = handleTrpcError(error);
+  if (message) {
+    toast.error(message);
+  }
 };

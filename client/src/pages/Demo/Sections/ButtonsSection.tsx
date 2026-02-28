@@ -78,7 +78,7 @@ export const ButtonsSection = ({
 
       <DemoRow>
         <ToolTip
-          content={t("demo.tooltips.addAgency", "Dodaj nową agencję")}
+          content={t("demo.tooltips.add", "Add something")}
           position="top"
         >
           <Button variant="success" leftIcon={<Plus size={16} />}>

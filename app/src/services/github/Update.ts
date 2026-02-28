@@ -14,6 +14,7 @@ export class UpdateGithubRepoService extends BaseService {
 
     await this.cache.del('projects:list:*');
     await this.cache.del('github:stats:*');
+    await this.cache.del('github:repos:*');
 
     return updated;
   }

@@ -6,22 +6,39 @@ import { FooterLeftSection } from './Sections/Footer/Left';
 import { FooterRightSection } from './Sections/Footer/Right';
 import { List } from '@/components/molecules/List/List';
 import { Button } from '@/components/atoms/Button/Button';
-import { Settings } from 'lucide-react';
+import { Settings, LogOut, Loader2 } from 'lucide-react';
 import { LoginModal } from '@/components/molecules/Modals/Login/Modal';
 import { useLoginModal } from '@/components/molecules/Modals/Login/useLoginModal';
-
 import { useLayout } from './hooks/useLayout';
 import { useFooterItems } from './hooks/useFooterItems';
+import { useAuth } from '@/hooks/useAuth';
 import type { LayoutProps } from './types';
 import { BRAND_NAME, LANGUAGES } from './consts';
 import './Layout.scss';
 
 export const Layout = ({ children }: LayoutProps) => {
   const {
-    navItems, t, isLangOpen, setIsLangOpen, currentLangLabel, handleLangSelect
+    navItems,
+    t,
+    isLangOpen,
+    setIsLangOpen,
+    currentLangLabel,
+    handleLangSelect
   } = useLayout();
-  const { socialLinks, navLinks, currentYear } = useFooterItems();
+
+  const {
+    socialLinks,
+    navLinks,
+    currentYear
+  } = useFooterItems();
+
   const loginModal = useLoginModal();
+  const {
+    isLoggedIn,
+    isUserLoading,
+    logout,
+    isLoggingOut
+  } = useAuth();
 
   return (
     <div className="app-layout">
@@ -31,14 +48,34 @@ export const Layout = ({ children }: LayoutProps) => {
         </NavbarMain>
 
         <NavbarEdge>
-          <Button
-            variant="ghost"
-            isIcon
-            aria-label={t('common.login', 'Login to Admin Panel')}
-            onClick={loginModal.open}
-          >
-            <Settings size={20} />
-          </Button>
+          {isUserLoading ? (
+            <div className="app-layout__auth-loader">
+              <Loader2 size={16} className="app-layout__spinner app-layout__spinner--muted" />
+            </div>
+          ) : isLoggedIn ? (
+            <Button
+              variant="ghost"
+              isIcon
+              aria-label={t('common.logout', 'Logout')}
+              onClick={logout}
+              disabled={isLoggingOut}
+            >
+              {isLoggingOut ? (
+                <Loader2 size={20} className="app-layout__spinner" />
+              ) : (
+                <LogOut size={20} />
+              )}
+            </Button>
+          ) : (
+            <Button
+              variant="ghost"
+              isIcon
+              aria-label={t('common.login', 'Login to Admin Panel')}
+              onClick={loginModal.open}
+            >
+              <Settings size={20} />
+            </Button>
+          )}
         </NavbarEdge>
       </Navbar>
 

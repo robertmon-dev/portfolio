@@ -7,6 +7,10 @@ export const GithubRepoSchema = z.object({
   stars: z.number(),
   language: z.string().nullable(),
   description: z.string().nullable(),
+  project: z.object({
+    id: z.string().uuid(),
+    title: z.string(),
+  }).nullable().optional(),
 });
 
 export const UpdateGithubRepoInputSchema = z.object({

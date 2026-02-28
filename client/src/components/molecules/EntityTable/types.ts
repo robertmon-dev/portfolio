@@ -9,7 +9,7 @@ export interface Column<T> {
   render?: (item: T) => ReactNode;
 }
 
-export interface EntityGridProps<T> {
+export interface EntityTableProps<T> {
   data: T[];
   columns: Column<T>[];
   isLoading?: boolean;

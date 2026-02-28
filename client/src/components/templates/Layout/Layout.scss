@@ -1,5 +1,15 @@
 @use "sass:color";
 
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .app-layout {
   min-height: 100vh;
   display: flex;
@@ -35,5 +45,21 @@
     border: 1px solid color.change($border-color, $alpha: 0.2);
     flex: 1;
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  }
+
+  &__auth-loader {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__spinner {
+    animation: spin 1s linear infinite;
+
+    &--muted {
+      color: $text-muted;
+    }
   }
 }

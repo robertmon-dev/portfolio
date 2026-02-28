@@ -9,7 +9,7 @@ export default defineConfig({
 
   resolve: {
     alias: {
-      '@portfolio/shared': path.resolve(__dirname, '../shared/dist/index.js'),
+      '@portfolio/shared': path.resolve(__dirname, '../shared/index.js'),
       '@portfolio/app': path.resolve(__dirname, '../app/src/index.ts'),
 
       '@': path.resolve(__dirname, './src'),

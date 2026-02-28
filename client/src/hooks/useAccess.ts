@@ -1,5 +1,6 @@
 import { trpc } from '../lib/trpc/client';
-import { RoleEnum, type Role } from '@portfolio/shared';
+import { type Role } from '@portfolio/shared';
+import { RoleEnum } from '@portfolio/shared';
 
 const ROLE_PERMISSIONS: Record<Exclude<Role, 'ADMIN'>, string[]> = {
   MODERATOR: [

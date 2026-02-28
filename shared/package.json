@@ -2,13 +2,19 @@
   "name": "@portfolio/shared",
   "version": "1.0.0",
   "main": "dist/index.js",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
   "scripts": {
     "dev": "tsc -w --preserveWatchOutput",
-    "build": "tsc",
-    "start": "node index.js",
-    "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev"
+    "build": "tsc"
   },
   "dependencies": {
     "zod": "^3.22.4"

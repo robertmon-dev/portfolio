@@ -6,47 +6,54 @@ export const useAuth = () => {
   const navigate = useNavigate();
   const utils = trpc.useUtils();
 
+  const { data: user, isLoading: isUserLoading } = trpc.account.me.useQuery(undefined, {
+    retry: false,
+    refetchOnWindowFocus: false,
+  });
+
   const loginMutation = trpc.auth.login.useMutation();
   const verify2FAMutation = trpc.auth.verify2FA.useMutation();
   const logoutMutation = trpc.account.logout.useMutation();
 
-  const saveSession = (token: string) => {
+  const saveSession = async (token: string) => {
     localStorage.setItem('token', token);
-    utils.account.me.invalidate();
-    navigate('/admin/dashboard');
+    await utils.account.me.refetch();
   };
 
   const login = async (data: LoginInput) => {
     const response = await loginMutation.mutateAsync(data);
-
     if (response.status === 'success') {
-      saveSession(response.token);
+      await saveSession(response.token);
     }
-
     return response;
   };
 
   const confirm2FA = async (data: VerifyTwoFactorInput) => {
     const response = await verify2FAMutation.mutateAsync(data);
-
     if (response.status === 'success') {
-      saveSession(response.token);
+      await saveSession(response.token);
     }
-
     return response;
   };
 
   const logout = async () => {
     try {
-      await logoutMutation.mutateAsync();
+      if (localStorage.getItem('token')) {
+        await logoutMutation.mutateAsync();
+      }
+    } catch (e) {
     } finally {
       localStorage.removeItem('token');
-      await utils.invalidate();
-      navigate('/');
+      utils.account.me.setData(undefined, null);
+
+      navigate('/demo');
     }
   };
 
   return {
+    user,
+    isLoggedIn: !!user,
+    isUserLoading,
     login,
     confirm2FA,
     logout,

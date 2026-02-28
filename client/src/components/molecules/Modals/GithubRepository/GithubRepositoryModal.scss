@@ -1,0 +1,84 @@
+@use "sass:color";
+
+.github-form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+  padding: $spacing-xs 0;
+
+  &__help {
+    color: $text-muted;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: $spacing-xs;
+
+    strong {
+      color: $tn-blue;
+    }
+  }
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+  }
+
+  &__label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: $text-main;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  &__input,
+  &__textarea,
+  &__select {
+    background: color.change($bg-app, $lightness: 5%);
+    border: 1px solid $border-color;
+    border-radius: $radius-sm;
+    padding: $spacing-sm $spacing-md;
+    color: $text-main;
+    font-family: inherit;
+    transition: all 0.2s ease;
+
+    &:focus {
+      outline: none;
+      border-color: $tn-blue;
+      box-shadow: 0 0 0 2px color.change($tn-blue, $alpha: 0.1);
+    }
+  }
+
+  &__select {
+    cursor: pointer;
+    appearance: none;
+  }
+
+  &__alert {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-md;
+    background: color.change($danger, $alpha: 0.1);
+    border: 1px solid color.change($danger, $alpha: 0.2);
+    border-radius: $radius-sm;
+    color: $danger;
+    font-size: 0.9rem;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: $spacing-md;
+    gap: $spacing-md;
+  }
+
+  &__info {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    color: $text-muted;
+    font-size: 0.8rem;
+  }
+}
