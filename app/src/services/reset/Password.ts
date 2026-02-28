@@ -17,7 +17,7 @@ export class PasswordResetService extends BaseService implements PasswordResetti
     const user = await this.db.user.findUnique({ where: { email } });
 
     if (!user) {
-      this.logger.info(`Password reset requested for non-existent email`, { email });
+     this.logger.info(`Password reset requested for non-existent email`, { email });
       return { message: 'If an account exists with this email, a reset link has been sent.' };
     }
 

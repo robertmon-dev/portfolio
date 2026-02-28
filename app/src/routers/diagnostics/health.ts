@@ -4,7 +4,7 @@ import { HealthResponseSchema } from '@portfolio/shared';
 import { HealthService } from '../../services/health/health';
 import { executeService } from '../../trpc/executers/base';
 
-export const healthRouter = router({
+export const diagnosticsRouter = router({
   check: publicProcedure
     .output(HealthResponseSchema)
     .query(async ({ ctx }) => executeService(HealthService, ctx, undefined)),

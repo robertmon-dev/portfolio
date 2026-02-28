@@ -12,7 +12,6 @@ export class DatabaseSeeder implements Seeding {
     this.database = Database.getInstance();
 
     this.logger = new Logger('DatabaseSeeder');
-
     this.seeds = [
       new AdminSeed(this.database.client, new Logger('AdminSeed')),
     ];
