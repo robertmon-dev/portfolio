@@ -1,4 +1,7 @@
 .env
+./turbo
+.turbo
+.turbo/*
 ./app/dist/
 ./client/dist/
 ./shared/dist/

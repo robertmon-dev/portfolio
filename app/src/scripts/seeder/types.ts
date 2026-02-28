@@ -1,7 +1,7 @@
 export interface Growing {
-  run(): Promise<void>;
+  grow(): Promise<void>;
 }
 
 export interface Seeding {
-  grow(): Promise<void>;
+  seed(): Promise<void>;
 }
