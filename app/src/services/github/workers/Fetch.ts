@@ -29,7 +29,6 @@ export class GithubFetchWorker {
         this.octokit.rest.users.getByUsername({ username }),
         this.octokit.rest.repos.listForUser({
           username,
-          per_page: 100,
           type: 'owner',
           sort: 'pushed',
           direction: 'desc'
