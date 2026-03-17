@@ -1,4 +1,3 @@
-// src/initializers/workerInitializer.ts
 import { Logger } from '../core/logger/logger';
 import { MailQueueWorker } from '../services/mail/mailQueueWorker';
 import { PrismaClient } from '@prisma/client';
