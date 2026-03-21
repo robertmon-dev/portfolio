@@ -75,16 +75,10 @@ export class TrpcContext {
       });
     }
 
-    const freshPermissions = new Permission(
-      user.id,
-      user.role,
-      user.permissions,
-    );
-
     return {
       ...ctx,
       user,
-      permissions: freshPermissions,
+      permissions: new Permission(user.id, user.role, user.permissions),
     };
   }
 }
