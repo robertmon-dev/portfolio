@@ -12,3 +12,8 @@ export const UserPermissionSchema = z.object({
   resource: z.string(),
   flags: z.array(z.enum(["READ", "WRITE", "ADMIN"])),
 });
+
+export const UpdateUserPermissionsInputSchema = z.object({
+  id: z.string().uuid(),
+  permissions: z.array(UserPermissionSchema),
+});

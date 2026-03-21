@@ -45,6 +45,13 @@ export const usersRouter = router({
       executeService(UpdateUserService, ctx, input),
     ),
 
+  updatePermissions: protectedProcedure
+    .input(UpdateUserPermissionsInputSchema)
+    .output(UserProfileSchema) // Zwracamy pełny, zaktualizowany profil
+    .mutation(async ({ ctx, input }) =>
+      executeService(UpdateUserPermissionsService, ctx, input),
+    ),
+
   delete: protectedProcedure
     .input(DeleteUserInputSchema)
     .output(z.void())
