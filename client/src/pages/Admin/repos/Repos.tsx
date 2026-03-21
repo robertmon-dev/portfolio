@@ -43,7 +43,7 @@ export const GithubAdminPage = () => {
     },
     (repo) => {
       actions.selectRepo(repo.id);
-      actions.unlinkRepo(repo.id);
+      actions.unlinkFromProject(repo.id);
     },
     state.processingId,
   );
