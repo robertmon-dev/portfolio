@@ -1,20 +1,23 @@
-import { toast } from 'react-toastify';
-import { notifyError } from '@/lib/trpc/handlers/trpcError';
-import { TECH_STACK_ACTIONS, type TechStackAction } from './types';
-import type { Utils } from '@/lib/trpc/types';
-import type { CreateTechStackInput, UpdateTechStackInput } from '@portfolio/shared';
-import type { TechStackMutations } from '../useMutations';
+import { toast } from "react-toastify";
+import { notifyError } from "@/lib/trpc/handlers/trpcError";
+import { TECH_STACK_ACTIONS, type TechStackAction } from "./types";
+import type { Utils } from "@/lib/trpc/types";
+import type {
+  CreateTechStackInput,
+  UpdateTechStackInput,
+} from "@portfolio/shared";
+import type { TechStackMutations } from "../useMutations";
 
 export const handleCreate = async (
   mutations: TechStackMutations,
   utils: Utils,
   dispatch: React.Dispatch<TechStackAction>,
-  data: CreateTechStackInput
+  data: CreateTechStackInput,
 ) => {
-  dispatch({ type: TECH_STACK_ACTIONS.SET_PROCESSING, payload: 'creating' });
+  dispatch({ type: TECH_STACK_ACTIONS.SET_PROCESSING, payload: "creating" });
   try {
     await mutations.create.mutateAsync(data);
-    toast.success('Tech Stack created successfully');
+    toast.success("Tech Stack created successfully");
 
     dispatch({ type: TECH_STACK_ACTIONS.CLOSE_MODALS });
     await utils.techStack.list.invalidate();
@@ -29,14 +32,13 @@ export const handleUpdate = async (
   mutations: TechStackMutations,
   utils: Utils,
   dispatch: React.Dispatch<TechStackAction>,
-  data: UpdateTechStackInput
+  data: UpdateTechStackInput,
 ) => {
   dispatch({ type: TECH_STACK_ACTIONS.SET_PROCESSING, payload: data.id });
   try {
-    const { id, ...restData } = data;
-    await mutations.update.mutateAsync({ id, data: restData });
-    toast.success('Tech Stack updated successfully');
+    await mutations.update.mutateAsync(data);
 
+    toast.success("Tech Stack updated successfully");
     dispatch({ type: TECH_STACK_ACTIONS.SELECT_TECH_STACK, payload: null });
     dispatch({ type: TECH_STACK_ACTIONS.CLOSE_MODALS });
 
@@ -52,12 +54,12 @@ export const handleDelete = async (
   mutations: TechStackMutations,
   utils: Utils,
   dispatch: React.Dispatch<TechStackAction>,
-  id: string
+  id: string,
 ) => {
   dispatch({ type: TECH_STACK_ACTIONS.SET_PROCESSING, payload: id });
   try {
     await mutations.delete.mutateAsync({ ids: [id] });
-    toast.success('Tech Stack deleted successfully');
+    toast.success("Tech Stack deleted successfully");
 
     dispatch({ type: TECH_STACK_ACTIONS.SELECT_TECH_STACK, payload: null });
     dispatch({ type: TECH_STACK_ACTIONS.CLOSE_MODALS });
@@ -69,4 +71,3 @@ export const handleDelete = async (
     dispatch({ type: TECH_STACK_ACTIONS.SET_PROCESSING, payload: null });
   }
 };
-

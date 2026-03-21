@@ -19,27 +19,41 @@ export const TechStackAdminPage = () => {
     return [
       {
         id: "total",
-        children: t("admin.techStack.tags.total", { count: total, defaultValue: "{{count}} Technologies" }),
+        children: t("admin.techStack.tags.total", {
+          count: total,
+          defaultValue: "{{count}} Technologies",
+        }),
         variant: "info" as const,
-        icon: <Layers size={12} />
-      }
+        icon: <Layers size={12} />,
+      },
     ];
   }, [state.techStacks, t]);
 
-  const columns = useMemo(() => getTechStackColumns(
-    (techStack) => actions.openModal('UPDATE', techStack.id),
-    (id) => actions.openModal('DELETE', id),
-    state.processingId,
-  ), [actions, state.processingId]);
+  const columns = useMemo(
+    () =>
+      getTechStackColumns(
+        (techStack) => actions.openModal("UPDATE", techStack.id),
+        (id) => actions.openModal("DELETE", id),
+        state.processingId,
+      ),
+    [actions, state.processingId],
+  );
 
   return (
     <div className="projects-management">
       <Header
         title={t("admin.techStack.title", "Tech Stack")}
-        subtitle={t("admin.techStack.subtitle", "Manage your technologies and tools")}
+        subtitle={t(
+          "admin.techStack.subtitle",
+          "Manage your technologies and tools",
+        )}
         tags={headerTags}
         action={
-          <Button onClick={() => actions.openModal('CREATE')} variant="primary" size="sm">
+          <Button
+            onClick={() => actions.openModal("CREATE")}
+            variant="primary"
+            size="sm"
+          >
             <Plus size={16} />
             {t("admin.techStack.actions.add", "Add Technology")}
           </Button>
@@ -47,11 +61,7 @@ export const TechStackAdminPage = () => {
       />
 
       <div className="projects-management__loader-container">
-        <LoadingBar
-          isLoading={state.isLoading}
-          variant="primary"
-          fullWidth
-        />
+        <LoadingBar isLoading={state.isLoading} variant="primary" fullWidth />
       </div>
 
       <main className="projects-management__content">
