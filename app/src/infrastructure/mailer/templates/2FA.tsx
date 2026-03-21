@@ -1,5 +1,5 @@
-import { Section, Text, Heading } from '@react-email/components';
-import { Layout } from './components/Layout';
+import { Section, Text, Heading } from "@react-email/components";
+import { Layout } from "./components/Layout";
 
 export const TwoFactorEmail = ({ code }: { code: string }) => (
   <Layout previewText="Your verification code">
@@ -19,4 +19,3 @@ export const TwoFactorEmail = ({ code }: { code: string }) => (
     </Text>
   </Layout>
 );
-

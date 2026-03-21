@@ -1,6 +1,16 @@
-import { Html, Head, Body, Container, Section, Text, Link, Preview, Tailwind } from '@react-email/components';
-import { tokyoNight } from '../theme';
-import type { LayoutProps } from './types';
+import {
+  Html,
+  Head,
+  Body,
+  Container,
+  Section,
+  Text,
+  Link,
+  Preview,
+  Tailwind,
+} from "@react-email/components";
+import { tokyoNight } from "../theme";
+import type { LayoutProps } from "./types";
 
 export const Layout = ({ children, previewText }: LayoutProps) => {
   return (
@@ -30,8 +40,8 @@ export const Layout = ({ children, previewText }: LayoutProps) => {
 
             <Section className="mt-[48px] border-t border-solid border-tn-slate/30 pt-[24px]">
               <Text className="text-tn-slate text-[12px] leading-[20px]">
-                This message was automatically generated.
-                If you were not expecting this email, you can safely ignore it.
+                This message was automatically generated. If you were not
+                expecting this email, you can safely ignore it.
               </Text>
               <Link
                 href="https://github.com/Moniev"

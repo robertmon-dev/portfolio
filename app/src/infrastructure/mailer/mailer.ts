@@ -1,16 +1,16 @@
-import nodemailer from 'nodemailer';
-import React from 'react';
-import { render } from '@react-email/render';
-import { BaseService } from '../../services/service';
-import { PrismaClient } from '@prisma/client';
-import type { Logging } from '../../core/logger/types';
-import type { Caching } from '../../infrastructure/cache/types';
-import type { Settings } from '../../core/settings/settings';
+import nodemailer from "nodemailer";
+import React from "react";
+import { render } from "@react-email/render";
+import { BaseService } from "../../services/service";
+import { PrismaClient } from "@prisma/client";
+import type { Logging } from "../../core/logger/types";
+import type { Caching } from "../../infrastructure/cache/types";
+import type { Settings } from "../../core/settings/settings";
 import type { Mailing } from "./types";
-import { WelcomeEmail } from '../../infrastructure/mailer/templates/Welcome';
-import { ResetPasswordEmail } from '../../infrastructure/mailer/templates/ResetPassword';
-import { TwoFactorEmail } from '../../infrastructure/mailer/templates/2FA';
-import { ContactConfirmationEmail } from '../../infrastructure/mailer/templates/Contact';
+import { WelcomeEmail } from "../../infrastructure/mailer/templates/Welcome";
+import { ResetPasswordEmail } from "../../infrastructure/mailer/templates/ResetPassword";
+import { TwoFactorEmail } from "../../infrastructure/mailer/templates/2FA";
+import { ContactConfirmationEmail } from "../../infrastructure/mailer/templates/Contact";
 
 export class MailSenderService extends BaseService implements Mailing {
   private transporter: nodemailer.Transporter;
@@ -19,7 +19,7 @@ export class MailSenderService extends BaseService implements Mailing {
     db: PrismaClient,
     cache: Caching,
     logger: Logging,
-    settings: Settings['config']
+    settings: Settings["config"],
   ) {
     super(db, cache, logger, settings);
 
@@ -37,38 +37,40 @@ export class MailSenderService extends BaseService implements Mailing {
   public async sendWelcomeEmail(to: string, name: string | null, url: string) {
     const html = await render(
       React.createElement(WelcomeEmail, {
-        name: name ?? 'User',
-        url
-      })
+        name: name ?? "User",
+        url,
+      }),
     );
-    return this.send(to, 'Welcome aboard! 🚀', html);
+    return this.send(to, "Welcome aboard! 🚀", html);
   }
 
   public async sendResetPassword(to: string, name: string | null, url: string) {
     const html = await render(
       React.createElement(ResetPasswordEmail, {
-        name: name ?? 'User',
-        url
-      })
+        name: name ?? "User",
+        url,
+      }),
     );
-    return this.send(to, 'Reset your password 🔐', html);
+    return this.send(to, "Reset your password 🔐", html);
   }
 
   public async send2FACode(to: string, code: string) {
-    const html = await render(
-      React.createElement(TwoFactorEmail, { code })
-    );
-    return this.send(to, 'Your verification code ⚡', html);
+    const html = await render(React.createElement(TwoFactorEmail, { code }));
+    return this.send(to, "Your verification code ⚡", html);
   }
 
-  public async sendContactConfirmation(to: string, name: string | null, message: string | null) {
+  public async sendContactConfirmation(
+    to: string,
+    name: string | null,
+    message: string | null,
+  ) {
     const html = await render(
       React.createElement(ContactConfirmationEmail, {
-        name: name ?? 'User',
-        message: message ?? 'No message content'
-      })
+        name: name ?? "User",
+        message: message ?? "No message content",
+      }),
     );
-    return this.send(to, 'Message received! 📥', html);
+    return this.send(to, "Message received! 📥", html);
   }
 
   private async send(to: string, subject: string, html: string) {

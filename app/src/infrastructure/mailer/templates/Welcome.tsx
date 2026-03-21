@@ -1,7 +1,6 @@
-import { Section, Text, Button, Heading, Link } from '@react-email/components';
-import { Layout } from './components/Layout';
-import type { WelcomeEmailProps } from './types';
-
+import { Section, Text, Button, Heading, Link } from "@react-email/components";
+import { Layout } from "./components/Layout";
+import type { WelcomeEmailProps } from "./types";
 
 export const WelcomeEmail = ({ name, url }: WelcomeEmailProps) => {
   return (
@@ -11,8 +10,9 @@ export const WelcomeEmail = ({ name, url }: WelcomeEmailProps) => {
       </Heading>
 
       <Text className="text-tn-lavender text-[15px] leading-[24px]">
-        Thanks for joining! Your environment is all set up.
-        There's just one last step — we need to verify your email address to make sure it's really you.
+        Thanks for joining! Your environment is all set up. There's just one
+        last step — we need to verify your email address to make sure it's
+        really you.
       </Text>
 
       <Section className="text-center mt-[32px] mb-[32px]">
@@ -25,7 +25,8 @@ export const WelcomeEmail = ({ name, url }: WelcomeEmailProps) => {
       </Section>
 
       <Text className="text-tn-slate text-[14px] leading-[24px]">
-        If the button above doesn't work, please copy and paste this link into your browser:
+        If the button above doesn't work, please copy and paste this link into
+        your browser:
         <br />
         <Link href={url} className="text-tn-blue break-all">
           {url}

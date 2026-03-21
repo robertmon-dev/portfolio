@@ -1,13 +1,20 @@
-import { Section, Text, Button, Heading } from '@react-email/components';
-import { Layout } from './components/Layout';
+import { Section, Text, Button, Heading } from "@react-email/components";
+import { Layout } from "./components/Layout";
 
-export const ResetPasswordEmail = ({ name, url }: { name: string; url: string }) => (
+export const ResetPasswordEmail = ({
+  name,
+  url,
+}: {
+  name: string;
+  url: string;
+}) => (
   <Layout previewText="Reset your password">
     <Heading className="text-tn-red text-[22px] font-bold p-0 my-[20px]">
       Password Reset Request 🔐
     </Heading>
     <Text className="text-tn-lavender text-[15px] leading-[24px]">
-      Hi {name}, we received a request to reset your password. If you didn't make this request, you can safely ignore this email.
+      Hi {name}, we received a request to reset your password. If you didn't
+      make this request, you can safely ignore this email.
     </Text>
     <Section className="text-center mt-[32px] mb-[32px]">
       <Button

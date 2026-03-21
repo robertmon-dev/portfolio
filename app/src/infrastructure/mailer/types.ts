@@ -1,4 +1,4 @@
-import type { SentMessageInfo } from 'nodemailer';
+import type { SentMessageInfo } from "nodemailer";
 
 export interface MailOptions {
   to: string;
@@ -9,8 +9,20 @@ export interface MailOptions {
 }
 
 export interface Mailing {
-  sendWelcomeEmail(to: string, name: string | null, url: string): Promise<SentMessageInfo>;
-  sendResetPassword(to: string, name: string | null, url: string): Promise<SentMessageInfo>;
+  sendWelcomeEmail(
+    to: string,
+    name: string | null,
+    url: string,
+  ): Promise<SentMessageInfo>;
+  sendResetPassword(
+    to: string,
+    name: string | null,
+    url: string,
+  ): Promise<SentMessageInfo>;
   send2FACode(to: string, code: string): Promise<SentMessageInfo>;
-  sendContactConfirmation(to: string, name: string | null, message: string): Promise<SentMessageInfo>;
+  sendContactConfirmation(
+    to: string,
+    name: string | null,
+    message: string,
+  ): Promise<SentMessageInfo>;
 }
