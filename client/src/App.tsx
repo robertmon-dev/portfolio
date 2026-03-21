@@ -5,6 +5,7 @@ import { Demo } from "@/pages/Demo/Demo";
 import { GithubAdminPage } from "@/pages/Admin/repos/Repos";
 import { ProjectsAdminPage } from "./pages/Admin/projects/Projects";
 import { TechStackAdminPage } from "./pages/Admin/techstack/Techstack";
+import { UsersAdminPage } from "./pages/Admin/users/Users";
 import { Guard } from "@/components/utility/guard/Guard";
 import { ErrorPage } from "@/pages/Error/Error";
 import "react-toastify/dist/ReactToastify.css";
@@ -43,6 +44,15 @@ const App = () => {
               element={
                 <Guard requiredPermission="techstack:*">
                   <TechStackAdminPage />
+                </Guard>
+              }
+            />
+
+            <Route
+              path="users"
+              element={
+                <Guard requiredPermission="users:*">
+                  <UsersAdminPage />
                 </Guard>
               }
             />

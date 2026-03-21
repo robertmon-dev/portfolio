@@ -35,11 +35,11 @@ export interface UserRetrieving {
 }
 
 export interface UserCreating {
-  execute(input: CreateUserInput): Promise<User>;
+  execute(input: CreateUserInput): Promise<UserProfile>;
 }
 
 export interface UserUpdating {
-  execute(input: UpdateUserInput): Promise<User>;
+  execute(input: UpdateUserInput): Promise<UserProfile>;
 }
 
 export interface UserDeleting {

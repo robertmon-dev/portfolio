@@ -1,7 +1,16 @@
 import { Column } from "@/components/molecules/EntityTable/types";
 import { Tag } from "@/components/atoms/Tag/Tag";
 import { Button } from "@/components/atoms/Button/Button";
-import { Trash2, Edit2, User } from "lucide-react";
+import {
+  Trash2,
+  Edit2,
+  User,
+  ShieldCheck,
+  ShieldAlert,
+  KeyRound,
+  Lock,
+  Unlock,
+} from "lucide-react";
 import { UserProfile } from "@portfolio/shared";
 
 export const getUserColumns = (
@@ -11,24 +20,26 @@ export const getUserColumns = (
 ): Column<UserProfile>[] => [
   {
     key: "username",
-    header: "User",
-    width: "30%",
+    header: "User Identity",
+    width: "25%",
     render: (user) => (
-      <div className="techstack-table__name-row">
-        {user.avatarUrl ? (
-          <img
-            src={user.avatarUrl}
-            className="user-table__avatar"
-            alt={user.username}
-          />
-        ) : (
-          <User size={14} className="techstack-table__type-icon" />
-        )}
-        <div className="user-table__identity">
-          <span className="techstack-table__title">
-            {user.name || user.username}
-          </span>
-          <span className="user-table__email">{user.email}</span>
+      <div className="user-table__identity-cell">
+        <div className="user-table__avatar-wrapper">
+          {user.avatarUrl ? (
+            <img
+              src={user.avatarUrl}
+              className="user-table__avatar"
+              alt={user.username}
+            />
+          ) : (
+            <div className="user-table__avatar-placeholder">
+              <User size={14} />
+            </div>
+          )}
+        </div>
+        <div className="user-table__info">
+          <span className="user-table__name">{user.name || user.username}</span>
+          <span className="user-table__subtext">@{user.username}</span>
         </div>
       </div>
     ),
@@ -36,17 +47,56 @@ export const getUserColumns = (
   {
     key: "role",
     header: "Role",
-    width: "20%",
+    width: "15%",
+    render: (user) => {
+      const isAdmin = user.role === "ADMIN";
+      return (
+        <Tag
+          variant={isAdmin ? "danger" : "info"}
+          size="sm"
+          icon={isAdmin ? <ShieldCheck size={12} /> : undefined}
+          maxLength={10}
+        >
+          {user.role}
+        </Tag>
+      );
+    },
+  },
+  {
+    key: "permissions",
+    header: "Permissions",
+    width: "15%",
     render: (user) => (
-      <Tag variant={user.role === "ADMIN" ? "danger" : "info"} size="sm">
-        {user.role}
+      <Tag variant="default" size="sm" icon={<Lock size={12} />} maxLength={20}>
+        {user.permissions.length} Resources
+      </Tag>
+    ),
+  },
+  {
+    key: "twoFactorEnabled",
+    header: "2FA Status",
+    width: "10%",
+    align: "center",
+    render: (user) => (
+      <Tag
+        variant={user.twoFactorEnabled ? "success" : "default"}
+        size="sm"
+        icon={
+          user.twoFactorEnabled ? (
+            <KeyRound size={12} />
+          ) : (
+            <ShieldAlert size={12} />
+          )
+        }
+      >
+        {user.twoFactorEnabled ? "Active" : "Disabled"}
       </Tag>
     ),
   },
   {
     key: "createdAt",
     header: "Joined",
-    width: "25%",
+    width: "20%",
     render: (user) => (
       <span className="user-table__date">
         {new Date(user.createdAt).toLocaleDateString()}
@@ -55,13 +105,10 @@ export const getUserColumns = (
   },
   {
     key: "actions",
-    header: "Actions",
+    header: "",
     align: "right",
     render: (user) => (
-      <div
-        className="techstack-table__actions"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="user-table__actions" onClick={(e) => e.stopPropagation()}>
         <Button
           variant="ghost"
           size="sm"
