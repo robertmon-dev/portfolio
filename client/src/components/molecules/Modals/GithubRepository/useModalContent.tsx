@@ -1,9 +1,12 @@
-import { useMemo } from 'react';
+import { useMemo } from "react";
 import { GithubUpdateForm } from "./Forms/Update";
 import { GithubLinkForm } from "./Forms/Link";
-import type { GithubActions } from '@/pages/Admin/repos/types';
+import type { GithubActions } from "@/pages/Admin/repos/types";
 
-export const useModalContent = (state: GithubActions['state'], actions: GithubActions['actions']) => {
+export const useModalContent = (
+  state: GithubActions["state"],
+  actions: GithubActions["actions"],
+) => {
   const { activeModal, selectedRepo, isAnyProcessing } = state;
 
   return useMemo(() => {
@@ -15,10 +18,12 @@ export const useModalContent = (state: GithubActions['state'], actions: GithubAc
         component: (
           <GithubUpdateForm
             repo={selectedRepo}
-            onSubmit={(data) => actions.updateRepo(selectedRepo.id, data)}
+            onSubmit={(data) =>
+              actions.updateRepo({ id: selectedRepo.id, ...data })
+            }
             isLoading={isAnyProcessing}
           />
-        )
+        ),
       },
       link: {
         title: "Link Repository to Project",
@@ -26,14 +31,16 @@ export const useModalContent = (state: GithubActions['state'], actions: GithubAc
           <GithubLinkForm
             repo={selectedRepo}
             projects={state.projects}
-            onSubmit={(projectId) => actions.linkToProject({
-              repoId: selectedRepo.id,
-              projectId
-            })}
+            onSubmit={(projectId) =>
+              actions.linkToProject({
+                repoId: selectedRepo.id,
+                projectId,
+              })
+            }
             isLoading={isAnyProcessing}
           />
-        )
-      }
+        ),
+      },
     };
 
     return contentMap[activeModal];

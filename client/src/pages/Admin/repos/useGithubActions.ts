@@ -56,8 +56,8 @@ export const useGithubActions = () => {
 
       closeModals: () => dispatch({ type: GITHUB_ACTIONS.CLOSE_MODALS }),
 
-      updateRepo: (id: string, data: UpdateGithubRepoInput) =>
-        handlers.handleUpdate(mutations, utils, dispatch, id, data),
+      updateRepo: (input: UpdateGithubRepoInput) =>
+        handlers.handleUpdate(mutations, utils, dispatch, input),
 
       linkToProject: (input: LinkRepoProjectInput) =>
         handlers.handleLinkProject(mutations, utils, dispatch, input),
