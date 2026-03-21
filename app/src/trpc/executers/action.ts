@@ -34,6 +34,6 @@ export async function invokeAction<
     const result = await callableAction.call(service, input);
     return result as Awaited<TReturn>;
   } catch (error) {
-    return handleServiceError(error, ctx.logger);
+    throw handleServiceError(error, ctx.logger);
   }
 }
