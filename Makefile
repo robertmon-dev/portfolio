@@ -1,6 +1,16 @@
-COMPOSE = docker-compose -f docker/docker-compose.yml
-YARN    = yarn
-TURBO   = npx turbo
+# ==============================================================================
+# Portfolio Monorepo Makefile
+# ==============================================================================
+
+COMPOSE_FULL  = docker-compose -f docker/docker-compose.yml
+COMPOSE_LOCAL = docker-compose -f docker/docker-compose.local.yml
+YARN          = yarn
+TURBO         = npx turbo
+
+REGISTRY      ?= ghcr.io
+IMAGE_PREFIX  ?= robermon-dev/portfolio
+TAG           ?= latest
+
 CYAN  := \033[36m
 RESET := \033[0m
 
@@ -59,23 +69,42 @@ dashboard: db-generate ## Launch mprocs development dashboard
 	@mprocs
 
 # ==============================================================================
-# Docker (Infrastructure & App)
+# Docker (Full Stack)
 # ==============================================================================
 
 .PHONY: up
-up: ## Start Docker containers (with build)
-	@echo "=> Starting Docker stack..."
-	@$(COMPOSE) up -d --build
-	@echo "=> Stack is up and running."
+up: ## Start Full Docker stack (DB, Redis, App, Client)
+	@echo "=> Starting Full Docker stack..."
+	@$(COMPOSE_FULL) up -d --build
+	@echo "=> Full stack is up and running."
 
 .PHONY: down
-down: ## Stop Docker containers
-	@echo "=> Stopping Docker stack..."
-	@$(COMPOSE) down
+down: ## Stop Full Docker stack
+	@echo "=> Stopping Full Docker stack..."
+	@$(COMPOSE_FULL) down
 
 .PHONY: logs
-logs: ## Follow Docker container logs
-	@$(COMPOSE) logs -f
+logs: ## Follow Full stack logs
+	@$(COMPOSE_FULL) logs -f
+
+# ==============================================================================
+# Infrastructure (DB & Redis only)
+# ==============================================================================
+
+.PHONY: infra-up
+infra-up: ## Start only local infrastructure (Postgres & Redis)
+	@echo "=> Starting local infrastructure..."
+	@$(COMPOSE_LOCAL) up -d
+	@echo "=> Infrastructure is ready."
+
+.PHONY: infra-down
+infra-down: ## Stop local infrastructure
+	@echo "=> Stopping local infrastructure..."
+	@$(COMPOSE_LOCAL) down
+
+.PHONY: infra-logs
+infra-logs: ## Follow infrastructure logs
+	@$(COMPOSE_LOCAL) logs -f
 
 # ==============================================================================
 # Database (Prisma)
@@ -105,3 +134,24 @@ db-studio: ## Launch Prisma Studio
 db-seed: ## Seed the database with initial data
 	@echo "=> Seeding database..."
 	@$(YARN) workspace @portfolio/app prisma db seed
+
+# ==============================================================================
+# CI/CD & Registry (GitHub Actions)
+# ==============================================================================
+
+.PHONY: docker-build-ci
+docker-build-ci: ## Build images for production (CI only)
+	@echo "=> Building production images for $(TAG)..."
+	@docker build -t $(REGISTRY)/$(IMAGE_PREFIX)-app:$(TAG) -f docker/Dockerfile.app .
+	@docker build -t $(REGISTRY)/$(IMAGE_PREFIX)-client:$(TAG) -f docker/Dockerfile.client .
+
+.PHONY: docker-push
+docker-push: ## Push production images to registry
+	@echo "=> Pushing images to $(REGISTRY)..."
+	@docker push $(REGISTRY)/$(IMAGE_PREFIX)-app:$(TAG)
+	@docker push $(REGISTRY)/$(IMAGE_PREFIX)-client:$(TAG)
+
+.PHONY: docker-login
+docker-login: ## Login to GitHub Container Registry
+	@echo "=> Logging in to $(REGISTRY)..."
+	@echo $${GITHUB_TOKEN} | docker login $(REGISTRY) -u $${GITHUB_ACTOR} --password-stdin
