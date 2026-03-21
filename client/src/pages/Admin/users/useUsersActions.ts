@@ -14,7 +14,7 @@ import type {
   UpdateUserInput,
 } from "@portfolio/shared";
 
-export const useUserActions = () => {
+export const useUsersActions = () => {
   const utils = trpc.useUtils();
   const mutations = useUserMutations();
   const [state, dispatch] = useReducer(userReducer, initialState);

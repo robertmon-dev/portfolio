@@ -91,4 +91,17 @@ export class Permission {
       flags: Array.from(flags),
     }));
   }
+
+  public static fromEndpoints(
+    userId: string,
+    role: Role,
+    endpoints: Endpoint[],
+  ): Permission {
+    const mapped = endpoints.map((e) => ({
+      resource: e.name,
+      flags: e.flags.map((f) => f.toUpperCase() as PermissionFlag),
+    }));
+
+    return new Permission(userId, role, mapped);
+  }
 }

@@ -6,12 +6,38 @@ import { Button } from "@/components/atoms/Button/Button";
 import { EntityTable } from "@/components/molecules/EntityTable/EntityTable";
 import { Header } from "@/components/molecules/Sections/Header/Header";
 import { LoadingBar } from "@/components/atoms/LoadingBar/LoadingBar";
-import { Users, UserPlus } from "lucide-react";
+import { Users, UserPlus, ShieldCheck } from "lucide-react";
 import "./Users.scss";
 
 export const UsersAdminPage = () => {
   const { t } = useTranslation();
   const { state, actions } = useUserActions();
+
+  const headerTags = useMemo(() => {
+    const total = state.users.length;
+    const admins = state.users.filter((u) => u.role === "ADMIN").length;
+
+    return [
+      {
+        id: "total",
+        children: t("admin.users.tags.total", {
+          count: total,
+          defaultValue: "{{count}} Users",
+        }),
+        variant: "info" as const,
+        icon: <Users size={12} />,
+      },
+      {
+        id: "admins",
+        children: t("admin.users.tags.admins", {
+          count: admins,
+          defaultValue: "{{count}} Admins",
+        }),
+        variant: "warning" as const,
+        icon: <ShieldCheck size={12} />,
+      },
+    ];
+  }, [state.users, t]);
 
   const columns = useMemo(
     () =>
@@ -26,8 +52,12 @@ export const UsersAdminPage = () => {
   return (
     <div className="projects-management">
       <Header
-        title="User Management"
-        subtitle="Manage administrative and guest users"
+        title={t("admin.users.title", "User Management")}
+        subtitle={t(
+          "admin.users.subtitle",
+          "Manage access levels and profiles",
+        )}
+        tags={headerTags}
         action={
           <Button
             onClick={() => actions.openModal("CREATE")}
@@ -35,7 +65,7 @@ export const UsersAdminPage = () => {
             size="sm"
           >
             <UserPlus size={16} />
-            Add User
+            {t("admin.users.actions.add", "Add User")}
           </Button>
         }
       />
