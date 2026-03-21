@@ -1,11 +1,11 @@
-import { useState, useRef, useEffect } from 'react';
-import { createPortal } from 'react-dom';
-import { ChevronDown, Check } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { getInputWrapperClasses } from '../Input/styles';
-import { bem } from '../../utility/bem';
-import type { SelectProps } from './types';
-import './Select.scss';
+import { useState, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
+import { ChevronDown, Check } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { getInputWrapperClasses } from "../Input/styles";
+import { bem } from "../../utility/bem";
+import type { SelectProps } from "./types";
+import "./Select.scss";
 
 export const Select = ({
   label,
@@ -22,12 +22,16 @@ export const Select = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLDivElement>(null);
 
-  const [dropdownStyles, setDropdownStyles] = useState<{ top: number; left: number; width: number }>({ top: 0, left: 0, width: 0 });
+  const [dropdownStyles, setDropdownStyles] = useState<{
+    top: number;
+    left: number;
+    width: number;
+  }>({ top: 0, left: 0, width: 0 });
 
-  const selectedOption = options.find(opt => opt.value === value);
+  const selectedOption = options.find((opt) => opt.value === value);
 
   const wrapperClasses = getInputWrapperClasses({ error, fullWidth, disabled });
-  const errorMessage = typeof error === 'string' ? error : null;
+  const errorMessage = typeof error === "string" ? error : null;
 
   const updatePosition = () => {
     if (triggerRef.current) {
@@ -43,19 +47,19 @@ export const Select = ({
   useEffect(() => {
     if (isOpen) {
       updatePosition();
-      window.addEventListener('resize', updatePosition);
-      window.addEventListener('scroll', updatePosition, true);
+      window.addEventListener("resize", updatePosition);
+      window.addEventListener("scroll", updatePosition, true);
     }
     return () => {
-      window.removeEventListener('resize', updatePosition);
-      window.removeEventListener('scroll', updatePosition, true);
+      window.removeEventListener("resize", updatePosition);
+      window.removeEventListener("scroll", updatePosition, true);
     };
   }, [isOpen]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Element;
-      const isDropdownClick = target.closest('.select-dropdown-list');
+      const isDropdownClick = target.closest(".select-dropdown-list");
 
       if (
         containerRef.current &&
@@ -67,73 +71,91 @@ export const Select = ({
     };
 
     if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside, true);
+      document.addEventListener("mousedown", handleClickOutside, true);
     }
 
-    return () => document.removeEventListener('mousedown', handleClickOutside, true);
+    return () =>
+      document.removeEventListener("mousedown", handleClickOutside, true);
   }, [isOpen]);
 
   return (
-    <div className={`input-container ${fullWidth ? 'full-width' : ''}`} ref={containerRef}>
+    <div
+      className={`input-container ${fullWidth ? "full-width" : ""}`}
+      ref={containerRef}
+    >
       {label && <label className="input-label">{label}</label>}
 
       <div className="select-custom-container">
         <div
           ref={triggerRef}
-          className={bem(wrapperClasses, ['select-wrapper-custom', isOpen && 'open'])}
+          className={bem(wrapperClasses, [
+            "select-wrapper-custom",
+            isOpen && "open",
+          ])}
           onClick={() => {
             if (!disabled) {
               setIsOpen(!isOpen);
             }
           }}
         >
-          {leftIcon && <span className="input-icon input-icon--left">{leftIcon}</span>}
+          {leftIcon && (
+            <span className="input-icon input-icon--left">{leftIcon}</span>
+          )}
 
           <div className="select-custom-value">
-            {selectedOption ? selectedOption.label : <span className="placeholder">{placeholder}</span>}
+            {selectedOption ? (
+              selectedOption.label
+            ) : (
+              <span className="placeholder">{placeholder}</span>
+            )}
           </div>
 
-          <span className={`select-chevron ${isOpen ? 'rotated' : ''}`}>
+          <span className={`select-chevron ${isOpen ? "rotated" : ""}`}>
             <ChevronDown size={18} />
           </span>
         </div>
 
-        {typeof document !== 'undefined' && createPortal(
-          <AnimatePresence>
-            {isOpen && (
-              <motion.ul
-                className="select-dropdown-list"
-                style={{
-                  position: 'absolute',
-                  top: `${dropdownStyles.top}px`,
-                  left: `${dropdownStyles.left}px`,
-                  width: `${dropdownStyles.width}px`,
-                  zIndex: 20000
-                }}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.2 }}
-              >
-                {options.map((option) => (
-                  <li
-                    key={option.value}
-                    className={bem('select-dropdown-item', [option.value === value && 'active'])}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onChange?.({ target: { value: option.value } });
-                      setIsOpen(false);
-                    }}
-                  >
-                    {option.label}
-                    {option.value === value && <Check size={14} className="check-icon" />}
-                  </li>
-                ))}
-              </motion.ul>
-            )}
-          </AnimatePresence>,
-          document.body
-        )}
+        {typeof document !== "undefined" &&
+          createPortal(
+            <AnimatePresence>
+              {isOpen && (
+                <motion.ul
+                  className="select-dropdown-list"
+                  style={{
+                    position: "absolute",
+                    top: `${dropdownStyles.top}px`,
+                    left: `${dropdownStyles.left}px`,
+                    width: `${dropdownStyles.width}px`,
+                    zIndex: 20000,
+                  }}
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {options.map((option) => (
+                    <li
+                      key={option.value}
+                      className={bem("select-dropdown-item", [
+                        option.value === value && "active",
+                      ])}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onChange?.({ target: { value: option.value } });
+                        setIsOpen(false);
+                      }}
+                    >
+                      {option.label}
+                      {option.value === value && (
+                        <Check size={14} className="check-icon" />
+                      )}
+                    </li>
+                  ))}
+                </motion.ul>
+              )}
+            </AnimatePresence>,
+            document.body,
+          )}
       </div>
 
       {errorMessage && <span className="input-error-msg">{errorMessage}</span>}

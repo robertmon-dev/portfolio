@@ -1,12 +1,17 @@
-import { useState } from 'react';
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/atoms/Button/Button";
 import { Select } from "@/components/atoms/Select/Select";
 import { Link, AlertCircle, Layout } from "lucide-react";
-import type { LinkFormProps } from '../types';
-import '../GithubRepositoryModal.scss'
+import type { LinkFormProps } from "../types";
+import "../GithubRepositoryModal.scss";
 
-export const GithubLinkForm = ({ repo, projects, onSubmit, isLoading }: LinkFormProps) => {
+export const GithubLinkForm = ({
+  repo,
+  projects,
+  onSubmit,
+  isLoading,
+}: LinkFormProps) => {
   const { t } = useTranslation();
   const [selectedId, setSelectedId] = useState<string>(repo.project?.id ?? "");
 
@@ -15,9 +20,9 @@ export const GithubLinkForm = ({ repo, projects, onSubmit, isLoading }: LinkForm
     if (selectedId) onSubmit(selectedId);
   };
 
-  const projectOptions = projects.map(p => ({
+  const projectOptions = projects.map((p) => ({
     value: p.id,
-    label: p.title
+    label: p.title,
   }));
 
   return (
@@ -30,9 +35,12 @@ export const GithubLinkForm = ({ repo, projects, onSubmit, isLoading }: LinkForm
         <Select
           label={t("admin.github.link.label", "Select Project")}
           value={selectedId}
-          onChange={(e) => setSelectedId(e.target.value)}
+          onChange={(e) => setSelectedId(String(e.target.value))}
           options={projectOptions}
-          placeholder={t("admin.github.link.placeholder", "Choose a project...")}
+          placeholder={t(
+            "admin.github.link.placeholder",
+            "Choose a project...",
+          )}
           leftIcon={<Layout size={18} />}
           fullWidth
           required
