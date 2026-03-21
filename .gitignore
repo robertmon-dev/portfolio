@@ -1,12 +1,20 @@
+# Build outputs
+dist/
+build/
+out/
+**/dist/
+**/build/
+.turbo/
+
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Environment
 .env
-./turbo
-.turbo
-.turbo/*
-./app/dist/
-./client/dist/
-./shared/dist/
-./dist/
-*.log
+.env.*
+!.env.example
+
 mprocs.yaml
 node_modules/
 .node_modules/
