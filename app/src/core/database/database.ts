@@ -20,9 +20,7 @@ export class Database implements Persisting {
     const sslConfig = config.DB_TLS_ENABLED
       ? {
           rejectUnauthorized: config.NODE_ENV === "production",
-          ca: config.DB_CA_PATH
-            ? fs.readFileSync(config.DB_CA_PATH).toString()
-            : undefined,
+          ca: config.DB_CA_PATH ? this.loadCA(config.DB_CA_PATH) : undefined,
         }
       : false;
 
@@ -79,6 +77,16 @@ export class Database implements Persisting {
     }
 
     return Database.instance;
+  }
+
+  private loadCA(path: string): string | undefined {
+    try {
+      if (fs.existsSync(path)) return fs.readFileSync(path, "utf8");
+      this.logger.warn(`CA file not found at ${path}`);
+    } catch (err) {
+      this.logger.error(`Failed to read CA file`, err);
+    }
+    return undefined;
   }
 
   public async connect(): Promise<void> {
