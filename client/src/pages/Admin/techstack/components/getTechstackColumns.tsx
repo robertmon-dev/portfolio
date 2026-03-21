@@ -1,41 +1,77 @@
 import { Column } from "@/components/molecules/EntityTable/types";
 import { Tag } from "@/components/atoms/Tag/Tag";
 import { Button } from "@/components/atoms/Button/Button";
-import { Trash2, Edit2, Layers } from "lucide-react";
+import { Trash2, Edit2, Layers, Link2 } from "lucide-react";
 import { TechStackWithRelations } from "@portfolio/shared";
 
 export const getTechStackColumns = (
   onEdit: (techStack: TechStackWithRelations) => void,
   onDelete: (id: string) => void,
+  onLink: (techStack: TechStackWithRelations) => void,
+  onUnlink: (techStackId: string, projectId: string) => void,
   processingId: string | null,
 ): Column<TechStackWithRelations>[] => [
   {
     key: "name",
-    header: "Technology Name",
-    width: "40%",
+    header: "Technology",
+    width: "25%", // Zmniejszone z 35%
     render: (techStack) => (
-      <div className="flex items-center gap-3">
-        <div className="flex-shrink-0 w-8 h-8 rounded-md bg-tn-surface-light flex items-center justify-center text-primary opacity-80">
-          <Layers size={16} />
-        </div>
-        <span className="font-bold text-sm">{techStack.name}</span>
+      <div className="techstack-table__name-row">
+        <Layers size={14} className="techstack-table__type-icon" />
+
+        <span className="techstack-table__title" title={techStack.name}>
+          {techStack.name}
+        </span>
+
+        <div
+          className="techstack-table__gem"
+          style={{
+            ["--gem-color" as any]: techStack.color?.startsWith("#")
+              ? techStack.color
+              : `#${techStack.color}` || "var(--primary)",
+          }}
+        />
       </div>
     ),
   },
   {
-    key: "usage",
+    key: "category",
+    header: "Category",
+    width: "15%",
+    render: (techStack) => (
+      <Tag variant="default" size="sm">
+        {techStack.category}
+      </Tag>
+    ),
+  },
+  {
+    key: "projects",
     header: "Linked Projects",
-    width: "30%",
-    align: "center",
-    render: (techStack) => {
-      const count = techStack.projects?.length || 0;
+    width: "45%",
+    render: (techStack) => (
+      <div className="techstack-table__projects">
+        {techStack.projects?.map((project) => (
+          <Tag
+            key={project.id}
+            variant="info"
+            size="sm"
+            maxLength={15}
+            disabled={processingId === techStack.id}
+            onDismiss={
+              processingId === techStack.id
+                ? undefined
+                : () => onUnlink(techStack.id, project.id)
+            }
+          >
+            {project.title}
+          </Tag>
+        ))}
 
-      return (
-        <Tag variant={count > 0 ? "info" : "default"} size="sm">
-          {count} {count === 1 ? "Project" : "Projects"}
-        </Tag>
-      );
-    },
+        {(!techStack.projects || techStack.projects.length === 0) && (
+          <span className="techstack-table__empty">No projects linked</span>
+        )}
+      </div>
+    ),
   },
   {
     key: "actions",
@@ -43,15 +79,26 @@ export const getTechStackColumns = (
     align: "right",
     render: (techStack) => (
       <div
-        className="flex justify-end gap-2"
+        className="techstack-table__actions"
         onClick={(e) => e.stopPropagation()}
       >
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => onLink(techStack)}
+          isIcon
+          title="Link Project"
+          disabled={processingId === techStack.id}
+        >
+          <Link2 size={14} />
+        </Button>
         <Button
           variant="ghost"
           size="sm"
           onClick={() => onEdit(techStack)}
           isIcon
           title="Edit Technology"
+          disabled={processingId === techStack.id}
         >
           <Edit2 size={14} />
         </Button>

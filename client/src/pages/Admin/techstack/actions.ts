@@ -5,6 +5,8 @@ import type { Utils } from "@/lib/trpc/types";
 import type {
   CreateTechStackInput,
   UpdateTechStackInput,
+  UnlinkTechStackProjectInput,
+  LinkTechStackProjectInput,
 } from "@portfolio/shared";
 import type { TechStackMutations } from "../useMutations";
 
@@ -65,6 +67,56 @@ export const handleDelete = async (
     dispatch({ type: TECH_STACK_ACTIONS.CLOSE_MODALS });
 
     await utils.techStack.list.invalidate();
+  } catch (error) {
+    notifyError(error);
+  } finally {
+    dispatch({ type: TECH_STACK_ACTIONS.SET_PROCESSING, payload: null });
+  }
+};
+
+export const handleLink = async (
+  mutations: TechStackMutations,
+  utils: Utils,
+  dispatch: React.Dispatch<TechStackAction>,
+  data: LinkTechStackProjectInput,
+) => {
+  dispatch({
+    type: TECH_STACK_ACTIONS.SET_PROCESSING,
+    payload: data.techStackId,
+  });
+  try {
+    await mutations.linkProject.mutateAsync(data);
+    toast.success("Technology linked to project successfully");
+
+    await Promise.all([
+      utils.techStack.list.invalidate(),
+      utils.projects.list.invalidate(),
+    ]);
+  } catch (error) {
+    notifyError(error);
+  } finally {
+    dispatch({ type: TECH_STACK_ACTIONS.SET_PROCESSING, payload: null });
+  }
+};
+
+export const handleUnlink = async (
+  mutations: TechStackMutations,
+  utils: Utils,
+  dispatch: React.Dispatch<TechStackAction>,
+  data: UnlinkTechStackProjectInput,
+) => {
+  dispatch({
+    type: TECH_STACK_ACTIONS.SET_PROCESSING,
+    payload: data.techStackId,
+  });
+  try {
+    await mutations.unlinkProject.mutateAsync(data);
+    toast.success("Technology unlinked from project");
+
+    await Promise.all([
+      utils.techStack.list.invalidate(),
+      utils.projects.list.invalidate(),
+    ]);
   } catch (error) {
     notifyError(error);
   } finally {

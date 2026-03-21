@@ -5,6 +5,7 @@ import { CreateTechStackService } from "../../services/techStack/Create";
 import { UpdateTechStackService } from "../../services/techStack/Update";
 import { DeleteTechStackService } from "../../services/techStack/Delete";
 import { LinkTechStackProjectService } from "../../services/techStack/Link";
+import { UnlinkTechStackProjectService } from "../../services/techStack/Unlink";
 import {
   CreateTechStackSchema,
   UpdateTechStackSchema,
@@ -39,5 +40,11 @@ export const techStackPrivateRouter = router({
     .input(LinkTechStackProjectSchema)
     .mutation(async ({ ctx, input }) =>
       executeService(LinkTechStackProjectService, ctx, input),
+    ),
+
+  unlinkProject: protectedProcedure
+    .input(LinkTechStackProjectSchema)
+    .mutation(async ({ ctx, input }) =>
+      executeService(UnlinkTechStackProjectService, ctx, input),
     ),
 });

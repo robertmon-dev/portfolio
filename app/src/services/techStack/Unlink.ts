@@ -1,26 +1,27 @@
 import { BaseService } from "../service";
-import { TechStackSchema, type TechStack } from "@portfolio/shared";
+import {
+  TechStackSchema,
+  type TechStack,
+  type LinkTechStackProjectInput,
+} from "@portfolio/shared";
 import type { TechStackProjectLinking } from "./types";
 
-export class LinkTechStackProjectService
+export class UnlinkTechStackProjectService
   extends BaseService
   implements TechStackProjectLinking
 {
-  public async execute(input: {
-    techStackId: string;
-    projectId: string;
-  }): Promise<TechStack> {
+  public async execute(input: LinkTechStackProjectInput): Promise<TechStack> {
     const { techStackId, projectId } = input;
 
     this.logger.info(
-      `Linking TechStack ${techStackId} to project ${projectId}`,
+      `Unlinking TechStack ${techStackId} from project ${projectId}`,
     );
 
     const updatedTechStack = await this.db.techStack.update({
       where: { id: techStackId },
       data: {
         projects: {
-          connect: { id: projectId },
+          disconnect: { id: projectId },
         },
       },
     });
@@ -32,7 +33,7 @@ export class LinkTechStackProjectService
     ]);
 
     this.logger.info(
-      `Successfully linked TechStack ${techStackId} to project ${projectId}`,
+      `Successfully unlinked TechStack ${techStackId} from project ${projectId}`,
     );
 
     return TechStackSchema.parse(updatedTechStack);

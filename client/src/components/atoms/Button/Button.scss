@@ -26,9 +26,31 @@
     justify-content: center;
 
     svg {
+      transform: translateY(1px);
+      flex-shrink: 0;
       display: block;
       stroke-width: 2px;
     }
+  }
+
+  .btn-label {
+    display: flex;
+    align-items: center;
+    gap: inherit;
+    line-height: 1;
+
+    svg {
+      transform: translateY(1px);
+      flex-shrink: 0;
+    }
+  }
+
+  .btn-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
   }
 
   &:disabled,
@@ -326,7 +348,10 @@
       height: 3rem;
     }
 
+    .btn-icon svg,
+
     svg {
+      transform: translateY(0);
       width: 1.25em;
       height: 1.25em;
       stroke-width: 2px;

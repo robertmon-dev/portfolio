@@ -7,7 +7,7 @@ export const TECH_STACK_ACTIONS = {
   CLOSE_MODALS: "TECH_STACK/CLOSE_MODALS",
 } as const;
 
-export type TechStackModalType = "CREATE" | "UPDATE" | "DELETE" | null;
+export type TechStackModalType = "CREATE" | "UPDATE" | "DELETE" | "LINK" | null;
 
 export interface TechStackState {
   processingId: string | null;

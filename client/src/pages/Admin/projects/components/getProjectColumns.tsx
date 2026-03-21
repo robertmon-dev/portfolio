@@ -3,102 +3,146 @@ import { Column } from "@/components/molecules/EntityTable/types";
 import { Tag } from "@/components/atoms/Tag/Tag";
 import { Button } from "@/components/atoms/Button/Button";
 import { Trash2, Edit2, Star, EyeOff, Eye, Github } from "lucide-react";
+import { TFunction } from "i18next";
 
 export const getProjectColumns = (
+  t: TFunction,
   onEdit: (project: ProjectWithRelations) => void,
   onDelete: (id: string) => void,
+  onUnlinkTech: (projectId: string, techStackId: string) => void,
+  onUnlinkRepo: (repoId: string) => void,
   processingId: string | null,
 ): Column<ProjectWithRelations>[] => [
   {
     key: "title",
-    header: "Project",
-    width: "30%",
+    header: t("admin.projects.table.project"),
+    width: "25%",
     render: (project) => (
-      <div className="flex flex-col gap-0.5">
-        <span className="font-bold text-sm">{project.title}</span>
-        <span className="text-xs text-muted opacity-70">/{project.slug}</span>
+      <div className="projects-table__title-col">
+        <span className="projects-table__title" title={project.title}>
+          {project.title}
+        </span>
+        <span className="projects-table__slug" title={`/${project.slug}`}>
+          /{project.slug}
+        </span>
       </div>
     ),
   },
   {
     key: "isFeatured",
-    header: "Featured",
+    header: t("admin.projects.table.featured"),
     width: "8%",
     align: "center",
     render: (project) => (
-      <div className="flex justify-center">
+      <div className="projects-table__featured-col">
         {project.isFeatured ? (
-          <span className="text-sm">⭐</span>
+          <span className="projects-table__star--active">⭐</span>
         ) : (
-          <Star size={18} className="text-muted opacity-10" />
+          <Star size={18} className="projects-table__star--inactive" />
         )}
       </div>
     ),
   },
   {
     key: "status",
-    header: "Status",
+    header: t("admin.projects.table.status"),
     width: "12%",
     render: (project) => (
-      <div className="flex items-center gap-2">
+      <div className="projects-table__status-col">
         {project.isVisible ? (
           <Tag variant="success" size="sm" icon={<Eye size={12} />}>
-            Visible
+            {t("common.visible", "Visible")}
           </Tag>
         ) : (
           <Tag variant="default" size="sm" icon={<EyeOff size={12} />}>
-            Draft
+            {t("common.draft", "Draft")}
           </Tag>
         )}
       </div>
     ),
   },
   {
+    key: "github",
+    header: t("admin.projects.table.repository", "Repository"),
+    width: "15%",
+    render: (project) =>
+      project.githubRepo ? (
+        <Tag
+          variant="info"
+          size="sm"
+          icon={<Github size={12} />}
+          onDismiss={
+            processingId === project.id
+              ? undefined
+              : () => onUnlinkRepo(project.githubRepo!.id)
+          }
+          disabled={processingId === project.id}
+        >
+          <span
+            className="projects-table__github-text"
+            title={project.githubRepo.name}
+          >
+            {project.githubRepo.name}
+          </span>
+        </Tag>
+      ) : (
+        <span className="projects-table__empty">
+          {t("admin.projects.table.notLinked", "Not linked")}
+        </span>
+      ),
+  },
+  {
     key: "techStack",
-    header: "Tech Stack",
-    width: "20%",
+    header: t("admin.projects.table.techStack", "Tech Stack"),
+    width: "30%",
     render: (project) => {
       const stack = project.techStack || [];
+
       if (stack.length === 0)
-        return <span className="text-xs text-muted">None</span>;
+        return (
+          <span className="projects-table__empty">
+            {t("admin.projects.table.noTechStack", "No tech stack")}
+          </span>
+        );
 
       return (
-        <div className="flex flex-wrap items-center gap-1">
-          {stack.slice(0, 2).map((tech) => (
-            <Tag key={tech.id} variant="info" size="sm">
+        <div className="projects-table__techstack-col">
+          {stack.map((tech) => (
+            <Tag
+              key={tech.id}
+              variant="default"
+              size="sm"
+              onDismiss={
+                processingId === project.id
+                  ? undefined
+                  : () => onUnlinkTech(project.id, tech.id)
+              }
+              disabled={processingId === project.id}
+              style={
+                tech.color
+                  ? {
+                      borderColor: `${tech.color}40`,
+                      color: tech.color,
+                      backgroundColor: `${tech.color}10`,
+                    }
+                  : {}
+              }
+            >
               {tech.name}
             </Tag>
           ))}
-          {stack.length > 2 && (
-            <span className="text-xs text-muted ml-1">+{stack.length - 2}</span>
-          )}
         </div>
       );
     },
   },
   {
-    key: "github",
-    header: "Repository",
-    width: "15%",
-    render: (project) =>
-      project.githubRepo ? (
-        <div className="flex items-center gap-1.5 text-sm text-tn-blue">
-          <Github size={14} />
-          <span className="truncate max-w-[80px]">
-            {project.githubRepo.name}
-          </span>
-        </div>
-      ) : (
-        <span className="text-xs text-muted">Not linked</span>
-      ),
-  },
-  {
     key: "actions",
-    header: "Actions",
+    header: t("admin.projects.table.actions", "Actions"),
     align: "right",
+    width: "10%",
     render: (project) => (
       <div
-        className="flex flex-row items-center justify-end gap-2 whitespace-nowrap"
+        className="projects-table__actions"
         onClick={(e) => e.stopPropagation()}
       >
         <Button
@@ -106,7 +150,8 @@ export const getProjectColumns = (
           size="sm"
           isIcon
           onClick={() => onEdit(project)}
-          title="Edit Project"
+          title={t("common.edit", "Edit")}
+          disabled={processingId === project.id}
         >
           <Edit2 size={14} />
         </Button>
@@ -116,7 +161,7 @@ export const getProjectColumns = (
           isIcon
           onClick={() => onDelete(project.id)}
           isLoading={processingId === project.id}
-          title="Delete Project"
+          title={t("common.delete", "Delete")}
         >
           <Trash2 size={14} />
         </Button>

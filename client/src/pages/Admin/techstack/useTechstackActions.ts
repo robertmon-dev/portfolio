@@ -12,6 +12,8 @@ import type {
   TechStackWithRelations,
   CreateTechStackInput,
   UpdateTechStackInput,
+  LinkTechStackProjectInput,
+  UnlinkTechStackProjectInput,
 } from "@portfolio/shared";
 
 export const useTechStackActions = () => {
@@ -49,6 +51,12 @@ export const useTechStackActions = () => {
 
       deleteTechStack: (id: string) =>
         handlers.handleDelete(mutations, utils, dispatch, id),
+
+      linkProject: (data: LinkTechStackProjectInput) =>
+        handlers.handleLink(mutations, utils, dispatch, data),
+
+      unlinkProject: (data: UnlinkTechStackProjectInput) =>
+        handlers.handleUnlink(mutations, utils, dispatch, data),
     }),
     [mutations, utils],
   );

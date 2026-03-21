@@ -12,6 +12,15 @@ export interface TechStackFormProps {
   isLoading?: boolean;
 }
 
+export interface LinkTechStackFormProps {
+  techStack: TechStackWithRelations;
+  projects: { id: string; title: string }[];
+  onSubmit: (projectId: string) => void;
+  onUnlink: (techStackId: string, projectId: string) => void;
+  onCancel: () => void;
+  isLoading?: boolean;
+}
+
 export interface TechStackModalProps {
   state: TechStackActions["state"];
   actions: TechStackActions["actions"];

@@ -8,11 +8,15 @@ import { Header } from "@/components/molecules/Sections/Header/Header";
 import { LoadingBar } from "@/components/atoms/LoadingBar/LoadingBar";
 import { ProjectsModals } from "@/components/molecules/Modals/Project/Modal";
 import { Star, Eye, Code2, Plus } from "lucide-react";
+import { useTechStackActions } from "@/pages/Admin/techstack/useTechstackActions";
+import { useGithubActions } from "../repos/useGithubActions";
 import "./Projects.scss";
 
 export const ProjectsAdminPage = () => {
   const { t } = useTranslation();
   const { state, actions } = useProjectActions();
+  const { actions: techStackActions } = useTechStackActions();
+  const { actions: githubActions } = useGithubActions();
 
   const headerTags = useMemo(() => {
     const total = state.projects.length;
@@ -50,10 +54,18 @@ export const ProjectsAdminPage = () => {
     ];
   }, [state.projects, t]);
 
-  const columns = getProjectColumns(
-    (project) => actions.openModal("UPDATE", project.id),
-    (id) => actions.deleteProject(id),
-    state.processingId,
+  const columns = useMemo(
+    () =>
+      getProjectColumns(
+        t,
+        (project) => actions.openModal("UPDATE", project.id),
+        (id) => actions.deleteProject(id),
+        (projectId, techStackId) =>
+          techStackActions.unlinkProject({ techStackId, projectId }),
+        (repoId) => githubActions.unlinkFromProject(repoId),
+        state.processingId,
+      ),
+    [t, actions, techStackActions, githubActions, state.processingId],
   );
 
   return (

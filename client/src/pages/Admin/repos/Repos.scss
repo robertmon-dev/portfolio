@@ -29,5 +29,55 @@
     flex-direction: column;
     padding: $spacing-md;
     width: 100%;
+
+    min-width: 0;
+    overflow-x: auto;
+  }
+}
+
+.github-table {
+  &__name-col {
+    min-width: 0;
+    width: 100%;
+  }
+
+  &__repo-name {
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: $text-main;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__stars {
+    font-size: 0.875rem;
+    white-space: nowrap;
+  }
+
+  &__project-col {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__empty {
+    font-size: 0.75rem;
+    color: $text-muted;
+    opacity: 0.5;
+    font-style: italic;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    flex-wrap: nowrap;
+  }
+
+  &__icon--unlink {
+    color: $danger;
   }
 }

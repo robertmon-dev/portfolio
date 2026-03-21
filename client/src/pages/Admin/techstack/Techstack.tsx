@@ -8,6 +8,7 @@ import { Header } from "@/components/molecules/Sections/Header/Header";
 import { LoadingBar } from "@/components/atoms/LoadingBar/LoadingBar";
 import { TechStackModals } from "@/components/molecules/Modals/TechStack/Modal";
 import { Plus, Layers } from "lucide-react";
+import "./Techstack.scss";
 
 export const TechStackAdminPage = () => {
   const { t } = useTranslation();
@@ -34,6 +35,9 @@ export const TechStackAdminPage = () => {
       getTechStackColumns(
         (techStack) => actions.openModal("UPDATE", techStack.id),
         (id) => actions.openModal("DELETE", id),
+        (techStack) => actions.openModal("LINK", techStack.id),
+        (techStackId, projectId) =>
+          actions.unlinkProject({ techStackId, projectId }),
         state.processingId,
       ),
     [actions, state.processingId],

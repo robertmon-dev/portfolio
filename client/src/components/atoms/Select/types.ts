@@ -1,8 +1,8 @@
 import React from "react";
 
 export interface SelectOption {
-  value: string | number;
-  label: string;
+  readonly value: string | number;
+  readonly label: string;
 }
 
 export interface SelectProps extends Omit<
@@ -10,7 +10,7 @@ export interface SelectProps extends Omit<
   "value" | "onChange"
 > {
   label?: string;
-  options: SelectOption[];
+  options: readonly SelectOption[];
   value?: string | number;
 
   onChange?: (event: {

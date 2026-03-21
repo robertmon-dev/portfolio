@@ -1,7 +1,9 @@
 import { useMemo } from "react";
-import { useTranslation } from "react-i18next"; // Dodajemy t
+import { useTranslation } from "react-i18next";
 import { TechStackForm } from "./Forms/Main";
+import { LinkTechStackForm } from "./Forms/Link";
 import { ConfirmDialog } from "../../ConfirmDialog/ConfirmDialog";
+import { useProjectActions } from "@/pages/Admin/projects/useProjectActions";
 import type { TechStackActions } from "@/pages/Admin/techstack/types";
 
 export const useModalContent = (
@@ -11,12 +13,15 @@ export const useModalContent = (
   const { t } = useTranslation();
   const { activeModal, selectedTechStack, isAnyProcessing } = state;
 
+  const { state: projectState } = useProjectActions();
+  const projects = projectState.projects;
+
   return useMemo(() => {
     if (!activeModal) return null;
 
     const contentMap = {
       CREATE: {
-        title: t("admin.techStack.modals.create.title", "Add New Technology"),
+        title: t("admin.techStack.modals.create.title"),
         component: (
           <TechStackForm
             onSubmit={actions.createTechStack}
@@ -41,8 +46,28 @@ export const useModalContent = (
           />
         ) : null,
       },
+      LINK: {
+        title: t("admin.techStack.modals.link.title"),
+        component: selectedTechStack ? (
+          <LinkTechStackForm
+            techStack={selectedTechStack}
+            projects={projects}
+            onSubmit={(projectId) =>
+              actions.linkProject({
+                techStackId: selectedTechStack.id,
+                projectId,
+              })
+            }
+            onUnlink={(techStackId, projectId) =>
+              actions.unlinkProject({ techStackId, projectId })
+            }
+            onCancel={actions.closeModals}
+            isLoading={isAnyProcessing || projectState.isLoading}
+          />
+        ) : null,
+      },
       DELETE: {
-        title: t("admin.techStack.modals.delete.title", "Delete Technology"),
+        title: t("admin.techStack.modals.delete.title"),
         component: selectedTechStack ? (
           <ConfirmDialog
             message={t("admin.techStack.modals.delete.message", {
@@ -62,5 +87,13 @@ export const useModalContent = (
     };
 
     return contentMap[activeModal as keyof typeof contentMap];
-  }, [activeModal, selectedTechStack, isAnyProcessing, actions, t]);
+  }, [
+    activeModal,
+    selectedTechStack,
+    isAnyProcessing,
+    actions,
+    t,
+    projects,
+    projectState.isLoading,
+  ]);
 };

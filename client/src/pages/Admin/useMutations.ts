@@ -23,6 +23,7 @@ export const useTechStackMutations = () => {
     update: trpc.admin.techStack.update.useMutation(),
     delete: trpc.admin.techStack.delete.useMutation(),
     linkProject: trpc.admin.techStack.linkProject.useMutation(),
+    unlinkProject: trpc.admin.techStack.unlinkProject.useMutation(),
   };
 };
 

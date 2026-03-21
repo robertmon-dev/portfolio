@@ -40,7 +40,7 @@ const App = () => {
             />
 
             <Route
-              path="tech-stack"
+              path="techstack"
               element={
                 <Guard requiredPermission="techstack:*">
                   <TechStackAdminPage />

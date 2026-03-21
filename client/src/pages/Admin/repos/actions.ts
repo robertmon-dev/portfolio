@@ -99,6 +99,7 @@ export const handleUnlinkProject = async (
     await Promise.all([
       utils.githubRepo.listRepos.invalidate(),
       utils.githubStats.getStats.invalidate(),
+      utils.projects.list.invalidate(),
     ]);
   } catch (error) {
     notifyError(error);

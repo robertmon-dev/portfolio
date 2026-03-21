@@ -1,8 +1,73 @@
+@use "sass:color";
+
 .tech-stack-form {
   display: flex;
   flex-direction: column;
   gap: $spacing-lg;
-  padding: $spacing-sm 0;
+  padding: $spacing-sm $spacing-none;
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__label {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    margin-bottom: $spacing-sm;
+    color: $primary;
+    font-size: 0.875rem;
+    font-weight: 600;
+
+    svg {
+      opacity: 0.8;
+    }
+  }
+
+  &__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-sm;
+    padding: $spacing-md;
+    border-radius: $radius-md;
+    background-color: color.change($bg-sidebar, $alpha: 0.3);
+    border: 1px solid $border-color;
+    min-height: 50px;
+    align-items: center;
+  }
+
+  &__empty {
+    font-size: 0.75rem;
+    color: $text-muted;
+    font-style: italic;
+  }
+
+  &__divider {
+    height: 1px;
+    background-color: $border-color;
+    opacity: 0.3;
+    margin: $spacing-md $spacing-none;
+  }
+
+  &__help {
+    font-size: 0.875rem;
+    color: $text-muted;
+    line-height: 1.5;
+    margin-bottom: $spacing-md;
+  }
+
+  &__alert {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-md;
+    background-color: color.change($danger, $alpha: 0.1);
+    color: $danger;
+    border-radius: $radius-md;
+    font-size: 0.875rem;
+    margin-top: $spacing-md;
+  }
 
   &__grid {
     display: grid;
@@ -18,10 +83,73 @@
     display: flex;
     justify-content: flex-end;
     gap: $spacing-sm;
-    margin-top: $spacing-md;
+    margin-top: $spacing-lg;
     padding-top: $spacing-md;
-    border-top: 1px solid var(--border-color);
+    border-top: 1px solid $border-color;
   }
+
+  &__color-section {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-md;
+    align-items: center;
+    padding: $spacing-md;
+    background-color: color.change($tn-bg-night, $alpha: 0.5);
+    border-radius: $radius-md;
+    border: 1px dashed $border-color;
+    margin-top: $spacing-sm;
+  }
+
+  &__preview-container {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+  }
+
+  &__preview-label {
+    font-size: 0.7rem;
+    color: $text-muted;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+  }
+
+  &__gem-wrapper {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-sm $spacing-md;
+    background: $tn-bg-storm;
+    border-radius: $radius-sm;
+    border: 1px solid color.change($border-color, $alpha: 0.2);
+    box-shadow: $shadow-surface-sm;
+  }
+
+  &__gem-name {
+    font-family: $font-stack;
+    font-size: 0.9rem;
+    color: $text-main;
+    font-weight: 500;
+  }
+}
+
+.techstack-table__gem--large {
+  width: 16px !important;
+  height: 16px !important;
+  margin-top: 0 !important;
+
+  &::after {
+    background: radial-gradient(
+      circle at 35% 35%,
+      rgba(255, 255, 255, 0.6) 0%,
+      rgba(255, 255, 255, 0) 70%
+    ) !important;
+  }
+
+  box-shadow:
+    0 0 15px var(--gem-color),
+    inset -2px -2px 3px rgba(0, 0, 0, 0.3) !important;
 }
 
 @media (max-width: 600px) {

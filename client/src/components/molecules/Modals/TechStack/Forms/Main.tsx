@@ -1,9 +1,12 @@
+import { useMemo } from "react"; // Dodajemy useMemo
 import { useTranslation } from "react-i18next";
 import { Input } from "@/components/atoms/Input/Input";
+import { Select } from "@/components/atoms/Select/Select";
 import { Button } from "@/components/atoms/Button/Button";
 import { useTechStackForm } from "./useTechstackForm";
 import { TechStackFormProps } from "../types";
 import { Save, X, Tag, Palette, Box } from "lucide-react";
+import { TECH_STACK_CATEGORIES } from "@portfolio/shared";
 import "../TechStackModal.scss";
 
 export const TechStackForm = ({
@@ -13,6 +16,15 @@ export const TechStackForm = ({
   isLoading,
 }: TechStackFormProps) => {
   const { t } = useTranslation();
+
+  const categoryOptions = useMemo(
+    () =>
+      TECH_STACK_CATEGORIES.map((category) => ({
+        value: category,
+        label: t(`admin.techStack.categories.${category}`, category),
+      })),
+    [t],
+  );
 
   const { formData, errors, handleChange, handleSubmit } = useTechStackForm({
     initialData,
@@ -34,27 +46,45 @@ export const TechStackForm = ({
           disabled={isLoading}
         />
 
-        <Input
+        <Select
           label={t("admin.techStack.form.category.label")}
-          placeholder={t("admin.techStack.form.category.placeholder")}
+          options={categoryOptions}
           value={formData.category}
-          onChange={(e) => handleChange("category", e.target.value)}
+          onChange={(e) => handleChange("category", e.target.value as any)}
           error={errors.category}
           leftIcon={<Box size={18} />}
           fullWidth
+          placeholder={t("admin.techStack.form.category.placeholder")}
           disabled={isLoading}
         />
 
-        <Input
-          label={t("admin.techStack.form.color.label")}
-          type="color"
-          value={formData.color}
-          onChange={(e) => handleChange("color", e.target.value)}
-          error={errors.color}
-          leftIcon={<Palette size={18} />}
-          fullWidth
-          disabled={isLoading}
-        />
+        <div className="tech-stack-form__color-section">
+          <Input
+            label={t("admin.techStack.form.color.label")}
+            type="color"
+            value={formData.color || "#7aa2f7"} // Fallback do Twojego tn-blue
+            onChange={(e) => handleChange("color", e.target.value)}
+            error={errors.color}
+            leftIcon={<Palette size={18} />}
+            disabled={isLoading}
+            fullWidth
+          />
+
+          <div className="tech-stack-form__preview-container">
+            <span className="tech-stack-form__preview-label">Live Preview</span>
+            <div className="tech-stack-form__gem-wrapper">
+              <div
+                className="techstack-table__gem techstack-table__gem--large"
+                style={{
+                  ["--gem-color" as any]: formData.color || "#7aa2f7",
+                }}
+              />
+              <span className="tech-stack-form__gem-name">
+                {formData.name || "Technology"}
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="tech-stack-form__actions">
@@ -69,8 +99,8 @@ export const TechStackForm = ({
         <Button type="submit" variant="primary" isLoading={isLoading}>
           <Save size={18} />{" "}
           {initialData
-            ? t("admin.techStack.form.actions.update", "Update")
-            : t("admin.techStack.form.actions.create", "Create")}
+            ? t("admin.techStack.form.actions.update")
+            : t("admin.techStack.form.actions.create")}
         </Button>
       </div>
     </form>

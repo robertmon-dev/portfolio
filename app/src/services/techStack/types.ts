@@ -2,8 +2,8 @@ import {
   TechStack,
   TechStackWithRelations,
   CreateTechStackInput,
-  UpdateTechStackInput
-} from '@portfolio/shared';
+  UpdateTechStackInput,
+} from "@portfolio/shared";
 
 export interface TechStackListing {
   execute(): Promise<TechStackWithRelations[]>;
@@ -18,7 +18,10 @@ export interface TechStackCreating {
 }
 
 export interface TechStackUpdating {
-  execute(input: { id: string; data: Omit<UpdateTechStackInput, 'id'> }): Promise<TechStack>;
+  execute(input: {
+    id: string;
+    data: Omit<UpdateTechStackInput, "id">;
+  }): Promise<TechStack>;
 }
 
 export interface TechStackDeleting {
@@ -26,5 +29,8 @@ export interface TechStackDeleting {
 }
 
 export interface TechStackProjectLinking {
-  execute(input: { techStackId: string; projectId: string }): Promise<TechStack>;
+  execute(input: {
+    techStackId: string;
+    projectId: string;
+  }): Promise<TechStack>;
 }
