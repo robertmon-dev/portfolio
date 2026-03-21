@@ -13,12 +13,13 @@ export const handleUpdate = async (
   mutations: GithubMutations,
   utils: Utils,
   dispatch: React.Dispatch<GithubAction>,
-  id: string,
-  data: UpdateGithubRepoInput,
+  input: UpdateGithubRepoInput,
 ) => {
-  dispatch({ type: GITHUB_ACTIONS.SET_PROCESSING, payload: id });
+  dispatch({ type: GITHUB_ACTIONS.SET_PROCESSING, payload: input.id });
+
   try {
-    await mutations.update.mutateAsync({ id, data });
+    await mutations.update.mutateAsync(input);
+
     toast.success("Repo updated successfully");
     dispatch({ type: GITHUB_ACTIONS.CLOSE_MODALS });
 
