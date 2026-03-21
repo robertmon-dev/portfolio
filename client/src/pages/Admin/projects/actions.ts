@@ -36,6 +36,8 @@ export const handleUpdate = async (
     await mutations.update.mutateAsync({ ...data });
     toast.success("Project updated successfully");
 
+    console.log(data);
+
     dispatch({ type: PROJECT_ACTIONS.SELECT_PROJECT, payload: null });
     dispatch({ type: PROJECT_ACTIONS.CLOSE_MODALS });
 
@@ -77,7 +79,7 @@ export const handleRestore = async (
 ) => {
   dispatch({ type: PROJECT_ACTIONS.SET_PROCESSING, payload: id });
   try {
-    await mutations.update.mutateAsync({ data: { id, isVisible: false } });
+    await mutations.update.mutateAsync({ id, isVisible: false });
     toast.success("Project restored successfully. Status set to Draft.");
 
     dispatch({ type: PROJECT_ACTIONS.SELECT_PROJECT, payload: null });
