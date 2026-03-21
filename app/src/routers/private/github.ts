@@ -9,7 +9,7 @@ import { DeleteGithubRepoService } from "../../services/github/Delete";
 import { LinkRepoProjectService } from "../../services/github/Link";
 import { UpdateGithubRepoService } from "../../services/github/Update";
 import { executeService } from "../../trpc/executers/base";
-import { UnlinkRepoProjectService } from "src/services/github/Unlink";
+import { UnlinkRepoProjectService } from "../../services/github/Unlink";
 
 export const githubPrivateRouter = router({
   update: protectedProcedure
