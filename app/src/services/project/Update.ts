@@ -1,6 +1,7 @@
 import { BaseService } from "../service";
 import { UpdateProjectInput, ProjectWithRelations } from "@portfolio/shared";
 import { ProjectUpdating } from "./types";
+import { projectWithRelationsQuery } from "./queries";
 
 export class UpdateProjectService
   extends BaseService
@@ -28,13 +29,14 @@ export class UpdateProjectService
             : githubRepoId
               ? { connect: { id: githubRepoId } }
               : undefined,
+        ...projectWithRelationsQuery,
       },
-      include: { techStack: true, githubRepo: true, gallery: true },
     });
 
     await Promise.all([
       this.cache.del(`project:slug:${project.slug}`),
       this.cache.del("projects:list:*"),
+      this.cache.del(`projects:id:${id}`),
     ]);
 
     return project;

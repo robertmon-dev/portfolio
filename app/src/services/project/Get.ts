@@ -1,5 +1,6 @@
 import { BaseService } from "../service";
 import type { ProjectRetrieving } from "./types";
+import { projectWithOrderedRelationsQuery } from "./queries";
 
 export class GetProjectBySlugService
   extends BaseService
@@ -13,11 +14,7 @@ export class GetProjectBySlugService
 
       return await this.db.project.findUnique({
         where: { slug },
-        include: {
-          techStack: { orderBy: { name: "asc" } },
-          gallery: { orderBy: { order: "asc" } },
-          githubRepo: true,
-        },
+        ...projectWithOrderedRelationsQuery,
       });
     });
   }
