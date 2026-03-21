@@ -1,4 +1,3 @@
-// App.tsx
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { Layout } from "@/components/templates/Layout/Layout";
