@@ -13,12 +13,7 @@ import { UnlinkRepoProjectService } from "../../services/github/Unlink";
 
 export const githubPrivateRouter = router({
   update: protectedProcedure
-    .input(
-      z.object({
-        id: z.string().uuid(),
-        data: UpdateGithubRepoInputSchema,
-      }),
-    )
+    .input(UpdateGithubRepoInputSchema)
     .mutation(async ({ ctx, input }) =>
       executeService(UpdateGithubRepoService, ctx, input),
     ),

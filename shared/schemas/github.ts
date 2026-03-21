@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 export const GithubRepoSchema = z.object({
   id: z.string().uuid(),
@@ -7,13 +7,17 @@ export const GithubRepoSchema = z.object({
   stars: z.number(),
   language: z.string().nullable(),
   description: z.string().nullable(),
-  project: z.object({
-    id: z.string().uuid(),
-    title: z.string(),
-  }).nullable().optional(),
+  project: z
+    .object({
+      id: z.string().uuid(),
+      title: z.string(),
+    })
+    .nullable()
+    .optional(),
 });
 
 export const UpdateGithubRepoInputSchema = z.object({
+  id: z.string().uuid(),
   name: z.string().min(1).optional(),
   stars: z.number().int().nonnegative().optional(),
   language: z.string().nullable().optional(),
