@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useUsersActions } from "./useUsersActions";
-import { getUserColumns } from "./components/getUserColumns";
+import { getUsersColumns } from "./components/getUserColumns";
 import { Button } from "@/components/atoms/Button/Button";
 import { EntityTable } from "@/components/molecules/EntityTable/EntityTable";
 import { Header } from "@/components/molecules/Sections/Header/Header";
@@ -41,7 +41,7 @@ export const UsersAdminPage = () => {
 
   const columns = useMemo(
     () =>
-      getUserColumns(
+      getUsersColumns(
         (user) => actions.openModal("UPDATE", user.id),
         (id) => actions.openModal("DELETE", id),
         state.processingId,
@@ -50,7 +50,7 @@ export const UsersAdminPage = () => {
   );
 
   return (
-    <div className="projects-management">
+    <div className="users-management">
       <Header
         title={t("admin.users.title", "User Management")}
         subtitle={t(
@@ -70,11 +70,11 @@ export const UsersAdminPage = () => {
         }
       />
 
-      <div className="projects-management__loader-container">
+      <div className="users-management__loader-container">
         <LoadingBar isLoading={state.isLoading} variant="primary" fullWidth />
       </div>
 
-      <main className="projects-management__content">
+      <main className="users-management__content">
         <EntityTable
           data={state.users}
           columns={columns}

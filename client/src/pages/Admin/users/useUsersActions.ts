@@ -9,9 +9,9 @@ import {
   type UserModalType,
 } from "./types";
 import type {
-  UserProfile,
   CreateUserInput,
   UpdateUserInput,
+  UserProfile,
 } from "@portfolio/shared";
 
 export const useUsersActions = () => {
@@ -53,7 +53,7 @@ export const useUsersActions = () => {
   return {
     state: {
       ...state,
-      users: users as UserProfile[],
+      users: users as unknown as UserProfile[],
       selectedUser,
       isLoading,
       isAnyProcessing: !!state.processingId,

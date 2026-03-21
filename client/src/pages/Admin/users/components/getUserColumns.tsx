@@ -9,11 +9,10 @@ import {
   ShieldAlert,
   KeyRound,
   Lock,
-  Unlock,
 } from "lucide-react";
 import { UserProfile } from "@portfolio/shared";
 
-export const getUserColumns = (
+export const getUsersColumns = (
   onEdit: (user: UserProfile) => void,
   onDelete: (id: string) => void,
   processingId: string | null,
@@ -75,12 +74,13 @@ export const getUserColumns = (
   {
     key: "twoFactorEnabled",
     header: "2FA Status",
-    width: "10%",
+    width: "20%",
     align: "center",
     render: (user) => (
       <Tag
         variant={user.twoFactorEnabled ? "success" : "default"}
         size="sm"
+        maxLength={20}
         icon={
           user.twoFactorEnabled ? (
             <KeyRound size={12} />
@@ -96,7 +96,7 @@ export const getUserColumns = (
   {
     key: "createdAt",
     header: "Joined",
-    width: "20%",
+    width: "10%",
     render: (user) => (
       <span className="user-table__date">
         {new Date(user.createdAt).toLocaleDateString()}

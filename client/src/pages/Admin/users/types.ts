@@ -1,5 +1,5 @@
 import { UserProfile } from "@portfolio/shared";
-import { useUserActions } from "./useUserActions";
+import { useUsersActions } from "./useUsersActions";
 
 export const USER_ACTIONS = {
   SET_PROCESSING: "USER/SET_PROCESSING",
@@ -43,4 +43,4 @@ export function userReducer(state: UserState, action: UserAction): UserState {
   }
 }
 
-export type UserActions = ReturnType<typeof useUserActions>;
+export type UserActions = ReturnType<typeof useUsersActions>;

@@ -1,6 +1,11 @@
 import { z } from "zod";
 import { RoleEnum, UserPermissionSchema } from "./permission";
 
+export const dateSchema = z.preprocess((arg) => {
+  if (typeof arg === "string" || arg instanceof Date) return new Date(arg);
+  return arg;
+}, z.date());
+
 export const UserProfileSchema = z.object({
   id: z.string().uuid(),
   email: z.string().email(),
@@ -12,8 +17,8 @@ export const UserProfileSchema = z.object({
   socials: z.record(z.any()).nullable(),
   role: RoleEnum,
   permissions: z.array(UserPermissionSchema).default([]),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  createdAt: dateSchema,
+  updatedAt: dateSchema,
   twoFactorEnabled: z.boolean().default(false),
 });
 

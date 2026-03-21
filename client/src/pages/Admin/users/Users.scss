@@ -1,0 +1,156 @@
+@use "sass:color";
+
+.users-management {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: $font-stack;
+
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+
+  .header {
+    padding: $spacing-xl $spacing-md $spacing-sm;
+    background: transparent;
+  }
+
+  &__loader-container {
+    height: 2px;
+    width: 100%;
+    position: relative;
+    z-index: 10;
+    padding: 0 $spacing-md;
+  }
+
+  &__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: $spacing-md;
+    width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+  }
+}
+
+.user-table {
+  &__identity-cell {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+  }
+
+  &__avatar-wrapper {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    border-radius: $radius-sm;
+    overflow: hidden;
+    background: $bg-surface;
+    border: 1px solid $border-color;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+  }
+
+  &__avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__avatar-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: color.change($tn-blue, $alpha: 0.1);
+    color: $tn-blue;
+    opacity: 0.8;
+    transition: all 0.2s ease;
+
+    tr:hover & {
+      opacity: 1;
+      background-color: color.change($tn-blue, $alpha: 0.2);
+      color: $text-main;
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  &__name {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: $text-main;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__subtext {
+    font-family: $font-stack;
+    font-size: 0.7rem;
+    color: $tn-comment;
+    opacity: 0.7;
+  }
+
+  &__date {
+    font-family: $font-stack;
+    font-size: 0.75rem;
+    color: $text-muted;
+    white-space: nowrap;
+
+    &::before { content: '/* '; opacity: 0.3; }
+    &::after { content: ' */'; opacity: 0.3; }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    justify-content: flex-end;
+  }
+}
+
+.entity-table {
+  background: transparent !important;
+
+  &__row {
+    border-bottom: 1px solid color.change($tn-storm, $alpha: 0.2) !important;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: color.change($tn-blue, $alpha: 0.02) !important;
+
+      .user-table__avatar-wrapper {
+        border-color: color.change($tn-blue, $alpha: 0.4);
+        transform: scale(1.05);
+      }
+    }
+  }
+
+  &__header-cell {
+    font-family: $font-stack;
+    text-transform: lowercase;
+    font-size: 0.7rem;
+    color: $tn-purple;
+    opacity: 0.8;
+    padding-bottom: $spacing-sm;
+
+    &::before { content: '.'; opacity: 0.5; }
+  }
+}
