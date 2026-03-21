@@ -1,7 +1,8 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import { Spinner } from '@/components/atoms/Spinner/Spinner';
-import type { EntityTableProps } from './types';
-import './EntityTable.scss';
+import { motion, AnimatePresence } from "framer-motion";
+import { Spinner } from "@/components/atoms/Spinner/Spinner";
+import type { EntityTableProps } from "./types";
+import "./EntityTable.scss";
+import { useTranslation } from "react-i18next";
 
 export const EntityTable = <T extends { id: string | number }>({
   data,
@@ -9,10 +10,15 @@ export const EntityTable = <T extends { id: string | number }>({
   isLoading,
   loadingVariant,
   onRowClick,
-  className = ''
+  className = "",
 }: EntityTableProps<T>) => {
+  const { t } = useTranslation();
+
   return (
-    <div className={`entity-table-container ${className}`} aria-busy={isLoading}>
+    <div
+      className={`entity-table-container ${className}`}
+      aria-busy={isLoading}
+    >
       <table className="entity-table">
         <thead>
           <tr>
@@ -21,7 +27,7 @@ export const EntityTable = <T extends { id: string | number }>({
                 key={col.key}
                 style={{
                   width: col.width,
-                  textAlign: col.align || 'left'
+                  textAlign: col.align || "left",
                 }}
               >
                 {col.header}
@@ -32,37 +38,41 @@ export const EntityTable = <T extends { id: string | number }>({
 
         <tbody className="entity-table__body">
           <AnimatePresence mode="popLayout">
-            {!isLoading && data.map((item) => (
-              <motion.tr
-                key={item.id}
-                layout
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                transition={{ duration: 0.2 }}
-                className={onRowClick ? 'clickable' : ''}
-                onClick={() => onRowClick?.(item)}
-              >
-                {columns.map((col) => (
-                  <td
-                    key={`${item.id}-${col.key}`}
-                    style={{ textAlign: col.align || 'left' }}
-                  >
-                    {col.render
-                      ? col.render(item)
-                      : String(item[col.key as keyof T] ?? "")}
-                  </td>
-                ))}
-              </motion.tr>
-            ))}
+            {!isLoading &&
+              data.map((item) => (
+                <motion.tr
+                  key={item.id}
+                  layout
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 20 }}
+                  transition={{ duration: 0.2 }}
+                  className={onRowClick ? "clickable" : ""}
+                  onClick={() => onRowClick?.(item)}
+                >
+                  {columns.map((col) => (
+                    <td
+                      key={`${item.id}-${col.key}`}
+                      style={{ textAlign: col.align || "left" }}
+                    >
+                      {col.render
+                        ? col.render(item)
+                        : String(item[col.key as keyof T] ?? "")}
+                    </td>
+                  ))}
+                </motion.tr>
+              ))}
           </AnimatePresence>
 
           {isLoading && (
             <tr>
-              <td colSpan={columns.length} className="entity-table__cell--loading">
+              <td
+                colSpan={columns.length}
+                className="entity-table__cell--loading"
+              >
                 <div className="loading-content">
                   <Spinner variant={loadingVariant} />
-                  <span>Loading data...</span>
+                  <span>{t("common.loading", "Loading data...")}</span>
                 </div>
               </td>
             </tr>
@@ -70,8 +80,11 @@ export const EntityTable = <T extends { id: string | number }>({
 
           {!isLoading && data.length === 0 && (
             <tr>
-              <td colSpan={columns.length} className="entity-table__cell--empty">
-                No records found.
+              <td
+                colSpan={columns.length}
+                className="entity-table__cell--empty"
+              >
+                {t("common.noRecords", "No records found.")}
               </td>
             </tr>
           )}
