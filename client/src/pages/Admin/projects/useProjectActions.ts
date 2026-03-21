@@ -1,20 +1,31 @@
-import { useReducer, useMemo } from 'react';
-import { trpc } from '@/lib/trpc/client';
-import { useProjectMutations } from '../useMutations';
-import * as handlers from './actions';
-import { PROJECT_ACTIONS, projectReducer, initialState, type ProjectModalType } from './types';
-import type { ProjectWithRelations, CreateProjectInput, UpdateProjectInput } from '@portfolio/shared';
+import { useReducer, useMemo } from "react";
+import { trpc } from "@/lib/trpc/client";
+import { useProjectMutations } from "../useMutations";
+import * as handlers from "./actions";
+import {
+  PROJECT_ACTIONS,
+  projectReducer,
+  initialState,
+  type ProjectModalType,
+} from "./types";
+import type {
+  ProjectWithRelations,
+  CreateProjectInput,
+  UpdateProjectInput,
+} from "@portfolio/shared";
 
 export const useProjectActions = () => {
   const utils = trpc.useUtils();
   const mutations = useProjectMutations();
   const [state, dispatch] = useReducer(projectReducer, initialState);
 
-  const { data: projects = [], isLoading: isProjectsLoading } = trpc.projects.list.useQuery({});
+  const { data: projects = [], isLoading: isProjectsLoading } =
+    trpc.projects.list.useQuery({});
 
-  const selectedProject = useMemo(() =>
-    projects.find((p) => p.id === state.selectedId) || null,
-    [projects, state.selectedId]);
+  const selectedProject = useMemo(
+    () => projects.find((p) => p.id === state.selectedId) || null,
+    [projects, state.selectedId],
+  );
 
   return {
     state: {
@@ -22,7 +33,7 @@ export const useProjectActions = () => {
       projects: projects as ProjectWithRelations[],
       selectedProject,
       isLoading: isProjectsLoading,
-      isAnyProcessing: !!state.processingId
+      isAnyProcessing: !!state.processingId,
     },
     actions: {
       selectProject: (id: string | null) =>
@@ -35,8 +46,7 @@ export const useProjectActions = () => {
         dispatch({ type: PROJECT_ACTIONS.OPEN_MODAL, payload: type });
       },
 
-      closeModals: () =>
-        dispatch({ type: PROJECT_ACTIONS.CLOSE_MODALS }),
+      closeModals: () => dispatch({ type: PROJECT_ACTIONS.CLOSE_MODALS }),
 
       createProject: (data: CreateProjectInput) =>
         handlers.handleCreate(mutations, utils, dispatch, data),
@@ -48,9 +58,7 @@ export const useProjectActions = () => {
         handlers.handleDelete(mutations, utils, dispatch, id),
 
       restoreProject: (id: string) =>
-        handlers.handleRestore(mutations, utils, dispatch, id)
-    }
+        handlers.handleRestore(mutations, utils, dispatch, id),
+    },
   };
 };
-
-

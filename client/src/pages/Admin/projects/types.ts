@@ -1,13 +1,18 @@
 import { useProjectActions } from "./useProjectActions";
 
 export const PROJECT_ACTIONS = {
-  SET_PROCESSING: 'PROJECT/SET_PROCESSING',
-  SELECT_PROJECT: 'PROJECT/SELECT_PROJECT',
-  OPEN_MODAL: 'PROJECT/OPEN_MODAL',
-  CLOSE_MODALS: 'PROJECT/CLOSE_MODALS',
+  SET_PROCESSING: "PROJECT/SET_PROCESSING",
+  SELECT_PROJECT: "PROJECT/SELECT_PROJECT",
+  OPEN_MODAL: "PROJECT/OPEN_MODAL",
+  CLOSE_MODALS: "PROJECT/CLOSE_MODALS",
 } as const;
 
-export type ProjectModalType = 'CREATE' | 'UPDATE' | 'DELETE' | 'RESTORE' | null;
+export type ProjectModalType =
+  | "CREATE"
+  | "UPDATE"
+  | "DELETE"
+  | "RESTORE"
+  | null;
 
 export interface ProjectState {
   processingId: string | null;
@@ -27,7 +32,10 @@ export const initialState: ProjectState = {
   activeModal: null,
 };
 
-export function projectReducer(state: ProjectState, action: ProjectAction): ProjectState {
+export function projectReducer(
+  state: ProjectState,
+  action: ProjectAction,
+): ProjectState {
   switch (action.type) {
     case PROJECT_ACTIONS.SET_PROCESSING:
       return { ...state, processingId: action.payload };
@@ -43,4 +51,3 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
 }
 
 export type ProjectActions = ReturnType<typeof useProjectActions>;
-

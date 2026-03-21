@@ -16,33 +16,42 @@ export const ProjectsAdminPage = () => {
 
   const headerTags = useMemo(() => {
     const total = state.projects.length;
-    const featured = state.projects.filter(p => p.isFeatured).length;
-    const visible = state.projects.filter(p => p.isVisible).length;
+    const featured = state.projects.filter((p) => p.isFeatured).length;
+    const visible = state.projects.filter((p) => p.isVisible).length;
 
     return [
       {
         id: "total",
-        children: t("admin.projects.tags.total", { count: total, defaultValue: "{{count}} Projects" }),
+        children: t("admin.projects.tags.total", {
+          count: total,
+          defaultValue: "{{count}} Projects",
+        }),
         variant: "info" as const,
-        icon: <Code2 size={12} />
+        icon: <Code2 size={12} />,
       },
       {
         id: "visible",
-        children: t("admin.projects.tags.visible", { count: visible, defaultValue: "{{count}} Visible" }),
+        children: t("admin.projects.tags.visible", {
+          count: visible,
+          defaultValue: "{{count}} Visible",
+        }),
         variant: "success" as const,
-        icon: <Eye size={12} />
+        icon: <Eye size={12} />,
       },
       {
         id: "featured",
-        children: t("admin.projects.tags.featured", { count: featured, defaultValue: "{{count}} Featured" }),
+        children: t("admin.projects.tags.featured", {
+          count: featured,
+          defaultValue: "{{count}} Featured",
+        }),
         variant: "warning" as const,
-        icon: <Star size={12} />
-      }
+        icon: <Star size={12} />,
+      },
     ];
   }, [state.projects, t]);
 
   const columns = getProjectColumns(
-    (project) => actions.openModal('UPDATE', project.id),
+    (project) => actions.openModal("UPDATE", project.id),
     (id) => actions.deleteProject(id),
     state.processingId,
   );
@@ -54,7 +63,11 @@ export const ProjectsAdminPage = () => {
         subtitle={t("admin.projects.subtitle")}
         tags={headerTags}
         action={
-          <Button onClick={() => actions.openModal('CREATE')} variant="primary" size="sm">
+          <Button
+            onClick={() => actions.openModal("CREATE")}
+            variant="primary"
+            size="sm"
+          >
             <Plus size={16} />
             {t("admin.projects.actions.add")}
           </Button>
@@ -62,11 +75,7 @@ export const ProjectsAdminPage = () => {
       />
 
       <div className="projects-management__loader-container">
-        <LoadingBar
-          isLoading={state.isLoading}
-          variant="primary"
-          fullWidth
-        />
+        <LoadingBar isLoading={state.isLoading} variant="primary" fullWidth />
       </div>
 
       <main className="projects-management__content">
