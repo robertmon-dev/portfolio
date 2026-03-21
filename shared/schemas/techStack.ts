@@ -12,6 +12,7 @@ export const CreateTechStackSchema = TechStackSchema.omit({ id: true });
 export const UpdateTechStackSchema = TechStackSchema.partial().extend({
   id: z.string().uuid(),
 });
+
 export const TechStackProjectRelationSchema = z.object({
   id: z.string(),
   title: z.string(),

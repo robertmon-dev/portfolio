@@ -42,11 +42,8 @@ export const TechStackAdminPage = () => {
   return (
     <div className="projects-management">
       <Header
-        title={t("admin.techStack.title", "Tech Stack")}
-        subtitle={t(
-          "admin.techStack.subtitle",
-          "Manage your technologies and tools",
-        )}
+        title={t("admin.techStack.title")}
+        subtitle={t("admin.techStack.subtitle")}
         tags={headerTags}
         action={
           <Button
@@ -55,7 +52,7 @@ export const TechStackAdminPage = () => {
             size="sm"
           >
             <Plus size={16} />
-            {t("admin.techStack.actions.add", "Add Technology")}
+            {t("admin.techStack.actions.add")}
           </Button>
         }
       />
