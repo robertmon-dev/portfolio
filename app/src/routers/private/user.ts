@@ -8,12 +8,14 @@ import {
   UpdateUserInputSchema,
   DeleteUserInputSchema,
   CreateUserInputSchema,
+  UpdateUserPermissionsInputSchema,
 } from "@portfolio/shared";
 import { GetUserService } from "../../services/user/Get";
 import { ListUsersService } from "../../services/user/List";
 import { UpdateUserService } from "../../services/user/Update";
 import { DeleteUserService } from "../../services/user/Delete";
 import { CreateUserService } from "../../services/user/Create";
+import { UpdateUserPermissionsService } from "src/services/user/UpdatePermission";
 import { executeService } from "../../trpc/executers/base";
 
 export const usersRouter = router({
@@ -47,7 +49,7 @@ export const usersRouter = router({
 
   updatePermissions: protectedProcedure
     .input(UpdateUserPermissionsInputSchema)
-    .output(UserProfileSchema) // Zwracamy pełny, zaktualizowany profil
+    .output(UserProfileSchema)
     .mutation(async ({ ctx, input }) =>
       executeService(UpdateUserPermissionsService, ctx, input),
     ),
