@@ -1,118 +1,107 @@
-DOCKER_COMPOSE_FILE = docker/docker-compose.yml
-COMPOSE = docker-compose -f $(DOCKER_COMPOSE_FILE)
-YARN = yarn
-
-CYAN = \033[36m
-RESET = \033[0m
+COMPOSE = docker-compose -f docker/docker-compose.yml
+YARN    = yarn
+TURBO   = npx turbo
+CYAN  := \033[36m
+RESET := \033[0m
 
 .DEFAULT_GOAL := help
 
-.PHONY: help install nuke clean clean-artifacts up down restart logs build-docker infra-up infra-down infra-logs dev build lint test db-generate db-push db-migrate db-studio db-reset shared-build dashboard
+# ==============================================================================
+# Utility
+# ==============================================================================
 
-help:
+.PHONY: help
+help: ## Display this help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "$(CYAN)%-30s$(RESET) %s\n", $$1, $$2}'
 
-# ==========================================
-# PACKAGES
-# ==========================================
+# ==============================================================================
+# Setup & Maintenance
+# ==============================================================================
 
-install:
-	$(YARN) install
+.PHONY: install
+install: ## Install all monorepo dependencies
+	@echo "=> Installing monorepo dependencies..."
+	@$(YARN) install
+	@echo "=> Installation complete."
 
-nuke:
-	rm -rf node_modules
-	rm -rf app/node_modules
-	rm -rf client/node_modules
-	rm -rf shared/node_modules
-	rm -rf app/dist
-	rm -rf client/dist
-	rm -rf shared/dist
-	rm -rf .turbo
-	rm -f yarn.lock
-	@echo "Project nuked."
+.PHONY: clean
+clean: ## Remove build artifacts and turbo cache
+	@echo "=> Cleaning build artifacts and turbo cache..."
+	@$(TURBO) run clean
+	@rm -rf .turbo
+	@echo "=> Clean complete."
 
-clean: clean-artifacts
-	rm -rf app/dist
-	rm -rf client/dist
-	rm -rf shared/dist
-	@echo "Cleared dist folders"
+.PHONY: nuke
+nuke: ## Radical cleanup (node_modules, locks, and dist folders)
+	@echo "=> Nuking project (removing everything except source)..."
+	@rm -rf node_modules **/node_modules
+	@rm -rf **/dist .turbo yarn.lock
+	@echo "=> Project nuked. Run 'make install' to start over."
 
-clean-artifacts:
-	find . -type f \( -name "*.js" -o -name "*.d.ts" -o -name "*.js.map" \) \
-		-not -path "*/node_modules/*" \
-		-not -path "*/dist/*" \
-		-not -path "*/build/*" \
-		-not -path "*/.git/*" \
-		-not -name "vite.config.js" \
-		-not -name "eslint.config.js" \
-		-not -name "postcss.config.js" \
-		-not -name "tailwind.config.js" \
-		-delete
+# ==============================================================================
+# Development & Build (Turbo)
+# ==============================================================================
 
-# ==========================================
-# DOCKER
-# ==========================================
+.PHONY: dev
+dev: db-generate ## Start all services in development mode (Turbo)
+	@echo "=> Starting development servers..."
+	@$(TURBO) run dev
 
-up:
-	$(COMPOSE) up -d --build
+.PHONY: build
+build: clean db-generate ## Build all packages (Shared -> App -> Client)
+	@echo "=> Building all packages..."
+	@$(TURBO) run build
+	@echo "=> Build complete."
 
-down:
-	$(COMPOSE) down
+.PHONY: dashboard
+dashboard: db-generate ## Launch mprocs development dashboard
+	@echo "=> Launching mprocs dashboard..."
+	@mprocs
 
-restart: down up
+# ==============================================================================
+# Docker (Infrastructure & App)
+# ==============================================================================
 
-logs:
-	$(COMPOSE) logs -f
+.PHONY: up
+up: ## Start Docker containers (with build)
+	@echo "=> Starting Docker stack..."
+	@$(COMPOSE) up -d --build
+	@echo "=> Stack is up and running."
 
-build-docker:
-	$(COMPOSE) build --no-cache
+.PHONY: down
+down: ## Stop Docker containers
+	@echo "=> Stopping Docker stack..."
+	@$(COMPOSE) down
 
-infra-up:
-	docker-compose -f docker/docker-compose.local.yml up -d
+.PHONY: logs
+logs: ## Follow Docker container logs
+	@$(COMPOSE) logs -f
 
-infra-down:
-	docker-compose -f docker/docker-compose.local.yml down
+# ==============================================================================
+# Database (Prisma)
+# ==============================================================================
 
-infra-logs:
-	docker-compose -f docker/docker-compose.local.yml logs -f
+.PHONY: db-generate
+db-generate: ## Generate Prisma client in @portfolio/app
+	@echo "=> Generating Prisma client..."
+	@$(YARN) workspace @portfolio/app prisma generate
 
-# ==========================================
-# DEVELOPMENT
-# ==========================================
+.PHONY: db-push
+db-push: ## Sync schema with database (push)
+	@echo "=> Pushing schema to database..."
+	@$(YARN) workspace @portfolio/app prisma db push
 
-dev: db-generate
-	$(YARN) dev
+.PHONY: db-migrate
+db-migrate: ## Create a new Prisma migration
+	@echo "=> Creating prisma migration..."
+	@$(YARN) workspace @portfolio/app prisma migrate dev
 
-build: clean-artifacts db-generate
-	$(YARN) build
+.PHONY: db-studio
+db-studio: ## Launch Prisma Studio
+	@echo "=> Opening Prisma Studio..."
+	@$(YARN) workspace @portfolio/app prisma studio
 
-lint:
-	$(YARN) lint
-
-test:
-	$(YARN) test
-
-dashboard: clean-artifacts db-generate
-	mprocs
-
-shared-build:
-	cd shared && $(YARN) build
-
-# ==========================================
-# DATABASE (PRISMA)
-# ==========================================
-
-db-generate:
-	cd app && npx prisma generate
-
-db-push:
-	cd app && npx prisma db push
-
-db-migrate:
-	cd app && npx prisma migrate dev
-
-db-studio:
-	cd app && npx prisma studio
-
-db-reset:
-	cd app && npx prisma migrate reset
+.PHONY: db-seed
+db-seed: ## Seed the database with initial data
+	@echo "=> Seeding database..."
+	@$(YARN) workspace @portfolio/app prisma db seed
