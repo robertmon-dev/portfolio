@@ -15,7 +15,7 @@ import { ListUsersService } from "../../services/user/List";
 import { UpdateUserService } from "../../services/user/Update";
 import { DeleteUserService } from "../../services/user/Delete";
 import { CreateUserService } from "../../services/user/Create";
-import { UpdateUserPermissionsService } from "src/services/user/UpdatePermission";
+import { UpdateUserPermissionsService } from "../../services/user/UpdatePermission";
 import { executeService } from "../../trpc/executers/base";
 
 export const usersRouter = router({
