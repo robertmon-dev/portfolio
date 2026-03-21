@@ -27,6 +27,15 @@ export const useTechStackMutations = () => {
   };
 };
 
+export const useUserMutations = () => {
+  return {
+    create: trpc.admin.users.create.useMutation(),
+    update: trpc.admin.users.update.useMutation(),
+    delete: trpc.admin.users.delete.useMutation(),
+  };
+};
+
 export type GithubMutations = ReturnType<typeof useGithubMutations>;
 export type ProjectMutations = ReturnType<typeof useProjectMutations>;
 export type TechStackMutations = ReturnType<typeof useTechStackMutations>;
+export type UserMutations = ReturnType<typeof useUserMutations>;

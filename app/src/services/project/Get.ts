@@ -1,7 +1,10 @@
-import { BaseService } from '../service';
-import type { ProjectRetrieving } from './types';
+import { BaseService } from "../service";
+import type { ProjectRetrieving } from "./types";
 
-export class GetProjectBySlugService extends BaseService implements ProjectRetrieving {
+export class GetProjectBySlugService
+  extends BaseService
+  implements ProjectRetrieving
+{
   public async execute(slug: string) {
     const cacheKey = `project:slug:${slug}`;
 
@@ -11,10 +14,10 @@ export class GetProjectBySlugService extends BaseService implements ProjectRetri
       return await this.db.project.findUnique({
         where: { slug },
         include: {
-          techStack: { orderBy: { name: 'asc' } },
-          gallery: { orderBy: { order: 'asc' } },
+          techStack: { orderBy: { name: "asc" } },
+          gallery: { orderBy: { order: "asc" } },
           githubRepo: true,
-        }
+        },
       });
     });
   }

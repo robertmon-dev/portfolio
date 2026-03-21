@@ -7,6 +7,17 @@ datasource db {
   provider = "postgresql"
 }
 
+enum TechStackCategory {
+  Frontend
+  Backend
+  Fullstack
+  Mobile
+  Infrastructure
+  Database
+  Design
+  Tools
+}
+
 enum Role {
   USER
   ADMIN
@@ -88,7 +99,7 @@ model TechStack {
   id       String  @id @default(uuid())
   name     String  @unique
   icon     String?
-  category String
+  category TechStackCategory
   color    String?
 
   projects Project[]
