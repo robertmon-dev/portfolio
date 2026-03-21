@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 export const TechStackSchema = z.object({
   id: z.string().uuid(),
@@ -9,19 +9,20 @@ export const TechStackSchema = z.object({
 });
 
 export const CreateTechStackSchema = TechStackSchema.omit({ id: true });
-export const UpdateTechStackSchema = TechStackSchema.partial().extend({ id: z.string().uuid() });
-
+export const UpdateTechStackSchema = TechStackSchema.partial().extend({
+  id: z.string().uuid(),
+});
 export const TechStackProjectRelationSchema = z.object({
   id: z.string(),
   title: z.string(),
-  slug: z.string()
+  slug: z.string(),
 });
 
 export const TechStackWithRelationsSchema = TechStackSchema.extend({
-  projects: z.array(TechStackProjectRelationSchema).default([])
+  projects: z.array(TechStackProjectRelationSchema).default([]),
 });
 
 export const LinkTechStackProjectSchema = z.object({
   techStackId: z.string().uuid(),
-  projectId: z.string()
+  projectId: z.string(),
 });

@@ -16,17 +16,22 @@ export const ConfirmDialog = ({
 
   const getIcon = () => {
     switch (variant) {
-      case "danger": return <AlertCircle size={48} className="confirm-dialog__icon--danger" />;
-      case "success": return <RotateCcw size={48} className="confirm-dialog__icon--success" />;
-      default: return <Info size={48} className="confirm-dialog__icon--primary" />;
+      case "danger":
+        return (
+          <AlertCircle size={48} className="confirm-dialog__icon--danger" />
+        );
+      case "success":
+        return (
+          <RotateCcw size={48} className="confirm-dialog__icon--success" />
+        );
+      default:
+        return <Info size={48} className="confirm-dialog__icon--primary" />;
     }
   };
 
   return (
     <div className="confirm-dialog">
-      <div className="confirm-dialog__header">
-        {getIcon()}
-      </div>
+      <div className="confirm-dialog__header">{getIcon()}</div>
 
       <p className="confirm-dialog__message">{message}</p>
 
@@ -37,7 +42,7 @@ export const ConfirmDialog = ({
           disabled={isLoading}
           fullWidth
         >
-          {cancelText || t("common.cancel", "Anuluj")}
+          {cancelText || t("common.cancel")}
         </Button>
         <Button
           variant={variant}
