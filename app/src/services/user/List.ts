@@ -7,6 +7,7 @@ import {
 } from "@portfolio/shared";
 import { Prisma } from "@prisma/client";
 import type { UserListing } from "./types";
+import { userProfileQuery } from "./queries";
 
 export class ListUsersService extends BaseService implements UserListing {
   public async execute(input: ListUsersInput): Promise<UserProfile[]> {
@@ -37,27 +38,7 @@ export class ListUsersService extends BaseService implements UserListing {
         orderBy: { createdAt: "desc" },
         take: input?.limit,
         skip: input?.offset,
-
-        select: {
-          id: true,
-          email: true,
-          username: true,
-          role: true,
-          createdAt: true,
-          updatedAt: true,
-          twoFactorEnabled: true,
-          avatarUrl: true,
-          name: true,
-          headline: true,
-          bio: true,
-          socials: true,
-          permissions: {
-            select: {
-              resource: true,
-              flags: true,
-            },
-          },
-        },
+        ...userProfileQuery,
       });
 
       return z.array(UserProfileSchema).parse(users);

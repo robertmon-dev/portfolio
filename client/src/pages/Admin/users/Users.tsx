@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { useUserActions } from "./useUserActions";
+import { useUsersActions } from "./useUsersActions";
 import { getUserColumns } from "./components/getUserColumns";
 import { Button } from "@/components/atoms/Button/Button";
 import { EntityTable } from "@/components/molecules/EntityTable/EntityTable";
@@ -11,7 +11,7 @@ import "./Users.scss";
 
 export const UsersAdminPage = () => {
   const { t } = useTranslation();
-  const { state, actions } = useUserActions();
+  const { state, actions } = useUsersActions();
 
   const headerTags = useMemo(() => {
     const total = state.users.length;
