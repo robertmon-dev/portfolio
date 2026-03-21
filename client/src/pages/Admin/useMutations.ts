@@ -1,9 +1,10 @@
-import { trpc } from '../../lib/trpc/client';
+import { trpc } from "../../lib/trpc/client";
 
 export const useGithubMutations = () => {
   return {
     update: trpc.admin.github.update.useMutation(),
     linkProject: trpc.admin.github.linkProject.useMutation(),
+    unlinkProject: trpc.admin.github.unlinkProject.useMutation(),
     delete: trpc.admin.github.delete.useMutation(),
   };
 };
