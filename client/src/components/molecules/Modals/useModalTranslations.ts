@@ -4,6 +4,6 @@ export const useModalTranslations = () => {
   const { t } = useTranslation();
 
   return {
-    closeAria: t("molecules.modal.base.closeAria", "Zamknij modal"),
+    closeAria: t("molecules.modal.base.closeAria", "Close modal"),
   };
 };

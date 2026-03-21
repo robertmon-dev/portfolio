@@ -8,4 +8,4 @@ export type CreateProjectInput = z.infer<typeof p.CreateProjectSchema>;
 export type UpdateProjectInput = z.infer<typeof p.UpdateProjectSchema>;
 export type ListProjectsOptions = z.infer<typeof p.ListProjectsOptionsSchema>;
 export type DeleteProjectInput = z.infer<typeof p.DeleteProjectSchema>;
-
+export type ProjectFormData = Omit<CreateProjectInput, 'techStackIds' | 'githubRepoId'> & {}

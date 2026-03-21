@@ -1,3 +1,5 @@
+import { useProjectActions } from "./useProjectActions";
+
 export const PROJECT_ACTIONS = {
   SET_PROCESSING: 'PROJECT/SET_PROCESSING',
   SELECT_PROJECT: 'PROJECT/SELECT_PROJECT',
@@ -5,7 +7,7 @@ export const PROJECT_ACTIONS = {
   CLOSE_MODALS: 'PROJECT/CLOSE_MODALS',
 } as const;
 
-export type ProjectModalType = 'create' | 'update' | 'delete' | 'restore' | null;
+export type ProjectModalType = 'CREATE' | 'UPDATE' | 'DELETE' | 'RESTORE' | null;
 
 export interface ProjectState {
   processingId: string | null;
@@ -39,3 +41,6 @@ export function projectReducer(state: ProjectState, action: ProjectAction): Proj
       return state;
   }
 }
+
+export type ProjectActions = ReturnType<typeof useProjectActions>;
+

@@ -36,6 +36,7 @@ export class RedisClient {
 
     const ioRedisConfig: IoRedisOptions = {
       maxRetriesPerRequest: null,
+      enableOfflineQueue: true,
       connectTimeout: 10000,
       tls: options.tlsEnabled ? options.tlsOptions : undefined,
 

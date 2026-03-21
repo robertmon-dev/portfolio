@@ -1,8 +1,9 @@
 import { BaseService } from '../service';
-import type { Prisma, GithubRepo } from '@prisma/client';
+import type { GithubRepo } from '@prisma/client';
+import type { UpdateGithubRepoInput } from '@portfolio/shared';
 
 export class UpdateGithubRepoService extends BaseService {
-  public async execute(input: { id: string; data: Prisma.GithubRepoUpdateInput }): Promise<GithubRepo> {
+  public async execute(input: { id: string; data: UpdateGithubRepoInput }): Promise<GithubRepo> {
     const { id, data } = input;
 
     this.logger.info(`Updating repo: ${id}`);

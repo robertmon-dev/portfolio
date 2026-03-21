@@ -16,6 +16,15 @@ export const useProjectMutations = () => {
   };
 };
 
+export const useTechStackMutations = () => {
+  return {
+    create: trpc.admin.techStack.create.useMutation(),
+    update: trpc.admin.techStack.update.useMutation(),
+    delete: trpc.admin.techStack.delete.useMutation(),
+    linkProject: trpc.admin.techStack.linkProject.useMutation(),
+  };
+};
+
 export type GithubMutations = ReturnType<typeof useGithubMutations>;
 export type ProjectMutations = ReturnType<typeof useProjectMutations>;
-
+export type TechStackMutations = ReturnType<typeof useTechStackMutations>;

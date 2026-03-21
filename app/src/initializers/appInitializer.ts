@@ -80,6 +80,7 @@ export class AppInitializer {
             this.logger.error('Error closing HTTP server', err);
             return reject(err);
           }
+
           this.logger.info('HTTP server closed.');
           resolve();
         });

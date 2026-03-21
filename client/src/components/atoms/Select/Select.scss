@@ -1,0 +1,113 @@
+@use "sass:color";
+
+.select-custom-container {
+  position: relative;
+  width: 100%;
+}
+
+.select-wrapper-custom {
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+
+  &.open {
+    border-color: color.change($primary, $alpha: 0.5);
+    box-shadow: 0 0 0 4px color.change($primary, $alpha: 0.1);
+  }
+}
+
+.select-custom-value {
+  flex: 1;
+  font-size: 0.95rem;
+  color: $text-main;
+
+  .placeholder {
+    color: $text-muted;
+  }
+}
+
+.select-dropdown-list {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+
+  background: $bg-surface;
+  border: 1px solid $border-color;
+  border-radius: $radius-md;
+  padding: $spacing-xs;
+
+  list-style: none;
+  box-shadow: $shadow-surface-lg;
+
+  max-height: 180px;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    margin: $spacing-xs 0;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: color.change($text-muted, $alpha: 0.3);
+    border-radius: 10px;
+
+    &:hover {
+      background-color: color.change($text-muted, $alpha: 0.6);
+    }
+  }
+
+  scrollbar-width: thin;
+  scrollbar-color: color.change($text-muted, $alpha: 0.3) transparent;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: $glow-rim-top;
+    pointer-events: none;
+  }
+}
+
+.select-dropdown-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-radius: $radius-sm;
+  color: $tn-lavender;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: color.change($primary, $alpha: 0.15);
+    color: $tn-blue;
+  }
+
+  &--active {
+    background-color: color.change($primary, $alpha: 0.2);
+    color: $primary;
+    font-weight: 700;
+  }
+
+  .check-icon {
+    color: $primary;
+  }
+}
+
+.select-chevron {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: $text-muted;
+
+  &.rotated {
+    transform: rotate(180deg);
+    color: $primary;
+  }
+}

@@ -13,7 +13,8 @@ export const MenuPortal = (props: MenuPortalProps) => {
     children,
     offset,
     minWidth,
-    variant = 'default'
+    variant = 'default',
+    maxHeight = 300
   } = props;
 
   const { coords, menuRef } = useMenuPortal({ isOpen, onClose, anchorEl, offset });
@@ -23,6 +24,8 @@ export const MenuPortal = (props: MenuPortalProps) => {
   const portalStyle = {
     ...getStyle(coords, minWidth),
     width: typeof minWidth === 'number' ? `${minWidth}px` : undefined,
+    maxHeight: typeof maxHeight === 'number' ? `${maxHeight}px` : maxHeight,
+    overflowY: 'auto' as const,
   };
 
   return createPortal(

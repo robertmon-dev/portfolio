@@ -2,10 +2,12 @@ import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useProjectActions } from "./useProjectActions";
 import { getProjectColumns } from "./components/getProjectColumns";
+import { Button } from "@/components/atoms/Button/Button";
 import { EntityTable } from "@/components/molecules/EntityTable/EntityTable";
 import { Header } from "@/components/molecules/Sections/Header/Header";
 import { LoadingBar } from "@/components/atoms/LoadingBar/LoadingBar";
-import { Star, Eye, Code2 } from "lucide-react";
+import { ProjectsModals } from "@/components/molecules/Modals/Project/Modal";
+import { Star, Eye, Code2, Plus } from "lucide-react";
 import "./Projects.scss";
 
 export const ProjectsAdminPage = () => {
@@ -40,8 +42,7 @@ export const ProjectsAdminPage = () => {
   }, [state.projects, t]);
 
   const columns = getProjectColumns(
-    (project) => {
-    },
+    (project) => actions.openModal('UPDATE', project.id),
     (id) => actions.deleteProject(id),
     state.processingId,
   );
@@ -49,9 +50,15 @@ export const ProjectsAdminPage = () => {
   return (
     <div className="projects-management">
       <Header
-        title={t("admin.projects.title", "Projects")}
-        subtitle={t("admin.projects.subtitle", "Manage your portfolio projects and visibility")}
+        title={t("admin.projects.title")}
+        subtitle={t("admin.projects.subtitle")}
         tags={headerTags}
+        action={
+          <Button onClick={() => actions.openModal('CREATE')} variant="primary" size="sm">
+            <Plus size={16} />
+            {t("admin.projects.actions.add")}
+          </Button>
+        }
       />
 
       <div className="projects-management__loader-container">
@@ -70,6 +77,8 @@ export const ProjectsAdminPage = () => {
           onRowClick={(project) => actions.selectProject(project.id)}
         />
       </main>
+
+      <ProjectsModals state={state} actions={actions} />
     </div>
   );
 };

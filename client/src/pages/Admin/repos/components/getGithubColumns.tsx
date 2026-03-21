@@ -1,13 +1,14 @@
 import { Column } from "@/components/molecules/EntityTable/types";
 import { Tag } from "@/components/atoms/Tag/Tag";
 import { Button } from "@/components/atoms/Button/Button";
-import { Trash2, Edit2, Link as LinkIcon } from "lucide-react";
+import { Trash2, Edit2, Link as LinkIcon, Link2Off } from "lucide-react";
 import { GithubRepo } from "@portfolio/shared";
 
 export const getGithubColumns = (
   onEdit: (repo: GithubRepo) => void,
   onDelete: (id: string) => void,
   onLink: (repo: GithubRepo) => void,
+  onUnlink: (repo: GithubRepo) => void,
   processingId: string | null
 ): Column<GithubRepo>[] => [
     {
@@ -54,15 +55,34 @@ export const getGithubColumns = (
       align: "right",
       render: (repo) => (
         <div className="flex justify-end gap-2" onClick={(e) => e.stopPropagation()}>
-          <Button variant="ghost" size="sm" onClick={() => onLink(repo)} title="Link project">
-            <LinkIcon size={14} />
-          </Button>
-          <Button variant="ghost" size="sm" onClick={() => onEdit(repo)} title="Edit">
+          {repo.project ? (
+            <Button
+              variant="ghost"
+              size="sm"
+              isIcon
+              onClick={() => onUnlink(repo)}
+              title="Unlink from project"
+            >
+              <Link2Off size={14} className="text-tn-red" />
+            </Button>
+          ) : (
+            <Button
+              variant="ghost"
+              size="sm"
+              isIcon
+              onClick={() => onLink(repo)}
+              title="Link to project"
+            >
+              <LinkIcon size={14} />
+            </Button>
+          )}
+          <Button variant="ghost" size="sm" onClick={() => onEdit(repo)} isIcon title="Edit">
             <Edit2 size={14} />
           </Button>
           <Button
             variant="danger"
             size="sm"
+            isIcon
             onClick={() => onDelete(repo.id)}
             isLoading={processingId === repo.id}
             title="Delete"

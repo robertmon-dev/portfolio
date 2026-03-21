@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/atoms/Button/Button";
-import { Link, AlertCircle } from "lucide-react";
+import { Select } from "@/components/atoms/Select/Select";
+import { Link, AlertCircle, Layout } from "lucide-react";
 import type { LinkFormProps } from '../types';
-import "../GithubRepositoryModal.scss"
-
+import '../GithubRepositoryModal.scss'
 
 export const GithubLinkForm = ({ repo, projects, onSubmit, isLoading }: LinkFormProps) => {
   const { t } = useTranslation();
@@ -15,40 +15,35 @@ export const GithubLinkForm = ({ repo, projects, onSubmit, isLoading }: LinkForm
     if (selectedId) onSubmit(selectedId);
   };
 
+  const projectOptions = projects.map(p => ({
+    value: p.id,
+    label: p.title
+  }));
+
   return (
     <form className="github-form" onSubmit={handleSubmit}>
       <p className="github-form__help">
-        {t("admin.github.link.help", {
-          defaultValue: "Connect {{name}} to one of your existing portfolio projects to display sync data.",
-          name: repo.name
-        })}
+        {t("admin.github.link.help", { name: repo.name })}
       </p>
 
       <div className="github-form__group">
-        <label className="github-form__label">
-          {t("admin.github.link.label", "Select Project")}
-        </label>
-        <select
-          className="github-form__select"
+        <Select
+          label={t("admin.github.link.label", "Select Project")}
           value={selectedId}
           onChange={(e) => setSelectedId(e.target.value)}
+          options={projectOptions}
+          placeholder={t("admin.github.link.placeholder", "Choose a project...")}
+          leftIcon={<Layout size={18} />}
+          fullWidth
           required
-        >
-          <option value="" disabled>
-            {t("admin.github.link.placeholder", "Choose a project...")}
-          </option>
-          {projects.map(project => (
-            <option key={project.id} value={project.id}>
-              {project.title}
-            </option>
-          ))}
-        </select>
+          disabled={isLoading || projects.length === 0}
+        />
       </div>
 
       {projects.length === 0 && (
         <div className="github-form__alert">
           <AlertCircle size={18} />
-          <span>{t("admin.github.link.noProjects", "No projects found. Create a project first.")}</span>
+          <span>{t("admin.github.link.noProjects")}</span>
         </div>
       )}
 
@@ -59,8 +54,9 @@ export const GithubLinkForm = ({ repo, projects, onSubmit, isLoading }: LinkForm
           isLoading={isLoading}
           disabled={!selectedId || projects.length === 0}
           leftIcon={<Link size={18} />}
+          fullWidth
         >
-          {t("admin.github.link.submit", "Link")}
+          {t("admin.github.link.submit")}
         </Button>
       </div>
     </form>

@@ -17,4 +17,5 @@ export interface MenuPortalProps {
   offset?: { x: number; y: number };
   minWidth?: number | 'anchor';
   variant?: MenuPortalVariant;
+  maxHeight?: number | string;
 }
