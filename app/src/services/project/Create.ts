@@ -27,7 +27,7 @@ export class CreateProjectService
             }
           : undefined,
       },
-      include: { techStack: true, githubRepo: true, gallery: true },
+      ...projectWithRelationsQuery,
     });
 
     await this.cache.del("projects:list:*");

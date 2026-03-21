@@ -1,6 +1,7 @@
 import { BaseService } from "../service";
 import { ProjectWithRelations } from "@portfolio/shared";
 import { ProjectDeleting } from "./types";
+import { projectWithRelationsQuery } from "./queries";
 
 export class DeleteProjectService
   extends BaseService
@@ -11,11 +12,7 @@ export class DeleteProjectService
 
     const deletedProject = await this.db.project.delete({
       where: { id },
-      include: {
-        githubRepo: true,
-        techStack: true,
-        gallery: true,
-      },
+      ...projectWithRelationsQuery,
     });
 
     await Promise.all([
