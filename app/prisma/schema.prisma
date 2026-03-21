@@ -18,6 +18,12 @@ enum TechStackCategory {
   Tools
 }
 
+enum PermissionFlag {
+  READ
+  WRITE
+  ADMIN
+}
+
 enum Role {
   USER
   ADMIN
@@ -134,6 +140,7 @@ model User {
   avatarUrl String?
 
   socials Json? @default("{}")
+  permissions       UserPermission[]
 
   role Role @default(USER)
 
@@ -142,6 +149,18 @@ model User {
   VerificationCode VerificationCode[]
 
   @@index([email])
+}
+
+model UserPermission {
+  id        String           @id @default(uuid())
+  userId    String
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  resource  String
+  flags     PermissionFlag[]
+
+  @@unique([userId, resource])
+  @@index([userId])
 }
 
 model VerificationCode {

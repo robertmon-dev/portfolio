@@ -1,14 +1,2 @@
-import { Role } from '@prisma/client';
-export { Role };
-
-export enum Flag {
-  Read = 'read',
-  Write = 'write',
-  Admin = 'admin'
-}
-
-export interface Endpoint {
-  name: string;
-  flags: Flag[];
-}
-
+import { Role, Flag, Endpoint } from "@portfolio/shared";
+export { Role, Flag, Endpoint };

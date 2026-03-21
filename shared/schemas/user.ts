@@ -1,6 +1,5 @@
-import { z } from 'zod';
-
-export const RoleEnum = z.enum(['USER', 'ADMIN', 'MODERATOR', 'VIEWER']);
+import { z } from "zod";
+import { RoleEnum, UserPermissionSchema } from "./permission";
 
 export const UserProfileSchema = z.object({
   id: z.string().uuid(),
@@ -12,30 +11,34 @@ export const UserProfileSchema = z.object({
   avatarUrl: z.string().nullable(),
   socials: z.record(z.any()).nullable(),
   role: RoleEnum,
-  permissions: z.array(z.string()).default([]),
+  permissions: z.array(UserPermissionSchema).default([]),
   createdAt: z.date(),
   updatedAt: z.date(),
-  twoFactorEnabled: z.boolean().default(false).optional(),
+  twoFactorEnabled: z.boolean().default(false),
 });
 
 export const MeResponseSchema = z.object({
-  user: UserProfileSchema
+  user: UserProfileSchema,
 });
 
-export const GetUserInputSchema = z.object({
-  id: z.string().uuid().optional(),
-  email: z.string().email().optional(),
-  username: z.string().optional(),
-}).refine((data) => data.id || data.email || data.username, {
-  message: "Provide at least one identifier: id, email, or username",
-});
+export const GetUserInputSchema = z
+  .object({
+    id: z.string().uuid().optional(),
+    email: z.string().email().optional(),
+    username: z.string().optional(),
+  })
+  .refine((data) => data.id || data.email || data.username, {
+    message: "Provide at least one identifier: id, email, or username",
+  });
 
-export const ListUsersInputSchema = z.object({
-  role: RoleEnum.optional(),
-  limit: z.number().min(1).max(100).default(20),
-  offset: z.number().min(0).default(0),
-  search: z.string().optional(),
-}).optional();
+export const ListUsersInputSchema = z
+  .object({
+    role: RoleEnum.optional(),
+    limit: z.number().min(1).max(100).default(20),
+    offset: z.number().min(0).default(0),
+    search: z.string().optional(),
+  })
+  .optional();
 
 export const UpdateUserInputSchema = z.object({
   id: z.string().uuid(),
@@ -56,5 +59,5 @@ export const CreateUserInputSchema = z.object({
   username: z.string().min(3).max(30),
   password: z.string().min(8),
   name: z.string().min(2).optional(),
-  role: RoleEnum.default('USER').optional(),
+  role: RoleEnum.default("USER").optional(),
 });
