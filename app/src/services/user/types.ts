@@ -1,15 +1,23 @@
-import type { User } from '@prisma/client';
+import type { User } from "@prisma/client";
 import type {
   CreateUserInput,
   UpdateUserInput,
   ListUsersInput,
   GetUserInput,
-  DeleteUserInput
-} from '@portfolio/shared';
+  DeleteUserInput,
+  UserProfile,
+} from "@portfolio/shared";
 
 export type UserListItem = Pick<
   User,
-  'id' | 'email' | 'username' | 'role' | 'createdAt' | 'twoFactorEnabled' | 'avatarUrl' | 'name'
+  | "id"
+  | "email"
+  | "username"
+  | "role"
+  | "createdAt"
+  | "twoFactorEnabled"
+  | "avatarUrl"
+  | "name"
 >;
 
 export type UserWithCounts = User & {
@@ -23,7 +31,7 @@ export interface UserListing {
 }
 
 export interface UserRetrieving {
-  execute(input: GetUserInput): Promise<UserWithCounts | null>;
+  execute(input: GetUserInput): Promise<UserProfile>;
 }
 
 export interface UserCreating {
