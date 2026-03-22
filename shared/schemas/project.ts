@@ -24,11 +24,15 @@ export const ProjectSchema = z.object({
   createdAt: z.date().or(z.string()),
 });
 
-export const CreateProjectSchema = ProjectSchema.omit({
-  id: true,
-  createdAt: true,
-  githubRepoId: true,
-}).extend({
+export const CreateProjectSchema = z.object({
+  slug: z.string(),
+  title: z.string(),
+  description: z.string(),
+  content: z.string().optional(),
+  imageUrl: z.url().optional(),
+  demoUrl: z.url().optional(),
+  isFeatured: z.boolean(),
+  isVisible: z.boolean(),
   techStackIds: z.array(z.uuid()).optional(),
   githubRepoId: z.uuid().nullable().optional(),
 });
@@ -36,6 +40,7 @@ export const CreateProjectSchema = ProjectSchema.omit({
 export const UpdateProjectSchema = CreateProjectSchema.partial().extend({
   id: z.uuid(),
 });
+
 export const ProjectWithRelationsSchema = ProjectSchema.extend({
   techStack: z.array(TechStackSchema).optional(),
   gallery: z.array(ProjectImageSchema).optional(),

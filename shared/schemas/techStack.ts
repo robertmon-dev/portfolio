@@ -10,32 +10,34 @@ export const TECH_STACK_CATEGORIES = [
   "Design",
   "Tools",
 ] as const;
+
 export type TechStackCategory = (typeof TECH_STACK_CATEGORIES)[number];
+
+export const TechStackCategorySchema = z.enum(TECH_STACK_CATEGORIES);
 
 export const TechStackSchema = z.object({
   id: z.uuid(),
   name: z.string().min(1, "Name is required"),
-  icon: z.string().nullable(),
+  icon: z.string().nullable().optional(),
   color: z
     .string()
     .regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/, "Invalid hex color")
-    .nullable(),
-
-  category: z.preprocess((val) => {
-    if (!val || val === "") return "Tools";
-    if (typeof val === "string") {
-      const found = TECH_STACK_CATEGORIES.find(
-        (cat) => cat.toLowerCase() === val.toLowerCase(),
-      );
-      return found || "Tools";
-    }
-    return val;
-  }, z.enum(TECH_STACK_CATEGORIES)) as z.ZodType<TechStackCategory>,
+    .nullable()
+    .optional(),
+  category: TechStackCategorySchema,
 });
 
-export const CreateTechStackSchema = TechStackSchema.omit({ id: true });
+export const CreateTechStackSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  icon: z.string().optional(),
+  color: z
+    .string()
+    .regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/, "Invalid hex color")
+    .optional(),
+  category: TechStackCategorySchema.default("Tools"),
+});
 
-export const UpdateTechStackSchema = TechStackSchema.partial().extend({
+export const UpdateTechStackSchema = CreateTechStackSchema.partial().extend({
   id: z.uuid(),
 });
 
