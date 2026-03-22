@@ -1,20 +1,23 @@
-import { BaseService } from '../service';
+import { BaseService } from "../service";
 import {
   TechStackSchema,
   type TechStack,
   type CreateTechStackInput,
-} from '@portfolio/shared';
-import type { TechStackCreating } from './types';
+} from "@portfolio/shared";
+import type { TechStackCreating } from "./types";
 
-export class CreateTechStackService extends BaseService implements TechStackCreating {
+export class CreateTechStackService
+  extends BaseService
+  implements TechStackCreating
+{
   public async execute(data: CreateTechStackInput): Promise<TechStack> {
     this.logger.info(`Creating tech stack: ${data.name}`);
 
     const created = await this.db.techStack.create({
-      data
+      data,
     });
 
-    await this.cache.del('techstack:list:*');
+    await this.invalidateTechStackCache(created);
 
     return TechStackSchema.parse(created);
   }

@@ -28,7 +28,7 @@ export class CreateUserService extends BaseService implements UserCreating {
       ...userProfileQuery,
     });
 
-    await this.cache.del("users:list:all");
+    await this.invalidateUserCache(newUser);
 
     this.logger.info(`User ${newUser.id} created successfully.`);
 

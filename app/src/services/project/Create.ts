@@ -30,7 +30,7 @@ export class CreateProjectService
       ...projectWithRelationsQuery,
     });
 
-    await this.cache.del("projects:list:*");
+    await this.invalidateProjectCache(project);
 
     return project;
   }
