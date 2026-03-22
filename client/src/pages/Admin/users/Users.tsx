@@ -7,6 +7,7 @@ import { EntityTable } from "@/components/molecules/EntityTable/EntityTable";
 import { Header } from "@/components/molecules/Sections/Header/Header";
 import { LoadingBar } from "@/components/atoms/LoadingBar/LoadingBar";
 import { Users, UserPlus, ShieldCheck } from "lucide-react";
+import { UsersModals } from "@/components/molecules/Modals/User/Modal";
 import "./Users.scss";
 
 export const UsersAdminPage = () => {
@@ -82,6 +83,8 @@ export const UsersAdminPage = () => {
           onRowClick={(user) => actions.selectUser(user.id)}
         />
       </main>
+
+      <UsersModals state={state} actions={actions} />
     </div>
   );
 };
