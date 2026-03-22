@@ -7,14 +7,14 @@ export const dateSchema = z.preprocess((arg) => {
 }, z.date());
 
 export const UserProfileSchema = z.object({
-  id: z.string().uuid(),
-  email: z.string().email(),
+  id: z.uuid(),
+  email: z.email(),
   username: z.string(),
   name: z.string().nullable(),
   headline: z.string().nullable(),
   bio: z.string().nullable(),
   avatarUrl: z.string().nullable(),
-  socials: z.record(z.any()).nullable(),
+  socials: z.record(z.string(), z.any()).nullable(),
   role: RoleEnum,
   permissions: z.array(UserPermissionSchema).default([]),
   createdAt: dateSchema,
@@ -28,8 +28,8 @@ export const MeResponseSchema = z.object({
 
 export const GetUserInputSchema = z
   .object({
-    id: z.string().uuid().optional(),
-    email: z.string().email().optional(),
+    id: z.string().optional(),
+    email: z.string().optional(),
     username: z.string().optional(),
   })
   .refine((data) => data.id || data.email || data.username, {
@@ -46,21 +46,21 @@ export const ListUsersInputSchema = z
   .optional();
 
 export const UpdateUserInputSchema = z.object({
-  id: z.string().uuid(),
+  id: z.uuid(),
   name: z.string().min(2).max(50).nullable().optional(),
   headline: z.string().max(100).nullable().optional(),
   bio: z.string().max(2000).nullable().optional(),
-  avatarUrl: z.string().url().nullable().optional(),
-  socials: z.record(z.any()).nullable().optional(),
+  avatarUrl: z.url().nullable().optional(),
+  socials: z.record(z.string(), z.any()).nullable().optional(),
   role: RoleEnum.optional(),
 });
 
 export const DeleteUserInputSchema = z.object({
-  id: z.string().uuid(),
+  id: z.uuid(),
 });
 
 export const CreateUserInputSchema = z.object({
-  email: z.string().email(),
+  email: z.email(),
   username: z.string().min(3).max(30),
   password: z.string().min(8),
   name: z.string().min(2).optional(),

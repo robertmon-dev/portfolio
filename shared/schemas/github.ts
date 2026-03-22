@@ -1,15 +1,15 @@
 import { z } from "zod";
 
 export const GithubRepoSchema = z.object({
-  id: z.string().uuid(),
+  id: z.uuid(),
   name: z.string(),
-  url: z.string().url(),
+  url: z.url(),
   stars: z.number(),
   language: z.string().nullable(),
   description: z.string().nullable(),
   project: z
     .object({
-      id: z.string().uuid(),
+      id: z.uuid(),
       title: z.string(),
     })
     .nullable()
@@ -17,7 +17,7 @@ export const GithubRepoSchema = z.object({
 });
 
 export const UpdateGithubRepoInputSchema = z.object({
-  id: z.string().uuid(),
+  id: z.uuid(),
   name: z.string().min(1).optional(),
   stars: z.number().int().nonnegative().optional(),
   language: z.string().nullable().optional(),
@@ -26,12 +26,12 @@ export const UpdateGithubRepoInputSchema = z.object({
 });
 
 export const LinkRepoProjectInputSchema = z.object({
-  repoId: z.string().uuid(),
-  projectId: z.string().uuid(),
+  repoId: z.uuid(),
+  projectId: z.uuid(),
 });
 
 export const GithubStatsSchema = z.object({
-  id: z.string().uuid(),
+  id: z.uuid(),
   username: z.string(),
   followers: z.number(),
   publicRepos: z.number(),

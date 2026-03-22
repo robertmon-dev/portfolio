@@ -13,7 +13,7 @@ export const TECH_STACK_CATEGORIES = [
 export type TechStackCategory = (typeof TECH_STACK_CATEGORIES)[number];
 
 export const TechStackSchema = z.object({
-  id: z.string().uuid(),
+  id: z.uuid(),
   name: z.string().min(1, "Name is required"),
   icon: z.string().nullable(),
   color: z
@@ -30,17 +30,17 @@ export const TechStackSchema = z.object({
       return found || "Tools";
     }
     return val;
-  }, z.enum(TECH_STACK_CATEGORIES)) as z.ZodType<TechStackCategory>, // <--- TO JEST KLUCZ
+  }, z.enum(TECH_STACK_CATEGORIES)) as z.ZodType<TechStackCategory>,
 });
 
 export const CreateTechStackSchema = TechStackSchema.omit({ id: true });
 
 export const UpdateTechStackSchema = TechStackSchema.partial().extend({
-  id: z.string().uuid(),
+  id: z.uuid(),
 });
 
 export const TechStackProjectRelationSchema = z.object({
-  id: z.string().uuid(),
+  id: z.uuid(),
   title: z.string(),
   slug: z.string(),
 });
@@ -50,6 +50,6 @@ export const TechStackWithRelationsSchema = TechStackSchema.extend({
 });
 
 export const LinkTechStackProjectSchema = z.object({
-  techStackId: z.string().uuid(),
-  projectId: z.string().uuid(),
+  techStackId: z.uuid(),
+  projectId: z.uuid(),
 });

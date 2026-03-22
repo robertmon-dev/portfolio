@@ -11,5 +11,12 @@ import * as UserSchemas from "./user";
 export const getOpenApiDefinitions = () => {
   return {
     HealthResponse: HealthResponseSchema,
+    ...AuthSchemas,
+    ...ExperienceSchemas,
+    ...GithubSchemas,
+    ...PermissionsSchemas,
+    ...ProjectSchemas,
+    ...TechStackSchemas,
+    ...UserSchemas,
   };
 };

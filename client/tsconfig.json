@@ -7,37 +7,15 @@
     "noEmit": true,
     "skipLibCheck": true,
     "baseUrl": ".",
-    "types": [
-      "node",
-      "react",
-      "react-dom",
-      "vite/client"
-    ],
+    "types": ["node", "react", "react-dom", "vite/client"],
     "allowJs": true,
     "esModuleInterop": true,
     "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-      "@portfolio/shared": [
-        "../shared/dist"
-      ],
-      "@portfolio/app": [
-        "../app/src/routers/app.ts"
-      ]
+      "@/*": ["./src/*"],
+      "@portfolio/shared": ["../shared/dist"],
+      "@portfolio/app/contract": ["../app/dist/contract.d.ts"]
     }
   },
-    "include": [
-    "src/**/*",
-    "src/**/*.tsx",
-    "src/**/*.ts",
-    "vite.config.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "../app",
-    "dist",
-    "**/*.spec.ts",
-    "**/*.test.ts"
-  ]
+  "include": ["src/**/*", "vite.config.ts"],
+  "exclude": ["node_modules", "dist", "**/*.spec.ts", "**/*.test.ts"]
 }

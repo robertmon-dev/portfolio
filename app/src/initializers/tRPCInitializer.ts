@@ -69,7 +69,6 @@ export class TrpcInitializer {
       description: "RESTful API generated from tRPC router",
       version: "1.0.0",
       baseUrl: `http://localhost:${this.settings.PORT}/api`,
-      defs: { ...getOpenApiDefinitions() },
     });
 
     app.use("/api-json", (req, res) => res.json(openApiDocument));

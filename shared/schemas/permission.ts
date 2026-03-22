@@ -14,6 +14,6 @@ export const UserPermissionSchema = z.object({
 });
 
 export const UpdateUserPermissionsInputSchema = z.object({
-  id: z.string().uuid(),
+  id: z.uuid(),
   permissions: z.array(UserPermissionSchema),
 });

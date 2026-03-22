@@ -1,7 +1,7 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 export const ExperienceSchema = z.object({
-  id: z.string().uuid(),
+  id: z.uuid(),
   position: z.string().min(1),
   company: z.string().min(1),
   startDate: z.date().or(z.string()),
@@ -11,5 +11,10 @@ export const ExperienceSchema = z.object({
   createdAt: z.date().or(z.string()),
 });
 
-export const CreateExperienceSchema = ExperienceSchema.omit({ id: true, createdAt: true });
-export const UpdateExperienceSchema = ExperienceSchema.partial().extend({ id: z.string().uuid() });
+export const CreateExperienceSchema = ExperienceSchema.omit({
+  id: true,
+  createdAt: true,
+});
+export const UpdateExperienceSchema = ExperienceSchema.partial().extend({
+  id: z.uuid(),
+});

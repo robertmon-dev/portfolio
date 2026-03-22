@@ -1,39 +1,41 @@
-import { z } from 'zod';
-import { TechStackSchema } from './techStack';
-import { GithubRepoSchema } from './github';
+import { z } from "zod";
+import { TechStackSchema } from "./techStack";
+import { GithubRepoSchema } from "./github";
 
 export const ProjectImageSchema = z.object({
-  id: z.string().uuid(),
-  url: z.string().url(),
+  id: z.uuid(),
+  url: z.url(),
   alt: z.string().nullable(),
   order: z.number(),
-  projectId: z.string().uuid(),
+  projectId: z.uuid(),
 });
 
 export const ProjectSchema = z.object({
-  id: z.string().uuid(),
+  id: z.uuid(),
   slug: z.string(),
   title: z.string(),
   description: z.string(),
-  content: z.string().nullable(),
-  imageUrl: z.string().url().nullable(),
-  demoUrl: z.string().url().nullable(),
-  githubRepoId: z.string().uuid().nullable(),
+  content: z.string().optional(),
+  imageUrl: z.url().optional(),
+  demoUrl: z.url().optional(),
+  githubRepoId: z.uuid().nullable(),
   isFeatured: z.boolean(),
   isVisible: z.boolean(),
-  createdAt: z.date().or(z.string())
+  createdAt: z.date().or(z.string()),
 });
 
 export const CreateProjectSchema = ProjectSchema.omit({
   id: true,
   createdAt: true,
-  githubRepoId: true
+  githubRepoId: true,
 }).extend({
-  techStackIds: z.array(z.string().uuid()).optional(),
-  githubRepoId: z.string().uuid().nullable().optional(),
+  techStackIds: z.array(z.uuid()).optional(),
+  githubRepoId: z.uuid().nullable().optional(),
 });
 
-export const UpdateProjectSchema = CreateProjectSchema.partial().extend({ id: z.string().uuid() });
+export const UpdateProjectSchema = CreateProjectSchema.partial().extend({
+  id: z.uuid(),
+});
 export const ProjectWithRelationsSchema = ProjectSchema.extend({
   techStack: z.array(TechStackSchema).optional(),
   gallery: z.array(ProjectImageSchema).optional(),
@@ -41,7 +43,7 @@ export const ProjectWithRelationsSchema = ProjectSchema.extend({
 });
 
 export const DeleteProjectSchema = z.object({
-  id: z.string().uuid(),
+  id: z.uuid(),
 });
 
 export const ListProjectsOptionsSchema = z.object({
