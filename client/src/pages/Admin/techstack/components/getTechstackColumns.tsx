@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import type { Column } from "@/components/molecules/EntityTable/types";
 import { Tag } from "@/components/atoms/Tag/Tag";
 import { Button } from "@/components/atoms/Button/Button";
@@ -25,11 +26,13 @@ export const getTechStackColumns = (
 
         <div
           className="techstack-table__gem"
-          style={{
-            ["--gem-color" as any]: techStack.color?.startsWith("#")
-              ? techStack.color
-              : `#${techStack.color}` || "var(--primary)",
-          }}
+          style={
+            {
+              ["--gem-color"]: techStack.color?.startsWith("#")
+                ? techStack.color
+                : `#${techStack.color}` || "var(--primary)",
+            } as CSSProperties
+          }
         />
       </div>
     ),
