@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { Alert } from "@/components/atoms/Alert/Alert";
 import { Button } from "@/components/atoms/Button/Button";
 import { Select } from "@/components/atoms/Select/Select";
 import { Tag } from "@/components/atoms/Tag/Tag";
@@ -91,10 +92,9 @@ export const LinkTechStackForm = ({
       </div>
 
       {availableProjects.length === 0 && projects.length > 0 && (
-        <div className="tech-stack-form__alert">
-          <AlertCircle size={18} />
-          <span>{t("admin.techStack.link.noAvailableProjects")}</span>
-        </div>
+        <Alert variant="warning">
+          {t("admin.techStack.link.noAvailableProjects")}
+        </Alert>
       )}
 
       <div className="tech-stack-form__actions">
