@@ -33,6 +33,7 @@ export const TechStackAdminPage = () => {
   const columns = useMemo(
     () =>
       getTechStackColumns(
+        t,
         (techStack) => actions.openModal("UPDATE", techStack.id),
         (id) => actions.openModal("DELETE", id),
         (techStack) => actions.openModal("LINK", techStack.id),

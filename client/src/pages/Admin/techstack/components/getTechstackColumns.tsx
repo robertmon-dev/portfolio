@@ -4,8 +4,10 @@ import { Tag } from "@/components/atoms/Tag/Tag";
 import { Button } from "@/components/atoms/Button/Button";
 import { Trash2, Edit2, Layers, Link2 } from "lucide-react";
 import type { TechStackWithRelations } from "@portfolio/shared";
+import type { TFunction } from "i18next";
 
 export const getTechStackColumns = (
+  t: TFunction,
   onEdit: (techStack: TechStackWithRelations) => void,
   onDelete: (id: string) => void,
   onLink: (techStack: TechStackWithRelations) => void,
@@ -14,7 +16,7 @@ export const getTechStackColumns = (
 ): Column<TechStackWithRelations>[] => [
   {
     key: "name",
-    header: "Technology",
+    header: t("admin.techStack.table.headers.name", "Technology"),
     width: "25%",
     render: (techStack) => (
       <div className="techstack-table__name-row">
@@ -28,9 +30,11 @@ export const getTechStackColumns = (
           className="techstack-table__gem"
           style={
             {
-              ["--gem-color"]: techStack.color?.startsWith("#")
-                ? techStack.color
-                : `#${techStack.color}` || "var(--primary)",
+              "--gem-color": techStack.color
+                ? techStack.color.startsWith("#")
+                  ? techStack.color
+                  : `#${techStack.color}`
+                : "var(--primary)",
             } as CSSProperties
           }
         />
@@ -39,17 +43,21 @@ export const getTechStackColumns = (
   },
   {
     key: "category",
-    header: "Category",
+    header: t("admin.techStack.table.headers.category", "Category"),
     width: "15%",
     render: (techStack) => (
       <Tag variant="default" size="sm">
-        {techStack.category}
+        {/* Klucz kategorii zgodny z tym, co daliśmy w formularzu */}
+        {t(
+          `admin.techStack.categories.${techStack.category}`,
+          techStack.category,
+        )}
       </Tag>
     ),
   },
   {
     key: "projects",
-    header: "Linked Projects",
+    header: t("admin.techStack.table.headers.projects", "Linked Projects"),
     width: "45%",
     render: (techStack) => (
       <div className="techstack-table__projects">
@@ -71,14 +79,16 @@ export const getTechStackColumns = (
         ))}
 
         {(!techStack.projects || techStack.projects.length === 0) && (
-          <span className="techstack-table__empty">No projects linked</span>
+          <span className="techstack-table__empty">
+            {t("admin.techStack.table.noProjects", "No projects linked")}
+          </span>
         )}
       </div>
     ),
   },
   {
     key: "actions",
-    header: "Actions",
+    header: t("admin.techStack.table.headers.actions", "Actions"),
     align: "right",
     render: (techStack) => (
       <div
@@ -90,7 +100,7 @@ export const getTechStackColumns = (
           size="sm"
           onClick={() => onLink(techStack)}
           isIcon
-          title="Link Project"
+          title={t("admin.techStack.table.actions.link", "Link Project")}
           disabled={processingId === techStack.id}
         >
           <Link2 size={14} />
@@ -100,7 +110,7 @@ export const getTechStackColumns = (
           size="sm"
           onClick={() => onEdit(techStack)}
           isIcon
-          title="Edit Technology"
+          title={t("common.edit", "Edit")}
           disabled={processingId === techStack.id}
         >
           <Edit2 size={14} />
@@ -111,7 +121,7 @@ export const getTechStackColumns = (
           isIcon
           onClick={() => onDelete(techStack.id)}
           isLoading={processingId === techStack.id}
-          title="Delete Technology"
+          title={t("common.delete", "Delete")}
         >
           <Trash2 size={14} />
         </Button>
