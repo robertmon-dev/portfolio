@@ -1,21 +1,23 @@
-import { Octokit } from 'octokit';
-import { PrismaClient } from '@prisma/client';
-import type { Logging } from '../../../core/logger/types';
-import type { Caching } from '../../../infrastructure/cache/types';
-import type { Settings } from '../../../core/settings/settings';
-import type { GithubApiRepo } from '../types';
+import { Octokit } from "octokit";
+import type { Logging } from "../../../core/logger/types";
+import type { Caching } from "../../../infrastructure/cache/types";
+import { BaseService } from "../../service";
+import type { GithubApiRepo } from "../types";
+import type { GithubRepo, PrismaClient } from "@prisma/client";
+import type { Settings } from "../../../core/settings/settings";
 
-export class GithubFetchWorker {
+export class GithubFetchWorker extends BaseService {
   private octokit: Octokit;
 
   constructor(
-    private readonly db: PrismaClient,
-    private readonly cache: Caching,
-    private readonly logger: Logging,
-    private readonly settings: Settings['config']
+    db: PrismaClient,
+    cache: Caching,
+    logger: Logging,
+    settings: Settings["config"],
   ) {
+    super(db, cache, logger, settings);
     this.octokit = new Octokit({
-      auth: this.settings.GITHUB_TOKEN
+      auth: this.settings.GITHUB_TOKEN,
     });
   }
 
@@ -24,27 +26,27 @@ export class GithubFetchWorker {
     this.logger.info(`GitHub Sync Worker started for: ${username}`);
     const start = Date.now();
 
-    try {
-      const [{ data: user }, { data: repos }] = await Promise.all([
-        this.octokit.rest.users.getByUsername({ username }),
-        this.octokit.rest.repos.listForUser({
-          username,
-          type: 'owner',
-          sort: 'pushed',
-          direction: 'desc'
-        })
-      ]);
+    const [{ data: user }, { data: repos }] = await Promise.all([
+      this.octokit.rest.users.getByUsername({ username }),
+      this.octokit.rest.repos.listForUser({
+        username,
+        type: "owner",
+        sort: "pushed",
+        direction: "desc",
+      }),
+    ]);
 
-      const bestRepos = (repos as GithubApiRepo[])
-        .filter(repo => !repo.fork)
-        .sort((a, b) => (b.stargazers_count ?? 0) - (a.stargazers_count ?? 0))
-        .slice(0, 6);
+    const bestRepos = (repos as GithubApiRepo[])
+      .filter((repo) => !repo.fork)
+      .sort((a, b) => (b.stargazers_count ?? 0) - (a.stargazers_count ?? 0))
+      .slice(0, 6);
 
-      const totalStars = (repos as GithubApiRepo[]).reduce((acc, repo) => {
-        return acc + (repo.stargazers_count ?? 0);
-      }, 0);
+    const totalStars = (repos as GithubApiRepo[]).reduce((acc, repo) => {
+      return acc + (repo.stargazers_count ?? 0);
+    }, 0);
 
-      await this.db.$transaction(async (tx) => {
+    const { syncedRepos, affectedProjects } = await this.db.$transaction(
+      async (tx) => {
         const stats = await tx.githubStats.upsert({
           where: { username },
           update: {
@@ -60,8 +62,10 @@ export class GithubFetchWorker {
           },
         });
 
+        const upsertedRepos: GithubRepo[] = [];
+
         for (const [index, repo] of bestRepos.entries()) {
-          await tx.githubRepo.upsert({
+          const updated = await tx.githubRepo.upsert({
             where: { url: repo.html_url },
             update: {
               name: repo.name,
@@ -69,7 +73,7 @@ export class GithubFetchWorker {
               language: repo.language ?? null,
               description: repo.description ?? null,
               order: index,
-              statsId: stats.id
+              statsId: stats.id,
             },
             create: {
               name: repo.name,
@@ -78,32 +82,40 @@ export class GithubFetchWorker {
               language: repo.language ?? null,
               description: repo.description ?? null,
               order: index,
-              statsId: stats.id
-            }
+              statsId: stats.id,
+            },
           });
+          upsertedRepos.push(updated);
         }
 
-        const topUrls = bestRepos.map(r => r.html_url);
+        const topUrls = bestRepos.map((r) => r.html_url);
+
         await tx.githubRepo.deleteMany({
           where: {
             statsId: stats.id,
             url: { notIn: topUrls },
-            project: { is: null }
-          }
+            project: { is: null },
+          },
         });
-      });
 
-      await Promise.all([
-        this.cache.del(`github:stats:${username}`),
-        this.cache.del('github:repos:list:all'),
-        this.cache.del('projects:list:*')
-      ]);
+        const projects = await tx.project.findMany({
+          where: {
+            githubRepoId: { in: upsertedRepos.map((r) => r.id) },
+          },
+          select: { id: true, slug: true },
+        });
 
-      this.logger.info(`GitHub Sync Worker completed in ${Date.now() - start}ms`);
+        return { syncedRepos: upsertedRepos, affectedProjects: projects };
+      },
+    );
 
-    } catch (error) {
-      this.logger.error('GitHub Sync Worker failed', error);
-      throw error;
-    }
+    await Promise.all([
+      this.invalidateGithubCache(...syncedRepos),
+      this.invalidateProjectCache(...affectedProjects),
+    ]);
+
+    this.logger.info(
+      `GitHub Sync Worker completed in ${Date.now() - start}ms. Synced ${syncedRepos.length} repos and invalidated ${affectedProjects.length} projects.`,
+    );
   }
 }
