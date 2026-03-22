@@ -68,16 +68,23 @@ export class TrpcInitializer {
       title: "Portfolio API",
       description: "RESTful API generated from tRPC router",
       version: "1.0.0",
-      baseUrl: `http://localhost:${this.settings.PORT}/api`,
+      baseUrl: `${this.settings.APP_URL}/api`,
       defs: { ...getOpenApiDefinitions() },
+      docsUrl: "https://github.com/robertmon-dev/portfolio",
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
     });
 
-    app.use("/api-json", (req, res) => res.json(openApiDocument));
-
+    app.use("/api-json", (_, res) => res.json(openApiDocument));
     app.use(
       "/api-docs",
       apiReference({
-        theme: "purple",
+        theme: "bluePlanet",
         spec: {
           url: "/api-json",
         },
