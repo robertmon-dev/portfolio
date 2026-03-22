@@ -11,7 +11,7 @@ import "../TechStackModal.scss";
 
 export const TechStackForm = ({
   initialData,
-  onSubmit,
+  onCreate,
   onCancel,
   isLoading,
 }: TechStackFormProps) => {
@@ -28,7 +28,7 @@ export const TechStackForm = ({
 
   const { formData, errors, handleChange, handleSubmit } = useTechStackForm({
     initialData,
-    onSubmit,
+    onCreate,
     onCancel,
   });
 

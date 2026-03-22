@@ -24,7 +24,7 @@ export const useModalContent = (
         title: t("admin.techStack.modals.create.title"),
         component: (
           <TechStackForm
-            onSubmit={actions.createTechStack}
+            onCreate={actions.createTechStack}
             onCancel={actions.closeModals}
             isLoading={isAnyProcessing}
           />
@@ -38,9 +38,7 @@ export const useModalContent = (
         component: selectedTechStack ? (
           <TechStackForm
             initialData={selectedTechStack}
-            onSubmit={(data) =>
-              actions.updateTechStack({ id: selectedTechStack.id, ...data })
-            }
+            onUpdate={actions.updateTechStack}
             onCancel={actions.closeModals}
             isLoading={isAnyProcessing}
           />

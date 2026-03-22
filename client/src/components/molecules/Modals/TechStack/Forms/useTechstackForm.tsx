@@ -1,12 +1,17 @@
 import { useState } from "react";
 import { CreateTechStackSchema } from "@portfolio/shared";
+import type {
+  CreateTechStackInput,
+  UpdateTechStackInput,
+} from "@portfolio/shared";
 import type { TechStackFormProps } from "../types";
 
 const DEFAULT_TECH_COLOR = "#7aa2f7";
 
 export const useTechStackForm = ({
   initialData,
-  onSubmit,
+  onCreate,
+  onUpdate,
   onCancel,
 }: Partial<TechStackFormProps>) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -55,9 +60,14 @@ export const useTechStackForm = ({
     }
 
     if (initialData?.id) {
-      onSubmit?.({ ...validation.data, id: initialData.id });
+      const updatePayload: UpdateTechStackInput = {
+        ...validation.data,
+        id: initialData.id,
+      };
+      onUpdate?.(updatePayload);
     } else {
-      onSubmit?.(validation.data);
+      const createPayload: CreateTechStackInput = validation.data;
+      onCreate?.(createPayload);
     }
   };
 

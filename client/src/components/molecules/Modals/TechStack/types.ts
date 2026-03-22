@@ -7,7 +7,8 @@ import type { TechStackActions } from "@/pages/Admin/techstack/types";
 
 export interface TechStackFormProps {
   initialData?: TechStackWithRelations;
-  onSubmit: (data: CreateTechStackInput | UpdateTechStackInput) => void;
+  onCreate?: (data: CreateTechStackInput) => void;
+  onUpdate?: (data: UpdateTechStackInput) => void;
   onCancel: () => void;
   isLoading?: boolean;
 }
