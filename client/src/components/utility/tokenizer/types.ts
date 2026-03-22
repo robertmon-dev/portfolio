@@ -1,13 +1,13 @@
 export type TokenType =
-  | 'string'
-  | 'number'
-  | 'boolean'
-  | 'property'
-  | 'punctuation'
-  | 'keyword'
-  | 'comment'
-  | 'operator'
-  | 'text';
+  | "string"
+  | "number"
+  | "boolean"
+  | "property"
+  | "punctuation"
+  | "keyword"
+  | "comment"
+  | "operator"
+  | "text";
 
 export interface Token {
   type: TokenType;

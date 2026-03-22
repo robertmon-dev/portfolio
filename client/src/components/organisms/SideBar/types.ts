@@ -1,10 +1,12 @@
-import { ReactNode, HTMLAttributes } from 'react';
+import type { ReactNode, HTMLAttributes } from "react";
 
 export interface SidebarProps extends HTMLAttributes<HTMLElement> {
   children: ReactNode;
   isCollapsed?: boolean;
 }
 
-export interface SidebarSectionProps extends HTMLAttributes<HTMLDivElement | HTMLElement> {
+export interface SidebarSectionProps extends HTMLAttributes<
+  HTMLDivElement | HTMLElement
+> {
   children: ReactNode;
 }

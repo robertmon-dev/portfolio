@@ -1,12 +1,12 @@
-import { useTranslation } from 'react-i18next';
-import { Building } from 'lucide-react';
-import { List } from '@/components/molecules/List/List';
-import type { FooterRightSectionProps } from './types';
+import { useTranslation } from "react-i18next";
+import { Building } from "lucide-react";
+import { List } from "@/components/molecules/List/List";
+import type { FooterRightSectionProps } from "./types";
 
 export const FooterRightSection = ({
   navLinks,
   currentYear,
-  brandName
+  brandName,
 }: FooterRightSectionProps) => {
   const { t } = useTranslation();
 
@@ -26,7 +26,7 @@ export const FooterRightSection = ({
           <span>{brandName}</span>
         </div>
         <div className="app-footer__copyright">
-          © {currentYear} {t('footer.rights', 'All rights reserved.')}
+          © {currentYear} {t("footer.rights", "All rights reserved.")}
         </div>
       </div>
     </div>

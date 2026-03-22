@@ -35,9 +35,7 @@ export const useModalContent = (
         component: selectedUser ? (
           <UpdateUserForm
             initialData={selectedUser}
-            onSubmit={(data) =>
-              actions.updateUser({ id: selectedUser.id, ...data })
-            }
+            onSubmit={(data) => actions.updateUser({ ...data })}
             onCancel={actions.closeModals}
             isLoading={isAnyProcessing}
           />

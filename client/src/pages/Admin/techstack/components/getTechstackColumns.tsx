@@ -1,8 +1,8 @@
-import { Column } from "@/components/molecules/EntityTable/types";
+import type { Column } from "@/components/molecules/EntityTable/types";
 import { Tag } from "@/components/atoms/Tag/Tag";
 import { Button } from "@/components/atoms/Button/Button";
 import { Trash2, Edit2, Layers, Link2 } from "lucide-react";
-import { TechStackWithRelations } from "@portfolio/shared";
+import type { TechStackWithRelations } from "@portfolio/shared";
 
 export const getTechStackColumns = (
   onEdit: (techStack: TechStackWithRelations) => void,
@@ -14,7 +14,7 @@ export const getTechStackColumns = (
   {
     key: "name",
     header: "Technology",
-    width: "25%", // Zmniejszone z 35%
+    width: "25%",
     render: (techStack) => (
       <div className="techstack-table__name-row">
         <Layers size={14} className="techstack-table__type-icon" />

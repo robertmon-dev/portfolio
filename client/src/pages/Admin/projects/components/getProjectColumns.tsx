@@ -1,9 +1,9 @@
-import { ProjectWithRelations } from "@portfolio/shared";
-import { Column } from "@/components/molecules/EntityTable/types";
+import type { ProjectWithRelations } from "@portfolio/shared";
+import type { Column } from "@/components/molecules/EntityTable/types";
 import { Tag } from "@/components/atoms/Tag/Tag";
 import { Button } from "@/components/atoms/Button/Button";
 import { Trash2, Edit2, Star, EyeOff, Eye, Github } from "lucide-react";
-import { TFunction } from "i18next";
+import type { TFunction } from "i18next";
 
 export const getProjectColumns = (
   t: TFunction,

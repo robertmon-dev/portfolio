@@ -66,7 +66,7 @@ export const useLayout = () => {
       res: "users",
     },
   ]
-    .filter((item) => can(`${item.res}:*`))
+    .filter((item) => item.res && can(`${item.res}:*`))
     .map((item) => ({
       ...item,
       isActive: location.pathname.startsWith(item.href),
@@ -75,7 +75,9 @@ export const useLayout = () => {
     ...item,
     isActive:
       location.pathname === item.href ||
-      (item.href !== "/" && location.pathname.startsWith(item.href)),
+      (!!item.href &&
+        item.href !== "/" &&
+        location.pathname.startsWith(item.href)),
   }));
 
   const showAdminNav = isAuthenticated && (isAdmin || adminNavItems.length > 0);

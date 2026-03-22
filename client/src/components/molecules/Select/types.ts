@@ -1,6 +1,6 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
-export type SelectVariant = 'default' | 'header' | 'footer';
+export type SelectVariant = "default" | "header" | "footer";
 
 export interface SelectProps {
   label?: string;

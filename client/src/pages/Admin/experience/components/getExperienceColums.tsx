@@ -1,4 +1,4 @@
-import { Experience } from "@portfolio/shared";
+import type { Experience } from "@portfolio/shared";
 import { Button } from "@/components/atoms/Button/Button";
 import {
   Edit2,

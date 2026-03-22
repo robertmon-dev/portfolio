@@ -13,7 +13,7 @@ export const Select = ({
   children,
   className = "",
   disabled = false,
-  variant = 'default'
+  variant = "default",
 }: SelectProps) => {
   const triggerRef = useRef<HTMLDivElement>(null);
 
@@ -25,20 +25,18 @@ export const Select = ({
         <div
           className={`
             select-molecule__trigger
-            ${variant === 'header' ? 'select-molecule__trigger--header-style' : ''}
-            ${isOpen ? 'select-molecule__trigger--active' : ''}
-            ${error ? 'select-molecule__trigger--error' : ''}
-            ${disabled ? 'select-molecule__trigger--disabled' : ''}
+            ${variant === "header" ? "select-molecule__trigger--header-style" : ""}
+            ${isOpen ? "select-molecule__trigger--active" : ""}
+            ${error ? "select-molecule__trigger--error" : ""}
+            ${disabled ? "select-molecule__trigger--disabled" : ""}
           `}
           onClick={() => !disabled && onOpenChange(!isOpen)}
         >
-          <div className="select-molecule__trigger-content">
-            {trigger}
-          </div>
+          <div className="select-molecule__trigger-content">{trigger}</div>
 
           <ChevronDown
             size={14}
-            className={`transition-transform duration-200 ${isOpen ? 'rotate-180 text-primary' : ''}`}
+            className={`transition-transform duration-200 ${isOpen ? "rotate-180 text-primary" : ""}`}
           />
         </div>
 

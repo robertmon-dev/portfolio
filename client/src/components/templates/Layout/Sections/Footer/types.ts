@@ -1,4 +1,4 @@
-import type { ListOption } from '@/components/molecules/List/List';
+import type { ListOption } from "@/components/molecules/List/List";
 
 export interface LanguageOption {
   code: string;

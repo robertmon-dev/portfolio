@@ -1,7 +1,7 @@
-import { useTranslation } from 'react-i18next';
-import { Select } from '@/components/molecules/Select/Select';
-import { List } from '@/components/molecules/List/List';
-import type { FooterLeftSectionProps } from './types';
+import { useTranslation } from "react-i18next";
+import { Select } from "@/components/molecules/Select/Select";
+import { List } from "@/components/molecules/List/List";
+import type { FooterLeftSectionProps } from "./types";
 
 export const FooterLeftSection = ({
   isLangOpen,
@@ -9,14 +9,16 @@ export const FooterLeftSection = ({
   currentLangLabel,
   handleLangSelect,
   socialLinks,
-  languages
+  languages,
 }: FooterLeftSectionProps) => {
   const { t } = useTranslation();
 
   return (
     <div className="app-footer__content-wrapper">
       <div className="app-footer__group">
-        <span className="app-footer__label">{t('footer.labels.language', 'Language')}</span>
+        <span className="app-footer__label">
+          {t("footer.labels.language", "Language")}
+        </span>
         <Select
           variant="footer"
           isOpen={isLangOpen}
@@ -36,7 +38,9 @@ export const FooterLeftSection = ({
       </div>
 
       <div className="app-footer__group">
-        <span className="app-footer__label">{t('footer.labels.social', 'Social')}</span>
+        <span className="app-footer__label">
+          {t("footer.labels.social", "Social")}
+        </span>
         <List
           items={socialLinks}
           variant="nav"

@@ -1,5 +1,5 @@
-import { ReactNode } from 'react';
-import { type Role } from '@portfolio/shared';
+import type { ReactNode } from "react";
+import { type Role } from "@portfolio/shared";
 
 export interface GuardProps {
   children: ReactNode;

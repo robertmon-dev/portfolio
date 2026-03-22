@@ -1,4 +1,4 @@
-import { Column } from "@/components/molecules/EntityTable/types";
+import type { Column } from "@/components/molecules/EntityTable/types";
 import { Tag } from "@/components/atoms/Tag/Tag";
 import { Button } from "@/components/atoms/Button/Button";
 import {
@@ -10,7 +10,7 @@ import {
   KeyRound,
   Lock,
 } from "lucide-react";
-import { UserProfile } from "@portfolio/shared";
+import type { UserProfile } from "@portfolio/shared";
 
 export const getUsersColumns = (
   onEdit: (user: UserProfile) => void,

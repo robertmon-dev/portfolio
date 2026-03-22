@@ -13,8 +13,11 @@ export const tokenizeCode = (code: string): Token[] => {
 
       if (match) {
         let finalType = rule.type;
-        if (rule.type === 'string' && remaining.match(/^"(\\.|[^"\\])*"(?=\s*:)/)) {
-          finalType = 'property';
+        if (
+          rule.type === "string" &&
+          remaining.match(/^"(\\.|[^"\\])*"(?=\s*:)/)
+        ) {
+          finalType = "property";
         }
 
         tokens.push({ type: finalType, value: match[0] });
@@ -25,11 +28,10 @@ export const tokenizeCode = (code: string): Token[] => {
     }
 
     if (!matchFound) {
-      tokens.push({ type: 'text', value: remaining[0] });
+      tokens.push({ type: "text", value: remaining[0] });
       remaining = remaining.slice(1);
     }
   }
 
   return tokens;
 };
-

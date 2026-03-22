@@ -1,20 +1,18 @@
-import type { SidebarProps } from './types';
-import './Sidebar.scss';
+import type { SidebarProps } from "./types";
+import "./Sidebar.scss";
 
 export const Sidebar = ({
   children,
-  className = '',
+  className = "",
   isCollapsed = false,
   ...rest
 }: SidebarProps) => {
   return (
     <aside
-      className={`sidebar ${isCollapsed ? 'sidebar--collapsed' : ''} ${className}`.trim()}
+      className={`sidebar ${isCollapsed ? "sidebar--collapsed" : ""} ${className}`.trim()}
       {...rest}
     >
-      <div className="sidebar__container">
-        {children}
-      </div>
+      <div className="sidebar__container">{children}</div>
     </aside>
   );
 };

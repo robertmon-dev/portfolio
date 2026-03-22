@@ -1,10 +1,14 @@
-import { useAccess } from '@/hooks/useAccess';
-import { LoadingBar } from '@/components/atoms/LoadingBar/LoadingBar';
-import { ErrorPage } from '@/pages/Error/Error';
-import type { GuardProps } from './types';
+import { useAccess } from "@/hooks/useAccess";
+import { LoadingBar } from "@/components/atoms/LoadingBar/LoadingBar";
+import { ErrorPage } from "@/pages/Error/Error";
+import type { GuardProps } from "./types";
 import "@/pages/Admin/repos/Repos.scss";
 
-export const Guard = ({ children, requiredRole, requiredPermission }: GuardProps) => {
+export const Guard = ({
+  children,
+  requiredRole,
+  requiredPermission,
+}: GuardProps) => {
   const { isAuthenticated, isLoading, hasRole, can } = useAccess();
 
   if (isLoading) {

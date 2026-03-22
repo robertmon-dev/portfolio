@@ -1,8 +1,8 @@
-import { Column } from "@/components/molecules/EntityTable/types";
+import type { Column } from "@/components/molecules/EntityTable/types";
 import { Tag } from "@/components/atoms/Tag/Tag";
 import { Button } from "@/components/atoms/Button/Button";
 import { Trash2, Edit2, Link as LinkIcon, Link2Off } from "lucide-react";
-import { GithubRepo } from "@portfolio/shared";
+import type { GithubRepo } from "@portfolio/shared";
 
 export const getGithubColumns = (
   onEdit: (repo: GithubRepo) => void,
@@ -59,7 +59,7 @@ export const getGithubColumns = (
             variant="success"
             size="sm"
             maxLength={20}
-            onDismiss={() => onUnlink(repo)} // Opcja odpięcia bezpośrednio z taga
+            onDismiss={() => onUnlink(repo)}
           >
             {repo.project.title}
           </Tag>

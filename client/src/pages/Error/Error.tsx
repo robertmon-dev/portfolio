@@ -7,18 +7,14 @@ import { ERROR_CONFIG } from "./consts";
 import type { ErrorPageProps } from "./types";
 import "./Error.scss";
 
-export const ErrorPage = ({
-  code = '404',
-  title,
-  message
-}: ErrorPageProps) => {
+export const ErrorPage = ({ code = "404", title, message }: ErrorPageProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
   const config = ERROR_CONFIG[code] || {
     icon: AlertTriangle,
     titleKey: "errors.default.title",
-    descKey: "errors.default.description"
+    descKey: "errors.default.description",
   };
 
   const Icon = config.icon;
@@ -53,7 +49,11 @@ export const ErrorPage = ({
               {title || t(config.titleKey, "Something went wrong")}
             </h2>
             <p className="error-page__description">
-              {message || t(config.descKey, "The page you are looking for doesn't exist.")}
+              {message ||
+                t(
+                  config.descKey,
+                  "The page you are looking for doesn't exist.",
+                )}
             </p>
           </motion.div>
         </div>

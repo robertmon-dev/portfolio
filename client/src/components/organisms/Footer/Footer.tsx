@@ -1,11 +1,11 @@
-import type { FooterProps } from './types';
-import './Footer.scss';
+import type { FooterProps } from "./types";
+import "./Footer.scss";
 
 export const Footer = ({
   brand,
   copyright,
   children,
-  className = '',
+  className = "",
   ...rest
 }: FooterProps) => {
   return (
@@ -16,7 +16,9 @@ export const Footer = ({
         <div className="app-footer__container">
           {brand && <div className="app-footer__brand">{brand}</div>}
           <nav className="app-footer__nav"></nav>
-          {copyright && <div className="app-footer__copyright">{copyright}</div>}
+          {copyright && (
+            <div className="app-footer__copyright">{copyright}</div>
+          )}
         </div>
       )}
     </footer>
