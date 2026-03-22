@@ -47,7 +47,6 @@ export const getTechStackColumns = (
     width: "15%",
     render: (techStack) => (
       <Tag variant="default" size="sm">
-        {/* Klucz kategorii zgodny z tym, co daliśmy w formularzu */}
         {t(
           `admin.techStack.categories.${techStack.category}`,
           techStack.category,
