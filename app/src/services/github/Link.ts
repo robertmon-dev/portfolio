@@ -21,10 +21,8 @@ export class LinkRepoProjectService extends BaseService {
     });
 
     await Promise.all([
-      this.cache.del("projects:list:*"),
-      this.cache.del("github:repos:list:all"),
-      this.cache.del(`project:id:${projectId}`),
-      this.cache.del(`project:slug:${project.slug}`),
+      this.invalidateGithubCache(updatedRepo),
+      this.invalidateProjectCache({ id: projectId, slug: project.slug }),
     ]);
 
     return updatedRepo;

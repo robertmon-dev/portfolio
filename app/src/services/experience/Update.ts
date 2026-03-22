@@ -20,10 +20,7 @@ export class UpdateExperienceService
       data,
     });
 
-    await Promise.all([
-      this.cache.del("experience:list:*"),
-      this.cache.del(`experience:id:${id}`),
-    ]);
+    await this.invalidateExperienceCache(updated);
 
     return ExperienceSchema.parse(updated);
   }

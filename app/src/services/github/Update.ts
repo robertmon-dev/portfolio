@@ -19,19 +19,9 @@ export class UpdateGithubRepoService extends BaseService {
       ...githubRepoWithRelationsQuery,
     });
 
-    const projectKeys = updated.project
-      ? [
-          `project:id:${updated.project.id}`,
-          `project:slug:${updated.project.slug}`,
-        ]
-      : [];
-
     await Promise.all([
-      this.cache.del("github:repos:list:all"),
-      this.cache.del("github:repos:*"),
-      this.cache.del("github:stats:*"),
-      this.cache.del("projects:list:*"),
-      ...projectKeys.map((key) => this.cache.del(key)),
+      this.invalidateGithubCache(updated),
+      this.invalidateProjectCache(updated.project),
     ]);
 
     this.logger.info(

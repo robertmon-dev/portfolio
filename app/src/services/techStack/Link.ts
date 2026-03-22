@@ -2,7 +2,7 @@ import { BaseService } from "../service";
 import { TechStackSchema, type TechStack } from "@portfolio/shared";
 import type { TechStackProjectLinking } from "./types";
 
-export class LinkTechStackProjectService
+export class LinkRepoProjectService
   extends BaseService
   implements TechStackProjectLinking
 {
@@ -11,6 +11,7 @@ export class LinkTechStackProjectService
     projectId: string;
   }): Promise<TechStack> {
     const { techStackId, projectId } = input;
+
     this.logger.info(
       `Linking TechStack ${techStackId} to project ${projectId}`,
     );
@@ -32,12 +33,13 @@ export class LinkTechStackProjectService
     );
 
     await Promise.all([
-      this.cache.del("projects:list:*"),
-      this.cache.del("techstack:list:*"),
-      this.cache.del(`techstack:id:${techStackId}`),
-      this.cache.del(`project:id:${projectId}`),
-      this.cache.del(`project:slug:${project.slug}`),
+      this.invalidateTechStackCache(updatedTechStack),
+      this.invalidateProjectCache({ id: projectId, slug: project.slug }),
     ]);
+
+    this.logger.info(
+      `Successfully linked TechStack ${techStackId} to project ${projectId}`,
+    );
 
     return TechStackSchema.parse(updatedTechStack);
   }

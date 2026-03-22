@@ -27,17 +27,9 @@ export class DeleteTechStackService
       return projects;
     });
 
-    const techStackKeys = ids.map((id) => `techstack:id:${id}`);
-    const projectKeys = affectedProjects.flatMap((p) => [
-      `project:id:${p.id}`,
-      `project:slug:${p.slug}`,
-    ]);
-
     await Promise.all([
-      this.cache.del("techstack:list:*"),
-      this.cache.del("projects:list:*"),
-      ...techStackKeys.map((key) => this.cache.del(key)),
-      ...projectKeys.map((key) => this.cache.del(key)),
+      this.invalidateTechStackCache(...ids.map((id) => ({ id }))),
+      this.invalidateProjectCache(...affectedProjects),
     ]);
 
     this.logger.info(

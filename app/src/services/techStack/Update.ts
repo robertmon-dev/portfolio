@@ -30,17 +30,14 @@ export class UpdateTechStackService
       },
     );
 
-    const projectKeys = affectedProjects.flatMap((p) => [
-      `project:id:${p.id}`,
-      `project:slug:${p.slug}`,
+    await Promise.all([
+      this.invalidateTechStackCache(updated),
+      this.invalidateProjectCache(...affectedProjects),
     ]);
 
-    await Promise.all([
-      this.cache.del("techstack:list:*"),
-      this.cache.del(`techstack:id:${id}`),
-      this.cache.del("projects:list:*"),
-      ...projectKeys.map((key) => this.cache.del(key)),
-    ]);
+    this.logger.info(
+      `Tech stack ${id} updated. Invalidated ${affectedProjects.length} projects.`,
+    );
 
     return TechStackSchema.parse(updated);
   }

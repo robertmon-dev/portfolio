@@ -10,18 +10,9 @@ export class DeleteGithubRepoService extends BaseService {
       ...githubRepoWithRelationsQuery,
     });
 
-    const projectKeys = deleted.project
-      ? [
-          `project:id:${deleted.project.id}`,
-          `project:slug:${deleted.project.slug}`,
-        ]
-      : [];
-
     await Promise.all([
-      this.cache.del("github:repos:list:all"),
-      this.cache.del("github:stats:*"),
-      this.cache.del("projects:list:*"),
-      ...projectKeys.map((key) => this.cache.del(key)),
+      this.invalidateGithubCache(deleted),
+      this.invalidateProjectCache(deleted.project),
     ]);
 
     this.logger.info(

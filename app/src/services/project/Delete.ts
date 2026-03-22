@@ -15,20 +15,15 @@ export class DeleteProjectService
       ...projectWithRelationsQuery,
     });
 
-    const techStackKeys = deletedProject.techStack.map(
-      (t) => `techstack:id:${t.id}`,
-    );
-
     await Promise.all([
-      this.cache.del(`project:slug:${deletedProject.slug}`),
-      this.cache.del(`projects:id:${id}`),
-      this.cache.del("projects:list:*"),
-      ...techStackKeys.map((key) => this.cache.del(key)),
+      this.invalidateProjectCache(deletedProject),
+      this.invalidateTechStackCache(...deletedProject.techStack),
     ]);
 
     this.logger.info(
       `Project deleted and cache invalidated: ${deletedProject.slug}`,
     );
+
     return deletedProject;
   }
 }

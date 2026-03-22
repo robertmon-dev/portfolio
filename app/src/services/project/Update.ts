@@ -24,9 +24,7 @@ export class UpdateProjectService
       data: {
         ...rest,
         techStack: techStackIds
-          ? {
-              set: techStackIds.map((techId) => ({ id: techId })),
-            }
+          ? { set: techStackIds.map((techId) => ({ id: techId })) }
           : undefined,
         githubRepo:
           githubRepoId === null
@@ -44,12 +42,9 @@ export class UpdateProjectService
     ]);
 
     await Promise.all([
-      this.cache.del(`project:slug:${oldProject?.slug}`),
-      this.cache.del(`project:slug:${project.slug}`),
-      this.cache.del(`projects:id:${id}`),
-      this.cache.del("projects:list:*"),
-      ...Array.from(techIdsToInvalidate).map((tId) =>
-        this.cache.del(`techstack:id:${tId}`),
+      this.invalidateProjectCache(oldProject, project),
+      this.invalidateTechStackCache(
+        ...Array.from(techIdsToInvalidate).map((id) => ({ id })),
       ),
     ]);
 

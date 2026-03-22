@@ -16,12 +16,8 @@ export class DeleteExperienceService
       },
     });
 
-    const individualCacheKeys = ids.map((id) => `experience:id:${id}`);
-
-    await Promise.all([
-      this.cache.del("experience:list:*"),
-      ...individualCacheKeys.map((key) => this.cache.del(key)),
-    ]);
+    const deletedExperiences = ids.map((id) => ({ id }));
+    await this.invalidateExperienceCache(...deletedExperiences);
 
     this.logger.info(
       `Successfully hard-deleted ${result.count} Experience(s) and invalidated cache.`,

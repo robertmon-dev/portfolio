@@ -33,12 +33,13 @@ export class UnlinkTechStackProjectService
     );
 
     await Promise.all([
-      this.cache.del("projects:list:*"),
-      this.cache.del("techstack:list:*"),
-      this.cache.del(`techstack:id:${techStackId}`),
-      this.cache.del(`project:id:${projectId}`),
-      this.cache.del(`project:slug:${project.slug}`),
+      this.invalidateTechStackCache(updatedTechStack),
+      this.invalidateProjectCache({ id: projectId, slug: project.slug }),
     ]);
+
+    this.logger.info(
+      `Successfully unlinked TechStack ${techStackId} from project ${projectId}`,
+    );
 
     return TechStackSchema.parse(updatedTechStack);
   }
