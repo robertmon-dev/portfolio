@@ -55,7 +55,7 @@ export const useUpdatePermissionsForm = ({
         const newList = [...prev];
         newList[existingPermIndex] = {
           ...existingPerm,
-          flags: newFlags as any,
+          flags: newFlags,
         };
         return newList;
       });

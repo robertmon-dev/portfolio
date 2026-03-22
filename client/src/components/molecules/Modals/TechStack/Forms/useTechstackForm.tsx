@@ -48,7 +48,6 @@ export const useTechStackForm = ({
       validation.error.issues.forEach((issue) => {
         const path = issue.path[0] as string;
         formattedErrors[path] = issue.message;
-        console.log(issue.message);
       });
 
       setErrors(formattedErrors);
@@ -56,7 +55,7 @@ export const useTechStackForm = ({
     }
 
     if (initialData?.id) {
-      onSubmit?.({ ...validation.data, id: initialData.id } as any);
+      onSubmit?.({ ...validation.data, id: initialData.id });
     } else {
       onSubmit?.(validation.data);
     }

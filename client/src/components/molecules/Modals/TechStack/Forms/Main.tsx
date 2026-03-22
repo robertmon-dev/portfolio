@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, CSSProperties } from "react";
 import { useTranslation } from "react-i18next";
 import { Input } from "@/components/atoms/Input/Input";
 import { Select } from "@/components/atoms/Select/Select";
@@ -71,13 +71,17 @@ export const TechStackForm = ({
           />
 
           <div className="tech-stack-form__preview-container">
-            <span className="tech-stack-form__preview-label">Live Preview</span>
+            <span className="tech-stack-form__preview-label">
+              {t("admin.techStack.form.preview.label", "Live Preview")}
+            </span>
             <div className="tech-stack-form__gem-wrapper">
               <div
                 className="techstack-table__gem techstack-table__gem--large"
-                style={{
-                  ["--gem-color" as any]: formData.color || "#7aa2f7",
-                }}
+                style={
+                  {
+                    "--gem-color": formData.color || "#7aa2f7",
+                  } as CSSProperties
+                }
               />
               <span className="tech-stack-form__gem-name">
                 {formData.name || "Technology"}
