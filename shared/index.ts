@@ -6,6 +6,7 @@ export * from "./schemas/project";
 export * from "./schemas/experience";
 export * from "./schemas/diagnostics";
 export * from "./schemas/permission";
+export * from "./schemas/registry";
 
 export * from "./types/auth";
 export * from "./types/user";

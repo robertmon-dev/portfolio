@@ -2,7 +2,7 @@ import { BaseService } from "../service";
 import { TechStackSchema, type TechStack } from "@portfolio/shared";
 import type { TechStackProjectLinking } from "./types";
 
-export class LinkRepoProjectService
+export class LinkTechStackProjectService
   extends BaseService
   implements TechStackProjectLinking
 {

@@ -23,11 +23,11 @@
         "../shared/dist"
       ],
       "@portfolio/app": [
-        "../app/src/index.ts"
+        "../app/src/routers/app.ts"
       ]
     }
   },
-  "include": [
+    "include": [
     "src/**/*",
     "src/**/*.tsx",
     "src/**/*.ts",
@@ -35,6 +35,7 @@
   ],
   "exclude": [
     "node_modules",
+    "../app",
     "dist",
     "**/*.spec.ts",
     "**/*.test.ts"
