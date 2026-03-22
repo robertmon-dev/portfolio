@@ -19,7 +19,7 @@ export const handleCreate = async (
     await mutations.create.mutateAsync({
       ...data,
       endDate: data.endDate ?? null,
-      startDate: data.startDate!,
+      startDate: data.startDate,
     });
     toast.success("Experience added successfully");
     dispatch({ type: EXPERIENCE_ACTIONS.CLOSE_MODALS });

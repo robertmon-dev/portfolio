@@ -13,7 +13,7 @@ export const useAccess = () => {
     if (!user?.permissions) return map;
 
     user.permissions.forEach((p) => {
-      map.set(p.resource, new Set(p.flags as Flag[]));
+      map.set(p.resource, new Set(p.flags));
     });
     return map;
   }, [user]);
@@ -43,7 +43,7 @@ export const useAccess = () => {
   const hasRole = (role: Role | Role[]) => {
     if (!user) return false;
     const roles = Array.isArray(role) ? role : [role];
-    return roles.includes(user.role as Role);
+    return roles.includes(user.role);
   };
 
   return {

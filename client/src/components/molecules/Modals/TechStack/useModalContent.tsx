@@ -84,7 +84,7 @@ export const useModalContent = (
       },
     };
 
-    return contentMap[activeModal as keyof typeof contentMap];
+    return contentMap[activeModal];
   }, [
     activeModal,
     selectedTechStack,

@@ -16,6 +16,9 @@
       "persistent": true
     },
     "lint": {},
+    "lint:fix": {
+      "cache": false
+    },
     "db:generate": {
       "cache": false
     },
