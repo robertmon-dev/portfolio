@@ -14,6 +14,7 @@ import { UserProfile } from "@portfolio/shared";
 
 export const getUsersColumns = (
   onEdit: (user: UserProfile) => void,
+  onPermissions: (user: UserProfile) => void,
   onDelete: (id: string) => void,
   processingId: string | null,
 ): Column<UserProfile>[] => [
@@ -109,6 +110,16 @@ export const getUsersColumns = (
     align: "right",
     render: (user) => (
       <div className="user-table__actions" onClick={(e) => e.stopPropagation()}>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => onPermissions(user)}
+          isIcon
+          disabled={processingId === user.id}
+          title="Manage Permissions"
+        >
+          <Lock size={14} />
+        </Button>
         <Button
           variant="ghost"
           size="sm"

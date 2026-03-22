@@ -6,6 +6,92 @@
   gap: $spacing-lg;
   padding: $spacing-sm $spacing-none;
 
+  &__alert {
+    display: flex;
+    align-items: flex-start;
+    gap: $spacing-sm;
+    padding: $spacing-md;
+    background-color: color.change($danger, $alpha: 0.1);
+    color: $danger;
+    border-radius: $radius-md;
+    border: 1px solid color.change($danger, $alpha: 0.2);
+
+    strong {
+      display: block;
+      margin-bottom: 2px;
+      font-size: 0.9rem;
+    }
+
+    p {
+      margin: 0;
+      font-size: 0.75rem;
+      opacity: 0.9;
+      line-height: 1.4;
+    }
+  }
+
+  // --- Permissions Matrix ---
+  &__permissions-table {
+    border: 1px solid $border-color;
+    border-radius: $radius-md;
+    overflow: hidden;
+    background-color: color.change($tn-bg-night, $alpha: 0.2);
+  }
+
+  &__permissions-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr auto;
+    gap: $spacing-xs;
+    padding: $spacing-sm $spacing-md;
+    background-color: color.change($tn-bg-storm, $alpha: 0.9);
+    border-bottom: 1px solid $border-color;
+
+    font-weight: 700;
+    font-size: 0.7rem;
+    color: $text-muted;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-align: center;
+
+    div:first-child {
+      text-align: left;
+    }
+  }
+
+  &__permissions-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr auto;
+    gap: $spacing-xs;
+    padding: $spacing-sm $spacing-md;
+    align-items: center;
+    transition: background-color 0.2s ease;
+    border-bottom: 1px dashed color.change($border-color, $alpha: 0.5);
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &--even {
+      background-color: color.change($tn-bg-night, $alpha: 0.4);
+    }
+
+    &:hover {
+      background-color: color.change($primary, $alpha: 0.05);
+    }
+  }
+
+  &__resource-name {
+    font-weight: 600;
+    color: $text-main;
+    text-transform: capitalize;
+    font-size: 0.85rem;
+  }
+
+  &__checkbox-cell {
+    display: flex;
+    justify-content: center;
+  }
+
   &__section {
     display: flex;
     flex-direction: column;
@@ -120,6 +206,28 @@
     }
     > :nth-child(3) {
       grid-column: 2;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .user-form {
+    &__permissions-header {
+      grid-template-columns: 1fr;
+      div:not(:first-child) {
+        display: none;
+      }
+    }
+
+    &__permissions-row {
+      grid-template-columns: 1fr auto;
+      row-gap: $spacing-sm;
+
+      .user-form__checkbox-cell {
+        grid-column: span 1;
+        justify-content: flex-start;
+        padding: $spacing-xs 0;
+      }
     }
   }
 }

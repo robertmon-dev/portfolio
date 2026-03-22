@@ -2,7 +2,11 @@ import { toast } from "react-toastify";
 import { notifyError } from "@/lib/trpc/handlers/trpcError";
 import { USER_ACTIONS, type UserAction } from "./types";
 import type { Utils } from "@/lib/trpc/types";
-import type { CreateUserInput, UpdateUserInput } from "@portfolio/shared";
+import type {
+  CreateUserInput,
+  UpdateUserInput,
+  UpdateUserPermissionsInput,
+} from "@portfolio/shared";
 import type { UserMutations } from "../useMutations";
 
 export const handleCreate = async (
@@ -53,6 +57,25 @@ export const handleDelete = async (
   try {
     await mutations.delete.mutateAsync({ id });
     toast.success("User deleted successfully");
+    dispatch({ type: USER_ACTIONS.CLOSE_MODALS });
+    await utils.admin.users.list.invalidate();
+  } catch (error) {
+    notifyError(error);
+  } finally {
+    dispatch({ type: USER_ACTIONS.SET_PROCESSING, payload: null });
+  }
+};
+
+export const handleUpdatePermissions = async (
+  mutations: UserMutations,
+  utils: Utils,
+  dispatch: React.Dispatch<UserAction>,
+  data: UpdateUserPermissionsInput,
+) => {
+  dispatch({ type: USER_ACTIONS.SET_PROCESSING, payload: data.id });
+  try {
+    await mutations.updatePermissions.mutateAsync(data);
+    toast.success("User permissions updated successfully");
     dispatch({ type: USER_ACTIONS.CLOSE_MODALS });
     await utils.admin.users.list.invalidate();
   } catch (error) {

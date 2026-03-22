@@ -14,6 +14,7 @@ export class DeleteUserService extends BaseService implements UserDeleting {
 
     await Promise.all([
       this.cache.del("users:list:all"),
+      this.cache.del("users:list:*"),
       this.cache.del(`user:profile:${id}`),
       this.cache.del(`user:profile:${user.email}`),
       this.cache.del(`user:profile:${user.username}`),

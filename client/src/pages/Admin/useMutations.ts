@@ -32,6 +32,7 @@ export const useUserMutations = () => {
     create: trpc.admin.users.create.useMutation(),
     update: trpc.admin.users.update.useMutation(),
     delete: trpc.admin.users.delete.useMutation(),
+    updatePermissions: trpc.admin.users.updatePermissions.useMutation(),
   };
 };
 

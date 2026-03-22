@@ -2,6 +2,7 @@ import {
   UserProfile,
   CreateUserInput,
   UpdateUserInput,
+  UpdateUserPermissionsInput,
 } from "@portfolio/shared";
 import type { UserActions } from "@/pages/Admin/users/types";
 
@@ -26,6 +27,13 @@ export interface CreateUserFormProps {
 export interface UpdateUserFormProps {
   initialData: UserProfile;
   onSubmit: (data: UpdateUserInput) => void;
+  onCancel: () => void;
+  isLoading?: boolean;
+}
+
+export interface UpdatePermissionsFormProps {
+  initialData: UserProfile;
+  onSubmit: (data: UpdateUserPermissionsInput) => void;
   onCancel: () => void;
   isLoading?: boolean;
 }

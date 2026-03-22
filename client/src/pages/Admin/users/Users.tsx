@@ -44,6 +44,7 @@ export const UsersAdminPage = () => {
     () =>
       getUsersColumns(
         (user) => actions.openModal("UPDATE", user.id),
+        (user) => actions.openModal("PERMISSIONS", user.id),
         (id) => actions.openModal("DELETE", id),
         state.processingId,
       ),

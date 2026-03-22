@@ -12,6 +12,7 @@ import type {
   CreateUserInput,
   UpdateUserInput,
   UserProfile,
+  UpdateUserPermissionsInput,
 } from "@portfolio/shared";
 
 export const useUsersActions = () => {
@@ -46,6 +47,9 @@ export const useUsersActions = () => {
 
       deleteUser: (id: string) =>
         handlers.handleDelete(mutations, utils, dispatch, id),
+
+      updatePermissions: (data: UpdateUserPermissionsInput) =>
+        handlers.handleUpdatePermissions(mutations, utils, dispatch, data),
     }),
     [mutations, utils],
   );

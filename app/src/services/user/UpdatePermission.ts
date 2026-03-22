@@ -46,6 +46,7 @@ export class UpdateUserPermissionsService extends BaseService {
 
     await Promise.all([
       this.cache.del("users:list:all"),
+      this.cache.del("users:list:*"),
       this.cache.del(`user:profile:${id}`),
       this.cache.del(`user:profile:${updated.email}`),
       this.cache.del(`user:profile:${updated.username}`),

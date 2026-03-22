@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { CreateUserForm } from "./Forms/Create";
 import { UpdateUserForm } from "./Forms/Update";
+import { UpdatePermissionsForm } from "./Forms/UpdatePermission";
 import { ConfirmDialog } from "../../ConfirmDialog/ConfirmDialog";
 import type { UserActions } from "@/pages/Admin/users/types";
 
@@ -37,6 +38,20 @@ export const useModalContent = (
             onSubmit={(data) =>
               actions.updateUser({ id: selectedUser.id, ...data })
             }
+            onCancel={actions.closeModals}
+            isLoading={isAnyProcessing}
+          />
+        ) : null,
+      },
+      PERMISSIONS: {
+        title: t("admin.users.modals.permissions.title", {
+          name: selectedUser?.username,
+          defaultValue: "Permissions: @{{name}}",
+        }),
+        component: selectedUser ? (
+          <UpdatePermissionsForm
+            initialData={selectedUser}
+            onSubmit={(data) => actions.updatePermissions(data)}
             onCancel={actions.closeModals}
             isLoading={isAnyProcessing}
           />

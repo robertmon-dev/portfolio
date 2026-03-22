@@ -7,7 +7,12 @@ export const USER_ACTIONS = {
   CLOSE_MODALS: "USER/CLOSE_MODALS",
 } as const;
 
-export type UserModalType = "CREATE" | "UPDATE" | "DELETE" | null;
+export type UserModalType =
+  | "CREATE"
+  | "UPDATE"
+  | "DELETE"
+  | "PERMISSIONS"
+  | null;
 
 export interface UserState {
   processingId: string | null;
