@@ -178,12 +178,7 @@ export const UpdatePermissionsForm = (props: UpdatePermissionsFormProps) => {
         >
           {t("common.cancel", "Cancel")}
         </Button>
-        <Button
-          type="submit"
-          variant="primary"
-          isLoading={isProcessing}
-          leftIcon={<Shield size={16} />}
-        >
+        <Button type="submit" variant="primary" isLoading={isProcessing}>
           {t("common.save", "Update Permissions")}
         </Button>
       </div>
