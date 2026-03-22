@@ -1,4 +1,4 @@
-import { ReactNode, CSSProperties } from 'react';
+import type { ReactNode, CSSProperties } from "react";
 
 export interface GridColumns {
   default?: number;
@@ -17,8 +17,8 @@ export interface EntityGridProps<T> {
 }
 
 export interface GridCSSVariables extends CSSProperties {
-  '--grid-gap'?: string;
-  '--cols-default'?: number;
-  '--cols-md'?: number;
-  '--cols-lg'?: number;
+  "--grid-gap"?: string;
+  "--cols-default"?: number;
+  "--cols-md"?: number;
+  "--cols-lg"?: number;
 }

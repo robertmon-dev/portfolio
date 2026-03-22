@@ -4,7 +4,7 @@ import { Button } from "@/components/atoms/Button/Button";
 import { Input } from "@/components/atoms/Input/Input";
 import { Checkbox } from "@/components/atoms/CheckBox/CheckBox";
 import type { LoginFormProps } from "../types";
-import "../LoginModal.scss"
+import "../LoginModal.scss";
 
 export const LoginForm = ({ form, isLoading }: LoginFormProps) => {
   const { t } = useTranslation();
@@ -47,7 +47,7 @@ export const LoginForm = ({ form, isLoading }: LoginFormProps) => {
           type="button"
           variant="ghost"
           size="sm"
-          onClick={() => form.goToStep('FORGOT_PASSWORD')}
+          onClick={() => form.goToStep("FORGOT_PASSWORD")}
           disabled={isLoading}
           className="login-form-step__forgot-btn"
         >

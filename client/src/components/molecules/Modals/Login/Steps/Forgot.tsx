@@ -8,9 +8,21 @@ export const ForgotPasswordForm = ({ form, isLoading }: LoginFormProps) => {
   const { t } = useTranslation();
 
   return (
-    <form onSubmit={form.handleRequestReset} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-      <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)', textAlign: 'center' }}>
-        {t("auth.recover.forgot_description", "Enter your email address and we will send you a code to reset your password.")}
+    <form
+      onSubmit={form.handleRequestReset}
+      style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}
+    >
+      <p
+        style={{
+          fontSize: "0.875rem",
+          color: "var(--text-muted)",
+          textAlign: "center",
+        }}
+      >
+        {t(
+          "auth.recover.forgot_description",
+          "Enter your email address and we will send you a code to reset your password.",
+        )}
       </p>
 
       <Input
@@ -32,11 +44,11 @@ export const ForgotPasswordForm = ({ form, isLoading }: LoginFormProps) => {
       <Button
         variant="ghost"
         size="sm"
-        onClick={() => form.goToStep('LOGIN')}
+        onClick={() => form.goToStep("LOGIN")}
         disabled={isLoading}
         fullWidth
       >
-        <ArrowLeft size={14} style={{ marginRight: '8px' }} />
+        <ArrowLeft size={14} style={{ marginRight: "8px" }} />
         {t("common.back", "Back to Login")}
       </Button>
     </form>

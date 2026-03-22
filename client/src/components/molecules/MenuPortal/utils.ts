@@ -1,8 +1,8 @@
-import { Position } from './types';
+import type { Position } from "./types";
 
 export const calculateMenuPosition = (
   anchorEl: HTMLElement | null,
-  offset = { x: 0, y: 5 }
+  offset = { x: 0, y: 5 },
 ): Position => {
   if (!anchorEl) return { top: 0, left: 0 };
 

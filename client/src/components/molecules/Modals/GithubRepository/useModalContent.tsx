@@ -1,32 +1,38 @@
 import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { GithubUpdateForm } from "./Forms/Update";
 import { GithubLinkForm } from "./Forms/Link";
+import { ConfirmDialog } from "../../ConfirmDialog/ConfirmDialog";
 import type { GithubActions } from "@/pages/Admin/repos/types";
 
 export const useModalContent = (
   state: GithubActions["state"],
   actions: GithubActions["actions"],
 ) => {
+  const { t } = useTranslation();
   const { activeModal, selectedRepo, isAnyProcessing } = state;
 
   return useMemo(() => {
     if (!activeModal || !selectedRepo) return null;
 
-    const contentMap = {
+    const contentMap: Record<
+      string,
+      { title: string; component: React.ReactNode }
+    > = {
       update: {
-        title: `Edit Repository: ${selectedRepo.name}`,
+        title: t("admin.github.modals.update.title", {
+          name: selectedRepo.name,
+        }),
         component: (
           <GithubUpdateForm
             repo={selectedRepo}
-            onSubmit={(data) =>
-              actions.updateRepo({ id: selectedRepo.id, ...data })
-            }
+            onSubmit={(data) => actions.updateRepo({ ...data })}
             isLoading={isAnyProcessing}
           />
         ),
       },
       link: {
-        title: "Link Repository to Project",
+        title: t("admin.github.modals.link.title"),
         component: (
           <GithubLinkForm
             repo={selectedRepo}
@@ -41,8 +47,24 @@ export const useModalContent = (
           />
         ),
       },
+      delete: {
+        title: t("admin.github.modals.delete.title"),
+        component: (
+          <ConfirmDialog
+            message={t("admin.github.modals.delete.message", {
+              name: selectedRepo.name,
+            })}
+            confirmText={t("common.delete", "Delete")}
+            cancelText={t("common.cancel", "Cancel")}
+            onConfirm={() => actions.deleteRepo(selectedRepo.id)}
+            onCancel={actions.closeModals}
+            isLoading={isAnyProcessing}
+            variant="danger"
+          />
+        ),
+      },
     };
 
-    return contentMap[activeModal];
-  }, [activeModal, selectedRepo, isAnyProcessing, actions]);
+    return contentMap[activeModal as keyof typeof contentMap] || null;
+  }, [activeModal, selectedRepo, isAnyProcessing, actions, t, state.projects]);
 };

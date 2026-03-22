@@ -1,5 +1,8 @@
-import { ReactNode } from 'react';
-import { ListItemVariant, ListItemStatus } from '../../atoms/ListItem/types';
+import type { ReactNode } from "react";
+import type {
+  ListItemVariant,
+  ListItemStatus,
+} from "../../atoms/ListItem/types";
 
 export interface ListOption {
   id: string | number;
@@ -18,5 +21,5 @@ export interface ListProps {
   variant?: ListItemVariant;
   status?: ListItemStatus;
   className?: string;
-  direction?: 'row' | 'column';
+  direction?: "row" | "column";
 }

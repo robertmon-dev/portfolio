@@ -1,10 +1,10 @@
-import { useMemo, CSSProperties } from "react";
+import { useMemo, type CSSProperties } from "react";
 import { useTranslation } from "react-i18next";
 import { Input } from "@/components/atoms/Input/Input";
 import { Select } from "@/components/atoms/Select/Select";
 import { Button } from "@/components/atoms/Button/Button";
 import { useTechStackForm } from "./useTechstackForm";
-import { TechStackFormProps } from "../types";
+import type { TechStackFormProps } from "../types";
 import { Save, X, Tag, Palette, Box } from "lucide-react";
 import { TECH_STACK_CATEGORIES } from "@portfolio/shared";
 import "../TechStackModal.scss";

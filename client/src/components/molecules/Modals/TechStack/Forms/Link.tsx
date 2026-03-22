@@ -51,7 +51,7 @@ export const LinkTechStackForm = ({
 
         <div className="tech-stack-form__tags">
           {techStack.projects.length > 0 ? (
-            techStack.projects.map((project: ProjectWithRelations) => (
+            techStack.projects.map((project) => (
               <Tag
                 key={project.id}
                 variant="info"

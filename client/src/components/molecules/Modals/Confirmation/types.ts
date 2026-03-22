@@ -1,4 +1,8 @@
-export type ConfirmationModalVariant = 'danger' | 'warning' | 'success' | 'info';
+export type ConfirmationModalVariant =
+  | "danger"
+  | "warning"
+  | "success"
+  | "info";
 
 export interface ConfirmationModalProps {
   isOpen: boolean;
@@ -6,9 +10,8 @@ export interface ConfirmationModalProps {
   onConfirm: () => void;
   title: string;
   message: string;
-  variant?: 'danger' | 'warning' | 'info' | 'success';
+  variant?: "danger" | "warning" | "info" | "success";
   confirmText?: string;
   cancelText?: string;
   isLoading?: boolean;
 }
-

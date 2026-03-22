@@ -1,21 +1,7 @@
 {
-  "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "jsx": "react-jsx",
-    "moduleResolution": "bundler",
-    "noEmit": true,
-    "skipLibCheck": true,
-    "baseUrl": ".",
-    "types": ["node", "react", "react-dom", "vite/client"],
-    "allowJs": true,
-    "esModuleInterop": true,
-    "paths": {
-      "@/*": ["./src/*"],
-      "@portfolio/shared": ["../shared/dist"],
-      "@portfolio/app/contract": ["../app/dist/contract.d.ts"]
-    }
-  },
-  "include": ["src/**/*", "vite.config.ts"],
-  "exclude": ["node_modules", "dist", "**/*.spec.ts", "**/*.test.ts"]
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
 }

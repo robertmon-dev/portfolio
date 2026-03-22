@@ -7,10 +7,14 @@ import type { LoginFormProps } from "../types";
 export const ResetPasswordForm = ({ form, isLoading }: LoginFormProps) => {
   const { t } = useTranslation();
 
-  const isMismatch = form.newPassword !== form.confirmPassword && form.confirmPassword !== "";
+  const isMismatch =
+    form.newPassword !== form.confirmPassword && form.confirmPassword !== "";
 
   return (
-    <form onSubmit={form.handleResetSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+    <form
+      onSubmit={form.handleResetSubmit}
+      style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}
+    >
       <Input
         label={t("auth.recover.code.label", "Reset Code")}
         type="text"
@@ -45,7 +49,11 @@ export const ResetPasswordForm = ({ form, isLoading }: LoginFormProps) => {
         fullWidth
         required
         disabled={isLoading}
-        error={isMismatch ? t("auth.recover.mismatch", "Passwords do not match") : undefined}
+        error={
+          isMismatch
+            ? t("auth.recover.mismatch", "Passwords do not match")
+            : undefined
+        }
       />
 
       <Button

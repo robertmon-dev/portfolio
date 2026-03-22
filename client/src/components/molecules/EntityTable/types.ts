@@ -1,11 +1,11 @@
-import { ReactNode } from 'react';
-import type { SpinnerVariant } from '@/components/atoms/Spinner/types';
+import type { ReactNode } from "react";
+import type { SpinnerVariant } from "@/components/atoms/Spinner/types";
 
 export interface Column<T> {
   key: string;
   header: string;
   width?: string;
-  align?: 'left' | 'center' | 'right';
+  align?: "left" | "center" | "right";
   render?: (item: T) => ReactNode;
 }
 

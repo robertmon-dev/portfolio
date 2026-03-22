@@ -9,7 +9,7 @@ export const STEP_COMPONENTS: Record<
   React.ComponentType<{ form: LoginFormState; isLoading: boolean }>
 > = {
   LOGIN: LoginForm,
-  '2FA': TwoFactorForm,
+  "2FA": TwoFactorForm,
   FORGOT_PASSWORD: ForgotPasswordForm,
   RESET_PASSWORD: ResetPasswordForm,
 };
@@ -17,7 +17,7 @@ export const STEP_COMPONENTS: Record<
 export const getStepTitleKey = (step: LoginStep): string => {
   const titleKeys: Record<LoginStep, string> = {
     LOGIN: "auth.login.title",
-    '2FA': "auth.2fa.title",
+    "2FA": "auth.2fa.title",
     FORGOT_PASSWORD: "auth.recover.forgot_title",
     RESET_PASSWORD: "auth.recover.reset_title",
   };
@@ -26,7 +26,7 @@ export const getStepTitleKey = (step: LoginStep): string => {
 
 export const STEP_TITLE_FALLBACKS: Record<LoginStep, string> = {
   LOGIN: "Admin Access",
-  '2FA': "Two-Factor Auth",
+  "2FA": "Two-Factor Auth",
   FORGOT_PASSWORD: "Reset Password",
   RESET_PASSWORD: "Set New Password",
 };

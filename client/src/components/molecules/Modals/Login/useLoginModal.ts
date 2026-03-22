@@ -11,7 +11,7 @@ export const useLoginModal = (onSuccess?: () => void) => {
   const { requestReset, confirmReset, isRecovering } = useRecover();
 
   const [isOpen, setIsOpen] = useState(false);
-  const [step, setStep] = useState<LoginStep>('LOGIN');
+  const [step, setStep] = useState<LoginStep>("LOGIN");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,7 +25,7 @@ export const useLoginModal = (onSuccess?: () => void) => {
   const close = () => {
     setIsOpen(false);
     setTimeout(() => {
-      setStep('LOGIN');
+      setStep("LOGIN");
       setUserId(null);
       setEmail("");
       setPassword("");
@@ -41,17 +41,19 @@ export const useLoginModal = (onSuccess?: () => void) => {
     try {
       const result = await login({ email, password });
 
-      if (result?.status === 'processing') {
+      if (result?.status === "processing") {
         setUserId(result.userId);
-        setStep('2FA');
+        setStep("2FA");
         toast.info(t("auth.login.2fa_required", "Please enter your 2FA code"));
-      } else if (result?.status === 'success') {
+      } else if (result?.status === "success") {
         toast.success(t("auth.login.success", "Welcome back!"));
         onSuccess?.();
         close();
       }
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : t("errors.login_failed"));
+      toast.error(
+        err instanceof Error ? err.message : t("errors.login_failed"),
+      );
     }
   };
 
@@ -59,10 +61,19 @@ export const useLoginModal = (onSuccess?: () => void) => {
     e.preventDefault();
     try {
       await requestReset({ email });
-      toast.info(t("auth.recover.email_sent", "If the account exists, a code has been sent"));
-      setStep('RESET_PASSWORD');
+      toast.info(
+        t(
+          "auth.recover.email_sent",
+          "If the account exists, a code has been sent",
+        ),
+      );
+      setStep("RESET_PASSWORD");
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : t("errors.unexpected", "Action failed"));
+      toast.error(
+        err instanceof Error
+          ? err.message
+          : t("errors.unexpected", "Action failed"),
+      );
     }
   };
 
@@ -77,12 +88,16 @@ export const useLoginModal = (onSuccess?: () => void) => {
       await confirmReset({
         token: resetCode,
         password: newPassword,
-        confirmPassword
+        confirmPassword,
       });
       toast.success(t("auth.recover.success", "Password updated successfully"));
-      setStep('LOGIN');
+      setStep("LOGIN");
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : t("errors.reset_failed", "Invalid reset code"));
+      toast.error(
+        err instanceof Error
+          ? err.message
+          : t("errors.reset_failed", "Invalid reset code"),
+      );
     }
   };
 
@@ -93,7 +108,7 @@ export const useLoginModal = (onSuccess?: () => void) => {
     try {
       const result = await confirm2FA({ userId, code: twoFactorCode });
 
-      if (result?.status === 'success') {
+      if (result?.status === "success") {
         toast.success(t("auth.login.success", "Welcome back!"));
         onSuccess?.();
         close();
@@ -110,18 +125,25 @@ export const useLoginModal = (onSuccess?: () => void) => {
     close,
     isLoggingIn: isLoggingIn || isRecovering,
     form: {
-      email, setEmail,
-      password, setPassword,
-      rememberMe, setRememberMe,
-      twoFactorCode, setTwoFactorCode,
-      resetCode, setResetCode,
-      newPassword, setNewPassword,
-      confirmPassword, setConfirmPassword,
+      email,
+      setEmail,
+      password,
+      setPassword,
+      rememberMe,
+      setRememberMe,
+      twoFactorCode,
+      setTwoFactorCode,
+      resetCode,
+      setResetCode,
+      newPassword,
+      setNewPassword,
+      confirmPassword,
+      setConfirmPassword,
       handleLoginSubmit,
       handle2FASubmit,
       handleRequestReset,
       handleResetSubmit,
-      goToStep: (s: LoginStep) => setStep(s)
-    }
+      goToStep: (s: LoginStep) => setStep(s),
+    },
   };
 };

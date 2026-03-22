@@ -1,8 +1,13 @@
-import { useState, useEffect, useRef } from 'react';
-import { calculateMenuPosition } from './utils';
-import type { UseMenuPortalProps, Position } from './types';
+import { useState, useEffect, useRef } from "react";
+import { calculateMenuPosition } from "./utils";
+import type { UseMenuPortalProps, Position } from "./types";
 
-export const useMenuPortal = ({ isOpen, onClose, anchorEl, offset }: UseMenuPortalProps) => {
+export const useMenuPortal = ({
+  isOpen,
+  onClose,
+  anchorEl,
+  offset,
+}: UseMenuPortalProps) => {
   const [coords, setCoords] = useState<Position>({ top: 0, left: 0 });
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -16,7 +21,8 @@ export const useMenuPortal = ({ isOpen, onClose, anchorEl, offset }: UseMenuPort
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as Node;
 
-      const isOutsideMenu = menuRef.current && !menuRef.current.contains(target);
+      const isOutsideMenu =
+        menuRef.current && !menuRef.current.contains(target);
       const isOutsideAnchor = anchorEl && !anchorEl.contains(target);
 
       if (isOpen && isOutsideMenu && isOutsideAnchor) {
@@ -25,10 +31,10 @@ export const useMenuPortal = ({ isOpen, onClose, anchorEl, offset }: UseMenuPort
     };
 
     if (isOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener("mousedown", handleClickOutside);
     }
 
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isOpen, onClose, anchorEl]);
 
   return {

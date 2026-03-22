@@ -1,16 +1,16 @@
-import { ListItem } from '../../atoms/ListItem/ListItem';
-import type { ListProps } from './types';
-import './List.scss';
+import { ListItem } from "../../atoms/ListItem/ListItem";
+import type { ListProps } from "./types";
+import "./List.scss";
 
 export const List = ({
   items,
-  variant = 'default',
-  status = 'default',
-  className = '',
-  direction = 'column'
+  variant = "default",
+  status = "default",
+  className = "",
+  direction = "column",
 }: ListProps) => {
-
-  const finalDirection = variant === 'nav' || variant === 'footer' ? 'row' : 'column';
+  const finalDirection =
+    variant === "nav" || variant === "footer" ? "row" : "column";
 
   return (
     <ul
@@ -35,4 +35,4 @@ export const List = ({
   );
 };
 
-export type { ListOption } from './types';
+export type { ListOption } from "./types";

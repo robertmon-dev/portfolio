@@ -1,4 +1,4 @@
-interface ConfirmDialogProps {
+export interface ConfirmDialogProps {
   message: string;
   confirmText: string;
   cancelText?: string;

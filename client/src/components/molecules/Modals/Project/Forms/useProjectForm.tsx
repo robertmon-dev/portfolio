@@ -2,7 +2,11 @@ import { useState, useEffect } from "react";
 import { CreateProjectSchema } from "@portfolio/shared";
 import type { ProjectFormProps } from "../types";
 
-export const useProjectForm = ({ initialData, onSubmit, onCancel }: Partial<ProjectFormProps>) => {
+export const useProjectForm = ({
+  initialData,
+  onSubmit,
+  onCancel,
+}: Partial<ProjectFormProps>) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const [formData, setFormData] = useState({
@@ -20,19 +24,22 @@ export const useProjectForm = ({ initialData, onSubmit, onCancel }: Partial<Proj
     if (!initialData && formData.title) {
       const slug = formData.title
         .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/(^-|-$)/g, '');
-      setFormData(prev => ({ ...prev, slug }));
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)/g, "");
+      setFormData((prev) => ({ ...prev, slug }));
     }
   }, [formData.title, initialData]);
 
-  const handleChange = (field: string, value: any) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+  const handleChange = <K extends keyof typeof formData>(
+    field: K,
+    value: (typeof formData)[K],
+  ) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
 
     if (errors[field]) {
-      setErrors(prev => {
+      setErrors((prev) => {
         const newErrors = { ...prev };
-        delete newErrors[field];
+        delete newErrors[field as string];
         return newErrors;
       });
     }
@@ -43,8 +50,8 @@ export const useProjectForm = ({ initialData, onSubmit, onCancel }: Partial<Proj
 
     const dataToValidate = {
       ...formData,
-      imageUrl: formData.imageUrl.trim() || null,
-      demoUrl: formData.demoUrl.trim() || null,
+      imageUrl: formData.imageUrl.trim() || undefined,
+      demoUrl: formData.demoUrl.trim() || undefined,
     };
 
     const validation = CreateProjectSchema.safeParse(dataToValidate);
@@ -59,7 +66,7 @@ export const useProjectForm = ({ initialData, onSubmit, onCancel }: Partial<Proj
       return;
     }
 
-    onSubmit?.(dataToValidate);
+    onSubmit?.(validation.data);
   };
 
   return {
@@ -67,6 +74,6 @@ export const useProjectForm = ({ initialData, onSubmit, onCancel }: Partial<Proj
     errors,
     handleChange,
     handleSubmit,
-    onCancel
+    onCancel,
   };
 };

@@ -3,11 +3,17 @@ import Modal from "../Modal";
 import {
   STEP_COMPONENTS,
   getStepTitleKey,
-  STEP_TITLE_FALLBACKS
+  STEP_TITLE_FALLBACKS,
 } from "./ModalContent";
 import type { LoginModalProps } from "./types";
 
-export const LoginModal = ({ open, onClose, form, isLoading, step }: LoginModalProps) => {
+export const LoginModal = ({
+  open,
+  onClose,
+  form,
+  isLoading,
+  step,
+}: LoginModalProps) => {
   const { t } = useTranslation();
   const ActiveStepForm = STEP_COMPONENTS[step];
 

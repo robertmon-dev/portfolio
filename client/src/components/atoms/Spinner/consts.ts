@@ -1,6 +1,12 @@
-import { ClipLoader, PulseLoader, HashLoader, BarLoader, BeatLoader } from 'react-spinners';
-import { SpinnerVariant } from './types';
-import colors from './Spinner.module.scss';
+import {
+  ClipLoader,
+  PulseLoader,
+  HashLoader,
+  BarLoader,
+  BeatLoader,
+} from "react-spinners";
+import type { SpinnerVariant } from "./types";
+import colors from "./Spinner.module.scss";
 
 export const DEFAULT_COLOR = colors.primary;
 

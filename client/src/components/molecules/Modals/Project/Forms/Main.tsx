@@ -6,19 +6,14 @@ import { TextArea } from "@/components/atoms/TextArea/TextArea";
 import { Checkbox } from "@/components/atoms/CheckBox/CheckBox";
 import { useProjectForm } from "./useProjectForm";
 import type { ProjectFormProps } from "../types";
-import '../ProjectModal.scss';
+import "../ProjectModal.scss";
 
 export const ProjectForm = (props: ProjectFormProps) => {
   const { t } = useTranslation();
   const { isLoading, initialData } = props;
 
-  const {
-    formData,
-    errors,
-    handleChange,
-    handleSubmit,
-    onCancel
-  } = useProjectForm(props);
+  const { formData, errors, handleChange, handleSubmit, onCancel } =
+    useProjectForm(props);
 
   return (
     <form onSubmit={handleSubmit} className="project-form">
@@ -26,7 +21,7 @@ export const ProjectForm = (props: ProjectFormProps) => {
         <Input
           label={t("admin.projects.form.title.label")}
           value={formData.title}
-          onChange={(e) => handleChange('title', e.target.value)}
+          onChange={(e) => handleChange("title", e.target.value)}
           error={errors.title}
           leftIcon={<Layout size={18} />}
           fullWidth
@@ -37,7 +32,7 @@ export const ProjectForm = (props: ProjectFormProps) => {
         <Input
           label={t("admin.projects.form.slug.label")}
           value={formData.slug}
-          onChange={(e) => handleChange('slug', e.target.value)}
+          onChange={(e) => handleChange("slug", e.target.value)}
           error={errors.slug}
           leftIcon={<Link size={18} />}
           fullWidth
@@ -47,7 +42,7 @@ export const ProjectForm = (props: ProjectFormProps) => {
         <TextArea
           label={t("admin.projects.form.description.label")}
           value={formData.description}
-          onChange={(e) => handleChange('description', e.target.value)}
+          onChange={(e) => handleChange("description", e.target.value)}
           error={errors.description}
           fullWidth
           disabled={isLoading}
@@ -57,7 +52,7 @@ export const ProjectForm = (props: ProjectFormProps) => {
         <TextArea
           label={t("admin.projects.form.content.label", "Content")}
           value={formData.content}
-          onChange={(e) => handleChange('content', e.target.value)}
+          onChange={(e) => handleChange("content", e.target.value)}
           error={errors.content}
           fullWidth
           disabled={isLoading}
@@ -69,7 +64,7 @@ export const ProjectForm = (props: ProjectFormProps) => {
           <Input
             label={t("admin.projects.form.imageUrl.label")}
             value={formData.imageUrl}
-            onChange={(e) => handleChange('imageUrl', e.target.value)}
+            onChange={(e) => handleChange("imageUrl", e.target.value)}
             error={errors.imageUrl}
             leftIcon={<ImageIcon size={18} />}
             fullWidth
@@ -78,7 +73,7 @@ export const ProjectForm = (props: ProjectFormProps) => {
           <Input
             label={t("admin.projects.form.demoUrl.label")}
             value={formData.demoUrl}
-            onChange={(e) => handleChange('demoUrl', e.target.value)}
+            onChange={(e) => handleChange("demoUrl", e.target.value)}
             error={errors.demoUrl}
             leftIcon={<Globe size={18} />}
             fullWidth
@@ -90,13 +85,13 @@ export const ProjectForm = (props: ProjectFormProps) => {
           <Checkbox
             label={t("admin.projects.form.isFeatured")}
             checked={formData.isFeatured}
-            onChange={(e) => handleChange('isFeatured', e.target.checked)}
+            onChange={(e) => handleChange("isFeatured", e.target.checked)}
             disabled={isLoading}
           />
           <Checkbox
             label={t("admin.projects.form.isVisible")}
             checked={formData.isVisible}
-            onChange={(e) => handleChange('isVisible', e.target.checked)}
+            onChange={(e) => handleChange("isVisible", e.target.checked)}
             disabled={isLoading}
           />
         </div>
@@ -111,12 +106,10 @@ export const ProjectForm = (props: ProjectFormProps) => {
         >
           {t("common.cancel", "Cancel")}
         </Button>
-        <Button
-          type="submit"
-          variant="primary"
-          isLoading={isLoading}
-        >
-          {initialData ? t("common.save", "Save Changes") : t("common.create", "Create Project")}
+        <Button type="submit" variant="primary" isLoading={isLoading}>
+          {initialData
+            ? t("common.save", "Save Changes")
+            : t("common.create", "Create Project")}
         </Button>
       </div>
     </form>

@@ -8,9 +8,21 @@ export const TwoFactorForm = ({ form, isLoading }: TwoFactorFormProps) => {
   const { t } = useTranslation();
 
   return (
-    <form onSubmit={form.handle2FASubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-      <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)', textAlign: 'center' }}>
-        {t("auth.2fa.description", "Enter the code from your authenticator app.")}
+    <form
+      onSubmit={form.handle2FASubmit}
+      style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}
+    >
+      <p
+        style={{
+          fontSize: "0.875rem",
+          color: "var(--text-muted)",
+          textAlign: "center",
+        }}
+      >
+        {t(
+          "auth.2fa.description",
+          "Enter the code from your authenticator app.",
+        )}
       </p>
 
       <Input
@@ -33,4 +45,3 @@ export const TwoFactorForm = ({ form, isLoading }: TwoFactorFormProps) => {
     </form>
   );
 };
-

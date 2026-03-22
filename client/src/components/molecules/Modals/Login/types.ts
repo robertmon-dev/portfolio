@@ -1,6 +1,6 @@
-import { FormEvent } from "react";
+import type { FormEvent } from "react";
 
-export type LoginStep = 'LOGIN' | '2FA' | 'FORGOT_PASSWORD' | 'RESET_PASSWORD';
+export type LoginStep = "LOGIN" | "2FA" | "FORGOT_PASSWORD" | "RESET_PASSWORD";
 
 export interface LoginFormState {
   email: string;

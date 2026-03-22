@@ -1,4 +1,4 @@
-import { forwardRef, KeyboardEvent } from "react";
+import { forwardRef, type KeyboardEvent } from "react";
 import { X } from "lucide-react";
 import type { TagProps } from "./types";
 import { getTagClasses } from "./styles";

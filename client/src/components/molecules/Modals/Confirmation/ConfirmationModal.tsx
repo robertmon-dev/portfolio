@@ -11,17 +11,12 @@ export const ConfirmationModal = ({
   title,
   message,
   variant = "danger",
-  isLoading
+  isLoading,
 }: ConfirmationModalProps) => {
   const { t } = useTranslation();
 
   return (
-    <Modal
-      open={isOpen}
-      title={title}
-      onClose={onClose}
-      size="default"
-    >
+    <Modal open={isOpen} title={title} onClose={onClose} size="default">
       <div className={`confirmation-modal confirmation-modal--${variant}`}>
         <div className="confirmation-modal__icon">
           {CONFIRMATION_ICONS[variant]}
@@ -30,12 +25,8 @@ export const ConfirmationModal = ({
         <p className="confirmation-modal__message">{message}</p>
 
         <div className="confirmation-modal__actions">
-          <Button
-            variant="outline"
-            onClick={onClose}
-            disabled={isLoading}
-          >
-            {t('common.cancel')}
+          <Button variant="outline" onClick={onClose} disabled={isLoading}>
+            {t("common.cancel")}
           </Button>
 
           <Button
@@ -43,7 +34,7 @@ export const ConfirmationModal = ({
             onClick={onConfirm}
             isLoading={isLoading}
           >
-            {t('common.confirm')}
+            {t("common.confirm")}
           </Button>
         </div>
       </div>

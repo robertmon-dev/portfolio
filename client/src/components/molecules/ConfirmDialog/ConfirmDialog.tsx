@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/atoms/Button/Button";
 import { AlertCircle, Info, RotateCcw } from "lucide-react";
+import type { ConfirmDialogProps } from "./types";
 import "./ConfirmDialog.scss";
 
 export const ConfirmDialog = ({
