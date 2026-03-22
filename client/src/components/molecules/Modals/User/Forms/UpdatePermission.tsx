@@ -1,5 +1,6 @@
+import { Alert } from "@/components/atoms/Alert/Alert";
 import { Button } from "@/components/atoms/Button/Button";
-import { ShieldAlert, Shield, ShieldOff, CheckSquare } from "lucide-react";
+import { Shield, ShieldOff, CheckSquare } from "lucide-react";
 import { useUpdatePermissionsForm } from "./hooks/useUpdatePermission";
 import type { UpdatePermissionsFormProps } from "../types";
 import { Checkbox } from "@/components/atoms/CheckBox/CheckBox";
@@ -17,30 +18,18 @@ export const UpdatePermissionsForm = (props: UpdatePermissionsFormProps) => {
 
   return (
     <form onSubmit={submitForm} className="user-form">
-      <div className="user-form__alert" style={{ marginBottom: "1.5rem" }}>
-        <ShieldAlert size={18} />
-        <div>
-          <strong style={{ display: "block", marginBottom: "2px" }}>
-            {t(
-              "admin.users.modals.permissions.warning_title",
-              "Proceed with caution!",
-            )}
-          </strong>
-          <p
-            style={{
-              margin: 0,
-              fontSize: "0.75rem",
-              opacity: 0.8,
-              lineHeight: 1.4,
-            }}
-          >
-            {t(
-              "admin.users.modals.permissions.warning_desc",
-              "Changing permissions instantly affects what this user can view or modify in the system.",
-            )}
-          </p>
-        </div>
-      </div>
+      <Alert
+        variant="danger"
+        title={t(
+          "admin.users.modals.permissions.warning_title",
+          "Proceed with caution!",
+        )}
+      >
+        {t(
+          "admin.users.modals.permissions.warning_desc",
+          "Changing permissions instantly affects what this user can view or modify in the system.",
+        )}
+      </Alert>
 
       <div className="user-form__section">
         <div className="user-form__label">
@@ -48,30 +37,8 @@ export const UpdatePermissionsForm = (props: UpdatePermissionsFormProps) => {
           {t("admin.users.modals.permissions.matrix", "Access Matrix")}
         </div>
 
-        <div
-          className="user-form__permissions-table"
-          style={{
-            border: "1px solid var(--border-color)",
-            borderRadius: "var(--radius-md)",
-            overflow: "hidden",
-            backgroundColor: "rgba(26, 27, 38, 0.2)",
-          }}
-        >
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "2fr 1fr 1fr 1fr auto",
-              gap: "8px",
-              padding: "14px 20px",
-              backgroundColor: "rgba(36, 40, 59, 0.9)",
-              borderBottom: "1px solid var(--border-color)",
-              fontWeight: "bold",
-              fontSize: "0.7rem",
-              color: "var(--text-muted)",
-              textTransform: "uppercase",
-              letterSpacing: "0.05em",
-            }}
-          >
+        <div className="user-form__permissions-table">
+          <div className="user-form__permissions-header">
             <div>{t("common.resource", "Resource")}</div>
             <div style={{ textAlign: "center" }}>
               {t("common.read", "Read")}
@@ -92,33 +59,13 @@ export const UpdatePermissionsForm = (props: UpdatePermissionsFormProps) => {
             return (
               <div
                 key={resource}
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "2fr 1fr 1fr 1fr auto",
-                  gap: "8px",
-                  padding: "10px 20px",
-                  borderBottom:
-                    index !== availableResources.length - 1
-                      ? "1px dashed var(--border-color)"
-                      : "none",
-                  alignItems: "center",
-                  backgroundColor:
-                    index % 2 === 0 ? "transparent" : "rgba(26, 27, 38, 0.4)",
-                  transition: "background-color 0.2s ease",
-                }}
+                className={`user-form__permissions-row ${
+                  index % 2 !== 0 ? "user-form__permissions-row--even" : ""
+                }`}
               >
-                <div
-                  style={{
-                    fontWeight: 600,
-                    color: "var(--text-main)",
-                    textTransform: "capitalize",
-                    fontSize: "0.85rem",
-                  }}
-                >
-                  {resource}
-                </div>
+                <div className="user-form__resource-name">{resource}</div>
 
-                <div style={{ display: "flex", justifyContent: "center" }}>
+                <div className="user-form__checkbox-cell">
                   <Checkbox
                     checked={currentFlags.includes("READ")}
                     onChange={() => handlers.toggleFlag(resource, "READ")}
@@ -127,7 +74,7 @@ export const UpdatePermissionsForm = (props: UpdatePermissionsFormProps) => {
                   />
                 </div>
 
-                <div style={{ display: "flex", justifyContent: "center" }}>
+                <div className="user-form__checkbox-cell">
                   <Checkbox
                     checked={currentFlags.includes("WRITE")}
                     onChange={() => handlers.toggleFlag(resource, "WRITE")}
@@ -136,7 +83,7 @@ export const UpdatePermissionsForm = (props: UpdatePermissionsFormProps) => {
                   />
                 </div>
 
-                <div style={{ display: "flex", justifyContent: "center" }}>
+                <div className="user-form__checkbox-cell">
                   <Checkbox
                     checked={currentFlags.includes("ADMIN")}
                     onChange={() => handlers.toggleFlag(resource, "ADMIN")}

@@ -10,6 +10,7 @@ import { Switch } from "@/components/atoms/Switch/Switch";
 import { Checkbox } from "@/components/atoms/CheckBox/CheckBox";
 import { Edit2, Trash2 } from "lucide-react";
 import { ButtonsSection } from "./Sections/ButtonsSection";
+import { AlertsSection } from "./Sections/AlertsSection";
 import { TagsSection } from "./Sections/TagsSection";
 import { ListsSection } from "./Sections/ListsSection";
 import { GridSection } from "./Sections/GridSection";
@@ -38,7 +39,7 @@ export const Demo = () => {
     demoListItems,
     demoGridData,
     demoHeaderTags,
-    demoTimelineData
+    demoTimelineData,
   } = useDemo();
 
   return (
@@ -56,6 +57,8 @@ export const Demo = () => {
           loading={loading}
           toggleGlobalLoading={toggleGlobalLoading}
         />
+
+        <AlertsSection />
         <TagsSection />
         <ListsSection demoListItems={demoListItems} />
         <GridSection
@@ -64,6 +67,7 @@ export const Demo = () => {
           handleSimulateLoading={handleSimulateLoading}
           handleOpenMenu={handleOpenMenu}
         />
+
         <FormsSection checked={checked} setChecked={setChecked} />
         <CodeSection sampleCode={sampleCode} />
         <CardsSection />
@@ -93,7 +97,10 @@ export const Demo = () => {
         title={t("demo.modals.configTitle", "Configuration")}
       >
         <div className="demo-modal-form">
-          <TextArea label={t("demo.modals.form.descLabel", "Description")} fullWidth />
+          <TextArea
+            label={t("demo.modals.form.descLabel", "Description")}
+            fullWidth
+          />
           <div className="demo-modal-form__settings">
             <Switch label={t("demo.modals.form.publicLabel", "Public")} />
             <Checkbox
