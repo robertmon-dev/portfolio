@@ -14,9 +14,7 @@ export class UpdateUserPermissionsService extends BaseService {
     this.logger.info(`Updating permissions for user ${id}`);
 
     const updated = await this.db.$transaction(async (tx) => {
-      await tx.userPermission.deleteMany({
-        where: { userId: id },
-      });
+      await tx.userPermission.deleteMany({ where: { userId: id } });
 
       if (permissions.length > 0) {
         await tx.userPermission.createMany({
@@ -33,6 +31,7 @@ export class UpdateUserPermissionsService extends BaseService {
         ...userProfileQuery,
       });
     });
+
     await this.invalidateUserCache(updated);
 
     this.logger.info(`Successfully updated permissions for user ${id}`);

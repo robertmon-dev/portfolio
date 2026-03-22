@@ -29,15 +29,7 @@ export class UpdateUserService extends BaseService implements UserUpdating {
       ...userProfileQuery,
     });
 
-    await Promise.all([
-      this.cache.del("users:list:*"),
-      this.cache.del("users:list:all"),
-      this.cache.del(`user:profile:${id}`),
-      this.cache.del(`user:profile:${oldUser?.email}`),
-      this.cache.del(`user:profile:${oldUser?.username}`),
-      this.cache.del(`user:profile:${updated.email}`),
-      this.cache.del(`user:profile:${updated.username}`),
-    ]);
+    await this.invalidateUserCache(oldUser, updated);
 
     return UserProfileSchema.parse(updated);
   }
