@@ -1,4 +1,3 @@
-import { UserProfile } from "@portfolio/shared";
 import { useUsersActions } from "./useUsersActions";
 
 export const USER_ACTIONS = {

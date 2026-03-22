@@ -54,7 +54,7 @@ export const useUsersActions = () => {
     state: {
       ...state,
       users: users as unknown as UserProfile[],
-      selectedUser,
+      selectedUser: selectedUser as unknown as UserProfile,
       isLoading,
       isAnyProcessing: !!state.processingId,
     },
