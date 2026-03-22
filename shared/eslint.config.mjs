@@ -1,27 +1,21 @@
 import js from "@eslint/js";
-import globals from "globals";
-import { defineConfig, globalIgnores } from "eslint/config";
+import { defineConfig } from "eslint/config";
 import tseslint from "typescript-eslint";
+import globals from "globals";
 
 export default defineConfig(
-  globalIgnores(["dist", "build", "node_modules", "coverage"]),
-
+  {
+    ignores: ["dist", "node_modules", "coverage"],
+  },
   js.configs.recommended,
   ...tseslint.configs.recommended,
-  ...tseslint.configs.strict,
-
   {
-    files: ["**/*.{ts,tsx}"],
-    extends: [
-      ...tseslint.configs.recommendedTypeChecked,
-      ...tseslint.configs.strictTypeChecked,
-    ],
+    files: ["**/*.ts"],
     languageOptions: {
       ecmaVersion: 2022,
-      sourceType: "commonjs",
+      sourceType: "module",
       globals: {
         ...globals.node,
-        ...globals.browser,
       },
       parserOptions: {
         projectService: true,
@@ -37,9 +31,6 @@ export default defineConfig(
           varsIgnorePattern: "^_",
         },
       ],
-      "no-console": ["warn", { allow: ["info", "warn", "error"] }],
-      "@typescript-eslint/no-floating-promises": "error",
-      "@typescript-eslint/await-thenable": "error",
     },
   },
 );

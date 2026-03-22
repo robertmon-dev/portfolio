@@ -2,6 +2,7 @@
   "name": "@portfolio/shared",
   "version": "1.0.0",
   "main": "./src/index.ts",
+  "type": "module",
   "types": "./src/index.ts",
   "exports": {
     ".": {
@@ -13,7 +14,9 @@
   },
   "scripts": {
     "dev": "tsc -w --preserveWatchOutput",
-    "build": "tsc"
+    "build": "tsc",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "@asteasolutions/zod-to-openapi": "^8.5.0",

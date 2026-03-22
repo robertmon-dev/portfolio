@@ -155,3 +155,19 @@ docker-push: ## Push production images to registry
 docker-login: ## Login to GitHub Container Registry
 	@echo "=> Logging in to $(REGISTRY)..."
 	@echo $${GITHUB_TOKEN} | docker login $(REGISTRY) -u $${GITHUB_ACTOR} --password-stdin
+
+# ==============================================================================
+# Quality
+# ==============================================================================
+
+.PHONY: lint
+lint: ## Run ESLint across the monorepo
+	@echo "=> Running linter..."
+	@$(TURBO) run lint
+	@echo "=> Lint complete."
+
+.PHONY: lint-fix
+lint-fix: ## Run ESLint with autofix where supported
+	@echo "=> Running linter with autofix..."
+	@$(TURBO) run lint:fix
+	@echo "=> Lint fix complete."

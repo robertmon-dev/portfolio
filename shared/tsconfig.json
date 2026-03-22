@@ -4,7 +4,9 @@
     "outDir": "./dist",
     "rootDir": ".",
     "declaration": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler"
   },
   "include": [
     "index.ts",
