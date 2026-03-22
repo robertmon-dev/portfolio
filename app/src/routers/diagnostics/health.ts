@@ -5,8 +5,6 @@ import { HealthResponseSchema } from "@portfolio/shared";
 import { HealthService } from "../../services/health/health";
 import { executeService } from "../../trpc/executers/base";
 
-const DiagnosticsCheckInput = z.object({});
-
 export const diagnosticsRouter = router({
   check: publicProcedure
     .meta({
@@ -19,7 +17,7 @@ export const diagnosticsRouter = router({
           "Returns information about server health, database connectivity, and Redis cache status.",
       },
     })
-    .input(DiagnosticsCheckInput)
+    .input(z.object({}))
     .output(HealthResponseSchema)
     .query(async ({ ctx }) => executeService(HealthService, ctx, undefined)),
 });

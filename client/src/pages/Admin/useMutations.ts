@@ -36,7 +36,16 @@ export const useUserMutations = () => {
   };
 };
 
+export const useExperienceMutations = () => {
+  return {
+    create: trpc.admin.experience.create.useMutation(),
+    update: trpc.admin.experience.update.useMutation(),
+    delete: trpc.admin.experience.delete.useMutation(),
+  };
+};
+
 export type GithubMutations = ReturnType<typeof useGithubMutations>;
 export type ProjectMutations = ReturnType<typeof useProjectMutations>;
 export type TechStackMutations = ReturnType<typeof useTechStackMutations>;
 export type UserMutations = ReturnType<typeof useUserMutations>;
+export type ExperienceMutations = ReturnType<typeof useExperienceMutations>;

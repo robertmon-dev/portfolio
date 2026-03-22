@@ -1,4 +1,4 @@
-import { useMemo } from "react"; // Dodajemy useMemo
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Input } from "@/components/atoms/Input/Input";
 import { Select } from "@/components/atoms/Select/Select";
@@ -62,7 +62,7 @@ export const TechStackForm = ({
           <Input
             label={t("admin.techStack.form.color.label")}
             type="color"
-            value={formData.color || "#7aa2f7"} // Fallback do Twojego tn-blue
+            value={formData.color || "#7aa2f7"}
             onChange={(e) => handleChange("color", e.target.value)}
             error={errors.color}
             leftIcon={<Palette size={18} />}

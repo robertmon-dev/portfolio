@@ -1,0 +1,158 @@
+import { Experience } from "@portfolio/shared";
+import { Button } from "@/components/atoms/Button/Button";
+import {
+  Edit2,
+  Trash2,
+  Calendar,
+  Clock,
+  Briefcase,
+  Building2,
+  FileText,
+  CheckCircle2,
+  History,
+} from "lucide-react";
+import dayjs from "dayjs";
+import duration from "dayjs/plugin/duration";
+import type { Column } from "@/components/molecules/EntityTable/types";
+import type { TFunction } from "i18next";
+
+dayjs.extend(duration);
+
+const getTenure = (
+  start: string | Date,
+  end: string | Date | null,
+  isCurrent: boolean,
+  t: TFunction,
+) => {
+  const startDate = dayjs(start);
+  const endDate = isCurrent ? dayjs() : dayjs(end);
+  const diff = dayjs.duration(endDate.diff(startDate));
+
+  const years = diff.years();
+  const months = diff.months();
+
+  const parts = [];
+  if (years > 0) parts.push(`${years}${t("common.time.y", "y")}`);
+  if (months > 0 || years === 0)
+    parts.push(`${months}${t("common.time.m", "m")}`);
+
+  return parts.join(" ");
+};
+
+export const getExperienceColumns = (
+  t: TFunction,
+  onEdit: (exp: Experience) => void,
+  onDelete: (id: string) => void,
+  processingId: string | null,
+): Column<Experience>[] => [
+  {
+    key: "position",
+    header: t("admin.experience.table.position"),
+    width: "20%",
+    render: (item) => (
+      <div className="experience-table__cell-with-icon">
+        <div className="experience-table__icon-wrapper">
+          <Briefcase size={14} />
+        </div>
+        <span className="experience-table__position">{item.position}</span>
+      </div>
+    ),
+  },
+  {
+    key: "company",
+    header: t("admin.experience.table.company"),
+    width: "15%",
+    render: (item) => (
+      <div className="experience-table__cell-with-icon">
+        <Building2 size={14} className="text-muted" />
+        <span className="experience-table__company-name">{item.company}</span>
+      </div>
+    ),
+  },
+  {
+    key: "duration",
+    header: t("admin.experience.table.duration"),
+    width: "20%",
+    render: (item) => {
+      const start = dayjs(item.startDate).format("MM/YYYY");
+      const end = item.isCurrent
+        ? t("common.present")
+        : dayjs(item.endDate).format("MM/YYYY");
+      const tenure = getTenure(item.startDate, item.endDate, item.isCurrent, t);
+
+      return (
+        <div className="experience-table__duration-stack">
+          <div className="experience-table__range">
+            <Calendar size={12} />
+            <span>
+              {start} — {end}
+            </span>
+          </div>
+          <div className="experience-table__tenure-badge">
+            <Clock size={10} />
+            <span>{tenure}</span>
+          </div>
+        </div>
+      );
+    },
+  },
+  {
+    key: "description",
+    header: t("admin.experience.table.description"),
+    width: "25%",
+    render: (item) => (
+      <div className="experience-table__description-preview">
+        <FileText size={12} />
+        <p title={item.description}>{item.description}</p>
+      </div>
+    ),
+  },
+  {
+    key: "status",
+    header: t("admin.experience.table.status"),
+    width: "10%",
+    align: "center",
+    render: (item) => (
+      <div
+        className={`experience-table__status-badge ${item.isCurrent ? "active" : "past"}`}
+      >
+        {item.isCurrent ? <CheckCircle2 size={12} /> : <History size={12} />}
+        <span>{item.isCurrent ? t("common.current") : t("common.past")}</span>
+      </div>
+    ),
+  },
+  {
+    key: "actions",
+    header: "",
+    width: "10%",
+    align: "right",
+    render: (item) => (
+      <div className="experience-table__actions">
+        <Button
+          variant="ghost"
+          size="sm"
+          isIcon={true}
+          onClick={(e) => {
+            e.stopPropagation();
+            onEdit(item);
+          }}
+          disabled={!!processingId}
+        >
+          <Edit2 size={14} />
+        </Button>
+        <Button
+          variant="ghost"
+          size="sm"
+          isIcon={true}
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete(item.id);
+          }}
+          isLoading={processingId === item.id}
+        >
+          <Trash2 size={14} />
+        </Button>
+      </div>
+    ),
+  },
+];

@@ -10,7 +10,6 @@ export const useTechStackForm = ({
   onCancel,
 }: Partial<TechStackFormProps>) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
-
   const [formData, setFormData] = useState({
     name: initialData?.name ?? "",
     category: initialData?.category ?? "",
@@ -18,11 +17,9 @@ export const useTechStackForm = ({
     color: initialData?.color ?? DEFAULT_TECH_COLOR,
   });
 
-  type FormData = typeof formData;
-
-  const handleChange = <K extends keyof FormData>(
+  const handleChange = <K extends keyof typeof formData>(
     field: K,
-    value: FormData[K],
+    value: (typeof formData)[K],
   ) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
 
@@ -40,25 +37,29 @@ export const useTechStackForm = ({
 
     const dataToValidate = {
       ...formData,
-      icon: formData.icon.trim() || null,
-      color: formData.color.trim() || null,
+      icon: formData.icon.trim() || "",
+      color: formData.color.trim() || DEFAULT_TECH_COLOR,
     };
 
     const validation = CreateTechStackSchema.safeParse(dataToValidate);
 
     if (!validation.success) {
       const formattedErrors: Record<string, string> = {};
-
       validation.error.issues.forEach((issue) => {
         const path = issue.path[0] as string;
         formattedErrors[path] = issue.message;
+        console.log(issue.message);
       });
 
       setErrors(formattedErrors);
       return;
     }
 
-    onSubmit?.(validation.data);
+    if (initialData?.id) {
+      onSubmit?.({ ...validation.data, id: initialData.id } as any);
+    } else {
+      onSubmit?.(validation.data);
+    }
   };
 
   return {

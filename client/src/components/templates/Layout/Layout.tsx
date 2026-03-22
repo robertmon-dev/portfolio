@@ -1,20 +1,20 @@
-import { Navbar } from '@/components/organisms/NavBar/NavBar';
-import { NavbarMain } from './Sections/Navbar/Main';
-import { NavbarEdge } from './Sections/Navbar/Edge';
-import { Footer } from '@/components/organisms/Footer/Footer';
-import { FooterLeftSection } from './Sections/Footer/Left';
-import { FooterRightSection } from './Sections/Footer/Right';
-import { List } from '@/components/molecules/List/List';
-import { Button } from '@/components/atoms/Button/Button';
-import { Settings, LogOut, Loader2 } from 'lucide-react';
-import { LoginModal } from '@/components/molecules/Modals/Login/Modal';
-import { useLoginModal } from '@/components/molecules/Modals/Login/useLoginModal';
-import { useLayout } from './hooks/useLayout';
-import { useFooterItems } from './hooks/useFooterItems';
-import { useAuth } from '@/hooks/useAuth';
-import type { LayoutProps } from './types';
-import { BRAND_NAME, LANGUAGES } from './consts';
-import './Layout.scss';
+import { Navbar } from "@/components/organisms/NavBar/NavBar";
+import { NavbarMain } from "./Sections/Navbar/Main";
+import { NavbarEdge } from "./Sections/Navbar/Edge";
+import { Footer } from "@/components/organisms/Footer/Footer";
+import { FooterLeftSection } from "./Sections/Footer/Left";
+import { FooterRightSection } from "./Sections/Footer/Right";
+import { List } from "@/components/molecules/List/List";
+import { Button } from "@/components/atoms/Button/Button";
+import { Settings, LogOut, Loader2 } from "lucide-react";
+import { LoginModal } from "@/components/molecules/Modals/Login/Modal";
+import { useLoginModal } from "@/components/molecules/Modals/Login/useLoginModal";
+import { useLayout } from "./hooks/useLayout";
+import { useFooterItems } from "./hooks/useFooterItems";
+import { useAuth } from "@/hooks/useAuth";
+import type { LayoutProps } from "./types";
+import { BRAND_NAME, LANGUAGES } from "./consts";
+import "./Layout.scss";
 
 export const Layout = ({ children }: LayoutProps) => {
   const {
@@ -23,22 +23,15 @@ export const Layout = ({ children }: LayoutProps) => {
     isLangOpen,
     setIsLangOpen,
     currentLangLabel,
-    handleLangSelect
+    handleLangSelect,
+    showAdminNav,
+    adminNavItems,
   } = useLayout();
 
-  const {
-    socialLinks,
-    navLinks,
-    currentYear
-  } = useFooterItems();
+  const { socialLinks, navLinks, currentYear } = useFooterItems();
 
   const loginModal = useLoginModal();
-  const {
-    isLoggedIn,
-    isUserLoading,
-    logout,
-    isLoggingOut
-  } = useAuth();
+  const { isLoggedIn, isUserLoading, logout, isLoggingOut } = useAuth();
 
   return (
     <div className="app-layout">
@@ -50,13 +43,16 @@ export const Layout = ({ children }: LayoutProps) => {
         <NavbarEdge>
           {isUserLoading ? (
             <div className="app-layout__auth-loader">
-              <Loader2 size={16} className="app-layout__spinner app-layout__spinner--muted" />
+              <Loader2
+                size={16}
+                className="app-layout__spinner app-layout__spinner--muted"
+              />
             </div>
           ) : isLoggedIn ? (
             <Button
               variant="ghost"
               isIcon
-              aria-label={t('common.logout', 'Logout')}
+              aria-label={t("common.logout", "Logout")}
               onClick={logout}
               disabled={isLoggingOut}
             >
@@ -70,7 +66,7 @@ export const Layout = ({ children }: LayoutProps) => {
             <Button
               variant="ghost"
               isIcon
-              aria-label={t('common.login', 'Login to Admin Panel')}
+              aria-label={t("common.login", "Login to Admin Panel")}
               onClick={loginModal.open}
             >
               <Settings size={20} />
@@ -79,10 +75,19 @@ export const Layout = ({ children }: LayoutProps) => {
         </NavbarEdge>
       </Navbar>
 
-      <main className="app-layout__main">
-        <div className="app-layout__content-container">
-          {children}
+      {showAdminNav && (
+        <div className="app-layout__admin-bar">
+          <div className="app-layout__admin-container">
+            <span className="app-layout__admin-label">
+              {t("common.management", "Management")}:
+            </span>
+            <List items={adminNavItems} variant="nav" direction="row" />
+          </div>
         </div>
+      )}
+
+      <main className="app-layout__main">
+        <div className="app-layout__content-container">{children}</div>
       </main>
 
       <Footer>
