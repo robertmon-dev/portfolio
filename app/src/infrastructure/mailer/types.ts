@@ -1,10 +1,18 @@
 import type { SentMessageInfo } from "nodemailer";
 
+export type MailValue =
+  | string
+  | number
+  | boolean
+  | null
+  | undefined
+  | MailValue[];
+
 export interface MailOptions {
   to: string;
   subject: string;
   templateId?: string;
-  vars?: Record<string, any>;
+  vars?: Record<string, MailValue>;
   html?: string;
 }
 
