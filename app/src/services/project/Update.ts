@@ -14,6 +14,11 @@ export class UpdateProjectService
 
     this.logger.info(`Updating project: ${id}`);
 
+    const oldProject = await this.db.project.findUnique({
+      where: { id },
+      select: { slug: true, techStack: { select: { id: true } } },
+    });
+
     const project = await this.db.project.update({
       where: { id },
       data: {
@@ -33,10 +38,19 @@ export class UpdateProjectService
       ...projectWithRelationsQuery,
     });
 
+    const techIdsToInvalidate = new Set([
+      ...(oldProject?.techStack.map((t) => t.id) || []),
+      ...(techStackIds || []),
+    ]);
+
     await Promise.all([
+      this.cache.del(`project:slug:${oldProject?.slug}`),
       this.cache.del(`project:slug:${project.slug}`),
-      this.cache.del("projects:list:*"),
       this.cache.del(`projects:id:${id}`),
+      this.cache.del("projects:list:*"),
+      ...Array.from(techIdsToInvalidate).map((tId) =>
+        this.cache.del(`techstack:id:${tId}`),
+      ),
     ]);
 
     return project;
