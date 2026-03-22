@@ -55,3 +55,13 @@ export const LinkTechStackProjectSchema = z.object({
   techStackId: z.uuid(),
   projectId: z.uuid(),
 });
+
+export const TechStackOpenApiSchemas = {
+  TechStackCategorySchema,
+  TechStackSchema,
+  CreateTechStackSchema,
+  UpdateTechStackSchema,
+  TechStackProjectRelationSchema,
+  TechStackWithRelationsSchema,
+  LinkTechStackProjectSchema,
+};
