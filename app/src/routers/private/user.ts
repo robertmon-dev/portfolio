@@ -23,7 +23,7 @@ export const usersRouter = router({
     .meta({
       openapi: {
         method: "POST",
-        path: "/users",
+        path: "/admin/users",
         tags: ["Users"],
         summary: "Create a new user",
         description: "Creates a new administrative user for the portfolio CMS.",
@@ -40,7 +40,7 @@ export const usersRouter = router({
     .meta({
       openapi: {
         method: "GET",
-        path: "/users",
+        path: "/admin/users",
         tags: ["Users"],
         summary: "List all users",
         description:
@@ -58,7 +58,7 @@ export const usersRouter = router({
     .meta({
       openapi: {
         method: "GET",
-        path: "/users/detail",
+        path: "/admin/users/detail",
         tags: ["Users"],
         summary: "Get user by ID",
         description: "Returns full profile information for a specific user.",
@@ -75,7 +75,7 @@ export const usersRouter = router({
     .meta({
       openapi: {
         method: "PATCH",
-        path: "/users",
+        path: "/admin/users",
         tags: ["Users"],
         summary: "Update user profile",
         description: "Updates basic information like name or email for a user.",
@@ -92,7 +92,7 @@ export const usersRouter = router({
     .meta({
       openapi: {
         method: "PATCH",
-        path: "/users/permissions",
+        path: "/admin/users/permissions",
         tags: ["Users"],
         summary: "Update user permissions",
         description:
@@ -110,7 +110,7 @@ export const usersRouter = router({
     .meta({
       openapi: {
         method: "DELETE",
-        path: "/users",
+        path: "/admin/users",
         tags: ["Users"],
         summary: "Delete user",
         description:

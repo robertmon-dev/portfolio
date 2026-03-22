@@ -16,7 +16,7 @@ export const experiencePrivateRouter = router({
     .meta({
       openapi: {
         method: "POST",
-        path: "/experience",
+        path: "/admin/experience",
         tags: ["Experience"],
         summary: "Create new experience",
         description:
@@ -34,7 +34,7 @@ export const experiencePrivateRouter = router({
     .meta({
       openapi: {
         method: "PATCH",
-        path: "/experience",
+        path: "/admin/experience",
         tags: ["Experience"],
         summary: "Update experience",
         description: "Updates existing experience details using its ID.",
@@ -51,7 +51,7 @@ export const experiencePrivateRouter = router({
     .meta({
       openapi: {
         method: "DELETE",
-        path: "/experience",
+        path: "/admin/experience",
         tags: ["Experience"],
         summary: "Bulk delete experiences",
         description:
@@ -61,7 +61,7 @@ export const experiencePrivateRouter = router({
     })
     .input(
       z.object({
-        ids: z.array(z.string().uuid()),
+        ids: z.array(z.uuid()),
       }),
     )
     .output(z.void())

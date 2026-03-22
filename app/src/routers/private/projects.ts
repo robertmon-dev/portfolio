@@ -16,7 +16,7 @@ export const projectPrivateRouter = router({
     .meta({
       openapi: {
         method: "POST",
-        path: "/projects",
+        path: "/admin/projects",
         tags: ["Projects"],
         summary: "Create a new project",
         description:
@@ -34,7 +34,7 @@ export const projectPrivateRouter = router({
     .meta({
       openapi: {
         method: "PATCH",
-        path: "/projects",
+        path: "/admin/projects",
         tags: ["Projects"],
         summary: "Update project details",
         description:
@@ -52,7 +52,7 @@ export const projectPrivateRouter = router({
     .meta({
       openapi: {
         method: "DELETE",
-        path: "/projects",
+        path: "/admin/projects",
         tags: ["Projects"],
         summary: "Delete project",
         description:

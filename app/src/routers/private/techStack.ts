@@ -19,7 +19,7 @@ export const techStackPrivateRouter = router({
     .meta({
       openapi: {
         method: "POST",
-        path: "/techstack",
+        path: "/admin/techstack",
         tags: ["TechStack"],
         summary: "Create new technology",
         description:
@@ -37,7 +37,7 @@ export const techStackPrivateRouter = router({
     .meta({
       openapi: {
         method: "PATCH",
-        path: "/techstack",
+        path: "/admin/techstack",
         tags: ["TechStack"],
         summary: "Update technology details",
         description:
@@ -55,7 +55,7 @@ export const techStackPrivateRouter = router({
     .meta({
       openapi: {
         method: "DELETE",
-        path: "/techstack",
+        path: "/admin/techstack",
         tags: ["TechStack"],
         summary: "Bulk delete technologies",
         description: "Removes multiple technologies from the global list.",
@@ -77,7 +77,7 @@ export const techStackPrivateRouter = router({
     .meta({
       openapi: {
         method: "POST",
-        path: "/techstack/link",
+        path: "/admin/techstack/link",
         tags: ["TechStack"],
         summary: "Link tech to project",
         description:
@@ -96,7 +96,7 @@ export const techStackPrivateRouter = router({
     .meta({
       openapi: {
         method: "DELETE",
-        path: "/techstack/link",
+        path: "/admin/techstack/link",
         tags: ["TechStack"],
         summary: "Unlink tech from project",
         description:

@@ -11,7 +11,7 @@ export const authPrivateRouter = router({
     .meta({
       openapi: {
         method: "GET",
-        path: "/auth/me",
+        path: "/admin/auth/me",
         tags: ["Auth"],
         summary: "Get current user profile",
         description:
@@ -41,7 +41,7 @@ export const authPrivateRouter = router({
     .meta({
       openapi: {
         method: "POST",
-        path: "/auth/logout",
+        path: "/admin/auth/logout",
         tags: ["Auth"],
         summary: "Logout user",
         description: "Invalidates the current session token.",

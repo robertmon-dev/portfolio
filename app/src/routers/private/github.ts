@@ -17,7 +17,7 @@ export const githubPrivateRouter = router({
     .meta({
       openapi: {
         method: "PATCH",
-        path: "/github/repo",
+        path: "/admin/github/repo",
         tags: ["GitHub"],
         summary: "Update GitHub repository data",
         description: "Updates local information about a GitHub repository.",
@@ -34,7 +34,7 @@ export const githubPrivateRouter = router({
     .meta({
       openapi: {
         method: "POST",
-        path: "/github/repo/link",
+        path: "/admin/github/repo/link",
         tags: ["GitHub"],
         summary: "Link repo to project",
         description:
@@ -53,7 +53,7 @@ export const githubPrivateRouter = router({
     .meta({
       openapi: {
         method: "DELETE",
-        path: "/github/repo/link",
+        path: "/admin/github/repo/link",
         tags: ["GitHub"],
         summary: "Unlink repo from project",
         description:
@@ -72,7 +72,7 @@ export const githubPrivateRouter = router({
     .meta({
       openapi: {
         method: "DELETE",
-        path: "/github/repo",
+        path: "/admin/github/repo",
         tags: ["GitHub"],
         summary: "Delete GitHub repo reference",
         description:
