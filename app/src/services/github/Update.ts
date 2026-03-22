@@ -1,14 +1,13 @@
 import { BaseService } from "../service";
-import { UpdateGithubRepoInput } from "@portfolio/shared";
 import {
-  githubRepoWithRelationsQuery,
-  type GithubRepoWithRelations,
-} from "./queries";
+  UpdateGithubRepoInput,
+  GithubRepoSchema,
+  type GithubRepo,
+} from "@portfolio/shared";
+import { githubRepoWithRelationsQuery } from "./queries";
 
 export class UpdateGithubRepoService extends BaseService {
-  public async execute(
-    input: UpdateGithubRepoInput,
-  ): Promise<GithubRepoWithRelations> {
+  public async execute(input: UpdateGithubRepoInput): Promise<GithubRepo> {
     const { id, ...data } = input;
 
     this.logger.info(`Updating GitHub repo: ${id}`);
@@ -28,6 +27,6 @@ export class UpdateGithubRepoService extends BaseService {
       `Successfully updated repo ${updated.name} and invalidated related caches.`,
     );
 
-    return updated;
+    return GithubRepoSchema.parse(updated);
   }
 }

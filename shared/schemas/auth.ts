@@ -6,16 +6,16 @@ export const LoginInputSchema = z.object({
   password: z.string().min(1, "Password is required"),
 });
 
-export const LoginResponseSchema = z.discriminatedUnion("status", [
-  z.object({
-    status: z.literal("processing"),
-    userId: z.uuid(),
-    message: z.string(),
-  }),
+export const LoginResponseSchema = z.union([
   z.object({
     status: z.literal("success"),
     token: z.string(),
     user: UserProfileSchema,
+  }),
+  z.object({
+    status: z.literal("processing"),
+    userId: z.uuid(),
+    message: z.string(),
   }),
 ]);
 
@@ -41,4 +41,12 @@ export const ResetPasswordSchema = z
 
 export const Resend2FASchema = z.object({
   userId: z.uuid(),
+});
+
+export const MessageResponseSchema = z.object({
+  message: z.string(),
+});
+
+export const SuccessResponseSchema = z.object({
+  success: z.literal(true),
 });

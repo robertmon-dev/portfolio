@@ -20,6 +20,16 @@ import { executeService } from "../../trpc/executers/base";
 
 export const usersRouter = router({
   create: protectedProcedure
+    .meta({
+      openapi: {
+        method: "POST",
+        path: "/users",
+        tags: ["Users"],
+        summary: "Create a new user",
+        description: "Creates a new administrative user for the portfolio CMS.",
+        protect: true,
+      },
+    })
     .input(CreateUserInputSchema)
     .output(UserProfileSchema)
     .mutation(async ({ ctx, input }) =>
@@ -27,6 +37,17 @@ export const usersRouter = router({
     ),
 
   list: protectedProcedure
+    .meta({
+      openapi: {
+        method: "GET",
+        path: "/users",
+        tags: ["Users"],
+        summary: "List all users",
+        description:
+          "Returns a list of users with pagination and filtering options.",
+        protect: true,
+      },
+    })
     .input(ListUsersInputSchema)
     .output(z.array(UserProfileSchema))
     .query(async ({ ctx, input }) =>
@@ -34,6 +55,16 @@ export const usersRouter = router({
     ),
 
   get: protectedProcedure
+    .meta({
+      openapi: {
+        method: "GET",
+        path: "/users/detail",
+        tags: ["Users"],
+        summary: "Get user by ID",
+        description: "Returns full profile information for a specific user.",
+        protect: true,
+      },
+    })
     .input(GetUserInputSchema)
     .output(UserProfileSchema)
     .query(async ({ ctx, input }) =>
@@ -41,6 +72,16 @@ export const usersRouter = router({
     ),
 
   update: protectedProcedure
+    .meta({
+      openapi: {
+        method: "PATCH",
+        path: "/users",
+        tags: ["Users"],
+        summary: "Update user profile",
+        description: "Updates basic information like name or email for a user.",
+        protect: true,
+      },
+    })
     .input(UpdateUserInputSchema)
     .output(UserProfileSchema)
     .mutation(async ({ ctx, input }) =>
@@ -48,6 +89,17 @@ export const usersRouter = router({
     ),
 
   updatePermissions: protectedProcedure
+    .meta({
+      openapi: {
+        method: "PATCH",
+        path: "/users/permissions",
+        tags: ["Users"],
+        summary: "Update user permissions",
+        description:
+          "Directly modifies the roles and permissions assigned to a user.",
+        protect: true,
+      },
+    })
     .input(UpdateUserPermissionsInputSchema)
     .output(UserProfileSchema)
     .mutation(async ({ ctx, input }) =>
@@ -55,6 +107,17 @@ export const usersRouter = router({
     ),
 
   delete: protectedProcedure
+    .meta({
+      openapi: {
+        method: "DELETE",
+        path: "/users",
+        tags: ["Users"],
+        summary: "Delete user",
+        description:
+          "Permanently removes a user account and their access rights.",
+        protect: true,
+      },
+    })
     .input(DeleteUserInputSchema)
     .output(z.void())
     .mutation(async ({ ctx, input }) =>
