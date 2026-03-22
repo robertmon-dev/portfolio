@@ -15,14 +15,13 @@ export const UsersAdminPage = () => {
   const { state, actions } = useUsersActions();
 
   const headerTags = useMemo(() => {
-    const total = state.users.length;
     const admins = state.users.filter((u) => u.role === "ADMIN").length;
 
     return [
       {
         id: "total",
         children: t("admin.users.tags.total", {
-          count: total,
+          count: state.users.length,
           defaultValue: "{{count}} Users",
         }),
         variant: "info" as const,

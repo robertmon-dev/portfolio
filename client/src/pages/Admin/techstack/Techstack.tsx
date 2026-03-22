@@ -15,13 +15,11 @@ export const TechStackAdminPage = () => {
   const { state, actions } = useTechStackActions();
 
   const headerTags = useMemo(() => {
-    const total = state.techStacks.length;
-
     return [
       {
         id: "total",
         children: t("admin.techStack.tags.total", {
-          count: total,
+          count: state.techStacks.length,
           defaultValue: "{{count}} Technologies",
         }),
         variant: "info" as const,

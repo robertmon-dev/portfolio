@@ -13,39 +13,54 @@ export const GithubAdminPage = () => {
   const { t } = useTranslation();
   const { state, actions } = useGithubActions();
 
+  const linkedCount = useMemo(
+    () => state.repos.filter((r) => !!r.project).length,
+    [state.repos],
+  );
+
   const headerTags = useMemo(
     () => [
       {
         id: "count",
-        children: `${state.repos.length} Repos`,
+        children: t("admin.github.stats.count", {
+          count: state.repos.length,
+          defaultValue: "{{count}} Repos",
+        }),
         variant: "info" as const,
         icon: <Github size={12} />,
       },
       {
         id: "linked",
-        children: `${state.repos.filter((r) => !!r.project).length} Linked`,
+        children: t("admin.github.stats.linked", {
+          count: linkedCount,
+          defaultValue: "{{count}} Linked",
+        }),
         variant: "success" as const,
         icon: <Link2 size={12} />,
       },
     ],
-    [state.repos.length, state.repos.filter((r) => !!r.project).length],
+    [state.repos.length, linkedCount, t],
   );
 
-  const columns = getGithubColumns(
-    (repo) => {
-      actions.selectRepo(repo.id);
-      actions.openModal("update");
-    },
-    (id) => actions.deleteRepo(id),
-    (repo) => {
-      actions.selectRepo(repo.id);
-      actions.openModal("link");
-    },
-    (repo) => {
-      actions.selectRepo(repo.id);
-      actions.unlinkFromProject(repo.id);
-    },
-    state.processingId,
+  const columns = useMemo(
+    () =>
+      getGithubColumns(
+        (repo) => {
+          actions.selectRepo(repo.id);
+          actions.openModal("update");
+        },
+        (id) => actions.deleteRepo(id),
+        (repo) => {
+          actions.selectRepo(repo.id);
+          actions.openModal("link");
+        },
+        (repo) => {
+          actions.selectRepo(repo.id);
+          actions.unlinkFromProject(repo.id);
+        },
+        state.processingId,
+      ),
+    [actions, state.processingId],
   );
 
   return (
