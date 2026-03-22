@@ -106,7 +106,7 @@ export const getUsersColumns = (
   },
   {
     key: "actions",
-    header: "",
+    header: "Actions",
     align: "right",
     render: (user) => (
       <div className="user-table__actions" onClick={(e) => e.stopPropagation()}>

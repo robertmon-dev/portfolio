@@ -1,7 +1,6 @@
 import { Role, PermissionFlag } from "@prisma/client";
 import { Flag, Endpoint } from "./types";
 import { Logger } from "../../core/logger/logger";
-import { RoleEnum } from "@portfolio/shared";
 
 export class Permission {
   private userId: string | null;
@@ -58,7 +57,7 @@ export class Permission {
     }
 
     const hasSpecificFlag = flags.has(required);
-    const hasResourceAdmin = flags.has(RoleEnum.enum.ADMIN);
+    const hasResourceAdmin = flags.has(Role.ADMIN);
 
     if (hasSpecificFlag || hasResourceAdmin) {
       this.logger.debug(`Access granted: Permission match`, {
