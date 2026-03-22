@@ -29,8 +29,8 @@ export class UpdateProjectService
             : githubRepoId
               ? { connect: { id: githubRepoId } }
               : undefined,
-        ...projectWithRelationsQuery,
       },
+      ...projectWithRelationsQuery,
     });
 
     await Promise.all([
