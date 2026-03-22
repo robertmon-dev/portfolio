@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const RoleEnum = z.enum(["USER", "ADMIN", "MODERATOR", "VIEWER"]);
-export const FlagEnum = z.enum(["read", "write", "admin"]);
+export const FlagEnum = z.enum(["READ", "WRITE", "ADMIN"]);
 
 export const EndpointSchema = z.object({
   name: z.string(),
@@ -10,7 +10,7 @@ export const EndpointSchema = z.object({
 
 export const UserPermissionSchema = z.object({
   resource: z.string(),
-  flags: z.array(z.enum(["READ", "WRITE", "ADMIN"])),
+  flags: z.array(FlagEnum),
 });
 
 export const UpdateUserPermissionsInputSchema = z.object({

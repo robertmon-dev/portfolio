@@ -21,14 +21,14 @@ export const CreateUserForm = (props: CreateUserFormProps) => {
         <div className="user-form__grid">
           <Input
             label={t("common.email", "Email")}
-            placeholder="admin@moniev.dev"
+            placeholder="user@mail.com"
             error={form.errors.email?.message}
             leftIcon={<Mail size={16} />}
             {...form.register("email")}
           />
           <Input
             label={t("common.username", "Username")}
-            placeholder="moniev"
+            placeholder="username"
             error={form.errors.username?.message}
             leftIcon={<User size={16} />}
             {...form.register("username")}
@@ -36,14 +36,14 @@ export const CreateUserForm = (props: CreateUserFormProps) => {
           <Input
             label={t("common.password", "Password")}
             type="password"
-            placeholder="Str0ng.P@ssw0rd!"
+            placeholder="Password"
             error={form.errors.password?.message}
             leftIcon={<Lock size={16} />}
             {...form.register("password")}
           />
           <Input
             label={t("common.name", "Full Name")}
-            placeholder="Robert Moń"
+            placeholder="Name"
             error={form.errors.name?.message}
             {...form.register("name")}
           />

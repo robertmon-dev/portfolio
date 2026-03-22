@@ -1,25 +1,6 @@
-import { trpc } from '../lib/trpc/client';
-import { type Role } from '@portfolio/shared';
-import { RoleEnum } from '@portfolio/shared';
-
-const ROLE_PERMISSIONS: Record<Exclude<Role, 'ADMIN'>, string[]> = {
-  MODERATOR: [
-    'projects:*',
-    'github:*',
-    'experience:*',
-    'blog:*',
-    'profile:edit'
-  ],
-  VIEWER: [
-    'projects:read',
-    'github:read',
-    'experience:read',
-    'blog:read'
-  ],
-  USER: [
-    'profile:edit'
-  ],
-};
+import { useMemo } from "react";
+import { trpc } from "../lib/trpc/client";
+import { FlagEnum, RoleEnum, type Flag, type Role } from "@portfolio/shared";
 
 export const useAccess = () => {
   const { data: user, isLoading } = trpc.account.me.useQuery(undefined, {
@@ -27,23 +8,42 @@ export const useAccess = () => {
     retry: false,
   });
 
+  const permissionsMap = useMemo(() => {
+    const map = new Map<string, Set<Flag>>();
+    if (!user?.permissions) return map;
+
+    user.permissions.forEach((p) => {
+      map.set(p.resource, new Set(p.flags as Flag[]));
+    });
+    return map;
+  }, [user]);
+
+  const can = (
+    resource: string,
+    required: string = FlagEnum.enum.READ,
+  ): boolean => {
+    if (!user) return false;
+    if (user.role === RoleEnum.enum.ADMIN) return true;
+
+    let targetResource = resource;
+    let targetFlag = required.toUpperCase() as Flag;
+
+    if (resource.includes(":")) {
+      const [res, fl] = resource.split(":");
+      targetResource = res;
+      targetFlag = fl.toUpperCase() as Flag;
+    }
+
+    const flags = permissionsMap.get(targetResource);
+    if (!flags) return false;
+
+    return flags.has(targetFlag) || flags.has(RoleEnum.enum.ADMIN);
+  };
+
   const hasRole = (role: Role | Role[]) => {
     if (!user) return false;
     const roles = Array.isArray(role) ? role : [role];
-    return roles.includes(user.role);
-  };
-
-  const can = (permission: string): boolean => {
-    if (!user) return false;
-
-    if (user.role === RoleEnum.enum.ADMIN) return true;
-
-    const permissions = ROLE_PERMISSIONS[user.role as Exclude<Role, 'ADMIN'>] || [];
-
-    if (permissions.includes(permission)) return true;
-
-    const [domain] = permission.split(':');
-    return permissions.includes(`${domain}:*`);
+    return roles.includes(user.role as Role);
   };
 
   return {
@@ -51,7 +51,7 @@ export const useAccess = () => {
     isLoading,
     isAuthenticated: !!user,
     isAdmin: user?.role === RoleEnum.enum.ADMIN,
-    hasRole,
     can,
+    hasRole,
   };
 };

@@ -4,7 +4,7 @@ import { Alert } from "@/components/atoms/Alert/Alert";
 import { Button } from "@/components/atoms/Button/Button";
 import { Select } from "@/components/atoms/Select/Select";
 import { Tag } from "@/components/atoms/Tag/Tag";
-import { Link2, AlertCircle, Layout, X, Info } from "lucide-react";
+import { Link2, Layout, X, Info } from "lucide-react";
 import type { LinkTechStackFormProps } from "../types";
 import type { ProjectWithRelations } from "@portfolio/shared";
 import "../TechStackModal.scss";
