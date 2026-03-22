@@ -12,6 +12,7 @@ import "../TechStackModal.scss";
 export const TechStackForm = ({
   initialData,
   onCreate,
+  onUpdate,
   onCancel,
   isLoading,
 }: TechStackFormProps) => {
@@ -29,6 +30,7 @@ export const TechStackForm = ({
   const { formData, errors, handleChange, handleSubmit } = useTechStackForm({
     initialData,
     onCreate,
+    onUpdate,
     onCancel,
   });
 
@@ -50,7 +52,7 @@ export const TechStackForm = ({
           label={t("admin.techStack.form.category.label")}
           options={categoryOptions}
           value={formData.category}
-          onChange={(e) => handleChange("category", e.target.value as any)}
+          onChange={(e) => handleChange("category", String(e.target.value))}
           error={errors.category}
           leftIcon={<Box size={18} />}
           fullWidth

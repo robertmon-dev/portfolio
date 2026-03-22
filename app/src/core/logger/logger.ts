@@ -1,6 +1,6 @@
-import pino from 'pino';
-import { Settings } from '../settings/settings';
-import type { LogMeta, Logging } from './types';
+import pino from "pino";
+import { Settings } from "../settings/settings";
+import type { LogMeta, Logging } from "./types";
 
 export class Logger implements Logging {
   private static rootPino: pino.Logger;
@@ -16,19 +16,19 @@ export class Logger implements Logging {
 
   private static initializeRootLogger() {
     const config = Settings.getInstance().config;
-    const isDev = config.NODE_ENV === 'development';
+    const isDev = config.NODE_ENV === "development";
 
     Logger.rootPino = pino({
       level: config.LOG_LEVEL,
       transport: isDev
         ? {
-          target: 'pino-pretty',
-          options: {
-            colorize: true,
-            translateTime: 'HH:MM:ss',
-            ignore: 'pid,hostname',
-          },
-        }
+            target: "pino-pretty",
+            options: {
+              colorize: true,
+              translateTime: "HH:MM:ss",
+              ignore: "pid,hostname",
+            },
+          }
         : undefined,
       serializers: {
         err: pino.stdSerializers.err,
@@ -60,12 +60,16 @@ export class Logger implements Logging {
     }
   }
 
-  public error<T extends object = LogMeta>(msg: string, error?: unknown, meta?: T): void {
+  public error<T extends object = LogMeta>(
+    msg: string,
+    error?: unknown,
+    meta?: T,
+  ): void {
     const logObject: Record<string, unknown> = meta ? { ...meta } : {};
 
     if (error instanceof Error) {
       logObject.err = error;
-    } else if (typeof error !== 'undefined' && error !== null) {
+    } else if (typeof error !== "undefined" && error !== null) {
       logObject.errorRaw = error;
     }
 
@@ -76,4 +80,3 @@ export class Logger implements Logging {
     }
   }
 }
-
