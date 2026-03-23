@@ -236,7 +236,7 @@
       background-color: color.change($col, $alpha: 0.15) !important;
 
       .list-item__icon {
-        color: $hover-col; // Nadpisuje niebieski
+        color: $hover-col;
         transform: translateX(4px) rotate(8deg);
       }
       .list-item__indicator {
