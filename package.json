@@ -9,6 +9,8 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
+    "dev:client": "turbo run dev --filter=@portfolio/client",
+    "dev:app": "turbo run dev --filter=@portfolio/app",
     "lint": "turbo run lint",
     "lint:fix": "turbo run lint:fix",
     "clean": "turbo run clean",

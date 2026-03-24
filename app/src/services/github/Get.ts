@@ -1,6 +1,6 @@
 import { BaseService } from "../service";
 import { GithubStatsSchema, type GithubStats } from "@portfolio/shared";
-import { githubRepoWithDeepRelationsQuery } from "./queries.ts";
+import { githubStatsWithDeepRelationsQuery } from "./queries";
 
 export class GetGithubStatsService extends BaseService {
   public async execute(
@@ -13,7 +13,7 @@ export class GetGithubStatsService extends BaseService {
 
       const stats = await this.db.githubStats.findUnique({
         where: { username },
-        ...githubRepoWithDeepRelationsQuery,
+        ...githubStatsWithDeepRelationsQuery,
       });
 
       if (!stats) return null;

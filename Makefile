@@ -5,7 +5,7 @@
 COMPOSE_FULL  = docker-compose -f docker/docker-compose.yml
 COMPOSE_LOCAL = docker-compose -f docker/docker-compose.local.yml
 YARN          = yarn
-TURBO         = npx turbo
+TURBO         = yarn turbo
 
 REGISTRY      ?= ghcr.io
 IMAGE_PREFIX  ?= robermon-dev/portfolio
@@ -55,7 +55,7 @@ nuke: ## Radical cleanup (node_modules, locks, and dist folders)
 .PHONY: dev
 dev: db-generate ## Start dev servers. Set NO_AUTOMATIONS=1 to skip background tasks.
 	@if [ "$(NO_AUTOMATIONS)" = "1" ]; then \
-		echo "$(YELLOW)=> Starting Core Services only (API + Client + Shared)...$(NC)"; \
+		echo "$(YELLOW)=> Starting Core Services only (API + Client)$(NC)"; \
 		export NO_AUTOMATIONS=1; \
 		$(TURBO) run dev --filter=@portfolio/app --filter=@portfolio/client --filter=@portfolio/shared; \
 	else \
