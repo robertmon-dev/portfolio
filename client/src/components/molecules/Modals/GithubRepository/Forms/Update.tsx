@@ -1,10 +1,14 @@
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Save, Info, Tag, Layout } from "lucide-react";
 import { Button } from "@/components/atoms/Button/Button";
 import { Input } from "@/components/atoms/Input/Input";
 import { TextArea } from "@/components/atoms/TextArea/TextArea";
-import { Save, Info, Tag, Layout } from "lucide-react";
-import type { UpdateGithubRepoInput } from "@portfolio/shared";
+import {
+  UpdateGithubRepoInputSchema,
+  type UpdateGithubRepoInput,
+} from "@portfolio/shared";
 import type { UpdateFormProps } from "../types";
 import "../GithubRepositoryModal.scss";
 
@@ -15,26 +19,28 @@ export const GithubUpdateForm = ({
 }: UpdateFormProps) => {
   const { t } = useTranslation();
 
-  const [formData, setFormData] = useState<UpdateGithubRepoInput>({
-    id: repo.id,
-    name: repo.name,
-    description: repo.description ?? "",
-    stars: repo.stars,
-    language: repo.language ?? "",
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<UpdateGithubRepoInput>({
+    resolver: zodResolver(UpdateGithubRepoInputSchema),
+    defaultValues: {
+      id: repo.id,
+      name: repo.name,
+      description: repo.description ?? "",
+      stars: repo.stars,
+      language: repo.language ?? "",
+    },
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSubmit(formData);
-  };
-
   return (
-    <form className="github-form" onSubmit={handleSubmit}>
+    <form className="github-form" onSubmit={handleSubmit(onSubmit)}>
       <div className="github-form__grid">
         <Input
+          {...register("name")}
           label={t("admin.github.update.fields.name.label")}
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          error={errors.name?.message}
           leftIcon={<Tag size={18} />}
           fullWidth
           required
@@ -42,22 +48,18 @@ export const GithubUpdateForm = ({
         />
 
         <Input
+          {...register("language")}
           label={t("admin.github.update.fields.language.label")}
-          value={formData.language ?? ""}
-          onChange={(e) =>
-            setFormData({ ...formData, language: e.target.value })
-          }
+          error={errors.language?.message}
           leftIcon={<Layout size={18} />}
           fullWidth
           disabled={isLoading}
         />
 
         <TextArea
+          {...register("description")}
           label={t("admin.github.update.fields.description.label")}
-          value={formData.description ?? ""}
-          onChange={(e) =>
-            setFormData({ ...formData, description: e.target.value })
-          }
+          error={errors.description?.message}
           rows={4}
           fullWidth
           disabled={isLoading}

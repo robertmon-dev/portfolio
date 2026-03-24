@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useEffect, useMemo } from "react";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateTechStackSchema } from "@portfolio/shared";
 import type {
   CreateTechStackInput,
-  UpdateTechStackInput,
+  TechStackCategory,
 } from "@portfolio/shared";
 import type { TechStackFormProps } from "../types";
 
@@ -12,70 +14,49 @@ export const useTechStackForm = ({
   initialData,
   onCreate,
   onUpdate,
-  onCancel,
 }: Partial<TechStackFormProps>) => {
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [formData, setFormData] = useState({
-    name: initialData?.name ?? "",
-    category: initialData?.category ?? "",
-    icon: initialData?.icon ?? "",
-    color: initialData?.color ?? DEFAULT_TECH_COLOR,
+  const defaultValues = useMemo(
+    (): CreateTechStackInput => ({
+      name: initialData?.name ?? "",
+      category: (initialData?.category as TechStackCategory) ?? "Tools",
+      icon: initialData?.icon ?? undefined,
+      color: initialData?.color ?? DEFAULT_TECH_COLOR,
+    }),
+    [initialData],
+  );
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm<CreateTechStackInput>({
+    resolver: zodResolver(CreateTechStackSchema),
+    defaultValues,
   });
 
-  const handleChange = <K extends keyof typeof formData>(
-    field: K,
-    value: (typeof formData)[K],
-  ) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+  useEffect(() => {
+    reset(defaultValues);
+  }, [defaultValues, reset]);
 
-    if (errors[field]) {
-      setErrors((prev) => {
-        const newErrors = { ...prev };
-        delete newErrors[field];
-        return newErrors;
-      });
-    }
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const dataToValidate = {
-      ...formData,
-      icon: formData.icon.trim() || "",
-      color: formData.color.trim() || DEFAULT_TECH_COLOR,
-    };
-
-    const validation = CreateTechStackSchema.safeParse(dataToValidate);
-
-    if (!validation.success) {
-      const formattedErrors: Record<string, string> = {};
-      validation.error.issues.forEach((issue) => {
-        const path = issue.path[0] as string;
-        formattedErrors[path] = issue.message;
-      });
-
-      setErrors(formattedErrors);
-      return;
-    }
-
+  const onSubmitHandler: SubmitHandler<CreateTechStackInput> = (data) => {
     if (initialData?.id) {
-      const updatePayload: UpdateTechStackInput = {
-        ...validation.data,
+      onUpdate?.({
+        ...data,
         id: initialData.id,
-      };
-      onUpdate?.(updatePayload);
+      });
     } else {
-      const createPayload: CreateTechStackInput = validation.data;
-      onCreate?.(createPayload);
+      onCreate?.(data);
     }
   };
 
   return {
-    formData,
+    register,
+    handleSubmit: handleSubmit(onSubmitHandler),
     errors,
-    handleChange,
-    handleSubmit,
-    onCancel,
+    setValue,
+    watch,
   };
 };

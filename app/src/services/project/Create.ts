@@ -1,5 +1,9 @@
 import { BaseService } from "../service";
-import { CreateProjectInput, ProjectWithRelations } from "@portfolio/shared";
+import {
+  type CreateProjectInput,
+  type ProjectWithRelations,
+  ProjectWithRelationsSchema,
+} from "@portfolio/shared";
 import { ProjectCreating } from "./types";
 import { projectWithRelationsQuery } from "./queries";
 
@@ -32,6 +36,6 @@ export class CreateProjectService
 
     await this.invalidateProjectCache(project);
 
-    return project;
+    return ProjectWithRelationsSchema.parse(project);
   }
 }

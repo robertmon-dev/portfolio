@@ -26,7 +26,6 @@
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
-    "jiti": "^2.6.1",
     "tsx": "^4.21.0",
     "turbo": "^2.7.4"
   },

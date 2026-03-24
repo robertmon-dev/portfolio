@@ -1,10 +1,14 @@
-import type { GithubRepo, UpdateGithubRepoInput, ProjectWithRelations } from "@portfolio/shared";
+import type {
+  GithubRepo,
+  UpdateGithubRepoInput,
+  ProjectWithRelations,
+  LinkRepoProjectInput,
+} from "@portfolio/shared";
 import type { GithubActions } from "@/pages/Admin/repos/types";
 
-
 export interface GithubModalsProps {
-  state: GithubActions['state'];
-  actions: GithubActions['actions'];
+  state: GithubActions["state"];
+  actions: GithubActions["actions"];
 }
 
 export interface UpdateFormProps {
@@ -16,6 +20,6 @@ export interface UpdateFormProps {
 export interface LinkFormProps {
   repo: GithubRepo;
   projects: ProjectWithRelations[];
-  onSubmit: (projectId: string) => void;
+  onSubmit: (data: LinkRepoProjectInput) => void;
   isLoading: boolean;
 }

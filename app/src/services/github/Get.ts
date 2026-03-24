@@ -1,8 +1,11 @@
-import { BaseService } from '../service';
-import { GithubStatsSchema, type GithubStats } from '@portfolio/shared';
+import { BaseService } from "../service";
+import { GithubStatsSchema, type GithubStats } from "@portfolio/shared";
+import { githubRepoWithDeepRelationsQuery } from "./queries.ts";
 
 export class GetGithubStatsService extends BaseService {
-  public async execute(username: string = this.settings.NICKNAME): Promise<GithubStats | null> {
+  public async execute(
+    username: string = this.settings.NICKNAME,
+  ): Promise<GithubStats | null> {
     const cacheKey = `github:stats:${username}`;
 
     return this.cache.wrap(cacheKey, 3600, async () => {
@@ -10,20 +13,7 @@ export class GetGithubStatsService extends BaseService {
 
       const stats = await this.db.githubStats.findUnique({
         where: { username },
-        include: {
-          repos: {
-            orderBy: { order: 'asc' },
-            include: {
-              project: {
-                select: {
-                  id: true,
-                  title: true,
-                  slug: true
-                }
-              }
-            }
-          }
-        }
+        ...githubRepoWithDeepRelationsQuery,
       });
 
       if (!stats) return null;

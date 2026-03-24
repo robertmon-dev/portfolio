@@ -1,12 +1,17 @@
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslation } from "react-i18next";
-import { type UpdateUserPermissionsInput } from "@portfolio/shared";
+import { UpdateUserPermissionsInputSchema } from "@portfolio/shared";
+import type {
+  UpdateUserPermissionsInput,
+  Flag,
+  UserPermission,
+} from "@portfolio/shared";
 import type { UpdatePermissionsFormProps } from "../../types";
 
 export const useUpdatePermissionsForm = ({
   initialData,
   onSubmit,
-  isLoading,
 }: Omit<UpdatePermissionsFormProps, "onCancel">) => {
   const { t } = useTranslation();
 
@@ -18,81 +23,74 @@ export const useUpdatePermissionsForm = ({
     "techstack",
   ];
 
-  const [permissions, setPermissions] = useState<
-    UpdateUserPermissionsInput["permissions"]
-  >(() => {
-    if (!initialData.permissions) return [];
-    return [...initialData.permissions];
+  const {
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { isSubmitting },
+  } = useForm<UpdateUserPermissionsInput>({
+    resolver: zodResolver(UpdateUserPermissionsInputSchema),
+    defaultValues: {
+      id: initialData.id,
+      permissions: initialData.permissions ?? [],
+    },
   });
 
-  const isProcessing = isLoading;
+  const watchedPermissions = watch("permissions");
+
+  const getFlagsForResource = (resource: string): Flag[] => {
+    const perm = watchedPermissions.find((p) => p.resource === resource);
+    return perm ? (perm.flags as Flag[]) : [];
+  };
 
   const handlers = {
-    toggleFlag: (resource: string, flag: "READ" | "WRITE" | "ADMIN") => {
-      setPermissions((prev) => {
-        const existingPermIndex = prev.findIndex(
-          (p) => p.resource === resource,
-        );
+    toggleFlag: (resource: string, flag: Flag) => {
+      const currentPerms: UserPermission[] = [...watchedPermissions];
+      const index = currentPerms.findIndex((p) => p.resource === resource);
 
-        if (existingPermIndex === -1) {
-          return [...prev, { resource, flags: [flag] }];
-        }
+      if (index === -1) {
+        currentPerms.push({ resource, flags: [flag] });
+      } else {
+        const existingPerm = currentPerms[index];
+        const existingFlags = existingPerm.flags;
+        const hasFlag = existingFlags.includes(flag);
 
-        const existingPerm = prev[existingPermIndex];
-        const hasFlag = existingPerm.flags.includes(flag);
-
-        let newFlags;
-        if (hasFlag) {
-          newFlags = existingPerm.flags.filter((f) => f !== flag);
-        } else {
-          newFlags = [...existingPerm.flags, flag];
-        }
+        const newFlags = hasFlag
+          ? existingFlags.filter((f) => f !== flag)
+          : [...existingFlags, flag];
 
         if (newFlags.length === 0) {
-          return prev.filter((_, i) => i !== existingPermIndex);
+          currentPerms.splice(index, 1);
+        } else {
+          currentPerms[index] = { ...existingPerm, flags: newFlags as Flag[] };
         }
+      }
 
-        const newList = [...prev];
-        newList[existingPermIndex] = {
-          ...existingPerm,
-          flags: newFlags,
-        };
-        return newList;
-      });
+      setValue("permissions", currentPerms, { shouldDirty: true });
     },
 
     toggleAllForResource: (resource: string, allSelected: boolean) => {
-      setPermissions((prev) => {
-        if (allSelected) {
-          return prev.filter((p) => p.resource !== resource);
-        } else {
-          const filtered = prev.filter((p) => p.resource !== resource);
-          return [...filtered, { resource, flags: ["READ", "WRITE", "ADMIN"] }];
-        }
-      });
+      const currentPerms = watchedPermissions.filter(
+        (p) => p.resource !== resource,
+      );
+
+      if (!allSelected) {
+        currentPerms.push({
+          resource,
+          flags: ["READ", "WRITE", "ADMIN"] as Flag[],
+        });
+      }
+
+      setValue("permissions", currentPerms, { shouldDirty: true });
     },
-  };
-
-  const submitForm = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSubmit({
-      id: initialData.id,
-      permissions,
-    });
-  };
-
-  const getFlagsForResource = (resource: string) => {
-    const perm = permissions.find((p) => p.resource === resource);
-    return perm ? perm.flags : [];
   };
 
   return {
     t,
     availableResources,
-    permissions,
-    isProcessing,
+    isProcessing: isSubmitting,
     handlers,
-    submitForm,
+    handleSubmit: handleSubmit((data) => onSubmit(data)), // ✅ Zmieniamy nazwę na handleSubmit
     getFlagsForResource,
   };
 };

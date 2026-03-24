@@ -53,9 +53,15 @@ nuke: ## Radical cleanup (node_modules, locks, and dist folders)
 # ==============================================================================
 
 .PHONY: dev
-dev: db-generate ## Start all services in development mode (Turbo)
-	@echo "=> Starting development servers..."
-	@$(TURBO) run dev
+dev: db-generate ## Start dev servers. Set NO_AUTOMATIONS=1 to skip background tasks.
+	@if [ "$(NO_AUTOMATIONS)" = "1" ]; then \
+		echo "$(YELLOW)=> Starting Core Services only (API + Client + Shared)...$(NC)"; \
+		export NO_AUTOMATIONS=1; \
+		$(TURBO) run dev --filter=@portfolio/app --filter=@portfolio/client --filter=@portfolio/shared; \
+	else \
+		echo "$(GREEN)=> Starting Full Stack Development...$(NC)"; \
+		$(TURBO) run dev; \
+	fi
 
 .PHONY: build
 build: clean db-generate ## Build all packages (Shared -> App -> Client)

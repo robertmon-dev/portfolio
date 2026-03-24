@@ -15,10 +15,7 @@ export const useModalContent = (
   return useMemo(() => {
     if (!activeModal || !selectedRepo) return null;
 
-    const contentMap: Record<
-      string,
-      { title: string; component: React.ReactNode }
-    > = {
+    const contentMap = {
       update: {
         title: t("admin.github.modals.update.title", {
           name: selectedRepo.name,
@@ -26,7 +23,7 @@ export const useModalContent = (
         component: (
           <GithubUpdateForm
             repo={selectedRepo}
-            onSubmit={(data) => actions.updateRepo({ ...data })}
+            onSubmit={(data) => actions.updateRepo(data)}
             isLoading={isAnyProcessing}
           />
         ),
@@ -37,12 +34,7 @@ export const useModalContent = (
           <GithubLinkForm
             repo={selectedRepo}
             projects={state.projects}
-            onSubmit={(projectId) =>
-              actions.linkToProject({
-                repoId: selectedRepo.id,
-                projectId,
-              })
-            }
+            onSubmit={(data) => actions.linkToProject(data)}
             isLoading={isAnyProcessing}
           />
         ),

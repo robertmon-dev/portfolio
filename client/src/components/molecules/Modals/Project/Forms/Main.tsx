@@ -10,19 +10,21 @@ import "../ProjectModal.scss";
 
 export const ProjectForm = (props: ProjectFormProps) => {
   const { t } = useTranslation();
-  const { isLoading, initialData } = props;
+  const { isLoading, initialData, onCancel } = props;
 
-  const { formData, errors, handleChange, handleSubmit, onCancel } =
+  const { register, errors, handleSubmit, watch, setValue } =
     useProjectForm(props);
+
+  const isFeatured = watch("isFeatured");
+  const isVisible = watch("isVisible");
 
   return (
     <form onSubmit={handleSubmit} className="project-form">
       <div className="project-form__grid">
         <Input
+          {...register("title")}
           label={t("admin.projects.form.title.label")}
-          value={formData.title}
-          onChange={(e) => handleChange("title", e.target.value)}
-          error={errors.title}
+          error={errors.title?.message}
           leftIcon={<Layout size={18} />}
           fullWidth
           required
@@ -30,30 +32,27 @@ export const ProjectForm = (props: ProjectFormProps) => {
         />
 
         <Input
+          {...register("slug")}
           label={t("admin.projects.form.slug.label")}
-          value={formData.slug}
-          onChange={(e) => handleChange("slug", e.target.value)}
-          error={errors.slug}
+          error={errors.slug?.message}
           leftIcon={<Link size={18} />}
           fullWidth
           disabled={!!initialData || isLoading}
         />
 
         <TextArea
+          {...register("description")}
           label={t("admin.projects.form.description.label")}
-          value={formData.description}
-          onChange={(e) => handleChange("description", e.target.value)}
-          error={errors.description}
+          error={errors.description?.message}
           fullWidth
           disabled={isLoading}
           rows={3}
         />
 
         <TextArea
+          {...register("content")}
           label={t("admin.projects.form.content.label", "Content")}
-          value={formData.content}
-          onChange={(e) => handleChange("content", e.target.value)}
-          error={errors.content}
+          error={errors.content?.message}
           fullWidth
           disabled={isLoading}
           rows={6}
@@ -62,19 +61,17 @@ export const ProjectForm = (props: ProjectFormProps) => {
 
         <div className="grid-row-dual">
           <Input
+            {...register("imageUrl")}
             label={t("admin.projects.form.imageUrl.label")}
-            value={formData.imageUrl}
-            onChange={(e) => handleChange("imageUrl", e.target.value)}
-            error={errors.imageUrl}
+            error={errors.imageUrl?.message}
             leftIcon={<ImageIcon size={18} />}
             fullWidth
             disabled={isLoading}
           />
           <Input
+            {...register("demoUrl")}
             label={t("admin.projects.form.demoUrl.label")}
-            value={formData.demoUrl}
-            onChange={(e) => handleChange("demoUrl", e.target.value)}
-            error={errors.demoUrl}
+            error={errors.demoUrl?.message}
             leftIcon={<Globe size={18} />}
             fullWidth
             disabled={isLoading}
@@ -84,14 +81,14 @@ export const ProjectForm = (props: ProjectFormProps) => {
         <div className="project-form__toggles">
           <Checkbox
             label={t("admin.projects.form.isFeatured")}
-            checked={formData.isFeatured}
-            onChange={(e) => handleChange("isFeatured", e.target.checked)}
+            checked={isFeatured}
+            onChange={(e) => setValue("isFeatured", e.target.checked)}
             disabled={isLoading}
           />
           <Checkbox
             label={t("admin.projects.form.isVisible")}
-            checked={formData.isVisible}
-            onChange={(e) => handleChange("isVisible", e.target.checked)}
+            checked={isVisible}
+            onChange={(e) => setValue("isVisible", e.target.checked)}
             disabled={isLoading}
           />
         </div>

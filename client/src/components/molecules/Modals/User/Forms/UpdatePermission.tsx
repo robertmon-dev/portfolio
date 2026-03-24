@@ -12,12 +12,12 @@ export const UpdatePermissionsForm = (props: UpdatePermissionsFormProps) => {
     availableResources,
     isProcessing,
     handlers,
-    submitForm,
+    handleSubmit,
     getFlagsForResource,
   } = useUpdatePermissionsForm(props);
 
   return (
-    <form onSubmit={submitForm} className="user-form">
+    <form onSubmit={handleSubmit} className="user-form">
       <Alert
         variant="danger"
         title={t(

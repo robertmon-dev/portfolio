@@ -1,149 +1,128 @@
-import { useState } from "react";
+import { useReducer, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import { useAuth } from "@/hooks/useAuth";
 import { useRecover } from "@/hooks/useRecover";
-import type { LoginStep } from "./types";
+import { notifyError } from "@/lib/trpc/handlers/trpcError";
+import { LoginInputSchema, ResetPasswordSchema } from "@portfolio/shared";
+import { loginReducer, initialState } from "./types";
+import type { LoginStep, LoginFormState } from "./types";
 
 export const useLoginModal = (onSuccess?: () => void) => {
   const { t } = useTranslation();
   const { login, confirm2FA, isLoggingIn } = useAuth();
   const { requestReset, confirmReset, isRecovering } = useRecover();
+  const [state, dispatch] = useReducer(loginReducer, initialState);
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [step, setStep] = useState<LoginStep>("LOGIN");
+  const updateField = (field: keyof typeof initialState, value: any) =>
+    dispatch({ type: "UPDATE_FIELD", payload: { field, value } });
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
-  const [twoFactorCode, setTwoFactorCode] = useState("");
-  const [resetCode, setResetCode] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [userId, setUserId] = useState<string | null>(null);
-
-  const close = () => {
-    setIsOpen(false);
-    setTimeout(() => {
-      setStep("LOGIN");
-      setUserId(null);
-      setEmail("");
-      setPassword("");
-      setTwoFactorCode("");
-      setResetCode("");
-      setNewPassword("");
-      setConfirmPassword("");
-    }, 300);
-  };
+  const close = useCallback(() => {
+    dispatch({ type: "CLOSE_MODAL" });
+    setTimeout(() => dispatch({ type: "RESET_FORM" }), 300);
+  }, []);
 
   const handleLoginSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const result = await login({ email, password });
+    const validation = LoginInputSchema.safeParse({
+      email: state.email,
+      password: state.password,
+    });
 
+    if (!validation.success) {
+      return toast.error(validation.error.issues[0].message);
+    }
+
+    try {
+      const result = await login(validation.data);
       if (result?.status === "processing") {
-        setUserId(result.userId);
-        setStep("2FA");
-        toast.info(t("auth.login.2fa_required", "Please enter your 2FA code"));
+        dispatch({ type: "SET_USER_ID", payload: result.userId });
+        dispatch({ type: "SET_STEP", payload: "2FA" });
+        toast.info(t("auth.login.2fa_required"));
       } else if (result?.status === "success") {
-        toast.success(t("auth.login.success", "Welcome back!"));
+        toast.success(t("auth.login.success"));
         onSuccess?.();
         close();
       }
     } catch (err) {
-      toast.error(
-        err instanceof Error ? err.message : t("errors.login_failed"),
-      );
+      notifyError(err);
     }
   };
 
   const handleRequestReset = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!state.email.includes("@"))
+      return toast.error(t("errors.invalid_email"));
+
     try {
-      await requestReset({ email });
-      toast.info(
-        t(
-          "auth.recover.email_sent",
-          "If the account exists, a code has been sent",
-        ),
-      );
-      setStep("RESET_PASSWORD");
+      await requestReset({ email: state.email });
+      toast.success(t("auth.recover.email_sent"));
+      dispatch({ type: "SET_STEP", payload: "RESET_PASSWORD" });
     } catch (err) {
-      toast.error(
-        err instanceof Error
-          ? err.message
-          : t("errors.unexpected", "Action failed"),
-      );
+      notifyError(err);
     }
   };
 
   const handleResetSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (newPassword !== confirmPassword) {
-      toast.error(t("auth.recover.mismatch", "Passwords do not match"));
-      return;
+    const validation = ResetPasswordSchema.safeParse({
+      token: state.resetCode,
+      password: state.newPassword,
+      confirmPassword: state.confirmPassword,
+    });
+
+    if (!validation.success) {
+      return toast.error(validation.error.issues[0].message);
     }
 
     try {
-      await confirmReset({
-        token: resetCode,
-        password: newPassword,
-        confirmPassword,
-      });
-      toast.success(t("auth.recover.success", "Password updated successfully"));
-      setStep("LOGIN");
+      await confirmReset(validation.data);
+      toast.success(t("auth.recover.success"));
+      dispatch({ type: "SET_STEP", payload: "LOGIN" });
     } catch (err) {
-      toast.error(
-        err instanceof Error
-          ? err.message
-          : t("errors.reset_failed", "Invalid reset code"),
-      );
+      notifyError(err);
     }
   };
 
   const handle2FASubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!userId) return;
+    if (!state.userId) return;
 
     try {
-      const result = await confirm2FA({ userId, code: twoFactorCode });
-
+      const result = await confirm2FA({
+        userId: state.userId,
+        code: state.twoFactorCode,
+      });
       if (result?.status === "success") {
-        toast.success(t("auth.login.success", "Welcome back!"));
+        toast.success(t("auth.login.success"));
         onSuccess?.();
         close();
       }
     } catch (err) {
-      toast.error(err instanceof Error ? err.message : t("errors.2fa_invalid"));
+      notifyError(err);
     }
   };
 
   return {
-    isOpen,
-    step,
-    open: () => setIsOpen(true),
+    isOpen: state.isOpen,
+    step: state.step,
+    open: () => dispatch({ type: "OPEN_MODAL" }),
     close,
     isLoggingIn: isLoggingIn || isRecovering,
     form: {
-      email,
-      setEmail,
-      password,
-      setPassword,
-      rememberMe,
-      setRememberMe,
-      twoFactorCode,
-      setTwoFactorCode,
-      resetCode,
-      setResetCode,
-      newPassword,
-      setNewPassword,
-      confirmPassword,
-      setConfirmPassword,
+      ...state,
+      setEmail: (v: string) => updateField("email", v),
+      setPassword: (v: string) => updateField("password", v),
+      setRememberMe: (v: boolean) => updateField("rememberMe", v),
+      setTwoFactorCode: (v: string) => updateField("twoFactorCode", v),
+      setResetCode: (v: string) => updateField("resetCode", v),
+      setNewPassword: (v: string) => updateField("newPassword", v),
+      setConfirmPassword: (v: string) => updateField("confirmPassword", v),
       handleLoginSubmit,
       handle2FASubmit,
       handleRequestReset,
       handleResetSubmit,
-      goToStep: (s: LoginStep) => setStep(s),
-    },
+      goToStep: (s: LoginStep) => dispatch({ type: "SET_STEP", payload: s }),
+    } as LoginFormState,
   };
 };

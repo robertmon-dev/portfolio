@@ -1,24 +1,16 @@
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Link, AlertCircle, Layout } from "lucide-react";
 import { Button } from "@/components/atoms/Button/Button";
 import { Select } from "@/components/atoms/Select/Select";
-import { Link, AlertCircle, Layout } from "lucide-react";
+import { useGithubLinkRepoForm } from "./hooks/useLink";
 import type { LinkFormProps } from "../types";
 import "../GithubRepositoryModal.scss";
 
-export const GithubLinkForm = ({
-  repo,
-  projects,
-  onSubmit,
-  isLoading,
-}: LinkFormProps) => {
+export const GithubLinkForm = (props: LinkFormProps) => {
+  const { repo, projects, isLoading } = props;
   const { t } = useTranslation();
-  const [selectedId, setSelectedId] = useState<string>(repo.project?.id ?? "");
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (selectedId) onSubmit(selectedId);
-  };
+  const { register, errors, handleSubmit } = useGithubLinkRepoForm(props);
 
   const projectOptions = projects.map((p) => ({
     value: p.id,
@@ -33,9 +25,9 @@ export const GithubLinkForm = ({
 
       <div className="github-form__group">
         <Select
+          {...register("projectId")}
           label={t("admin.github.link.label", "Select Project")}
-          value={selectedId}
-          onChange={(e) => setSelectedId(String(e.target.value))}
+          error={errors.projectId?.message}
           options={projectOptions}
           placeholder={t(
             "admin.github.link.placeholder",
@@ -60,7 +52,7 @@ export const GithubLinkForm = ({
           type="submit"
           variant="primary"
           isLoading={isLoading}
-          disabled={!selectedId || projects.length === 0}
+          disabled={projects.length === 0}
           leftIcon={<Link size={18} />}
           fullWidth
         >

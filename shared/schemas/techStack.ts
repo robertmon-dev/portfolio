@@ -34,7 +34,7 @@ export const CreateTechStackSchema = z.object({
     .string()
     .regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/, "Invalid hex color")
     .optional(),
-  category: TechStackCategorySchema.default("Tools"),
+  category: TechStackCategorySchema,
 });
 
 export const UpdateTechStackSchema = CreateTechStackSchema.partial().extend({

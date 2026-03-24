@@ -1,5 +1,9 @@
 import { BaseService } from "../service";
-import { UpdateProjectInput, ProjectWithRelations } from "@portfolio/shared";
+import {
+  type UpdateProjectInput,
+  type ProjectWithRelations,
+  ProjectWithRelationsSchema,
+} from "@portfolio/shared";
 import { ProjectUpdating } from "./types";
 import { projectWithRelationsQuery } from "./queries";
 
@@ -48,6 +52,6 @@ export class UpdateProjectService
       ),
     ]);
 
-    return project;
+    return ProjectWithRelationsSchema.parse(project);
   }
 }

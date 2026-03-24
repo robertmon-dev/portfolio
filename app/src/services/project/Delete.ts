@@ -1,6 +1,9 @@
 import { BaseService } from "../service";
-import { ProjectWithRelations } from "@portfolio/shared";
-import { ProjectDeleting } from "./types";
+import {
+  type ProjectWithRelations,
+  ProjectWithRelationsSchema,
+} from "@portfolio/shared";
+import type { ProjectDeleting } from "./types";
 import { projectWithRelationsQuery } from "./queries";
 
 export class DeleteProjectService
@@ -24,6 +27,6 @@ export class DeleteProjectService
       `Project deleted and cache invalidated: ${deletedProject.slug}`,
     );
 
-    return deletedProject;
+    return ProjectWithRelationsSchema.parse(deletedProject);
   }
 }

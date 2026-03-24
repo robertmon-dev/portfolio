@@ -1,22 +1,27 @@
 import { useMemo, type CSSProperties } from "react";
 import { useTranslation } from "react-i18next";
+import { Save, X, Tag, Palette, Box } from "lucide-react";
+import {
+  TECH_STACK_CATEGORIES,
+  type TechStackCategory,
+} from "@portfolio/shared";
 import { Input } from "@/components/atoms/Input/Input";
 import { Select } from "@/components/atoms/Select/Select";
 import { Button } from "@/components/atoms/Button/Button";
 import { useTechStackForm } from "./useTechstackForm";
 import type { TechStackFormProps } from "../types";
-import { Save, X, Tag, Palette, Box } from "lucide-react";
-import { TECH_STACK_CATEGORIES } from "@portfolio/shared";
 import "../TechStackModal.scss";
 
-export const TechStackForm = ({
-  initialData,
-  onCreate,
-  onUpdate,
-  onCancel,
-  isLoading,
-}: TechStackFormProps) => {
+export const TechStackForm = (props: TechStackFormProps) => {
+  const { initialData, onCancel, isLoading } = props;
   const { t } = useTranslation();
+
+  const { register, errors, handleSubmit, watch, setValue } =
+    useTechStackForm(props);
+
+  const watchedName = watch("name");
+  const watchedColor = watch("color");
+  const watchedCategory = watch("category");
 
   const categoryOptions = useMemo(
     () =>
@@ -27,22 +32,14 @@ export const TechStackForm = ({
     [t],
   );
 
-  const { formData, errors, handleChange, handleSubmit } = useTechStackForm({
-    initialData,
-    onCreate,
-    onUpdate,
-    onCancel,
-  });
-
   return (
     <form onSubmit={handleSubmit} className="tech-stack-form">
       <div className="tech-stack-form__grid">
         <Input
+          {...register("name")}
           label={t("admin.techStack.form.name.label")}
           placeholder={t("admin.techStack.form.name.placeholder")}
-          value={formData.name}
-          onChange={(e) => handleChange("name", e.target.value)}
-          error={errors.name}
+          error={errors.name?.message}
           leftIcon={<Tag size={18} />}
           fullWidth
           disabled={isLoading}
@@ -51,9 +48,11 @@ export const TechStackForm = ({
         <Select
           label={t("admin.techStack.form.category.label")}
           options={categoryOptions}
-          value={formData.category}
-          onChange={(e) => handleChange("category", String(e.target.value))}
-          error={errors.category}
+          value={watchedCategory}
+          onChange={(e) =>
+            setValue("category", e.target.value as TechStackCategory)
+          }
+          error={errors.category?.message}
           leftIcon={<Box size={18} />}
           fullWidth
           placeholder={t("admin.techStack.form.category.placeholder")}
@@ -62,11 +61,10 @@ export const TechStackForm = ({
 
         <div className="tech-stack-form__color-section">
           <Input
+            {...register("color")}
             label={t("admin.techStack.form.color.label")}
             type="color"
-            value={formData.color || "#7aa2f7"}
-            onChange={(e) => handleChange("color", e.target.value)}
-            error={errors.color}
+            error={errors.color?.message}
             leftIcon={<Palette size={18} />}
             disabled={isLoading}
             fullWidth
@@ -81,12 +79,12 @@ export const TechStackForm = ({
                 className="techstack-table__gem techstack-table__gem--large"
                 style={
                   {
-                    "--gem-color": formData.color || "#7aa2f7",
+                    "--gem-color": watchedColor || "#7aa2f7",
                   } as CSSProperties
                 }
               />
               <span className="tech-stack-form__gem-name">
-                {formData.name || "Technology"}
+                {watchedName || "Technology"}
               </span>
             </div>
           </div>

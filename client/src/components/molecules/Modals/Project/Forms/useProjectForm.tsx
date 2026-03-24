@@ -1,79 +1,59 @@
-import { useState, useEffect } from "react";
-import { CreateProjectSchema } from "@portfolio/shared";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  CreateProjectSchema,
+  type CreateProjectInput,
+} from "@portfolio/shared";
 import type { ProjectFormProps } from "../types";
 
 export const useProjectForm = ({
   initialData,
   onSubmit,
-  onCancel,
 }: Partial<ProjectFormProps>) => {
-  const [errors, setErrors] = useState<Record<string, string>>({});
-
-  const [formData, setFormData] = useState({
-    title: initialData?.title ?? "",
-    slug: initialData?.slug ?? "",
-    description: initialData?.description ?? "",
-    content: initialData?.content ?? "",
-    imageUrl: initialData?.imageUrl ?? "",
-    demoUrl: initialData?.demoUrl ?? "",
-    isFeatured: initialData?.isFeatured ?? false,
-    isVisible: initialData?.isVisible ?? true,
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    reset,
+    formState: { errors, dirtyFields },
+  } = useForm<CreateProjectInput>({
+    resolver: zodResolver(CreateProjectSchema),
+    defaultValues: initialData ?? {
+      title: "",
+      slug: "",
+      description: "",
+      content: "",
+      imageUrl: "",
+      demoUrl: "",
+      isFeatured: false,
+      isVisible: true,
+    },
   });
 
   useEffect(() => {
-    if (!initialData && formData.title) {
-      const slug = formData.title
+    if (initialData) reset(initialData);
+  }, [initialData, reset]);
+
+  const watchedTitle = watch("title");
+
+  useEffect(() => {
+    if (!initialData && !dirtyFields.slug && watchedTitle) {
+      const slug = watchedTitle
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/(^-|-$)/g, "");
-      setFormData((prev) => ({ ...prev, slug }));
+
+      setValue("slug", slug, { shouldValidate: true });
     }
-  }, [formData.title, initialData]);
-
-  const handleChange = <K extends keyof typeof formData>(
-    field: K,
-    value: (typeof formData)[K],
-  ) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-
-    if (errors[field]) {
-      setErrors((prev) => {
-        const newErrors = { ...prev };
-        delete newErrors[field as string];
-        return newErrors;
-      });
-    }
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const dataToValidate = {
-      ...formData,
-      imageUrl: formData.imageUrl.trim() || undefined,
-      demoUrl: formData.demoUrl.trim() || undefined,
-    };
-
-    const validation = CreateProjectSchema.safeParse(dataToValidate);
-
-    if (!validation.success) {
-      const formattedErrors: Record<string, string> = {};
-      validation.error.issues.forEach((issue) => {
-        const path = issue.path[0] as string;
-        formattedErrors[path] = issue.message;
-      });
-      setErrors(formattedErrors);
-      return;
-    }
-
-    onSubmit?.(validation.data);
-  };
+  }, [watchedTitle, initialData, dirtyFields.slug, setValue]);
 
   return {
-    formData,
+    register,
+    handleSubmit: handleSubmit((data) => onSubmit?.(data)),
     errors,
-    handleChange,
-    handleSubmit,
-    onCancel,
+    watch,
+    setValue,
   };
 };
