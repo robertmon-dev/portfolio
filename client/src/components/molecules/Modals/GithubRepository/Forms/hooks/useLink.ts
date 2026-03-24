@@ -14,7 +14,7 @@ export const useGithubLinkRepoForm = ({
   onSubmit: (data: LinkRepoProjectInput) => void;
 }) => {
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm<LinkRepoProjectInput>({
@@ -26,7 +26,7 @@ export const useGithubLinkRepoForm = ({
   });
 
   return {
-    register,
+    control,
     errors,
     handleSubmit: handleSubmit((data) => onSubmit(data)),
   };
