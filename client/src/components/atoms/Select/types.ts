@@ -7,7 +7,7 @@ export interface SelectOption {
 
 export interface SelectProps extends Omit<
   React.SelectHTMLAttributes<HTMLSelectElement>,
-  "value" | "onChange"
+  "value" | "onChange" | "onBlur"
 > {
   label?: string;
   options: readonly SelectOption[];
@@ -22,4 +22,5 @@ export interface SelectProps extends Omit<
   leftIcon?: React.ReactNode;
   fullWidth?: boolean;
   placeholder?: string;
+  onBlur?: React.FocusEventHandler<HTMLDivElement>;
 }
