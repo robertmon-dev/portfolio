@@ -16,7 +16,7 @@ export const useProjectModalContent = (
 
     const contentMap = {
       CREATE: {
-        title: t("admin.projects.modals.create.title", "Dodaj nowy projekt"),
+        title: t("admin.projects.modals.create.title", "Edit exisitng project"),
         component: (
           <ProjectForm
             onSubmit={(data) => actions.createProject(data)}

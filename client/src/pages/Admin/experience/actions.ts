@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
 import { notifyError } from "@/lib/trpc/handlers/trpcError";
 import { EXPERIENCE_ACTIONS, type ExperienceAction } from "./types";
+import { toIso, toNullableIso, toOptionalIso } from "@/lib/utils/date";
 import type { ExperienceMutations } from "../useMutations";
 import type { Utils } from "@/lib/trpc/types";
 import type {
@@ -18,8 +19,8 @@ export const handleCreate = async (
   try {
     await mutations.create.mutateAsync({
       ...data,
-      endDate: data.endDate ?? null,
-      startDate: data.startDate,
+      startDate: toIso(data.startDate),
+      endDate: toNullableIso(data.endDate),
     });
     toast.success("Experience added successfully");
     dispatch({ type: EXPERIENCE_ACTIONS.CLOSE_MODALS });
@@ -39,7 +40,13 @@ export const handleUpdate = async (
 ) => {
   dispatch({ type: EXPERIENCE_ACTIONS.SET_PROCESSING, payload: data.id });
   try {
-    await mutations.update.mutateAsync(data);
+    const payload = {
+      ...data,
+      startDate: toOptionalIso(data.startDate),
+      endDate: toNullableIso(data.endDate),
+    };
+
+    await mutations.update.mutateAsync(payload);
     toast.success("Experience updated successfully");
     dispatch({ type: EXPERIENCE_ACTIONS.SELECT_EXPERIENCE, payload: null });
     dispatch({ type: EXPERIENCE_ACTIONS.CLOSE_MODALS });

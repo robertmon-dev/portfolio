@@ -24,7 +24,7 @@ export const useExperienceForm = ({
       position: "",
       company: "",
       startDate: "",
-      endDate: "",
+      endDate: null,
       description: "",
       isCurrent: false,
     },
