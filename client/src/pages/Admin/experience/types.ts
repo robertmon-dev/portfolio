@@ -1,3 +1,5 @@
+import type { useExperienceActions } from "./useExperienceActions";
+
 export const EXPERIENCE_ACTIONS = {
   SET_PROCESSING: "EXPERIENCE/SET_PROCESSING",
   SELECT_EXPERIENCE: "EXPERIENCE/SELECT_EXPERIENCE",
@@ -49,3 +51,5 @@ export function experienceReducer(
       return state;
   }
 }
+
+export type ExperienceActions = ReturnType<typeof useExperienceActions>;

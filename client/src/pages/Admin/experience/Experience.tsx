@@ -5,6 +5,7 @@ import { Header } from "@/components/molecules/Sections/Header/Header";
 import { Button } from "@/components/atoms/Button/Button";
 import { LoadingBar } from "@/components/atoms/LoadingBar/LoadingBar";
 import { EntityTable } from "@/components/molecules/EntityTable/EntityTable";
+import { ExperienceModals } from "@/components/molecules/Modals/Experience/Modal";
 import { useExperienceActions } from "./useExperienceActions";
 import { getExperienceColumns } from "./components/getExperienceColums";
 import "./Experience.scss";
@@ -68,6 +69,8 @@ export const ExperienceAdminPage = () => {
           onRowClick={(exp) => actions.selectExperience(exp.id)}
         />
       </main>
+
+      <ExperienceModals state={state} actions={actions} />
     </div>
   );
 };

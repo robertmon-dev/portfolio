@@ -1,0 +1,44 @@
+@use "sass:color";
+
+.experience-form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+  padding: $spacing-sm $spacing-none;
+
+  &__grid {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+  }
+
+  .grid-row-dual {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: $spacing-md;
+  }
+
+  &__toggles {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+    padding: $spacing-xs $spacing-none;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: $spacing-sm;
+    margin-top: $spacing-sm;
+    padding-top: $spacing-md;
+    border-top: 1px solid $border-color;
+  }
+}
+
+@media (max-width: 600px) {
+  .experience-form {
+    .grid-row-dual {
+      grid-template-columns: 1fr;
+    }
+  }
+}
