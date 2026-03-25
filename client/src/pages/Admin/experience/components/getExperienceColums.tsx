@@ -12,32 +12,9 @@ import {
   History,
 } from "lucide-react";
 import dayjs from "dayjs";
-import duration from "dayjs/plugin/duration";
 import type { Column } from "@/components/molecules/EntityTable/types";
 import type { TFunction } from "i18next";
-
-dayjs.extend(duration);
-
-const getTenure = (
-  start: string | Date,
-  end: string | Date | null,
-  isCurrent: boolean,
-  t: TFunction,
-) => {
-  const startDate = dayjs(start);
-  const endDate = isCurrent ? dayjs() : dayjs(end);
-  const diff = dayjs.duration(endDate.diff(startDate));
-
-  const years = diff.years();
-  const months = diff.months();
-
-  const parts = [];
-  if (years > 0) parts.push(`${years}${t("common.time.y", "y")}`);
-  if (months > 0 || years === 0)
-    parts.push(`${months}${t("common.time.m", "m")}`);
-
-  return parts.join(" ");
-};
+import { getTenure } from "@/lib/utils/date";
 
 export const getExperienceColumns = (
   t: TFunction,
