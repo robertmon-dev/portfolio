@@ -15,6 +15,7 @@ import dayjs from "dayjs";
 import type { Column } from "@/components/molecules/EntityTable/types";
 import type { TFunction } from "i18next";
 import { getTenure } from "@/lib/utils/date";
+import { truncateText } from "@/lib/utils/text";
 
 export const getExperienceColumns = (
   t: TFunction,
@@ -80,7 +81,7 @@ export const getExperienceColumns = (
     render: (item) => (
       <div className="experience-table__description-preview">
         <FileText size={12} />
-        <p title={item.description}>{item.description}</p>
+        <p title={item.description}>{truncateText(item.description)}</p>
       </div>
     ),
   },
@@ -91,7 +92,7 @@ export const getExperienceColumns = (
     align: "center",
     render: (item) => (
       <div
-        className={`experience-table__status-badge ${item.isCurrent ? "Active" : "Past"}`}
+        className={`experience-table__status-badge ${item.isCurrent ? "active" : "past"}`}
       >
         {item.isCurrent ? <CheckCircle2 size={12} /> : <History size={12} />}
         <span>
