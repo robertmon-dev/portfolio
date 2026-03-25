@@ -1,4 +1,4 @@
-export const truncateText = (text: string, maxLength: number = 30) => {
+export const truncateText = (text: string, maxLength: number = 8) => {
   if (text.length <= maxLength) return text;
   return `${text.substring(0, maxLength)}...`;
 };
