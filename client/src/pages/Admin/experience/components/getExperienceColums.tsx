@@ -47,7 +47,7 @@ export const getExperienceColumns = (
 ): Column<Experience>[] => [
   {
     key: "position",
-    header: t("admin.experience.table.position"),
+    header: t("admin.experience.table.position", "Position"),
     width: "20%",
     render: (item) => (
       <div className="experience-table__cell-with-icon">
@@ -60,7 +60,7 @@ export const getExperienceColumns = (
   },
   {
     key: "company",
-    header: t("admin.experience.table.company"),
+    header: t("admin.experience.table.company", "Company"),
     width: "15%",
     render: (item) => (
       <div className="experience-table__cell-with-icon">
@@ -71,7 +71,7 @@ export const getExperienceColumns = (
   },
   {
     key: "duration",
-    header: t("admin.experience.table.duration"),
+    header: t("admin.experience.table.duration", "Duration"),
     width: "20%",
     render: (item) => {
       const start = dayjs(item.startDate).format("MM/YYYY");
@@ -98,8 +98,8 @@ export const getExperienceColumns = (
   },
   {
     key: "description",
-    header: t("admin.experience.table.description"),
-    width: "25%",
+    header: t("admin.experience.table.description", "Description"),
+    width: "15%",
     render: (item) => (
       <div className="experience-table__description-preview">
         <FileText size={12} />
@@ -109,21 +109,25 @@ export const getExperienceColumns = (
   },
   {
     key: "status",
-    header: t("admin.experience.table.status"),
+    header: t("admin.experience.table.status", "Status"),
     width: "10%",
     align: "center",
     render: (item) => (
       <div
-        className={`experience-table__status-badge ${item.isCurrent ? "active" : "past"}`}
+        className={`experience-table__status-badge ${item.isCurrent ? "Active" : "Past"}`}
       >
         {item.isCurrent ? <CheckCircle2 size={12} /> : <History size={12} />}
-        <span>{item.isCurrent ? t("common.current") : t("common.past")}</span>
+        <span>
+          {item.isCurrent
+            ? t("common.current", "Current")
+            : t("common.past", "Past")}
+        </span>
       </div>
     ),
   },
   {
     key: "actions",
-    header: "",
+    header: t("admin.experience.table.actions", "Actions"),
     width: "10%",
     align: "right",
     render: (item) => (
