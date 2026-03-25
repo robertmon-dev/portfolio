@@ -1,0 +1,111 @@
+@use "sass:color";
+
+.documents-calendar__select {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  font-family: $font-stack;
+
+  .documents-calendar__select-trigger {
+    min-width: 110px;
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $radius-sm;
+    border: 1px solid $border-color;
+    background: $bg-input;
+    color: $text-main;
+    font-size: 0.875rem;
+    font-family: inherit;
+    font-weight: 600;
+    text-transform: none;
+    cursor: pointer;
+    text-align: left;
+    box-shadow: $shadow-surface-sm;
+    transition: all 0.2s ease;
+
+    &:hover,
+    &:focus-visible {
+      outline: none;
+      border-color: $primary;
+      box-shadow: 0 0 0 1px $primary, $glow-rim-top;
+    }
+  }
+
+  .documents-calendar__select-menu {
+    display: none;
+    position: absolute;
+    top: calc(100% + #{$spacing-xs});
+    left: 0;
+    list-style: none;
+    margin: 0;
+    padding: $spacing-xs;
+    background: $bg-surface;
+    border: 1px solid $border-color;
+    border-radius: $radius-md;
+    box-shadow: $shadow-surface-md;
+    max-height: 220px;
+    overflow-y: auto;
+    min-width: 100%;
+    z-index: 10;
+    transform-origin: top;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: $border-color;
+      border-radius: 3px;
+
+      &:hover {
+        background: color.change($tn-slate, $alpha: 0.8);
+      }
+    }
+
+    li {
+      margin: 0;
+    }
+
+    button {
+      width: 100%;
+      border: none;
+      background: transparent;
+      padding: $spacing-xs $spacing-sm;
+      text-align: left;
+      border-radius: $radius-sm;
+      font-size: 0.875rem;
+      font-family: inherit;
+      color: $text-muted;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &[aria-selected="true"] {
+        background: color.change($primary, $alpha: 0.15);
+        color: $primary;
+        font-weight: 600;
+      }
+
+      &:hover:not([aria-selected="true"]) {
+        background: color.change($text-muted, $alpha: 0.1);
+        color: $text-main;
+      }
+    }
+  }
+
+  &.open .documents-calendar__select-menu {
+    display: block;
+    animation: dropdownFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
