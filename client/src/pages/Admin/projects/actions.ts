@@ -1,5 +1,4 @@
 import { toast } from "react-toastify";
-import { notifyError } from "@/lib/trpc/handlers/trpcError";
 import { PROJECT_ACTIONS, type ProjectAction } from "./types";
 import type { ProjectMutations } from "../useMutations";
 import type { Utils } from "@/lib/trpc/types";
@@ -18,8 +17,6 @@ export const handleCreate = async (
 
     dispatch({ type: PROJECT_ACTIONS.CLOSE_MODALS });
     await utils.projects.list.invalidate();
-  } catch (error) {
-    notifyError(error);
   } finally {
     dispatch({ type: PROJECT_ACTIONS.SET_PROCESSING, payload: null });
   }
@@ -40,8 +37,6 @@ export const handleUpdate = async (
     dispatch({ type: PROJECT_ACTIONS.CLOSE_MODALS });
 
     await utils.projects.list.invalidate();
-  } catch (error) {
-    notifyError(error);
   } finally {
     dispatch({ type: PROJECT_ACTIONS.SET_PROCESSING, payload: null });
   }
@@ -62,8 +57,6 @@ export const handleDelete = async (
     dispatch({ type: PROJECT_ACTIONS.CLOSE_MODALS });
 
     await utils.projects.list.invalidate();
-  } catch (error) {
-    notifyError(error);
   } finally {
     dispatch({ type: PROJECT_ACTIONS.SET_PROCESSING, payload: null });
   }
@@ -84,8 +77,6 @@ export const handleRestore = async (
     dispatch({ type: PROJECT_ACTIONS.CLOSE_MODALS });
 
     await utils.projects.list.invalidate();
-  } catch (error) {
-    notifyError(error);
   } finally {
     dispatch({ type: PROJECT_ACTIONS.SET_PROCESSING, payload: null });
   }

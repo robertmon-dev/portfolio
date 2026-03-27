@@ -1,5 +1,4 @@
 import { toast } from "react-toastify";
-import { notifyError } from "@/lib/trpc/handlers/trpcError";
 import { USER_ACTIONS, type UserAction } from "./types";
 import type { Utils } from "@/lib/trpc/types";
 import type {
@@ -21,8 +20,6 @@ export const handleCreate = async (
     toast.success("User created successfully");
     dispatch({ type: USER_ACTIONS.CLOSE_MODALS });
     await utils.admin.users.list.invalidate();
-  } catch (error) {
-    notifyError(error);
   } finally {
     dispatch({ type: USER_ACTIONS.SET_PROCESSING, payload: null });
   }
@@ -40,8 +37,6 @@ export const handleUpdate = async (
     toast.success("User updated successfully");
     dispatch({ type: USER_ACTIONS.CLOSE_MODALS });
     await utils.admin.users.list.invalidate();
-  } catch (error) {
-    notifyError(error);
   } finally {
     dispatch({ type: USER_ACTIONS.SET_PROCESSING, payload: null });
   }
@@ -59,8 +54,6 @@ export const handleDelete = async (
     toast.success("User deleted successfully");
     dispatch({ type: USER_ACTIONS.CLOSE_MODALS });
     await utils.admin.users.list.invalidate();
-  } catch (error) {
-    notifyError(error);
   } finally {
     dispatch({ type: USER_ACTIONS.SET_PROCESSING, payload: null });
   }
@@ -78,8 +71,6 @@ export const handleUpdatePermissions = async (
     toast.success("User permissions updated successfully");
     dispatch({ type: USER_ACTIONS.CLOSE_MODALS });
     await utils.admin.users.list.invalidate();
-  } catch (error) {
-    notifyError(error);
   } finally {
     dispatch({ type: USER_ACTIONS.SET_PROCESSING, payload: null });
   }

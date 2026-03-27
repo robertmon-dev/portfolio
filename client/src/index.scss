@@ -57,7 +57,14 @@ select {
   font-feature-settings: "calt" 1;
 }
 
+.Toastify__toast-container {
+  z-index: 20000 !important;
+
+  padding: $spacing-md;
+}
+
 .Toastify__toast {
+  z-index: inherit;
   font-family: $font-stack;
   border-radius: 12px;
   border: 1px solid rgba($primary, 0.1);

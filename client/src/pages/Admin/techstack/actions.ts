@@ -1,5 +1,4 @@
 import { toast } from "react-toastify";
-import { notifyError } from "@/lib/trpc/handlers/trpcError";
 import { TECH_STACK_ACTIONS, type TechStackAction } from "./types";
 import type { Utils } from "@/lib/trpc/types";
 import type {
@@ -23,8 +22,6 @@ export const handleCreate = async (
 
     dispatch({ type: TECH_STACK_ACTIONS.CLOSE_MODALS });
     await utils.techStack.list.invalidate();
-  } catch (error) {
-    notifyError(error);
   } finally {
     dispatch({ type: TECH_STACK_ACTIONS.SET_PROCESSING, payload: null });
   }
@@ -45,8 +42,6 @@ export const handleUpdate = async (
     dispatch({ type: TECH_STACK_ACTIONS.CLOSE_MODALS });
 
     await utils.techStack.list.invalidate();
-  } catch (error) {
-    notifyError(error);
   } finally {
     dispatch({ type: TECH_STACK_ACTIONS.SET_PROCESSING, payload: null });
   }
@@ -67,8 +62,6 @@ export const handleDelete = async (
     dispatch({ type: TECH_STACK_ACTIONS.CLOSE_MODALS });
 
     await utils.techStack.list.invalidate();
-  } catch (error) {
-    notifyError(error);
   } finally {
     dispatch({ type: TECH_STACK_ACTIONS.SET_PROCESSING, payload: null });
   }
@@ -92,8 +85,6 @@ export const handleLink = async (
       utils.techStack.list.invalidate(),
       utils.projects.list.invalidate(),
     ]);
-  } catch (error) {
-    notifyError(error);
   } finally {
     dispatch({ type: TECH_STACK_ACTIONS.SET_PROCESSING, payload: null });
   }
@@ -117,8 +108,6 @@ export const handleUnlink = async (
       utils.techStack.list.invalidate(),
       utils.projects.list.invalidate(),
     ]);
-  } catch (error) {
-    notifyError(error);
   } finally {
     dispatch({ type: TECH_STACK_ACTIONS.SET_PROCESSING, payload: null });
   }

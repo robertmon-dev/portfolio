@@ -25,8 +25,6 @@ export const handleCreate = async (
     toast.success("Experience added successfully");
     dispatch({ type: EXPERIENCE_ACTIONS.CLOSE_MODALS });
     await utils.experience.list.invalidate();
-  } catch (error) {
-    notifyError(error);
   } finally {
     dispatch({ type: EXPERIENCE_ACTIONS.SET_PROCESSING, payload: null });
   }
@@ -51,8 +49,6 @@ export const handleUpdate = async (
     dispatch({ type: EXPERIENCE_ACTIONS.SELECT_EXPERIENCE, payload: null });
     dispatch({ type: EXPERIENCE_ACTIONS.CLOSE_MODALS });
     await utils.experience.list.invalidate();
-  } catch (error) {
-    notifyError(error);
   } finally {
     dispatch({ type: EXPERIENCE_ACTIONS.SET_PROCESSING, payload: null });
   }
@@ -71,8 +67,6 @@ export const handleDelete = async (
     dispatch({ type: EXPERIENCE_ACTIONS.SELECT_EXPERIENCE, payload: null });
     dispatch({ type: EXPERIENCE_ACTIONS.CLOSE_MODALS });
     await utils.experience.list.invalidate();
-  } catch (error) {
-    notifyError(error);
   } finally {
     dispatch({ type: EXPERIENCE_ACTIONS.SET_PROCESSING, payload: null });
   }

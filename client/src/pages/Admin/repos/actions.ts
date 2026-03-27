@@ -1,5 +1,4 @@
 import { toast } from "react-toastify";
-import { notifyError } from "@/lib/trpc/handlers/trpcError";
 import { GITHUB_ACTIONS } from "./types";
 import type { GithubMutations } from "../useMutations";
 import type {
@@ -27,8 +26,6 @@ export const handleUpdate = async (
       utils.githubStats.getStats.invalidate(),
       utils.githubRepo.listRepos.invalidate(),
     ]);
-  } catch (error) {
-    notifyError(error);
   } finally {
     dispatch({ type: GITHUB_ACTIONS.SET_PROCESSING, payload: null });
   }
@@ -50,8 +47,6 @@ export const handleLinkProject = async (
       utils.githubRepo.listRepos.invalidate(),
       utils.githubStats.getStats.invalidate(),
     ]);
-  } catch (error) {
-    notifyError(error);
   } finally {
     dispatch({ type: GITHUB_ACTIONS.SET_PROCESSING, payload: null });
   }
@@ -75,8 +70,6 @@ export const handleDelete = async (
       utils.githubStats.getStats.invalidate(),
       utils.githubRepo.listRepos.invalidate(),
     ]);
-  } catch (error) {
-    notifyError(error);
   } finally {
     dispatch({ type: GITHUB_ACTIONS.SET_PROCESSING, payload: null });
   }
@@ -101,8 +94,6 @@ export const handleUnlinkProject = async (
       utils.githubStats.getStats.invalidate(),
       utils.projects.list.invalidate(),
     ]);
-  } catch (error) {
-    notifyError(error);
   } finally {
     dispatch({ type: GITHUB_ACTIONS.SET_PROCESSING, payload: null });
   }
