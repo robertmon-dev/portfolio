@@ -1,5 +1,5 @@
 import { BaseService } from "../service";
-import { TechStackSchema, type TechStack } from "@portfolio/shared";
+import { type TechStack } from "@portfolio/shared";
 import type { TechStackProjectLinking } from "./types";
 
 export class LinkTechStackProjectService
@@ -41,6 +41,6 @@ export class LinkTechStackProjectService
       `Successfully linked TechStack ${techStackId} to project ${projectId}`,
     );
 
-    return TechStackSchema.parse(updatedTechStack);
+    return updatedTechStack;
   }
 }

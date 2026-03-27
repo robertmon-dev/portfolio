@@ -1,9 +1,5 @@
-import { z } from "zod";
 import { BaseService } from "../service";
-import {
-  TechStackWithRelationsSchema,
-  type TechStackWithRelations,
-} from "@portfolio/shared";
+import { type TechStackWithRelations } from "@portfolio/shared";
 import type { TechStackListing } from "./types";
 import { techStackWithRelationsQuery } from "./queries";
 
@@ -22,7 +18,7 @@ export class ListTechStacksService
         ...techStackWithRelationsQuery,
       });
 
-      return z.array(TechStackWithRelationsSchema).parse(items);
+      return items;
     });
   }
 }

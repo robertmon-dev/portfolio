@@ -1,6 +1,5 @@
-import { z } from "zod";
 import { BaseService } from "../service";
-import { ExperienceSchema, type Experience } from "@portfolio/shared";
+import { type Experience } from "@portfolio/shared";
 import type { ExperienceListing } from "./types";
 
 export class ListExperienceService
@@ -17,7 +16,7 @@ export class ListExperienceService
         orderBy: { startDate: "desc" },
       });
 
-      return z.array(ExperienceSchema).parse(items);
+      return items;
     });
   }
 }

@@ -1,11 +1,11 @@
-import { BaseService } from '../service';
-import {
-  ExperienceSchema,
-  type Experience
-} from '@portfolio/shared';
-import type { ExperienceRetrieving } from './types';
+import { BaseService } from "../service";
+import { type Experience } from "@portfolio/shared";
+import type { ExperienceRetrieving } from "./types";
 
-export class GetExperienceService extends BaseService implements ExperienceRetrieving {
+export class GetExperienceService
+  extends BaseService
+  implements ExperienceRetrieving
+{
   public async execute(id: string): Promise<Experience | null> {
     const cacheKey = `experience:id:${id}`;
 
@@ -13,12 +13,12 @@ export class GetExperienceService extends BaseService implements ExperienceRetri
       this.logger.debug(`Fetching Experience: ${id} (cache miss)`);
 
       const experience = await this.db.experience.findUnique({
-        where: { id }
+        where: { id },
       });
 
       if (!experience) return null;
 
-      return ExperienceSchema.parse(experience);
+      return experience;
     });
   }
 }

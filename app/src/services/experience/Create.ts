@@ -1,9 +1,5 @@
 import { BaseService } from "../service";
-import {
-  ExperienceSchema,
-  type Experience,
-  type CreateExperienceInput,
-} from "@portfolio/shared";
+import { type Experience, type CreateExperienceInput } from "@portfolio/shared";
 import type { ExperienceCreating } from "./types";
 
 export class CreateExperienceService
@@ -19,6 +15,6 @@ export class CreateExperienceService
 
     await this.invalidateExperienceCache(created);
 
-    return ExperienceSchema.parse(created);
+    return created;
   }
 }

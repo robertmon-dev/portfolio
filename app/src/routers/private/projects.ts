@@ -60,7 +60,7 @@ export const projectPrivateRouter = router({
         protect: true,
       },
     })
-    .input(z.object({ id: z.string().uuid() }))
+    .input(z.object({ id: z.uuid() }))
     .output(z.object({ success: z.boolean() }))
     .mutation(async ({ ctx, input }) => {
       await executeService(DeleteProjectService, ctx, input.id);

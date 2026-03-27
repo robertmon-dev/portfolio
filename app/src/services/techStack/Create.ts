@@ -1,9 +1,5 @@
 import { BaseService } from "../service";
-import {
-  TechStackSchema,
-  type TechStack,
-  type CreateTechStackInput,
-} from "@portfolio/shared";
+import { type TechStack, type CreateTechStackInput } from "@portfolio/shared";
 import type { TechStackCreating } from "./types";
 
 export class CreateTechStackService
@@ -19,6 +15,6 @@ export class CreateTechStackService
 
     await this.invalidateTechStackCache(created);
 
-    return TechStackSchema.parse(created);
+    return created;
   }
 }

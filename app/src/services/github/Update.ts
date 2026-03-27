@@ -1,9 +1,5 @@
 import { BaseService } from "../service";
-import {
-  UpdateGithubRepoInput,
-  GithubRepoSchema,
-  type GithubRepo,
-} from "@portfolio/shared";
+import { UpdateGithubRepoInput, type GithubRepo } from "@portfolio/shared";
 import { githubRepoWithRelationsQuery } from "./queries";
 
 export class UpdateGithubRepoService extends BaseService {
@@ -27,6 +23,6 @@ export class UpdateGithubRepoService extends BaseService {
       `Successfully updated repo ${updated.name} and invalidated related caches.`,
     );
 
-    return GithubRepoSchema.parse(updated);
+    return updated;
   }
 }

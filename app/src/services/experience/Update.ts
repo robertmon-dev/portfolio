@@ -1,9 +1,5 @@
 import { BaseService } from "../service";
-import {
-  ExperienceSchema,
-  type Experience,
-  type UpdateExperienceInput,
-} from "@portfolio/shared";
+import type { Experience, UpdateExperienceInput } from "@portfolio/shared";
 import type { ExperienceUpdating } from "./types";
 
 export class UpdateExperienceService
@@ -22,6 +18,6 @@ export class UpdateExperienceService
 
     await this.invalidateExperienceCache(updated);
 
-    return ExperienceSchema.parse(updated);
+    return updated;
   }
 }

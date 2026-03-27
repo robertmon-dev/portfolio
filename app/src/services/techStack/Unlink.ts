@@ -1,6 +1,5 @@
 import { BaseService } from "../service";
 import {
-  TechStackSchema,
   type TechStack,
   type LinkTechStackProjectInput,
 } from "@portfolio/shared";
@@ -41,6 +40,6 @@ export class UnlinkTechStackProjectService
       `Successfully unlinked TechStack ${techStackId} from project ${projectId}`,
     );
 
-    return TechStackSchema.parse(updatedTechStack);
+    return updatedTechStack;
   }
 }

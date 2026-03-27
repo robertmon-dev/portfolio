@@ -1,8 +1,5 @@
 import { BaseService } from "../service";
-import {
-  TechStackWithRelationsSchema,
-  type TechStackWithRelations,
-} from "@portfolio/shared";
+import { type TechStackWithRelations } from "@portfolio/shared";
 import { techStackWithRelationsQuery } from "./queries";
 import type { TechStackRetrieving } from "./types";
 
@@ -25,7 +22,7 @@ export class GetTechStackService
 
       if (!techStack) return null;
 
-      return TechStackWithRelationsSchema.parse(techStack);
+      return techStack;
     });
   }
 }

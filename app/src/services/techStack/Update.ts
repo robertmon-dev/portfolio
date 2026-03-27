@@ -1,9 +1,5 @@
 import { BaseService } from "../service";
-import {
-  TechStackSchema,
-  type TechStack,
-  type UpdateTechStackInput,
-} from "@portfolio/shared";
+import { type TechStack, type UpdateTechStackInput } from "@portfolio/shared";
 import type { TechStackUpdating } from "./types";
 
 export class UpdateTechStackService
@@ -39,6 +35,6 @@ export class UpdateTechStackService
       `Tech stack ${id} updated. Invalidated ${affectedProjects.length} projects.`,
     );
 
-    return TechStackSchema.parse(updated);
+    return updated;
   }
 }

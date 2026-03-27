@@ -1,5 +1,5 @@
 import { BaseService } from "../service";
-import { GithubStatsSchema, type GithubStats } from "@portfolio/shared";
+import { type GithubStats } from "@portfolio/shared";
 import { githubStatsWithDeepRelationsQuery } from "./queries";
 
 export class GetGithubStatsService extends BaseService {
@@ -18,7 +18,7 @@ export class GetGithubStatsService extends BaseService {
 
       if (!stats) return null;
 
-      return GithubStatsSchema.parse(stats);
+      return stats;
     });
   }
 }
