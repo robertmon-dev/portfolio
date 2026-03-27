@@ -1,10 +1,13 @@
-import i18n from '../../../i18n';
+import i18n from '@/i18n';
+import { useTranslation } from 'react-i18next';
 import { TRPCClientError } from '@trpc/client';
 import { toast } from 'react-toastify';
 
 export const handleTrpcError = (error: unknown): string | null => {
+  const { t } = useTranslation();
+
   if (!(error instanceof TRPCClientError)) {
-    return i18n.t('errors.codes.NETWORK_ERROR');
+    return t('errors.codes.NETWORK_ERROR');
   }
 
   if (error.message === 'unserialize' || error.shape?.message === 'unserialize') {
@@ -15,24 +18,24 @@ export const handleTrpcError = (error: unknown): string | null => {
   const serverMessage = error.message;
 
   if (serverMessage && i18n.exists(serverMessage)) {
-    return i18n.t(serverMessage);
+    return t(serverMessage);
   }
 
   if (code === 'BAD_REQUEST' && error.data?.zodError) {
-    return i18n.t('errors.codes.VALIDATION_ERROR');
+    return t('errors.codes.VALIDATION_ERROR');
   }
 
   if (code === 'UNAUTHORIZED') {
     localStorage.removeItem('token');
-    return i18n.t('errors.codes.UNAUTHORIZED');
+    return t('errors.codes.UNAUTHORIZED');
   }
 
   const translationKey = `errors.codes.${code}`;
   if (i18n.exists(translationKey)) {
-    return i18n.t(translationKey);
+    return t(translationKey);
   }
 
-  return serverMessage || i18n.t('errors.codes.UNKNOWN_ERROR');
+  return serverMessage || t('errors.codes.UNKNOWN_ERROR');
 };
 
 export const notifyError = (error: unknown) => {
