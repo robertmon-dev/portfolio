@@ -16,7 +16,7 @@ export const getProjectColumns = (
   {
     key: "title",
     header: t("admin.projects.table.project", "Project"),
-    width: "25%",
+    width: "15%",
     render: (project) => (
       <div className="projects-table__title-col">
         <span className="projects-table__title" title={project.title}>
@@ -31,7 +31,7 @@ export const getProjectColumns = (
   {
     key: "isFeatured",
     header: t("admin.projects.table.featured", "Featured"),
-    width: "8%",
+    width: "10%",
     align: "center",
     render: (project) => (
       <div className="projects-table__featured-col">
@@ -46,7 +46,7 @@ export const getProjectColumns = (
   {
     key: "status",
     header: t("admin.projects.table.status", "Status"),
-    width: "12%",
+    width: "15%",
     render: (project) => (
       <div className="projects-table__status-col">
         {project.isVisible ? (
@@ -94,7 +94,7 @@ export const getProjectColumns = (
   {
     key: "techStack",
     header: t("admin.projects.table.techStack", "Tech Stack"),
-    width: "30%",
+    width: "35%",
     render: (project) => {
       const stack = project.techStack || [];
 
@@ -139,7 +139,7 @@ export const getProjectColumns = (
     key: "actions",
     header: t("admin.projects.table.actions", "Actions"),
     align: "right",
-    width: "10%",
+    width: "15%",
     render: (project) => (
       <div
         className="projects-table__actions"

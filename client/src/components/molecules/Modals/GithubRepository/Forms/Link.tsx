@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, AlertCircle, Layout } from "lucide-react";
 import { Button } from "@/components/atoms/Button/Button";
@@ -13,15 +14,23 @@ export const GithubLinkForm = (props: LinkFormProps) => {
 
   const { control, errors, handleSubmit } = useGithubLinkRepoForm(props);
 
-  const projectOptions = projects.map((p) => ({
-    value: p.id,
-    label: p.title,
-  }));
+  const projectOptions = useMemo(
+    () =>
+      projects.map((p) => ({
+        value: p.id,
+        label: p.title,
+      })),
+    [projects],
+  );
 
   return (
     <form className="github-form" onSubmit={handleSubmit}>
       <p className="github-form__help">
-        {t("admin.github.link.help", { name: repo.name })}
+        {t("admin.github.link.help", {
+          name: repo.name,
+          defaultValue:
+            "Select which project should be linked with {{name}} repository.",
+        })}
       </p>
 
       <div className="github-form__group">
@@ -36,7 +45,7 @@ export const GithubLinkForm = (props: LinkFormProps) => {
               options={projectOptions}
               placeholder={t(
                 "admin.github.link.placeholder",
-                "Choose a project...",
+                "Choose a project to link...",
               )}
               leftIcon={<Layout size={18} />}
               fullWidth
@@ -50,7 +59,12 @@ export const GithubLinkForm = (props: LinkFormProps) => {
       {projects.length === 0 && (
         <div className="github-form__alert">
           <AlertCircle size={18} />
-          <span>{t("admin.github.link.noProjects")}</span>
+          <span>
+            {t(
+              "admin.github.link.noProjects",
+              "No available projects found. Create a project first to link it with this repository.",
+            )}
+          </span>
         </div>
       )}
 
@@ -63,7 +77,7 @@ export const GithubLinkForm = (props: LinkFormProps) => {
           leftIcon={<Link size={18} />}
           fullWidth
         >
-          {t("admin.github.link.submit")}
+          {t("admin.github.link.submit", "Link Repository")}
         </Button>
       </div>
     </form>

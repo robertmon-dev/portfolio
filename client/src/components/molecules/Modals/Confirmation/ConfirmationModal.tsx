@@ -26,7 +26,7 @@ export const ConfirmationModal = ({
 
         <div className="confirmation-modal__actions">
           <Button variant="outline" onClick={onClose} disabled={isLoading}>
-            {t("common.cancel")}
+            {t("common.cancel", "Cancel")}
           </Button>
 
           <Button
@@ -34,7 +34,7 @@ export const ConfirmationModal = ({
             onClick={onConfirm}
             isLoading={isLoading}
           >
-            {t("common.confirm")}
+            {t("common.confirm", "Confirm")}
           </Button>
         </div>
       </div>

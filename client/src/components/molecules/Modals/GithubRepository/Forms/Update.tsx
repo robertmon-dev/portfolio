@@ -39,7 +39,7 @@ export const GithubUpdateForm = ({
       <div className="github-form__grid">
         <Input
           {...register("name")}
-          label={t("admin.github.update.fields.name.label")}
+          label={t("admin.github.update.fields.name.label", "Repository Name")}
           error={errors.name?.message}
           leftIcon={<Tag size={18} />}
           fullWidth
@@ -49,7 +49,10 @@ export const GithubUpdateForm = ({
 
         <Input
           {...register("language")}
-          label={t("admin.github.update.fields.language.label")}
+          label={t(
+            "admin.github.update.fields.language.label",
+            "Primary Language",
+          )}
           error={errors.language?.message}
           leftIcon={<Layout size={18} />}
           fullWidth
@@ -58,7 +61,10 @@ export const GithubUpdateForm = ({
 
         <TextArea
           {...register("description")}
-          label={t("admin.github.update.fields.description.label")}
+          label={t(
+            "admin.github.update.fields.description.label",
+            "Description",
+          )}
           error={errors.description?.message}
           rows={4}
           fullWidth
@@ -69,7 +75,12 @@ export const GithubUpdateForm = ({
       <div className="github-form__footer">
         <div className="github-form__info">
           <Info size={14} />
-          <span>{t("admin.github.update.info")}</span>
+          <span>
+            {t(
+              "admin.github.update.info",
+              "Note: These changes only affect how the repository is displayed in your portfolio, not the original GitHub data.",
+            )}
+          </span>
         </div>
         <Button
           type="submit"
@@ -78,7 +89,7 @@ export const GithubUpdateForm = ({
           leftIcon={<Save size={18} />}
           fullWidth
         >
-          {t("admin.github.update.submit")}
+          {t("admin.github.update.submit", "Save Changes")}
         </Button>
       </div>
     </form>
