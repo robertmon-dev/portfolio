@@ -11,7 +11,6 @@ import {
 import type {
   CreateUserInput,
   UpdateUserInput,
-  UserProfile,
   UpdateUserPermissionsInput,
 } from "@portfolio/shared";
 
@@ -57,8 +56,8 @@ export const useUsersActions = () => {
   return {
     state: {
       ...state,
-      users: users as unknown as UserProfile[],
-      selectedUser: selectedUser as unknown as UserProfile,
+      users,
+      selectedUser,
       isLoading,
       isAnyProcessing: !!state.processingId,
     },

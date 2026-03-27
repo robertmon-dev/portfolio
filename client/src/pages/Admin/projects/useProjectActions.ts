@@ -8,11 +8,7 @@ import {
   initialState,
   type ProjectModalType,
 } from "./types";
-import type {
-  ProjectWithRelations,
-  CreateProjectInput,
-  UpdateProjectInput,
-} from "@portfolio/shared";
+import type { CreateProjectInput, UpdateProjectInput } from "@portfolio/shared";
 
 export const useProjectActions = () => {
   const utils = trpc.useUtils();
@@ -30,7 +26,7 @@ export const useProjectActions = () => {
   return {
     state: {
       ...state,
-      projects: projects as ProjectWithRelations[],
+      projects,
       selectedProject,
       isLoading: isProjectsLoading,
       isAnyProcessing: !!state.processingId,

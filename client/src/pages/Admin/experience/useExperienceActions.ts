@@ -9,7 +9,6 @@ import {
   type ExperienceModalType,
 } from "./types";
 import type {
-  Experience,
   CreateExperienceInput,
   UpdateExperienceInput,
 } from "@portfolio/shared";
@@ -30,7 +29,7 @@ export const useExperienceActions = () => {
   return {
     state: {
       ...state,
-      experiences: experiences as Experience[],
+      experiences,
       selectedExperience,
       isLoading: isExperiencesLoading,
       isAnyProcessing: !!state.processingId,

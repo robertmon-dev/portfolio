@@ -12,7 +12,6 @@ import type {
   UpdateGithubRepoInput,
   LinkRepoProjectInput,
   GithubRepo,
-  ProjectWithRelations,
 } from "@portfolio/shared";
 
 export const useGithubActions = () => {
@@ -36,7 +35,7 @@ export const useGithubActions = () => {
     state: {
       ...state,
       repos,
-      projects: projects as ProjectWithRelations[],
+      projects,
       stats,
       selectedRepo,
       isLoading: isReposLoading || isStatsLoading || isProjectsLoading,

@@ -9,7 +9,6 @@ import {
   type TechStackModalType,
 } from "./types";
 import type {
-  TechStackWithRelations,
   CreateTechStackInput,
   UpdateTechStackInput,
   LinkTechStackProjectInput,
@@ -64,7 +63,7 @@ export const useTechStackActions = () => {
   return {
     state: {
       ...state,
-      techStacks: techStacks as TechStackWithRelations[],
+      techStacks,
       selectedTechStack,
       isLoading: isTechStacksLoading,
       isAnyProcessing: !!state.processingId,
