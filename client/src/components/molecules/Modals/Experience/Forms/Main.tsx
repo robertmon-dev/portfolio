@@ -1,101 +1,13 @@
 import { useTranslation } from "react-i18next";
-import type { ControllerRenderProps, Path } from "react-hook-form";
-import { Controller } from "react-hook-form";
-import dayjs from "dayjs";
+import { MonthYearSelector } from "@/components/molecules/MonthYearSelector/MonthYearSelector";
 import { Briefcase, Building2, Calendar } from "lucide-react";
 import { Button } from "@/components/atoms/Button/Button";
 import { Input } from "@/components/atoms/Input/Input";
 import { TextArea } from "@/components/atoms/TextArea/TextArea";
 import { Checkbox } from "@/components/atoms/CheckBox/CheckBox";
-import CalendarDropdown from "@/components/molecules/CalendarDropdown/CalendarDropdown";
-import type { ExperienceFormProps, MonthYearSelectorProps } from "../types";
+import type { ExperienceFormProps } from "../types";
 import { useExperienceForm } from "./useExperienceForm";
 import "../ExperienceModal.scss";
-import type { CreateExperienceInput } from "@portfolio/shared";
-
-const MonthYearSelector = ({
-  name,
-  control,
-  label,
-  icon,
-  disabled,
-  t,
-  error,
-}: MonthYearSelectorProps) => {
-  const currentYear = dayjs().year();
-
-  const years = [
-    { value: 0, label: t("common.year", "Year") },
-    ...Array.from({ length: 50 }, (_, i) => ({
-      value: currentYear - i,
-      label: (currentYear - i).toString(),
-    })),
-  ];
-
-  const months = [
-    { value: 0, label: t("common.month", "Month") },
-    ...Array.from({ length: 12 }, (_, i) => ({
-      value: i + 1,
-      label: dayjs().month(i).format("MMMM"),
-    })),
-  ];
-
-  const renderField = ({
-    field,
-  }: {
-    field: ControllerRenderProps<
-      CreateExperienceInput,
-      Path<CreateExperienceInput>
-    >;
-  }) => {
-    const dateObj = field.value ? dayjs(field.value as string | Date) : null;
-    const currentMonth = dateObj && dateObj.isValid() ? dateObj.month() + 1 : 0;
-    const currentYearVal = dateObj && dateObj.isValid() ? dateObj.year() : 0;
-
-    const handleSelect = (type: "month" | "year", val: number) => {
-      let newM = currentMonth || 1;
-      let newY = currentYearVal || currentYear;
-
-      if (type === "month") newM = val || 1;
-      if (type === "year") newY = val || currentYear;
-
-      const newDate = dayjs()
-        .year(newY)
-        .month(newM - 1)
-        .date(1)
-        .format("YYYY-MM-DD");
-      field.onChange(newDate);
-    };
-
-    return (
-      <div className="experience-form__custom-date">
-        <label className="experience-form__custom-label">
-          {icon}
-          <span>{label}</span>
-        </label>
-        <div className="experience-form__dropdowns">
-          <CalendarDropdown
-            value={currentMonth}
-            options={months}
-            onSelect={(val) => handleSelect("month", val)}
-            ariaLabel={`${label} month`}
-            disabled={disabled}
-          />
-          <CalendarDropdown
-            value={currentYearVal}
-            options={years}
-            onSelect={(val) => handleSelect("year", val)}
-            ariaLabel={`${label} year`}
-            disabled={disabled}
-          />
-        </div>
-        {error && <span className="experience-form__error">{error}</span>}
-      </div>
-    );
-  };
-
-  return <Controller name={name} control={control} render={renderField} />;
-};
 
 export const ExperienceForm = (props: ExperienceFormProps) => {
   const { t } = useTranslation();

@@ -1,6 +1,7 @@
-import "./CalendarDropdown.scss";
+import { Button } from "@/components/atoms/Button/Button.tsx";
 import { useCalendarDropdown } from "./useCalendarDropdown.ts";
 import type { CalendarDropdownProps } from "./types.ts";
+import "./CalendarDropdown.scss";
 
 const CalendarDropdown = ({
   value,
@@ -18,9 +19,9 @@ const CalendarDropdown = ({
       className={`documents-calendar__select${open ? " open" : ""}`}
       ref={containerRef}
     >
-      <button
+      <Button
         type="button"
-        className="documents-calendar__select-trigger"
+        variant="select"
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-label={ariaLabel}
@@ -28,7 +29,7 @@ const CalendarDropdown = ({
         onClick={() => setOpen((o) => !o)}
       >
         {label}
-      </button>
+      </Button>
       <ul
         className="documents-calendar__select-menu"
         role="listbox"

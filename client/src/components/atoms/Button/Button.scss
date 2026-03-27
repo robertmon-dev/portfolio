@@ -321,6 +321,35 @@
     }
   }
 
+  &--select {
+    min-width: 110px;
+    background-color: $bg-input;
+    border: 1px solid $border-color;
+    border-radius: $radius-sm;
+    color: $text-main;
+    box-shadow: $shadow-surface-sm;
+
+    justify-content: flex-start;
+
+    .btn-label {
+      width: 100%;
+      text-align: left;
+      justify-content: flex-start;
+    }
+
+    &:hover,
+    &:focus-visible {
+      background-color: $bg-input;
+      border-color: $primary;
+      box-shadow: 0 0 0 1px $primary, $glow-rim-top;
+      transform: translateY(0);
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+
   &--icon {
     padding: 0 !important;
 

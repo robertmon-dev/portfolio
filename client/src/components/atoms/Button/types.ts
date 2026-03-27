@@ -1,7 +1,16 @@
-import React from 'react';
+import React from "react";
 
-export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'success' | 'purple';
-export type ButtonSize = 'sm' | 'md' | 'lg';
+export type ButtonVariant =
+  | "primary"
+  | "secondary"
+  | "outline"
+  | "ghost"
+  | "danger"
+  | "success"
+  | "purple"
+  | "select";
+
+export type ButtonSize = "sm" | "md" | "lg";
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
@@ -12,4 +21,4 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
   isIcon?: boolean;
-};
+}
