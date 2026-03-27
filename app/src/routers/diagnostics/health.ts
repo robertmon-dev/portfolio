@@ -1,12 +1,12 @@
 import { z } from "zod";
 import { router } from "../../trpc/init";
-import { publicProcedure } from "../../trpc/procedures/public";
+import { utilityProcedure } from "src/trpc/procedures/utility";
 import { HealthResponseSchema } from "@portfolio/shared";
 import { HealthService } from "../../services/health/health";
 import { executeService } from "../../trpc/executers/base";
 
 export const diagnosticsRouter = router({
-  check: publicProcedure
+  check: utilityProcedure
     .meta({
       openapi: {
         method: "GET",

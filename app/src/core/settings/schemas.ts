@@ -7,7 +7,7 @@ export const envSchema = z
       .default("development"),
     PORT: z.string().transform(Number).default(8800),
 
-    DATABASE_URL: z.string().url(),
+    DATABASE_URL: z.url(),
     DB_TLS_ENABLED: z
       .string()
       .default("false")
@@ -24,14 +24,14 @@ export const envSchema = z
     JWT_SECRET: z.string().min(32),
     NICKNAME: z.string(),
 
-    ROOT_EMAIL: z.string().email().default("admin@example.com"),
+    ROOT_EMAIL: z.email().default("admin@example.com"),
     ROOT_PASSWORD: z.string().min(8).default("admin1234"),
     ROOT_USERNAME: z.string().default("root"),
 
     LOG_LEVEL: z
       .enum(["fatal", "error", "warn", "info", "debug", "trace"])
       .default("info"),
-    APP_URL: z.string().url().default("http://localhost:8800"),
+    APP_URL: z.url().default("http://localhost:8800"),
 
     GITHUB_TOKEN: z.string().min(1, "GitHub Token is required for sync"),
 
@@ -39,8 +39,9 @@ export const envSchema = z
     MAIL_PORT: z.string().transform(Number).default(587),
     MAIL_USER: z.string(),
     MAIL_PASS: z.string(),
-    MAIL_FROM: z.string().email(),
+    MAIL_FROM: z.email(),
 
+    X_API_TOKEN: z.uuid(),
     CORS_ORIGIN: z.string().optional(),
   })
   .transform((env) => {
