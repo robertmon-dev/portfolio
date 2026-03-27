@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { zUuid, zString, zColor, zSafeArray } from "./generic";
 
 export const TECH_STACK_CATEGORIES = [
   "Frontend",
@@ -16,44 +17,37 @@ export type TechStackCategory = (typeof TECH_STACK_CATEGORIES)[number];
 export const TechStackCategorySchema = z.enum(TECH_STACK_CATEGORIES);
 
 export const TechStackSchema = z.object({
-  id: z.uuid(),
-  name: z.string().min(1, "Name is required"),
-  icon: z.string().nullable().optional(),
-  color: z
-    .string()
-    .regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/, "Invalid hex color")
-    .nullable()
-    .optional(),
+  id: zUuid,
+  name: zString.min(1, "Name is required"),
+  icon: zString.nullable().optional(),
+  color: zColor.nullable().optional(),
   category: TechStackCategorySchema,
 });
 
 export const CreateTechStackSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  icon: z.string().optional(),
-  color: z
-    .string()
-    .regex(/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/, "Invalid hex color")
-    .optional(),
+  name: zString.min(1, "Name is required"),
+  icon: zString.optional(),
+  color: zColor.optional(),
   category: TechStackCategorySchema,
 });
 
 export const UpdateTechStackSchema = CreateTechStackSchema.partial().extend({
-  id: z.uuid(),
+  id: zUuid,
 });
 
 export const TechStackProjectRelationSchema = z.object({
-  id: z.uuid(),
-  title: z.string(),
-  slug: z.string(),
+  id: zUuid,
+  title: zString,
+  slug: zString,
 });
 
 export const TechStackWithRelationsSchema = TechStackSchema.extend({
-  projects: z.array(TechStackProjectRelationSchema).default([]),
+  projects: zSafeArray(TechStackProjectRelationSchema).default([]),
 });
 
 export const LinkTechStackProjectSchema = z.object({
-  techStackId: z.uuid(),
-  projectId: z.uuid(),
+  techStackId: zUuid,
+  projectId: zUuid,
 });
 
 export const TechStackOpenApiSchemas = {

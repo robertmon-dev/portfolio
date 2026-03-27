@@ -1,54 +1,63 @@
 import { z } from "zod";
 import { TechStackSchema } from "./techStack";
 import { GithubRepoSchema } from "./github";
+import {
+  zUuid,
+  zString,
+  zUrl,
+  zText,
+  zContent,
+  zDateOrString,
+  zSafeArray,
+} from "./generic";
 
 export const ProjectImageSchema = z.object({
-  id: z.uuid(),
-  url: z.url(),
-  alt: z.string().nullable(),
+  id: zUuid,
+  url: zUrl,
+  alt: zString.nullable(),
   order: z.number(),
-  projectId: z.uuid(),
+  projectId: zUuid,
 });
 
 export const ProjectSchema = z.object({
-  id: z.uuid(),
-  slug: z.string(),
-  title: z.string(),
-  description: z.string(),
-  content: z.string().optional(),
-  imageUrl: z.url().optional(),
-  demoUrl: z.url().optional(),
-  githubRepoId: z.uuid().nullable(),
+  id: zUuid,
+  slug: zString,
+  title: zString,
+  description: zText,
+  content: zContent.optional(),
+  imageUrl: zUrl.optional(),
+  demoUrl: zUrl.optional(),
+  githubRepoId: zUuid.nullable(),
   isFeatured: z.boolean(),
   isVisible: z.boolean(),
-  createdAt: z.date().or(z.string()),
+  createdAt: zDateOrString,
 });
 
 export const CreateProjectSchema = z.object({
-  slug: z.string(),
-  title: z.string(),
-  description: z.string(),
-  content: z.string().optional(),
-  imageUrl: z.url().optional(),
-  demoUrl: z.url().optional(),
+  slug: zString,
+  title: zString,
+  description: zText,
+  content: zContent.optional(),
+  imageUrl: zUrl.optional(),
+  demoUrl: zUrl.optional(),
   isFeatured: z.boolean(),
   isVisible: z.boolean(),
-  techStackIds: z.array(z.uuid()).optional(),
-  githubRepoId: z.uuid().nullable().optional(),
+  techStackIds: zSafeArray(zUuid, 50).optional(),
+  githubRepoId: zUuid.nullable().optional(),
 });
 
 export const UpdateProjectSchema = CreateProjectSchema.partial().extend({
-  id: z.uuid(),
+  id: zUuid,
 });
 
 export const ProjectWithRelationsSchema = ProjectSchema.extend({
-  techStack: z.array(TechStackSchema).optional(),
-  gallery: z.array(ProjectImageSchema).optional(),
+  techStack: zSafeArray(TechStackSchema, 50).optional(),
+  gallery: zSafeArray(ProjectImageSchema, 20).optional(),
   githubRepo: GithubRepoSchema.nullable().optional(),
 });
 
 export const DeleteProjectSchema = z.object({
-  id: z.uuid(),
+  id: zUuid,
 });
 
 export const ListProjectsOptionsSchema = z.object({
