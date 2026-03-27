@@ -1,19 +1,20 @@
 import { z } from "zod";
+import { zString, zUuid, zSafeArray } from "./generic";
 
 export const RoleEnum = z.enum(["USER", "ADMIN", "MODERATOR", "VIEWER"]);
 export const FlagEnum = z.enum(["READ", "WRITE", "ADMIN"]);
 
 export const EndpointSchema = z.object({
-  name: z.string(),
-  flags: z.array(FlagEnum),
+  name: zString,
+  flags: zSafeArray(FlagEnum),
 });
 
 export const UserPermissionSchema = z.object({
-  resource: z.string(),
-  flags: z.array(FlagEnum),
+  resource: zString,
+  flags: zSafeArray(FlagEnum),
 });
 
 export const UpdateUserPermissionsInputSchema = z.object({
-  id: z.uuid(),
-  permissions: z.array(UserPermissionSchema),
+  id: zUuid,
+  permissions: zSafeArray(UserPermissionSchema),
 });

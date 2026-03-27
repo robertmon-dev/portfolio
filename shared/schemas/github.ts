@@ -1,41 +1,42 @@
 import { z } from "zod";
+import { zUuid, zString, zUrl, zText, zDateOrString } from "./generic";
 
 export const GithubRepoSchema = z.object({
-  id: z.uuid(),
-  name: z.string(),
-  url: z.url(),
+  id: zUuid,
+  name: zString,
+  url: zUrl,
   stars: z.number(),
-  language: z.string().nullable(),
-  description: z.string().nullable(),
+  language: zString.nullable(),
+  description: zText.nullable(),
   project: z
     .object({
-      id: z.uuid(),
-      title: z.string(),
+      id: zUuid,
+      title: zString,
     })
     .nullable()
     .optional(),
 });
 
 export const UpdateGithubRepoInputSchema = z.object({
-  id: z.uuid(),
-  name: z.string().min(1).optional(),
+  id: zUuid,
+  name: zString.min(1).optional(),
   stars: z.number().int().nonnegative().optional(),
-  language: z.string().nullable().optional(),
-  description: z.string().nullable().optional(),
+  language: zString.nullable().optional(),
+  description: zText.nullable().optional(),
   order: z.number().int().optional(),
 });
 
 export const LinkRepoProjectInputSchema = z.object({
-  repoId: z.uuid(),
-  projectId: z.uuid(),
+  repoId: zUuid,
+  projectId: zUuid,
 });
 
 export const GithubStatsSchema = z.object({
-  id: z.uuid(),
-  username: z.string(),
+  id: zUuid,
+  username: zString,
   followers: z.number(),
   publicRepos: z.number(),
   totalStars: z.number(),
   repos: z.array(GithubRepoSchema),
-  updatedAt: z.date().or(z.string()),
+  updatedAt: zDateOrString,
 });

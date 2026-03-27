@@ -21,3 +21,8 @@ export const zDatePreprocess = z.preprocess((arg) => {
   if (typeof arg === "string" || arg instanceof Date) return new Date(arg);
   return arg;
 }, z.date());
+
+export const zSafeArray = <T extends z.ZodTypeAny>(schema: T, maxItems = 100) =>
+  z
+    .array(schema)
+    .max(maxItems, `Array cannot contain more than ${maxItems} items`);
