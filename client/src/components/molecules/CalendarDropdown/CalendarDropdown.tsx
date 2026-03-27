@@ -7,6 +7,7 @@ const CalendarDropdown = ({
   options,
   onSelect,
   ariaLabel,
+  disabled = false,
 }: CalendarDropdownProps) => {
   const { open, setOpen, containerRef, menuRef } = useCalendarDropdown();
 
@@ -23,6 +24,7 @@ const CalendarDropdown = ({
         aria-haspopup="listbox"
         aria-expanded={open}
         aria-label={ariaLabel}
+        disabled={disabled}
         onClick={() => setOpen((o) => !o)}
       >
         {label}

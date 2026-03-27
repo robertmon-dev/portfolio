@@ -17,6 +17,7 @@ export const useExperienceForm = ({
     setValue,
     watch,
     reset,
+    control,
     formState: { errors },
   } = useForm<CreateExperienceInput>({
     resolver: zodResolver(CreateExperienceSchema),
@@ -57,6 +58,7 @@ export const useExperienceForm = ({
     handleSubmit: handleSubmit((data) => onSubmit(data)),
     errors,
     watch,
+    control,
     setValue,
   };
 };

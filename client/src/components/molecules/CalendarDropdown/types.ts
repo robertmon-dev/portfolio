@@ -8,4 +8,5 @@ export interface CalendarDropdownProps {
   options: CalendarDropdownOption[];
   onSelect: (value: number) => void;
   ariaLabel: string;
+  disabled?: boolean;
 }
