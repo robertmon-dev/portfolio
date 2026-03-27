@@ -6,7 +6,7 @@ export const useAuth = () => {
   const navigate = useNavigate();
   const utils = trpc.useUtils();
 
-  const { data: user, isLoading: isUserLoading } = trpc.account.me.useQuery(
+  const { data, isLoading: isUserLoading } = trpc.account.me.useQuery(
     undefined,
     {
       retry: false,
@@ -45,18 +45,16 @@ export const useAuth = () => {
         await logoutMutation.mutateAsync();
       }
     } catch {
-      //***
     } finally {
       localStorage.removeItem("token");
       utils.account.me.setData(undefined, undefined);
-
       navigate("/demo");
     }
   };
 
   return {
-    user,
-    isLoggedIn: !!user,
+    user: { ...data },
+    isLoggedIn: !!data,
     isUserLoading,
     login,
     confirm2FA,
