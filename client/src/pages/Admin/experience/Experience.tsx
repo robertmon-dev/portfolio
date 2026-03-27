@@ -20,6 +20,7 @@ export const ExperienceAdminPage = () => {
         id: "total",
         children: t("admin.experience.tags.total", {
           count: state.experiences.length,
+          defaultValue: "{{count}} Experiences",
         }),
         variant: "info" as const,
         icon: <Briefcase size={12} />,
@@ -42,8 +43,11 @@ export const ExperienceAdminPage = () => {
   return (
     <div className="experience-management">
       <Header
-        title={t("admin.experience.title")}
-        subtitle={t("admin.experience.subtitle")}
+        title={t("admin.experience.title", "Experience Management")}
+        subtitle={t(
+          "admin.experience.subtitle",
+          "Manage your professional work history and education",
+        )}
         tags={headerTags}
         action={
           <Button
@@ -52,7 +56,7 @@ export const ExperienceAdminPage = () => {
             size="sm"
             leftIcon={<Plus size={16} />}
           >
-            {t("admin.experience.actions.add")}
+            {t("admin.experience.actions.add", "Add Experience")}
           </Button>
         }
       />

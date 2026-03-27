@@ -42,12 +42,13 @@ export const UsersAdminPage = () => {
   const columns = useMemo(
     () =>
       getUsersColumns(
+        t,
         (user) => actions.openModal("UPDATE", user.id),
         (user) => actions.openModal("PERMISSIONS", user.id),
         (id) => actions.openModal("DELETE", id),
         state.processingId,
       ),
-    [actions, state.processingId],
+    [t, actions, state.processingId],
   );
 
   return (

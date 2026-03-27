@@ -11,8 +11,10 @@ import {
   Lock,
 } from "lucide-react";
 import type { UserProfile } from "@portfolio/shared";
+import type { TFunction } from "i18next";
 
 export const getUsersColumns = (
+  t: TFunction,
   onEdit: (user: UserProfile) => void,
   onPermissions: (user: UserProfile) => void,
   onDelete: (id: string) => void,
@@ -20,7 +22,7 @@ export const getUsersColumns = (
 ): Column<UserProfile>[] => [
   {
     key: "username",
-    header: "User Identity",
+    header: t("admin.users.table.headers.identity", "User Identity"),
     width: "25%",
     render: (user) => (
       <div className="user-table__identity-cell">
@@ -39,14 +41,14 @@ export const getUsersColumns = (
         </div>
         <div className="user-table__info">
           <span className="user-table__name">{user.name || user.username}</span>
-          <span className="user-table__subtext">@{user.username}</span>
+          <span className="user-table__subtext">{user.username}</span>
         </div>
       </div>
     ),
   },
   {
     key: "role",
-    header: "Role",
+    header: t("admin.users.table.headers.role", "Role"),
     width: "15%",
     render: (user) => {
       const isAdmin = user.role === "ADMIN";
@@ -64,17 +66,20 @@ export const getUsersColumns = (
   },
   {
     key: "permissions",
-    header: "Permissions",
+    header: t("admin.users.table.headers.permissions", "Permissions"),
     width: "15%",
     render: (user) => (
       <Tag variant="default" size="sm" icon={<Lock size={12} />} maxLength={20}>
-        {user.permissions.length} Resources
+        {t("admin.users.table.resourcesCount", {
+          count: user.permissions.length,
+          defaultValue: "{{count}} Resources",
+        })}
       </Tag>
     ),
   },
   {
     key: "twoFactorEnabled",
-    header: "2FA Status",
+    header: t("admin.users.table.headers.2fa", "2FA Status"),
     width: "20%",
     align: "center",
     render: (user) => (
@@ -90,13 +95,15 @@ export const getUsersColumns = (
           )
         }
       >
-        {user.twoFactorEnabled ? "Active" : "Disabled"}
+        {user.twoFactorEnabled
+          ? t("common.status.active", "Active")
+          : t("common.status.disabled", "Disabled")}
       </Tag>
     ),
   },
   {
     key: "createdAt",
-    header: "Joined",
+    header: t("admin.users.table.headers.joined", "Joined"),
     width: "10%",
     render: (user) => (
       <span className="user-table__date">
@@ -106,7 +113,7 @@ export const getUsersColumns = (
   },
   {
     key: "actions",
-    header: "Actions",
+    header: t("common.actions", "Actions"),
     align: "right",
     render: (user) => (
       <div className="user-table__actions" onClick={(e) => e.stopPropagation()}>
@@ -116,7 +123,10 @@ export const getUsersColumns = (
           onClick={() => onPermissions(user)}
           isIcon
           disabled={processingId === user.id}
-          title="Manage Permissions"
+          title={t(
+            "admin.users.actions.managePermissions",
+            "Manage Permissions",
+          )}
         >
           <Lock size={14} />
         </Button>
@@ -125,6 +135,7 @@ export const getUsersColumns = (
           size="sm"
           onClick={() => onEdit(user)}
           isIcon
+          title={t("common.edit", "Edit")}
           disabled={processingId === user.id}
         >
           <Edit2 size={14} />
@@ -135,6 +146,7 @@ export const getUsersColumns = (
           isIcon
           onClick={() => onDelete(user.id)}
           isLoading={processingId === user.id}
+          title={t("common.delete", "Delete")}
         >
           <Trash2 size={14} />
         </Button>
