@@ -28,6 +28,19 @@ help: ## Display this help message
 # Setup & Maintenance
 # ==============================================================================
 
+.PHONY: setup
+setup: ## Full project orchestration (Install -> Infra -> DB Setup)
+	@echo "$(CYAN)=> Running full project setup...$(RESET)"
+	@$(MAKE) install
+	@$(MAKE) infra-up
+	@echo "$(CYAN)=> Waiting for database to be ready...$(RESET)"
+	@sleep 3
+	@$(MAKE) db-generate
+	@$(MAKE) db-push
+	@$(MAKE) db-seed
+	@echo "$(GREEN)=> Setup complete! Run 'make dev' to start development.$(RESET)"
+
+
 .PHONY: install
 install: ## Install all monorepo dependencies
 	@echo "=> Installing monorepo dependencies..."
