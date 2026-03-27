@@ -7,7 +7,7 @@ import { Input } from "@/components/atoms/Input/Input";
 import { TextArea } from "@/components/atoms/TextArea/TextArea";
 import { Checkbox } from "@/components/atoms/CheckBox/CheckBox";
 import CalendarDropdown from "@/components/molecules/CalendarDropdown/CalendarDropdown";
-import type { ExperienceFormProps } from "../types";
+import type { ExperienceFormProps, MonthYearSelectorProps } from "../types";
 import { useExperienceForm } from "./useExperienceForm";
 import "../ExperienceModal.scss";
 
@@ -19,7 +19,7 @@ const MonthYearSelector = ({
   disabled,
   t,
   error,
-}: any) => {
+}: MonthYearSelectorProps) => {
   const currentYear = dayjs().year();
 
   const years = [
@@ -43,7 +43,9 @@ const MonthYearSelector = ({
       name={name}
       control={control}
       render={({ field }) => {
-        const dateObj = field.value ? dayjs(field.value) : null;
+        const dateObj = field.value
+          ? dayjs(field.value as string | Date)
+          : null;
         const currentMonth =
           dateObj && dateObj.isValid() ? dateObj.month() + 1 : 0;
         const currentYearVal =
@@ -56,7 +58,6 @@ const MonthYearSelector = ({
           if (type === "month") newM = val || 1;
           if (type === "year") newY = val || currentYear;
 
-          // Złożenie i aktualizacja w RHF jako string YYYY-MM-DD
           const newDate = dayjs()
             .year(newY)
             .month(newM - 1)
@@ -128,7 +129,6 @@ export const ExperienceForm = (props: ExperienceFormProps) => {
         />
 
         <div className="grid-row-dual">
-          {/* Zastępujemy <Input type="date"> nowym selektorem */}
           <MonthYearSelector
             name="startDate"
             control={control}
