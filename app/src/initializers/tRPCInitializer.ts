@@ -80,20 +80,22 @@ export class TrpcInitializer {
       },
     });
 
-    app.use("/api-json", (_, res) => res.json(openApiDocument));
-    app.use(
-      "/api-docs",
-      apiReference({
-        theme: "bluePlanet",
-        spec: {
-          url: "/api-json",
-        },
-        layout: "modern",
-      }),
-    );
+    if (this.settings.NODE_ENV !== "development") {
+      app.use("/api-json", (_, res) => res.json(openApiDocument));
+      app.use(
+        "/api-docs",
+        apiReference({
+          theme: "bluePlanet",
+          spec: {
+            url: "/api-json",
+          },
+          layout: "modern",
+        }),
+      );
+      this.logger.info("Scalar UI at /api-docs");
+    }
 
     this.logger.info("tRPC mounted at /trpc");
     this.logger.info("REST API mounted at /api");
-    this.logger.info("Scalar UI (Modern Docs) available at /api-docs");
   }
 }
