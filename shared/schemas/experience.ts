@@ -1,14 +1,15 @@
 import { z } from "zod";
+import { zUuid, zString, zText, zDateOrString } from "./generic";
 
 export const ExperienceSchema = z.object({
-  id: z.uuid(),
-  position: z.string().min(1),
-  company: z.string().min(1),
-  startDate: z.date().or(z.string()),
-  endDate: z.date().or(z.string()).nullable(),
-  description: z.string(),
+  id: zUuid,
+  position: zString.min(1),
+  company: zString.min(1),
+  startDate: zDateOrString,
+  endDate: zDateOrString.nullable(),
+  description: zText,
   isCurrent: z.boolean(),
-  createdAt: z.date().or(z.string()),
+  createdAt: zDateOrString,
 });
 
 export const CreateExperienceSchema = ExperienceSchema.omit({
@@ -31,7 +32,7 @@ export const CreateExperienceSchema = ExperienceSchema.omit({
 
 export const UpdateExperienceSchema = ExperienceSchema.partial()
   .extend({
-    id: z.uuid(),
+    id: zUuid,
   })
   .refine(
     (data) => {
