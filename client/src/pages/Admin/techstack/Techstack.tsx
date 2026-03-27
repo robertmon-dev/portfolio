@@ -26,7 +26,7 @@ export const TechStackAdminPage = () => {
         icon: <Layers size={12} />,
       },
     ];
-  }, [state.techStacks, t]);
+  }, [state.techStacks.length, t]);
 
   const columns = useMemo(
     () =>
@@ -39,14 +39,17 @@ export const TechStackAdminPage = () => {
           actions.unlinkProject({ techStackId, projectId }),
         state.processingId,
       ),
-    [actions, state.processingId],
+    [t, actions, state.processingId],
   );
 
   return (
     <div className="projects-management">
       <Header
-        title={t("admin.techStack.title")}
-        subtitle={t("admin.techStack.subtitle")}
+        title={t("admin.techStack.title", "Tech Stack Management")}
+        subtitle={t(
+          "admin.techStack.subtitle",
+          "Organize and manage the technologies you use in your projects",
+        )}
         tags={headerTags}
         action={
           <Button
@@ -55,7 +58,7 @@ export const TechStackAdminPage = () => {
             size="sm"
           >
             <Plus size={16} />
-            {t("admin.techStack.actions.add")}
+            {t("admin.techStack.actions.add", "Add Technology")}
           </Button>
         }
       />

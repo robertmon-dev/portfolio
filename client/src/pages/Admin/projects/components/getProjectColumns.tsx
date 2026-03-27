@@ -15,7 +15,7 @@ export const getProjectColumns = (
 ): Column<ProjectWithRelations>[] => [
   {
     key: "title",
-    header: t("admin.projects.table.project"),
+    header: t("admin.projects.table.project", "Project"),
     width: "25%",
     render: (project) => (
       <div className="projects-table__title-col">
@@ -30,7 +30,7 @@ export const getProjectColumns = (
   },
   {
     key: "isFeatured",
-    header: t("admin.projects.table.featured"),
+    header: t("admin.projects.table.featured", "Featured"),
     width: "8%",
     align: "center",
     render: (project) => (
@@ -45,7 +45,7 @@ export const getProjectColumns = (
   },
   {
     key: "status",
-    header: t("admin.projects.table.status"),
+    header: t("admin.projects.table.status", "Status"),
     width: "12%",
     render: (project) => (
       <div className="projects-table__status-col">

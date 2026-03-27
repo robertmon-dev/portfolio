@@ -45,6 +45,7 @@ export const GithubAdminPage = () => {
   const columns = useMemo(
     () =>
       getGithubColumns(
+        t,
         (repo) => {
           actions.selectRepo(repo.id);
           actions.openModal("update");
@@ -60,7 +61,7 @@ export const GithubAdminPage = () => {
         },
         state.processingId,
       ),
-    [actions, state.processingId],
+    [t, actions, state.processingId],
   );
 
   return (

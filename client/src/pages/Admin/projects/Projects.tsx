@@ -71,8 +71,11 @@ export const ProjectsAdminPage = () => {
   return (
     <div className="projects-management">
       <Header
-        title={t("admin.projects.title")}
-        subtitle={t("admin.projects.subtitle")}
+        title={t("admin.projects.title", "Projects Management")}
+        subtitle={t(
+          "admin.projects.subtitle",
+          "Manage and showcase your portfolio work",
+        )}
         tags={headerTags}
         action={
           <Button
@@ -81,7 +84,7 @@ export const ProjectsAdminPage = () => {
             size="sm"
           >
             <Plus size={16} />
-            {t("admin.projects.actions.add")}
+            {t("admin.projects.actions.add", "Add Project")}
           </Button>
         }
       />

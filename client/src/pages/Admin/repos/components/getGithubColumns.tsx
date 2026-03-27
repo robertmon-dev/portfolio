@@ -3,8 +3,10 @@ import { Tag } from "@/components/atoms/Tag/Tag";
 import { Button } from "@/components/atoms/Button/Button";
 import { Trash2, Edit2, Link as LinkIcon, Link2Off } from "lucide-react";
 import type { GithubRepo } from "@portfolio/shared";
+import type { TFunction } from "i18next";
 
 export const getGithubColumns = (
+  t: TFunction,
   onEdit: (repo: GithubRepo) => void,
   onDelete: (id: string) => void,
   onLink: (repo: GithubRepo) => void,
@@ -13,7 +15,7 @@ export const getGithubColumns = (
 ): Column<GithubRepo>[] => [
   {
     key: "name",
-    header: "Repository",
+    header: t("admin.github.table.repository", "Repository"),
     width: "25%",
     render: (repo) => (
       <div className="github-table__name-col">
@@ -25,7 +27,7 @@ export const getGithubColumns = (
   },
   {
     key: "language",
-    header: "Language",
+    header: t("admin.github.table.language", "Language"),
     width: "15%",
     render: (repo) => (
       <div className="github-table__lang-col">
@@ -34,14 +36,16 @@ export const getGithubColumns = (
             {repo.language}
           </Tag>
         ) : (
-          <span className="github-table__empty">Unknown</span>
+          <span className="github-table__empty">
+            {t("common.unknown", "Unknown")}
+          </span>
         )}
       </div>
     ),
   },
   {
     key: "stars",
-    header: "Stars",
+    header: t("admin.github.table.stars", "Stars"),
     width: "10%",
     align: "center",
     render: (repo) => (
@@ -50,7 +54,7 @@ export const getGithubColumns = (
   },
   {
     key: "project",
-    header: "Linked Project",
+    header: t("admin.github.table.linkedProject", "Linked Project"),
     width: "25%",
     render: (repo) => (
       <div className="github-table__project-col">
@@ -65,7 +69,7 @@ export const getGithubColumns = (
           </Tag>
         ) : (
           <Tag variant="default" size="sm">
-            Unlinked
+            {t("admin.github.table.unlinked", "Unlinked")}
           </Tag>
         )}
       </div>
@@ -73,7 +77,7 @@ export const getGithubColumns = (
   },
   {
     key: "actions",
-    header: "Actions",
+    header: t("common.actions", "Actions"),
     align: "right",
     render: (repo) => (
       <div
@@ -86,7 +90,7 @@ export const getGithubColumns = (
             size="sm"
             isIcon
             onClick={() => onUnlink(repo)}
-            title="Unlink from project"
+            title={t("admin.github.actions.unlink", "Unlink from project")}
             disabled={processingId === repo.id}
           >
             <Link2Off size={14} className="github-table__icon--unlink" />
@@ -97,7 +101,7 @@ export const getGithubColumns = (
             size="sm"
             isIcon
             onClick={() => onLink(repo)}
-            title="Link to project"
+            title={t("admin.github.actions.link", "Link to project")}
             disabled={processingId === repo.id}
           >
             <LinkIcon size={14} />
@@ -108,7 +112,7 @@ export const getGithubColumns = (
           size="sm"
           onClick={() => onEdit(repo)}
           isIcon
-          title="Edit"
+          title={t("common.edit", "Edit")}
           disabled={processingId === repo.id}
         >
           <Edit2 size={14} />
@@ -119,7 +123,7 @@ export const getGithubColumns = (
           isIcon
           onClick={() => onDelete(repo.id)}
           isLoading={processingId === repo.id}
-          title="Delete"
+          title={t("common.delete", "Delete")}
         >
           <Trash2 size={14} />
         </Button>
