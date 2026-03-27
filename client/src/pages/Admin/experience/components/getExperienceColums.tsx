@@ -54,7 +54,7 @@ export const getExperienceColumns = (
     render: (item) => {
       const start = dayjs(item.startDate).format("MM/YYYY");
       const end = item.isCurrent
-        ? t("common.present")
+        ? t("common.present", "Present")
         : dayjs(item.endDate).format("MM/YYYY");
       const tenure = getTenure(item.startDate, item.endDate, item.isCurrent, t);
 

@@ -41,7 +41,7 @@ export const envSchema = z
     MAIL_PASS: z.string(),
     MAIL_FROM: z.email(),
 
-    X_API_TOKEN: z.uuid(),
+    X_API_TOKEN: z.uuid().optional(),
     CORS_ORIGIN: z.string().optional(),
   })
   .transform((env) => {
