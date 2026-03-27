@@ -3,8 +3,7 @@ import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import { useAuth } from "@/hooks/useAuth";
 import { useRecover } from "@/hooks/useRecover";
-import { notifyError } from "@/lib/trpc/handlers/trpcError";
-import { LoginInputSchema, ResetPasswordSchema } from "@portfolio/shared";
+import { type LoginInput, type ResetPasswordInput } from "@portfolio/shared";
 import { loginReducer, initialState } from "./types";
 import type { LoginStep, LoginFormState } from "./types";
 
@@ -22,84 +21,47 @@ export const useLoginModal = (onSuccess?: () => void) => {
     setTimeout(() => dispatch({ type: "RESET_FORM" }), 300);
   }, []);
 
-  const handleLoginSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const validation = LoginInputSchema.safeParse({
-      email: state.email,
-      password: state.password,
-    });
-
-    if (!validation.success) {
-      return toast.error(validation.error.issues[0].message);
-    }
-
-    try {
-      const result = await login(validation.data);
-      if (result?.status === "processing") {
-        dispatch({ type: "SET_USER_ID", payload: result.userId });
-        dispatch({ type: "SET_STEP", payload: "2FA" });
-        toast.info(t("auth.login.2fa_required"));
-      } else if (result?.status === "success") {
-        toast.success(t("auth.login.success"));
-        onSuccess?.();
-        close();
-      }
-    } catch (err) {
-      notifyError(err);
+  const handleLoginSubmit = async (data: LoginInput) => {
+    const result = await login(data);
+    if (result?.status === "processing") {
+      dispatch({ type: "SET_USER_ID", payload: result.userId });
+      dispatch({ type: "SET_STEP", payload: "2FA" });
+      toast.info(
+        t("auth.login.2fa_required", "Two-factor authentication required"),
+      );
+    } else if (result?.status === "success") {
+      toast.success(t("auth.login.success", "Logged in successfully"));
+      onSuccess?.();
+      close();
     }
   };
 
-  const handleRequestReset = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!state.email.includes("@"))
-      return toast.error(t("errors.invalid_email"));
-
-    try {
-      await requestReset({ email: state.email });
-      toast.success(t("auth.recover.email_sent"));
-      dispatch({ type: "SET_STEP", payload: "RESET_PASSWORD" });
-    } catch (err) {
-      notifyError(err);
-    }
+  const handleRequestReset = async (data: { email: string }) => {
+    await requestReset(data);
+    toast.success(
+      t("auth.recover.email_sent", "Reset code sent to your email"),
+    );
+    dispatch({ type: "SET_STEP", payload: "RESET_PASSWORD" });
   };
 
-  const handleResetSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const validation = ResetPasswordSchema.safeParse({
-      token: state.resetCode,
-      password: state.newPassword,
-      confirmPassword: state.confirmPassword,
-    });
-
-    if (!validation.success) {
-      return toast.error(validation.error.issues[0].message);
-    }
-
-    try {
-      await confirmReset(validation.data);
-      toast.success(t("auth.recover.success"));
-      dispatch({ type: "SET_STEP", payload: "LOGIN" });
-    } catch (err) {
-      notifyError(err);
-    }
+  const handleResetSubmit = async (data: ResetPasswordInput) => {
+    await confirmReset(data);
+    toast.success(t("auth.recover.success", "Password has been updated"));
+    dispatch({ type: "SET_STEP", payload: "LOGIN" });
   };
 
-  const handle2FASubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handle2FASubmit = async (code: string) => {
     if (!state.userId) return;
 
-    try {
-      const result = await confirm2FA({
-        userId: state.userId,
-        code: state.twoFactorCode,
-      });
-      if (result?.status === "success") {
-        toast.success(t("auth.login.success"));
-        onSuccess?.();
-        close();
-      }
-    } catch (err) {
-      notifyError(err);
+    const result = await confirm2FA({
+      userId: state.userId,
+      code,
+    });
+
+    if (result?.status === "success") {
+      toast.success(t("auth.login.success", "Access granted!"));
+      onSuccess?.();
+      close();
     }
   };
 
@@ -118,10 +80,12 @@ export const useLoginModal = (onSuccess?: () => void) => {
       setResetCode: (v: string) => updateField("resetCode", v),
       setNewPassword: (v: string) => updateField("newPassword", v),
       setConfirmPassword: (v: string) => updateField("confirmPassword", v),
+
       handleLoginSubmit,
       handle2FASubmit,
       handleRequestReset,
       handleResetSubmit,
+
       goToStep: (s: LoginStep) => dispatch({ type: "SET_STEP", payload: s }),
     } as LoginFormState,
   };

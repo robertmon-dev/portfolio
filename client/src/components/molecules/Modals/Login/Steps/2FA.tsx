@@ -1,47 +1,71 @@
+import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { ShieldCheck } from "lucide-react";
-import { Button } from "@/components/atoms/Button/Button";
+import { ShieldCheck, ArrowRight } from "lucide-react";
 import { Input } from "@/components/atoms/Input/Input";
+import { Button } from "@/components/atoms/Button/Button";
 import type { TwoFactorFormProps } from "../types";
 
-export const TwoFactorForm = ({ form, isLoading }: TwoFactorFormProps) => {
+export const TwoFactorForm = ({
+  form: modalForm,
+  isLoading,
+}: TwoFactorFormProps) => {
   const { t } = useTranslation();
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<{ code: string }>({
+    defaultValues: {
+      code: modalForm.twoFactorCode,
+    },
+  });
+
+  const onSubmit = (data: { code: string }) => {
+    modalForm.handle2FASubmit(data.code);
+  };
+
   return (
-    <form
-      onSubmit={form.handle2FASubmit}
-      style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}
-    >
-      <p
-        style={{
-          fontSize: "0.875rem",
-          color: "var(--text-muted)",
-          textAlign: "center",
-        }}
-      >
+    <form onSubmit={handleSubmit(onSubmit)} className="auth-form">
+      <p className="auth-form__description">
         {t(
           "auth.2fa.description",
-          "Enter the code from your authenticator app.",
+          "Enter the 6-digit verification code from your authenticator app to secure your session.",
         )}
       </p>
 
-      <Input
-        label={t("auth.2fa.code.label", "Verification Code")}
-        type="text"
-        inputMode="numeric"
-        value={form.twoFactorCode}
-        onChange={(e) => form.setTwoFactorCode(e.target.value)}
-        placeholder="000 000"
-        leftIcon={<ShieldCheck size={18} />}
-        fullWidth
-        required
-        autoFocus
-        disabled={isLoading}
-      />
+      <div className="auth-form__fields">
+        <Input
+          {...register("code", {
+            required: t("auth.2fa.errors.required", "Code is required"),
+            pattern: {
+              value: /^[0-9]{6}$/,
+              message: t("auth.2fa.errors.invalid", "Code must be 6 digits"),
+            },
+          })}
+          label={t("auth.2fa.fields.code.label", "Verification Code")}
+          type="text"
+          inputMode="numeric"
+          placeholder="000 000"
+          error={errors.code?.message}
+          leftIcon={<ShieldCheck size={18} />}
+          fullWidth
+          autoFocus
+          disabled={isLoading}
+        />
+      </div>
 
-      <Button type="submit" variant="primary" isLoading={isLoading} fullWidth>
-        {t("auth.2fa.submit", "Verify & Login")}
-      </Button>
+      <div className="auth-form__footer">
+        <Button
+          type="submit"
+          variant="primary"
+          isLoading={isLoading}
+          fullWidth
+          rightIcon={<ArrowRight size={18} />}
+        >
+          {t("auth.2fa.submit", "Verify & Login")}
+        </Button>
+      </div>
     </form>
   );
 };

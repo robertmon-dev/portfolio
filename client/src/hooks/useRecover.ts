@@ -1,5 +1,8 @@
-import { trpc } from '../lib/trpc/client';
-import type { RequestPasswordResetInput, ResetPasswordInput } from '@portfolio/shared';
+import { trpc } from "../lib/trpc/client";
+import type {
+  RequestPasswordResetInput,
+  ResetPasswordInput,
+} from "@portfolio/shared";
 
 export const useRecover = () => {
   const requestMutation = trpc.auth.requestPasswordReset.useMutation();

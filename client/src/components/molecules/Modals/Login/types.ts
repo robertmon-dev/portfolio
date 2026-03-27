@@ -1,4 +1,4 @@
-import type { FormEvent } from "react";
+import type { LoginInput, ResetPasswordInput } from "@portfolio/shared";
 
 export type LoginStep = "LOGIN" | "2FA" | "FORGOT_PASSWORD" | "RESET_PASSWORD";
 
@@ -38,10 +38,10 @@ export interface LoginFormState {
   setNewPassword: (v: string) => void;
   confirmPassword: string;
   setConfirmPassword: (v: string) => void;
-  handleLoginSubmit: (e: FormEvent) => Promise<void>;
-  handle2FASubmit: (e: FormEvent) => Promise<void>;
-  handleRequestReset: (e: FormEvent) => Promise<void>;
-  handleResetSubmit: (e: FormEvent) => Promise<void>;
+  handleLoginSubmit: (data: LoginInput) => Promise<void>;
+  handle2FASubmit: (code: string) => Promise<void>;
+  handleRequestReset: (data: { email: string }) => Promise<void>;
+  handleResetSubmit: (data: ResetPasswordInput) => Promise<void>;
   goToStep: (step: LoginStep) => void;
 }
 

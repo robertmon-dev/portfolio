@@ -4,8 +4,9 @@ import {
   STEP_COMPONENTS,
   getStepTitleKey,
   STEP_TITLE_FALLBACKS,
-} from "./ModalContent";
+} from "./consts";
 import type { LoginModalProps } from "./types";
+import "./LoginModal.scss";
 
 export const LoginModal = ({
   open,

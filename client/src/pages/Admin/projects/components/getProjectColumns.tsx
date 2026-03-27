@@ -139,7 +139,7 @@ export const getProjectColumns = (
     key: "actions",
     header: t("admin.projects.table.actions", "Actions"),
     align: "right",
-    width: "15%",
+    width: "10%",
     render: (project) => (
       <div
         className="projects-table__actions"

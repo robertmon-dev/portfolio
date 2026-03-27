@@ -44,10 +44,12 @@ export const useAuth = () => {
       if (localStorage.getItem("token")) {
         await logoutMutation.mutateAsync();
       }
-    } catch (e) {
+    } catch {
+      //***
     } finally {
       localStorage.removeItem("token");
       utils.account.me.setData(undefined, undefined);
+      await utils.invalidate();
 
       navigate("/demo");
     }

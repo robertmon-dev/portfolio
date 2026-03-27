@@ -1,70 +1,91 @@
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslation } from "react-i18next";
-import { Lock, Hash } from "lucide-react";
-import { Button } from "@/components/atoms/Button/Button";
+import { Lock, Hash, RefreshCcw } from "lucide-react";
 import { Input } from "@/components/atoms/Input/Input";
+import { Button } from "@/components/atoms/Button/Button";
+import {
+  ResetPasswordSchema,
+  type ResetPasswordInput,
+} from "@portfolio/shared";
 import type { LoginFormProps } from "../types";
 
-export const ResetPasswordForm = ({ form, isLoading }: LoginFormProps) => {
+export const ResetPasswordForm = ({
+  form: modalForm,
+  isLoading,
+}: LoginFormProps) => {
   const { t } = useTranslation();
 
-  const isMismatch =
-    form.newPassword !== form.confirmPassword && form.confirmPassword !== "";
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ResetPasswordInput>({
+    resolver: zodResolver(ResetPasswordSchema),
+    defaultValues: {
+      token: modalForm.resetCode,
+      password: "",
+      confirmPassword: "",
+    },
+  });
+
+  const onSubmit = (data: ResetPasswordInput) => {
+    modalForm.handleResetSubmit(data);
+  };
 
   return (
-    <form
-      onSubmit={form.handleResetSubmit}
-      style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}
-    >
-      <Input
-        label={t("auth.recover.code.label", "Reset Code")}
-        type="text"
-        value={form.resetCode}
-        onChange={(e) => form.setResetCode(e.target.value)}
-        placeholder="123456"
-        leftIcon={<Hash size={18} />}
-        fullWidth
-        required
-        disabled={isLoading}
-      />
+    <form onSubmit={handleSubmit(onSubmit)} className="auth-form">
+      <div className="auth-form__fields">
+        <Input
+          {...register("token")}
+          label={t("auth.recover.fields.code.label", "Reset Code")}
+          placeholder="123456"
+          error={errors.token?.message}
+          leftIcon={<Hash size={18} />}
+          fullWidth
+          required
+          disabled={isLoading}
+        />
 
-      <Input
-        label={t("auth.recover.newPassword.label", "New Password")}
-        type="password"
-        value={form.newPassword}
-        onChange={(e) => form.setNewPassword(e.target.value)}
-        placeholder="••••••••"
-        leftIcon={<Lock size={18} />}
-        fullWidth
-        required
-        disabled={isLoading}
-      />
+        <Input
+          {...register("password")}
+          type="password"
+          label={t("auth.recover.fields.password.label", "New Password")}
+          placeholder="••••••••"
+          error={errors.password?.message}
+          leftIcon={<Lock size={18} />}
+          fullWidth
+          required
+          disabled={isLoading}
+        />
 
-      <Input
-        label={t("auth.recover.confirmPassword.label", "Confirm New Password")}
-        type="password"
-        value={form.confirmPassword}
-        onChange={(e) => form.setConfirmPassword(e.target.value)}
-        placeholder="••••••••"
-        leftIcon={<Lock size={18} />}
-        fullWidth
-        required
-        disabled={isLoading}
-        error={
-          isMismatch
-            ? t("auth.recover.mismatch", "Passwords do not match")
-            : undefined
-        }
-      />
+        <Input
+          {...register("confirmPassword")}
+          type="password"
+          label={t(
+            "auth.recover.fields.confirmPassword.label",
+            "Confirm New Password",
+          )}
+          placeholder="••••••••"
+          error={errors.confirmPassword?.message}
+          leftIcon={<Lock size={18} />}
+          fullWidth
+          required
+          disabled={isLoading}
+        />
+      </div>
 
-      <Button
-        type="submit"
-        variant="primary"
-        isLoading={isLoading}
-        disabled={isMismatch}
-        fullWidth
-      >
-        {t("auth.recover.submit", "Update Password")}
-      </Button>
+      <div className="auth-form__footer">
+        <Button
+          type="submit"
+          variant="primary"
+          isLoading={isLoading}
+          leftIcon={<RefreshCcw size={18} />}
+          fullWidth
+        >
+          {t("auth.recover.submit", "Update Password")}
+        </Button>
+      </div>
     </form>
   );
 };

@@ -1,61 +1,79 @@
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslation } from "react-i18next";
-import { Mail, Lock } from "lucide-react";
-import { Button } from "@/components/atoms/Button/Button";
+import { Mail, Lock, LogIn } from "lucide-react";
 import { Input } from "@/components/atoms/Input/Input";
+import { Button } from "@/components/atoms/Button/Button";
 import { Checkbox } from "@/components/atoms/CheckBox/CheckBox";
+import { LoginInputSchema, type LoginInput } from "@portfolio/shared";
 import type { LoginFormProps } from "../types";
-import "../LoginModal.scss";
 
-export const LoginForm = ({ form, isLoading }: LoginFormProps) => {
+export const LoginForm = ({ form: modalForm, isLoading }: LoginFormProps) => {
   const { t } = useTranslation();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginInput>({
+    resolver: zodResolver(LoginInputSchema),
+    defaultValues: {
+      email: modalForm.email,
+      password: "",
+    },
+  });
+
+  const onSubmit = (data: LoginInput) => {
+    modalForm.setEmail(data.email);
+    modalForm.handleLoginSubmit(data);
+  };
 
   return (
-    <form onSubmit={form.handleLoginSubmit} className="login-form-step">
-      <Input
-        label={t("auth.login.email.label", "Email Address")}
-        type="email"
-        value={form.email}
-        onChange={(e) => form.setEmail(e.target.value)}
-        placeholder={t("auth.login.email.placeholder", "your@email.com")}
-        leftIcon={<Mail size={18} />}
-        fullWidth
-        required
-        disabled={isLoading}
-      />
-
-      <Input
-        label={t("auth.login.password.label", "Password")}
-        type="password"
-        value={form.password}
-        onChange={(e) => form.setPassword(e.target.value)}
-        placeholder={t("auth.login.password.placeholder", "••••••••")}
-        leftIcon={<Lock size={18} />}
-        fullWidth
-        required
-        disabled={isLoading}
-      />
-
-      <div className="login-form-step__options">
-        <Checkbox
-          label={t("auth.login.remember", "Remember me")}
-          checked={form.rememberMe}
-          onChange={(e) => form.setRememberMe(e.target.checked)}
+    <form onSubmit={handleSubmit(onSubmit)} className="auth-form">
+      <div className="auth-form__fields">
+        <Input
+          {...register("email")}
+          label={t("auth.login.fields.email.label", "Email Address")}
+          placeholder="admin@portfolio.com"
+          error={errors.email?.message}
+          leftIcon={<Mail size={18} />}
+          fullWidth
           disabled={isLoading}
         />
 
-        <Button
-          type="button"
-          variant="ghost"
-          size="sm"
-          onClick={() => form.goToStep("FORGOT_PASSWORD")}
+        <Input
+          {...register("password")}
+          type="password"
+          label={t("auth.login.fields.password.label", "Password")}
+          placeholder="••••••••"
+          error={errors.password?.message}
+          leftIcon={<Lock size={18} />}
+          fullWidth
           disabled={isLoading}
-          className="login-form-step__forgot-btn"
-        >
-          {t("auth.login.forgot_link", "Forgotten Password?")}
-        </Button>
+        />
       </div>
 
-      <Button type="submit" variant="primary" isLoading={isLoading} fullWidth>
+      <div className="auth-form__options">
+        <Checkbox
+          label={t("auth.login.remember_me", "Remember me")}
+          onChange={(e) => modalForm.setRememberMe(e.target.checked)}
+          checked={modalForm.rememberMe}
+        />
+        <button
+          type="button"
+          className="auth-form__forgot-link"
+          onClick={() => modalForm.goToStep("FORGOT_PASSWORD")}
+        >
+          {t("auth.login.forgot_password", "Forgot password?")}
+        </button>
+      </div>
+
+      <Button
+        type="submit"
+        variant="primary"
+        fullWidth
+        isLoading={isLoading}
+        leftIcon={<LogIn size={18} />}
+      >
         {t("auth.login.submit", "Sign In")}
       </Button>
     </form>
