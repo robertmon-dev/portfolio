@@ -123,7 +123,7 @@ export const getExperienceColumns = (
           <Edit2 size={14} />
         </Button>
         <Button
-          variant="ghost"
+          variant="danger"
           size="sm"
           isIcon={true}
           onClick={(e) => {

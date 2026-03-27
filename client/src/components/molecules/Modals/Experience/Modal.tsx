@@ -4,6 +4,7 @@ import type { ExperienceModalProps } from "./types";
 
 export const ExperienceModals = ({ state, actions }: ExperienceModalProps) => {
   const currentModal = useExperienceModalContent(state, actions);
+  const { activeModal } = state;
 
   const handleClose = () => {
     if (state.isAnyProcessing) return;
@@ -15,7 +16,7 @@ export const ExperienceModals = ({ state, actions }: ExperienceModalProps) => {
       open={!!state.activeModal}
       onClose={handleClose}
       title={currentModal?.title ?? ""}
-      size="40vw"
+      size={activeModal === "DELETE" ? "20vw" : "40vw"}
     >
       {currentModal?.component}
     </Modal>

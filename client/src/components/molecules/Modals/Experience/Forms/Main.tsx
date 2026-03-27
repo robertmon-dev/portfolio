@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import type { ControllerRenderProps, Path } from "react-hook-form";
 import { Controller } from "react-hook-form";
 import dayjs from "dayjs";
 import { Briefcase, Building2, Calendar } from "lucide-react";
@@ -10,6 +11,7 @@ import CalendarDropdown from "@/components/molecules/CalendarDropdown/CalendarDr
 import type { ExperienceFormProps, MonthYearSelectorProps } from "../types";
 import { useExperienceForm } from "./useExperienceForm";
 import "../ExperienceModal.scss";
+import type { CreateExperienceInput } from "@portfolio/shared";
 
 const MonthYearSelector = ({
   name,
@@ -38,62 +40,61 @@ const MonthYearSelector = ({
     })),
   ];
 
-  return (
-    <Controller
-      name={name}
-      control={control}
-      render={({ field }) => {
-        const dateObj = field.value
-          ? dayjs(field.value as string | Date)
-          : null;
-        const currentMonth =
-          dateObj && dateObj.isValid() ? dateObj.month() + 1 : 0;
-        const currentYearVal =
-          dateObj && dateObj.isValid() ? dateObj.year() : 0;
+  const renderField = ({
+    field,
+  }: {
+    field: ControllerRenderProps<
+      CreateExperienceInput,
+      Path<CreateExperienceInput>
+    >;
+  }) => {
+    const dateObj = field.value ? dayjs(field.value as string | Date) : null;
+    const currentMonth = dateObj && dateObj.isValid() ? dateObj.month() + 1 : 0;
+    const currentYearVal = dateObj && dateObj.isValid() ? dateObj.year() : 0;
 
-        const handleSelect = (type: "month" | "year", val: number) => {
-          let newM = currentMonth || 1;
-          let newY = currentYearVal || currentYear;
+    const handleSelect = (type: "month" | "year", val: number) => {
+      let newM = currentMonth || 1;
+      let newY = currentYearVal || currentYear;
 
-          if (type === "month") newM = val || 1;
-          if (type === "year") newY = val || currentYear;
+      if (type === "month") newM = val || 1;
+      if (type === "year") newY = val || currentYear;
 
-          const newDate = dayjs()
-            .year(newY)
-            .month(newM - 1)
-            .date(1)
-            .format("YYYY-MM-DD");
-          field.onChange(newDate);
-        };
+      const newDate = dayjs()
+        .year(newY)
+        .month(newM - 1)
+        .date(1)
+        .format("YYYY-MM-DD");
+      field.onChange(newDate);
+    };
 
-        return (
-          <div className="experience-form__custom-date">
-            <label className="experience-form__custom-label">
-              {icon}
-              <span>{label}</span>
-            </label>
-            <div className="experience-form__dropdowns">
-              <CalendarDropdown
-                value={currentMonth}
-                options={months}
-                onSelect={(val) => handleSelect("month", val)}
-                ariaLabel={`${label} month`}
-                disabled={disabled}
-              />
-              <CalendarDropdown
-                value={currentYearVal}
-                options={years}
-                onSelect={(val) => handleSelect("year", val)}
-                ariaLabel={`${label} year`}
-                disabled={disabled}
-              />
-            </div>
-            {error && <span className="experience-form__error">{error}</span>}
-          </div>
-        );
-      }}
-    />
-  );
+    return (
+      <div className="experience-form__custom-date">
+        <label className="experience-form__custom-label">
+          {icon}
+          <span>{label}</span>
+        </label>
+        <div className="experience-form__dropdowns">
+          <CalendarDropdown
+            value={currentMonth}
+            options={months}
+            onSelect={(val) => handleSelect("month", val)}
+            ariaLabel={`${label} month`}
+            disabled={disabled}
+          />
+          <CalendarDropdown
+            value={currentYearVal}
+            options={years}
+            onSelect={(val) => handleSelect("year", val)}
+            ariaLabel={`${label} year`}
+            disabled={disabled}
+          />
+        </div>
+        {error && <span className="experience-form__error">{error}</span>}
+      </div>
+    );
+  };
+
+  return <Controller name={name} control={control} render={renderField} />;
 };
 
 export const ExperienceForm = (props: ExperienceFormProps) => {
