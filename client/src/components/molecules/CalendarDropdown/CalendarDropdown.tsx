@@ -1,3 +1,4 @@
+import { ChevronDown } from "lucide-react";
 import { Button } from "@/components/atoms/Button/Button.tsx";
 import { useCalendarDropdown } from "./useCalendarDropdown.ts";
 import type { CalendarDropdownProps } from "./types.ts";
@@ -27,6 +28,7 @@ const CalendarDropdown = ({
         aria-label={ariaLabel}
         disabled={disabled}
         onClick={() => setOpen((o) => !o)}
+        rightIcon={<ChevronDown size={16} className="dropdown-chevron" />}
       >
         {label}
       </Button>
