@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { Controller } from "react-hook-form";
 import dayjs from "dayjs";
-import { Briefcase, Building2, Calendar, FileText } from "lucide-react";
+import { Briefcase, Building2, Calendar } from "lucide-react";
 import { Button } from "@/components/atoms/Button/Button";
 import { Input } from "@/components/atoms/Input/Input";
 import { TextArea } from "@/components/atoms/TextArea/TextArea";
@@ -23,7 +23,7 @@ const MonthYearSelector = ({
   const currentYear = dayjs().year();
 
   const years = [
-    { value: 0, label: t("common.year", "Year") }, // Placeholder
+    { value: 0, label: t("common.year", "Year") },
     ...Array.from({ length: 50 }, (_, i) => ({
       value: currentYear - i,
       label: (currentYear - i).toString(),
@@ -31,10 +31,10 @@ const MonthYearSelector = ({
   ];
 
   const months = [
-    { value: 0, label: t("common.month", "Month") }, // Placeholder
+    { value: 0, label: t("common.month", "Month") },
     ...Array.from({ length: 12 }, (_, i) => ({
       value: i + 1,
-      label: dayjs().month(i).format("MMMM"), // Zwróci "January", "February" itp.
+      label: dayjs().month(i).format("MMMM"),
     })),
   ];
 
@@ -43,7 +43,6 @@ const MonthYearSelector = ({
       name={name}
       control={control}
       render={({ field }) => {
-        // Parsowanie obecnego stringa "YYYY-MM-DD" do wartości liczbowych
         const dateObj = field.value ? dayjs(field.value) : null;
         const currentMonth =
           dateObj && dateObj.isValid() ? dateObj.month() + 1 : 0;
@@ -51,8 +50,8 @@ const MonthYearSelector = ({
           dateObj && dateObj.isValid() ? dateObj.year() : 0;
 
         const handleSelect = (type: "month" | "year", val: number) => {
-          let newM = currentMonth || 1; // Domyślnie styczeń, jeśli wcześniej było pusto
-          let newY = currentYearVal || currentYear; // Domyślnie obecny rok
+          let newM = currentMonth || 1;
+          let newY = currentYearVal || currentYear;
 
           if (type === "month") newM = val || 1;
           if (type === "year") newY = val || currentYear;
