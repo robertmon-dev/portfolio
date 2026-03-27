@@ -1,24 +1,29 @@
 import { z } from "zod";
 import { RoleEnum, UserPermissionSchema } from "./permission";
-
-export const dateSchema = z.preprocess((arg) => {
-  if (typeof arg === "string" || arg instanceof Date) return new Date(arg);
-  return arg;
-}, z.date());
+import {
+  zUuid,
+  zEmail,
+  zString,
+  zText,
+  zUrl,
+  zPassword,
+  zDatePreprocess,
+  zSafeArray,
+} from "./generic";
 
 export const UserProfileSchema = z.object({
-  id: z.uuid(),
-  email: z.email(),
-  username: z.string(),
-  name: z.string().nullable(),
-  headline: z.string().nullable(),
-  bio: z.string().nullable(),
-  avatarUrl: z.string().nullable(),
-  socials: z.record(z.string(), z.any()).nullable(),
+  id: zUuid,
+  email: zEmail,
+  username: zString,
+  name: zString.nullable(),
+  headline: zString.nullable(),
+  bio: zText.nullable(),
+  avatarUrl: zUrl.nullable(),
+  socials: z.record(zString, z.any()).nullable(),
   role: RoleEnum,
-  permissions: z.array(UserPermissionSchema).default([]),
-  createdAt: dateSchema,
-  updatedAt: dateSchema,
+  permissions: zSafeArray(UserPermissionSchema).default([]),
+  createdAt: zDatePreprocess,
+  updatedAt: zDatePreprocess,
   twoFactorEnabled: z.boolean().default(false),
 });
 
@@ -28,9 +33,9 @@ export const MeResponseSchema = z.object({
 
 export const GetUserInputSchema = z
   .object({
-    id: z.string().optional(),
-    email: z.string().optional(),
-    username: z.string().optional(),
+    id: zUuid.optional(),
+    email: zEmail.optional(),
+    username: zString.optional(),
   })
   .refine((data) => data.id || data.email || data.username, {
     message: "Provide at least one identifier: id, email, or username",
@@ -41,28 +46,28 @@ export const ListUsersInputSchema = z
     role: RoleEnum.optional(),
     limit: z.number().min(1).max(100).default(20),
     offset: z.number().min(0).default(0),
-    search: z.string().optional(),
+    search: zString.optional(),
   })
   .optional();
 
 export const UpdateUserInputSchema = z.object({
-  id: z.uuid(),
-  name: z.string().min(2).max(50).nullable().optional(),
-  headline: z.string().max(100).nullable().optional(),
-  bio: z.string().max(2000).nullable().optional(),
-  avatarUrl: z.url().nullable().optional(),
-  socials: z.record(z.string(), z.any()).nullable().optional(),
+  id: zUuid,
+  name: zString.min(2).nullable().optional(),
+  headline: zString.nullable().optional(),
+  bio: zText.nullable().optional(),
+  avatarUrl: zUrl.nullable().optional(),
+  socials: z.record(zString, z.any()).nullable().optional(),
   role: RoleEnum.optional(),
 });
 
 export const DeleteUserInputSchema = z.object({
-  id: z.uuid(),
+  id: zUuid,
 });
 
 export const CreateUserInputSchema = z.object({
-  email: z.email(),
-  username: z.string().min(3).max(30),
-  password: z.string().min(8),
-  name: z.string().min(2).optional(),
+  email: zEmail,
+  username: zString.min(3).max(30),
+  password: zPassword,
+  name: zString.min(2).optional(),
   role: RoleEnum.default("USER").optional(),
 });
