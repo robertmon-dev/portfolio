@@ -1,38 +1,39 @@
 import { z } from "zod";
+import { zEmail, zPassword, zString, zUuid } from "./generic";
 import { UserProfileSchema } from "./user";
 
 export const LoginInputSchema = z.object({
-  email: z.email("Invalid email address"),
-  password: z.string().min(1, "Password is required"),
+  email: zEmail,
+  password: zPassword,
 });
 
 export const LoginResponseSchema = z.union([
   z.object({
     status: z.literal("success"),
-    token: z.string(),
+    token: zString,
     user: UserProfileSchema,
   }),
   z.object({
     status: z.literal("processing"),
-    userId: z.uuid(),
-    message: z.string(),
+    userId: zUuid,
+    message: zString,
   }),
 ]);
 
 export const Verify2FASchema = z.object({
-  userId: z.uuid(),
-  code: z.string().length(6),
+  userId: zUuid,
+  code: zString.length(6),
 });
 
 export const RequestPasswordResetSchema = z.object({
-  email: z.email("Invalid email format"),
+  email: zEmail,
 });
 
 export const ResetPasswordSchema = z
   .object({
-    token: z.string().min(1, "Token is required"),
-    password: z.string().min(8, "Password must be at least 8 characters long"),
-    confirmPassword: z.string(),
+    token: zString.min(1, "Token is required"),
+    password: zPassword,
+    confirmPassword: zString,
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",
@@ -40,11 +41,11 @@ export const ResetPasswordSchema = z
   });
 
 export const Resend2FASchema = z.object({
-  userId: z.uuid(),
+  userId: zUuid,
 });
 
 export const MessageResponseSchema = z.object({
-  message: z.string(),
+  message: zString,
 });
 
 export const SuccessResponseSchema = z.object({
