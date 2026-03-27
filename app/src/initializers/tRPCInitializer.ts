@@ -80,7 +80,7 @@ export class TrpcInitializer {
       },
     });
 
-    if (this.settings.NODE_ENV !== "development") {
+    if (this.settings.NODE_ENV === "development") {
       app.use("/api-json", (_, res) => res.json(openApiDocument));
       app.use(
         "/api-docs",
