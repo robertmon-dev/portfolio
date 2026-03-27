@@ -49,7 +49,6 @@ export const useAuth = () => {
     } finally {
       localStorage.removeItem("token");
       utils.account.me.setData(undefined, undefined);
-      await utils.invalidate();
 
       navigate("/demo");
     }
