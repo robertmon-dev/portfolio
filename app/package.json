@@ -25,7 +25,7 @@
     "lint:fix": "eslint . --fix"
   },
   "prisma": {
-    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/main.ts"
+    "seed": "yarn tsx ./src/scripts/seeder/main.ts"
   },
   "dependencies": {
     "@portfolio/shared": "*",
