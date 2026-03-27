@@ -3,7 +3,7 @@ import { router } from "../../trpc/init";
 import { publicProcedure } from "../../trpc/procedures/public";
 import { ListTechStacksService } from "../../services/techStack/List";
 import { GetTechStackService } from "../../services/techStack/Get";
-import { TechStackWithRelationsSchema } from "@portfolio/shared";
+import { TechStackWithRelationsSchema, zUuid } from "@portfolio/shared";
 import { executeService } from "../../trpc/executers/base";
 
 export const techStackPublicRouter = router({
@@ -37,7 +37,7 @@ export const techStackPublicRouter = router({
         protect: false,
       },
     })
-    .input(z.object({ id: z.string().uuid() }))
+    .input(z.object({ id: zUuid }))
     .output(TechStackWithRelationsSchema.nullable())
     .query(async ({ ctx, input }) =>
       executeService(GetTechStackService, ctx, input.id),

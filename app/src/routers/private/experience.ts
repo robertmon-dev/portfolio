@@ -8,6 +8,7 @@ import {
   CreateExperienceSchema,
   UpdateExperienceSchema,
   ExperienceSchema,
+  DeleteExperienceInputSchema,
 } from "@portfolio/shared";
 import { executeService } from "../../trpc/executers/base";
 
@@ -59,11 +60,7 @@ export const experiencePrivateRouter = router({
         protect: true,
       },
     })
-    .input(
-      z.object({
-        ids: z.array(z.uuid()),
-      }),
-    )
+    .input(DeleteExperienceInputSchema)
     .output(z.void())
     .mutation(
       async ({ ctx, input }) =>

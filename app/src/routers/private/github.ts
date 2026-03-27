@@ -3,6 +3,7 @@ import {
   UpdateGithubRepoInputSchema,
   LinkRepoProjectInputSchema,
   GithubRepoSchema,
+  zUuid,
 } from "@portfolio/shared";
 import { router } from "../../trpc/init";
 import { protectedProcedure } from "../../trpc/procedures/private";
@@ -61,7 +62,7 @@ export const githubPrivateRouter = router({
         protect: true,
       },
     })
-    .input(z.object({ repoId: z.uuid() }))
+    .input(z.object({ repoId: zUuid }))
     .output(z.object({ success: z.boolean() }))
     .mutation(async ({ ctx, input }) => {
       await executeService(UnlinkRepoProjectService, ctx, input.repoId);
@@ -80,7 +81,7 @@ export const githubPrivateRouter = router({
         protect: true,
       },
     })
-    .input(z.object({ id: z.uuid() }))
+    .input(z.object({ id: zUuid }))
     .output(z.object({ success: z.boolean() }))
     .mutation(async ({ ctx, input }) => {
       await executeService(DeleteGithubRepoService, ctx, input.id);

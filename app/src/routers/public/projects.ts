@@ -6,6 +6,7 @@ import { GetProjectBySlugService } from "../../services/project/Get";
 import {
   ProjectWithRelationsSchema,
   ListProjectsOptionsSchema,
+  zString,
 } from "@portfolio/shared";
 import { executeService } from "../../trpc/executers/base";
 
@@ -40,7 +41,7 @@ export const projectsRouter = router({
         protect: false,
       },
     })
-    .input(z.object({ slug: z.string() }))
+    .input(z.object({ slug: zString }))
     .output(ProjectWithRelationsSchema.nullable())
     .query(async ({ ctx, input }) =>
       executeService(GetProjectBySlugService, ctx, input.slug),

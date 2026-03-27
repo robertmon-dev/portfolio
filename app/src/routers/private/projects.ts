@@ -8,6 +8,7 @@ import {
   CreateProjectSchema,
   UpdateProjectSchema,
   ProjectSchema,
+  zUuid,
 } from "@portfolio/shared";
 import { executeService } from "../../trpc/executers/base";
 
@@ -60,7 +61,7 @@ export const projectPrivateRouter = router({
         protect: true,
       },
     })
-    .input(z.object({ id: z.uuid() }))
+    .input(z.object({ id: zUuid }))
     .output(z.object({ success: z.boolean() }))
     .mutation(async ({ ctx, input }) => {
       await executeService(DeleteProjectService, ctx, input.id);

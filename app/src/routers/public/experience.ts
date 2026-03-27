@@ -3,7 +3,7 @@ import { router } from "../../trpc/init";
 import { publicProcedure } from "../../trpc/procedures/public";
 import { ListExperienceService } from "../../services/experience/List";
 import { GetExperienceService } from "../../services/experience/Get";
-import { ExperienceSchema } from "@portfolio/shared";
+import { ExperienceSchema, zUuid } from "@portfolio/shared";
 import { executeService } from "../../trpc/executers/base";
 
 export const experiencePublicRouter = router({
@@ -36,7 +36,7 @@ export const experiencePublicRouter = router({
         protect: false,
       },
     })
-    .input(z.object({ id: z.uuid() }))
+    .input(z.object({ id: zUuid }))
     .output(ExperienceSchema.nullable())
     .query(async ({ ctx, input }) =>
       executeService(GetExperienceService, ctx, input.id),

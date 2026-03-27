@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { zUuid, zString, zText, zDateOrString } from "./generic";
+import { zUuid, zString, zText, zDateOrString, zSafeArray } from "./generic";
 
 export const ExperienceSchema = z.object({
   id: zUuid,
@@ -44,3 +44,7 @@ export const UpdateExperienceSchema = ExperienceSchema.partial()
       path: ["endDate"],
     },
   );
+
+export const DeleteExperienceInputSchema = z.object({
+  ids: zSafeArray(zUuid),
+});
