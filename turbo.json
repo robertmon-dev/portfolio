@@ -20,7 +20,13 @@
       "persistent": true
     },
     "db:generate": {
-      "cache": false
+      "inputs": [
+        "prisma/schema.prisma"
+      ],
+      "outputs": [
+        "node_modules/.prisma/**"
+      ],
+      "cache": true
     },
     "lint": {
       "dependsOn": [
