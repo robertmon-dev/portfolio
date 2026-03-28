@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { router } from "../../trpc/init";
-import { protectedProcedure } from "../../trpc/procedures/private";
+import { permissionProcedure } from "../../trpc/procedures/permission";
 import { CreateProjectService } from "../../services/project/Create";
 import { UpdateProjectService } from "../../services/project/Update";
 import { DeleteProjectService } from "../../services/project/Delete";
@@ -9,11 +9,12 @@ import {
   UpdateProjectSchema,
   ProjectSchema,
   zUuid,
+  FlagEnum,
 } from "@portfolio/shared";
 import { executeService } from "../../trpc/executers/base";
 
 export const projectPrivateRouter = router({
-  create: protectedProcedure
+  create: permissionProcedure("project:create", FlagEnum.enum.WRITE)
     .meta({
       openapi: {
         method: "POST",
@@ -31,7 +32,7 @@ export const projectPrivateRouter = router({
       executeService(CreateProjectService, ctx, input),
     ),
 
-  update: protectedProcedure
+  update: permissionProcedure("project:update", FlagEnum.enum.WRITE)
     .meta({
       openapi: {
         method: "PATCH",
@@ -49,7 +50,7 @@ export const projectPrivateRouter = router({
       executeService(UpdateProjectService, ctx, input),
     ),
 
-  delete: protectedProcedure
+  delete: permissionProcedure("project:delete", FlagEnum.enum.WRITE)
     .meta({
       openapi: {
         method: "DELETE",

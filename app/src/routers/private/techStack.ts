@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { router } from "../../trpc/init";
-import { protectedProcedure } from "../../trpc/procedures/private";
+import { permissionProcedure } from "../../trpc/procedures/permission";
 import { CreateTechStackService } from "../../services/techStack/Create";
 import { UpdateTechStackService } from "../../services/techStack/Update";
 import { DeleteTechStackService } from "../../services/techStack/Delete";
@@ -11,11 +11,12 @@ import {
   UpdateTechStackSchema,
   LinkTechStackProjectSchema,
   TechStackSchema,
+  FlagEnum,
 } from "@portfolio/shared";
 import { executeService } from "../../trpc/executers/base";
 
 export const techStackPrivateRouter = router({
-  create: protectedProcedure
+  create: permissionProcedure("techStack:create", FlagEnum.enum.WRITE)
     .meta({
       openapi: {
         method: "POST",
@@ -33,7 +34,7 @@ export const techStackPrivateRouter = router({
       executeService(CreateTechStackService, ctx, input),
     ),
 
-  update: protectedProcedure
+  update: permissionProcedure("techStack:update", FlagEnum.enum.WRITE)
     .meta({
       openapi: {
         method: "PATCH",
@@ -51,7 +52,7 @@ export const techStackPrivateRouter = router({
       executeService(UpdateTechStackService, ctx, input),
     ),
 
-  delete: protectedProcedure
+  delete: permissionProcedure("techStack:delete", FlagEnum.enum.WRITE)
     .meta({
       openapi: {
         method: "DELETE",
@@ -73,7 +74,7 @@ export const techStackPrivateRouter = router({
       return { success: true };
     }),
 
-  linkProject: protectedProcedure
+  linkProject: permissionProcedure("techStack:linkProject", FlagEnum.enum.WRITE)
     .meta({
       openapi: {
         method: "POST",
@@ -92,7 +93,10 @@ export const techStackPrivateRouter = router({
       return { success: true };
     }),
 
-  unlinkProject: protectedProcedure
+  unlinkProject: permissionProcedure(
+    "techStack:unlinkProject",
+    FlagEnum.enum.WRITE,
+  )
     .meta({
       openapi: {
         method: "DELETE",

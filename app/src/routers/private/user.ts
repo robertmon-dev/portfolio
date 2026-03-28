@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { router } from "../../trpc/init";
-import { protectedProcedure } from "../../trpc/procedures/private";
+import { permissionProcedure } from "../../trpc/procedures/permission";
 import {
   UserProfileSchema,
   GetUserInputSchema,
@@ -9,6 +9,7 @@ import {
   DeleteUserInputSchema,
   CreateUserInputSchema,
   UpdateUserPermissionsInputSchema,
+  FlagEnum,
 } from "@portfolio/shared";
 import { GetUserService } from "../../services/user/Get";
 import { ListUsersService } from "../../services/user/List";
@@ -19,7 +20,7 @@ import { UpdateUserPermissionsService } from "../../services/user/UpdatePermissi
 import { executeService } from "../../trpc/executers/base";
 
 export const usersRouter = router({
-  create: protectedProcedure
+  create: permissionProcedure("user:create", FlagEnum.enum.WRITE)
     .meta({
       openapi: {
         method: "POST",
@@ -36,7 +37,7 @@ export const usersRouter = router({
       executeService(CreateUserService, ctx, input),
     ),
 
-  list: protectedProcedure
+  list: permissionProcedure("user:list", FlagEnum.enum.WRITE)
     .meta({
       openapi: {
         method: "GET",
@@ -54,7 +55,7 @@ export const usersRouter = router({
       executeService(ListUsersService, ctx, input),
     ),
 
-  get: protectedProcedure
+  get: permissionProcedure("user:get", FlagEnum.enum.READ)
     .meta({
       openapi: {
         method: "GET",
@@ -71,7 +72,7 @@ export const usersRouter = router({
       executeService(GetUserService, ctx, input),
     ),
 
-  update: protectedProcedure
+  update: permissionProcedure("user:update", FlagEnum.enum.WRITE)
     .meta({
       openapi: {
         method: "PATCH",
@@ -88,7 +89,10 @@ export const usersRouter = router({
       executeService(UpdateUserService, ctx, input),
     ),
 
-  updatePermissions: protectedProcedure
+  updatePermissions: permissionProcedure(
+    "user:updatePermissions",
+    FlagEnum.enum.WRITE,
+  )
     .meta({
       openapi: {
         method: "PATCH",
@@ -106,7 +110,7 @@ export const usersRouter = router({
       executeService(UpdateUserPermissionsService, ctx, input),
     ),
 
-  delete: protectedProcedure
+  delete: permissionProcedure("user:delete", FlagEnum.enum.WRITE)
     .meta({
       openapi: {
         method: "DELETE",

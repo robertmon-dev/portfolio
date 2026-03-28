@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { router } from "../../trpc/init";
-import { protectedProcedure } from "../../trpc/procedures/private";
+import { permissionProcedure } from "../../trpc/procedures/permission";
 import { CreateExperienceService } from "../../services/experience/Create";
 import { UpdateExperienceService } from "../../services/experience/Update";
 import { DeleteExperienceService } from "../../services/experience/Delete";
@@ -9,11 +9,12 @@ import {
   UpdateExperienceSchema,
   ExperienceSchema,
   DeleteExperienceInputSchema,
+  FlagEnum,
 } from "@portfolio/shared";
 import { executeService } from "../../trpc/executers/base";
 
 export const experiencePrivateRouter = router({
-  create: protectedProcedure
+  create: permissionProcedure("experience:create", FlagEnum.enum.WRITE)
     .meta({
       openapi: {
         method: "POST",
@@ -31,7 +32,7 @@ export const experiencePrivateRouter = router({
       executeService(CreateExperienceService, ctx, input),
     ),
 
-  update: protectedProcedure
+  update: permissionProcedure("experience:update", FlagEnum.enum.WRITE)
     .meta({
       openapi: {
         method: "PATCH",
@@ -48,7 +49,7 @@ export const experiencePrivateRouter = router({
       executeService(UpdateExperienceService, ctx, input),
     ),
 
-  delete: protectedProcedure
+  delete: permissionProcedure("experience:delete", FlagEnum.enum.WRITE)
     .meta({
       openapi: {
         method: "DELETE",

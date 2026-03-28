@@ -6,15 +6,16 @@ import {
   zUuid,
 } from "@portfolio/shared";
 import { router } from "../../trpc/init";
-import { protectedProcedure } from "../../trpc/procedures/private";
+import { permissionProcedure } from "../../trpc/procedures/permission";
 import { DeleteGithubRepoService } from "../../services/github/Delete";
 import { LinkRepoProjectService } from "../../services/github/Link";
 import { UpdateGithubRepoService } from "../../services/github/Update";
 import { executeService } from "../../trpc/executers/base";
 import { UnlinkRepoProjectService } from "../../services/github/Unlink";
+import { FlagEnum } from "@portfolio/shared";
 
 export const githubPrivateRouter = router({
-  update: protectedProcedure
+  update: permissionProcedure("github:update", FlagEnum.enum.WRITE)
     .meta({
       openapi: {
         method: "PATCH",
@@ -31,7 +32,7 @@ export const githubPrivateRouter = router({
       executeService(UpdateGithubRepoService, ctx, input),
     ),
 
-  linkProject: protectedProcedure
+  linkProject: permissionProcedure("github:linkProject", FlagEnum.enum.WRITE)
     .meta({
       openapi: {
         method: "POST",
@@ -50,7 +51,10 @@ export const githubPrivateRouter = router({
       return { success: true };
     }),
 
-  unlinkProject: protectedProcedure
+  unlinkProject: permissionProcedure(
+    "github:unlinkProject",
+    FlagEnum.enum.WRITE,
+  )
     .meta({
       openapi: {
         method: "DELETE",
@@ -69,7 +73,7 @@ export const githubPrivateRouter = router({
       return { success: true };
     }),
 
-  delete: protectedProcedure
+  delete: permissionProcedure("github:delete", FlagEnum.enum.WRITE)
     .meta({
       openapi: {
         method: "DELETE",

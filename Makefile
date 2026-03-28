@@ -38,6 +38,44 @@ setup: ## Full project orchestration (Install -> Infra -> DB Setup)
 	@$(MAKE) db-generate
 	@$(MAKE) db-push
 	@$(MAKE) db-seed
+	i$(YARN) workspace @portfolio/app prisma db seed
+
+# ==============================================================================
+# CI/CD & Registry (GitHub Actions)
+# ==============================================================================
+
+.PHONY: docker-build-ci
+docker-build-ci: ## Build images for production (CI only)
+	@echo "=> Building production images for $(TAG)..."
+	@docker build -t $(REGISTRY)/$(IMAGE_PREFIX)-app:$(TAG) -f docker/Dockerfile.app .
+	@docker build -t $(REGISTRY)/$(IMAGE_PREFIX)-client:$(TAG) -f docker/Dockerfile.client .
+
+.PHONY: docker-push
+docker-push: ## Push production images to registry
+	@echo "=> Pushing images to $(REGISTRY)..."
+	@docker push $(REGISTRY)/$(IMAGE_PREFIX)-app:$(TAG)
+	@docker push $(REGISTRY)/$(IMAGE_PREFIX)-client:$(TAG)
+
+.PHONY: docker-login
+docker-login: ## Login to GitHub Container Registry
+	@echo "=> Logging in to $(REGISTRY)..."
+	@echo $${GITHUB_TOKEN} | docker login $(REGISTRY) -u $${GITHUB_ACTOR} --password-stdin
+
+# ==============================================================================
+# Quality
+# ==============================================================================
+
+.PHONY: lint
+lint: ## Run ESLint across the monorepo
+	@echo "=> Running linter..."
+	@$(TURBO) run lint
+	@echo "=> Lint complete."
+
+.PHONY: lint-fix
+lint-fix: ## Run ESLint with autofix where supported
+	@echo "=> Running linter with autofix..."
+	@$(TURBO) run lint:fix
+	@echo "=> Lint fix complete."
 	@echo "$(GREEN)=> Setup complete! Run 'make dev' to start development.$(RESET)"
 
 

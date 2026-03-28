@@ -16,11 +16,11 @@ export const useUpdatePermissionsForm = ({
   const { t } = useTranslation();
 
   const availableResources = [
-    "users",
-    "projects",
-    "posts",
-    "settings",
-    "techstack",
+    "user",
+    "github",
+    "project",
+    "techStack",
+    "experience",
   ];
 
   const {
