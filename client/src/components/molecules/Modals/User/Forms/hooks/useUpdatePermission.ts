@@ -90,7 +90,7 @@ export const useUpdatePermissionsForm = ({
     availableResources,
     isProcessing: isSubmitting,
     handlers,
-    handleSubmit: handleSubmit((data) => onSubmit(data)), // ✅ Zmieniamy nazwę na handleSubmit
+    handleSubmit: handleSubmit((data) => onSubmit(data)),
     getFlagsForResource,
   };
 };

@@ -8,3 +8,4 @@ export type UserPermission = z.infer<typeof p.UserPermissionSchema>;
 export type UpdateUserPermissionsInput = z.infer<
   typeof p.UpdateUserPermissionsInputSchema
 >;
+export type ResourceType = z.infer<typeof p.ResourceEnum>;

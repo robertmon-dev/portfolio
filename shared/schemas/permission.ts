@@ -18,3 +18,13 @@ export const UpdateUserPermissionsInputSchema = z.object({
   id: zUuid,
   permissions: zSafeArray(UserPermissionSchema),
 });
+
+export const AVAILABLE_RESOURCES = [
+  "user",
+  "github",
+  "project",
+  "techStack",
+  "experience",
+] as const;
+
+export const ResourceEnum = z.enum(AVAILABLE_RESOURCES);
