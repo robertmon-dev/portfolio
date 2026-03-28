@@ -4,17 +4,12 @@ import { Shield, ShieldOff, CheckSquare } from "lucide-react";
 import { useUpdatePermissionsForm } from "./hooks/useUpdatePermission";
 import type { UpdatePermissionsFormProps } from "../types";
 import { Checkbox } from "@/components/atoms/CheckBox/CheckBox";
+import { AVAILABLE_RESOURCES } from "@portfolio/shared";
 
 export const UpdatePermissionsForm = (props: UpdatePermissionsFormProps) => {
   const { onCancel } = props;
-  const {
-    t,
-    availableResources,
-    isProcessing,
-    handlers,
-    handleSubmit,
-    getFlagsForResource,
-  } = useUpdatePermissionsForm(props);
+  const { t, isProcessing, handlers, handleSubmit, getFlagsForResource } =
+    useUpdatePermissionsForm(props);
 
   return (
     <form onSubmit={handleSubmit} className="user-form">
@@ -52,7 +47,7 @@ export const UpdatePermissionsForm = (props: UpdatePermissionsFormProps) => {
             <div style={{ width: "32px" }}></div>
           </div>
 
-          {availableResources.map((resource, index) => {
+          {AVAILABLE_RESOURCES.map((resource, index) => {
             const currentFlags = getFlagsForResource(resource);
             const allSelected = currentFlags.length === 3;
 

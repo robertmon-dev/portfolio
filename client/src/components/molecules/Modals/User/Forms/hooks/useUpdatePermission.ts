@@ -15,14 +15,6 @@ export const useUpdatePermissionsForm = ({
 }: Omit<UpdatePermissionsFormProps, "onCancel">) => {
   const { t } = useTranslation();
 
-  const availableResources = [
-    "user",
-    "github",
-    "project",
-    "techStack",
-    "experience",
-  ];
-
   const {
     handleSubmit,
     setValue,
@@ -87,7 +79,6 @@ export const useUpdatePermissionsForm = ({
 
   return {
     t,
-    availableResources,
     isProcessing: isSubmitting,
     handlers,
     handleSubmit: handleSubmit((data) => onSubmit(data)),
