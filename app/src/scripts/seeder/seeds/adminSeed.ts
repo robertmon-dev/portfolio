@@ -3,6 +3,7 @@ import type { Logging } from "../../../core/logger/types";
 import * as argon2 from "argon2";
 import type { Growing } from "../types";
 import type { EnvConfig } from "../../../core/settings/types";
+import { AVAILABLE_RESOURCES } from "@portfolio/shared";
 
 export class AdminSeed implements Growing {
   constructor(
@@ -37,14 +38,6 @@ export class AdminSeed implements Growing {
         },
       });
 
-      const resources = [
-        "users",
-        "projects",
-        "github",
-        "techStack",
-        "experience",
-        "diagnostics",
-      ];
       const allFlags: PermissionFlag[] = [
         PermissionFlag.READ,
         PermissionFlag.WRITE,
@@ -54,7 +47,7 @@ export class AdminSeed implements Growing {
       this.logger.info(`Assigning full permissions to ${rootUser.username}...`);
 
       await Promise.all(
-        resources.map((resource) =>
+        AVAILABLE_RESOURCES.map((resource) =>
           this.db.userPermission.upsert({
             where: {
               userId_resource: {
