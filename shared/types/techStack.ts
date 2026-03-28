@@ -11,3 +11,4 @@ export type LinkTechStackProjectInput = z.infer<
   typeof t.LinkTechStackProjectSchema
 >;
 export type UnlinkTechStackProjectInput = LinkTechStackProjectInput;
+export type DeleteTechStackInput = z.infer<typeof t.DeleteTechStackInputSchema>;

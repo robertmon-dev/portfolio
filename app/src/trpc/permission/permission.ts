@@ -19,10 +19,7 @@ export class Permission {
     this.logger = new Logger("Permission");
 
     this.permissionsMap = new Map(
-      dbPermissions.map((p) => [
-        p.resource,
-        new Set(p.flags.map((f) => f as Flag)),
-      ]),
+      dbPermissions.map((p) => [p.resource, new Set(p.flags.map((f) => f))]),
     );
   }
 

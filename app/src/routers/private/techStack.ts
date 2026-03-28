@@ -13,6 +13,7 @@ import {
   TechStackSchema,
   FlagEnum,
   ResourceEnum,
+  DeleteTechStackInputSchema,
 } from "@portfolio/shared";
 import { executeService } from "../../trpc/executers/base";
 
@@ -64,11 +65,7 @@ export const techStackPrivateRouter = router({
         protect: true,
       },
     })
-    .input(
-      z.object({
-        ids: z.array(z.uuid()),
-      }),
-    )
+    .input(DeleteTechStackInputSchema)
     .output(z.object({ success: z.boolean() }))
     .mutation(async ({ ctx, input }) => {
       await executeService(DeleteTechStackService, ctx, input.ids);

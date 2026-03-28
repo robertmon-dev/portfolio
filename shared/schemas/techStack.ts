@@ -50,6 +50,10 @@ export const LinkTechStackProjectSchema = z.object({
   projectId: zUuid,
 });
 
+export const DeleteTechStackInputSchema = z.object({
+  ids: zSafeArray(zUuid),
+});
+
 export const TechStackOpenApiSchemas = {
   TechStackCategorySchema,
   TechStackSchema,
