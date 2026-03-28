@@ -59,7 +59,6 @@ export const UpdatePermissionsForm = (props: UpdatePermissionsFormProps) => {
                 }`}
               >
                 <div className="user-form__resource-name">{resource}</div>
-
                 <div className="user-form__checkbox-cell">
                   <Checkbox
                     checked={currentFlags.includes("READ")}
