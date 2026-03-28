@@ -15,10 +15,7 @@ import {
 import { executeService } from "../../trpc/executers/base";
 
 export const experiencePrivateRouter = router({
-  create: permissionProcedure(
-    `${ResourceEnum.enum.experience}:create`,
-    FlagEnum.enum.WRITE,
-  )
+  create: permissionProcedure(ResourceEnum.enum.experience, FlagEnum.enum.WRITE)
     .meta({
       openapi: {
         method: "POST",
@@ -36,10 +33,7 @@ export const experiencePrivateRouter = router({
       executeService(CreateExperienceService, ctx, input),
     ),
 
-  update: permissionProcedure(
-    `${ResourceEnum.enum.experience}:update`,
-    FlagEnum.enum.WRITE,
-  )
+  update: permissionProcedure(ResourceEnum.enum.experience, FlagEnum.enum.WRITE)
     .meta({
       openapi: {
         method: "PATCH",
@@ -56,10 +50,7 @@ export const experiencePrivateRouter = router({
       executeService(UpdateExperienceService, ctx, input),
     ),
 
-  delete: permissionProcedure(
-    `${ResourceEnum.enum.experience}`,
-    FlagEnum.enum.WRITE,
-  )
+  delete: permissionProcedure(ResourceEnum.enum.experience, FlagEnum.enum.WRITE)
     .meta({
       openapi: {
         method: "DELETE",

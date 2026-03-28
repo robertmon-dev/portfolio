@@ -7,7 +7,6 @@ import type {
   Flag,
   UserPermission,
 } from "@portfolio/shared";
-
 import type { UpdatePermissionsFormProps } from "../../types";
 
 export const useUpdatePermissionsForm = ({

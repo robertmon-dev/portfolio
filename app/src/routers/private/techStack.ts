@@ -17,10 +17,7 @@ import {
 import { executeService } from "../../trpc/executers/base";
 
 export const techStackPrivateRouter = router({
-  create: permissionProcedure(
-    `${ResourceEnum.enum.techStack}:create`,
-    FlagEnum.enum.WRITE,
-  )
+  create: permissionProcedure(ResourceEnum.enum.techStack, FlagEnum.enum.WRITE)
     .meta({
       openapi: {
         method: "POST",
@@ -38,10 +35,7 @@ export const techStackPrivateRouter = router({
       executeService(CreateTechStackService, ctx, input),
     ),
 
-  update: permissionProcedure(
-    `${ResourceEnum.enum.techStack}:update`,
-    FlagEnum.enum.WRITE,
-  )
+  update: permissionProcedure(ResourceEnum.enum.techStack, FlagEnum.enum.WRITE)
     .meta({
       openapi: {
         method: "PATCH",
@@ -59,10 +53,7 @@ export const techStackPrivateRouter = router({
       executeService(UpdateTechStackService, ctx, input),
     ),
 
-  delete: permissionProcedure(
-    `${ResourceEnum.enum.techStack}:delete`,
-    FlagEnum.enum.WRITE,
-  )
+  delete: permissionProcedure(ResourceEnum.enum.techStack, FlagEnum.enum.WRITE)
     .meta({
       openapi: {
         method: "DELETE",
@@ -85,7 +76,7 @@ export const techStackPrivateRouter = router({
     }),
 
   linkProject: permissionProcedure(
-    `${ResourceEnum.enum.techStack}:linkProject`,
+    ResourceEnum.enum.techStack,
     FlagEnum.enum.WRITE,
   )
     .meta({
@@ -107,7 +98,7 @@ export const techStackPrivateRouter = router({
     }),
 
   unlinkProject: permissionProcedure(
-    `${ResourceEnum.enum.project}:unlinkProject`,
+    ResourceEnum.enum.project,
     FlagEnum.enum.WRITE,
   )
     .meta({

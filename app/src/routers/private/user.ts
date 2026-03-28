@@ -21,10 +21,7 @@ import { UpdateUserPermissionsService } from "../../services/user/UpdatePermissi
 import { executeService } from "../../trpc/executers/base";
 
 export const usersRouter = router({
-  create: permissionProcedure(
-    `${ResourceEnum.enum.user}:create`,
-    FlagEnum.enum.WRITE,
-  )
+  create: permissionProcedure(ResourceEnum.enum.user, FlagEnum.enum.WRITE)
     .meta({
       openapi: {
         method: "POST",
@@ -41,10 +38,7 @@ export const usersRouter = router({
       executeService(CreateUserService, ctx, input),
     ),
 
-  list: permissionProcedure(
-    `${ResourceEnum.enum.user}:list`,
-    FlagEnum.enum.WRITE,
-  )
+  list: permissionProcedure(ResourceEnum.enum.user, FlagEnum.enum.WRITE)
     .meta({
       openapi: {
         method: "GET",
@@ -62,7 +56,7 @@ export const usersRouter = router({
       executeService(ListUsersService, ctx, input),
     ),
 
-  get: permissionProcedure(`${ResourceEnum.enum.user}:get`, FlagEnum.enum.READ)
+  get: permissionProcedure(ResourceEnum.enum.user, FlagEnum.enum.READ)
     .meta({
       openapi: {
         method: "GET",
@@ -79,10 +73,7 @@ export const usersRouter = router({
       executeService(GetUserService, ctx, input),
     ),
 
-  update: permissionProcedure(
-    `${ResourceEnum.enum.user}:update`,
-    FlagEnum.enum.WRITE,
-  )
+  update: permissionProcedure(ResourceEnum.enum.user, FlagEnum.enum.WRITE)
     .meta({
       openapi: {
         method: "PATCH",
@@ -100,7 +91,7 @@ export const usersRouter = router({
     ),
 
   updatePermissions: permissionProcedure(
-    `${ResourceEnum.enum.user}:updatePermissions`,
+    ResourceEnum.enum.user,
     FlagEnum.enum.WRITE,
   )
     .meta({
