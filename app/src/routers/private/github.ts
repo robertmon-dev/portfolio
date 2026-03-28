@@ -12,10 +12,13 @@ import { LinkRepoProjectService } from "../../services/github/Link";
 import { UpdateGithubRepoService } from "../../services/github/Update";
 import { executeService } from "../../trpc/executers/base";
 import { UnlinkRepoProjectService } from "../../services/github/Unlink";
-import { FlagEnum } from "@portfolio/shared";
+import { FlagEnum, ResourceEnum } from "@portfolio/shared";
 
 export const githubPrivateRouter = router({
-  update: permissionProcedure("github:update", FlagEnum.enum.WRITE)
+  update: permissionProcedure(
+    `${ResourceEnum.enum.github}:update`,
+    FlagEnum.enum.WRITE,
+  )
     .meta({
       openapi: {
         method: "PATCH",
@@ -32,7 +35,10 @@ export const githubPrivateRouter = router({
       executeService(UpdateGithubRepoService, ctx, input),
     ),
 
-  linkProject: permissionProcedure("github:linkProject", FlagEnum.enum.WRITE)
+  linkProject: permissionProcedure(
+    `${ResourceEnum.enum.github}:linkProject`,
+    FlagEnum.enum.WRITE,
+  )
     .meta({
       openapi: {
         method: "POST",
@@ -52,7 +58,7 @@ export const githubPrivateRouter = router({
     }),
 
   unlinkProject: permissionProcedure(
-    "github:unlinkProject",
+    `${ResourceEnum.enum.github}:unlinkProject`,
     FlagEnum.enum.WRITE,
   )
     .meta({
@@ -73,7 +79,10 @@ export const githubPrivateRouter = router({
       return { success: true };
     }),
 
-  delete: permissionProcedure("github:delete", FlagEnum.enum.WRITE)
+  delete: permissionProcedure(
+    `${ResourceEnum.enum.github}:delete`,
+    FlagEnum.enum.WRITE,
+  )
     .meta({
       openapi: {
         method: "DELETE",

@@ -10,11 +10,15 @@ import {
   ProjectSchema,
   zUuid,
   FlagEnum,
+  ResourceEnum,
 } from "@portfolio/shared";
 import { executeService } from "../../trpc/executers/base";
 
 export const projectPrivateRouter = router({
-  create: permissionProcedure("project:create", FlagEnum.enum.WRITE)
+  create: permissionProcedure(
+    `${ResourceEnum.enum.project}:create`,
+    FlagEnum.enum.WRITE,
+  )
     .meta({
       openapi: {
         method: "POST",
@@ -32,7 +36,10 @@ export const projectPrivateRouter = router({
       executeService(CreateProjectService, ctx, input),
     ),
 
-  update: permissionProcedure("project:update", FlagEnum.enum.WRITE)
+  update: permissionProcedure(
+    `${ResourceEnum.enum.project}:update`,
+    FlagEnum.enum.WRITE,
+  )
     .meta({
       openapi: {
         method: "PATCH",
@@ -50,7 +57,10 @@ export const projectPrivateRouter = router({
       executeService(UpdateProjectService, ctx, input),
     ),
 
-  delete: permissionProcedure("project:delete", FlagEnum.enum.WRITE)
+  delete: permissionProcedure(
+    `${ResourceEnum.enum.project}:delete`,
+    FlagEnum.enum.WRITE,
+  )
     .meta({
       openapi: {
         method: "DELETE",

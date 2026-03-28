@@ -10,6 +10,7 @@ import {
   CreateUserInputSchema,
   UpdateUserPermissionsInputSchema,
   FlagEnum,
+  ResourceEnum,
 } from "@portfolio/shared";
 import { GetUserService } from "../../services/user/Get";
 import { ListUsersService } from "../../services/user/List";
@@ -20,7 +21,10 @@ import { UpdateUserPermissionsService } from "../../services/user/UpdatePermissi
 import { executeService } from "../../trpc/executers/base";
 
 export const usersRouter = router({
-  create: permissionProcedure("user:create", FlagEnum.enum.WRITE)
+  create: permissionProcedure(
+    `${ResourceEnum.enum.user}:create`,
+    FlagEnum.enum.WRITE,
+  )
     .meta({
       openapi: {
         method: "POST",
@@ -37,7 +41,10 @@ export const usersRouter = router({
       executeService(CreateUserService, ctx, input),
     ),
 
-  list: permissionProcedure("user:list", FlagEnum.enum.WRITE)
+  list: permissionProcedure(
+    `${ResourceEnum.enum.user}:list`,
+    FlagEnum.enum.WRITE,
+  )
     .meta({
       openapi: {
         method: "GET",
@@ -55,7 +62,7 @@ export const usersRouter = router({
       executeService(ListUsersService, ctx, input),
     ),
 
-  get: permissionProcedure("user:get", FlagEnum.enum.READ)
+  get: permissionProcedure(`${ResourceEnum.enum.user}:get`, FlagEnum.enum.READ)
     .meta({
       openapi: {
         method: "GET",
@@ -72,7 +79,10 @@ export const usersRouter = router({
       executeService(GetUserService, ctx, input),
     ),
 
-  update: permissionProcedure("user:update", FlagEnum.enum.WRITE)
+  update: permissionProcedure(
+    `${ResourceEnum.enum.user}:update`,
+    FlagEnum.enum.WRITE,
+  )
     .meta({
       openapi: {
         method: "PATCH",
@@ -90,7 +100,7 @@ export const usersRouter = router({
     ),
 
   updatePermissions: permissionProcedure(
-    "user:updatePermissions",
+    `${ResourceEnum.enum.user}:updatePermissions`,
     FlagEnum.enum.WRITE,
   )
     .meta({
@@ -110,7 +120,10 @@ export const usersRouter = router({
       executeService(UpdateUserPermissionsService, ctx, input),
     ),
 
-  delete: permissionProcedure("user:delete", FlagEnum.enum.WRITE)
+  delete: permissionProcedure(
+    `${ResourceEnum.enum.user}:delete`,
+    FlagEnum.enum.WRITE,
+  )
     .meta({
       openapi: {
         method: "DELETE",

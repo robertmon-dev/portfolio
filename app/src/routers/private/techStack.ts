@@ -12,11 +12,15 @@ import {
   LinkTechStackProjectSchema,
   TechStackSchema,
   FlagEnum,
+  ResourceEnum,
 } from "@portfolio/shared";
 import { executeService } from "../../trpc/executers/base";
 
 export const techStackPrivateRouter = router({
-  create: permissionProcedure("techStack:create", FlagEnum.enum.WRITE)
+  create: permissionProcedure(
+    `${ResourceEnum.enum.techStack}:create`,
+    FlagEnum.enum.WRITE,
+  )
     .meta({
       openapi: {
         method: "POST",
@@ -34,7 +38,10 @@ export const techStackPrivateRouter = router({
       executeService(CreateTechStackService, ctx, input),
     ),
 
-  update: permissionProcedure("techStack:update", FlagEnum.enum.WRITE)
+  update: permissionProcedure(
+    `${ResourceEnum.enum.techStack}:update`,
+    FlagEnum.enum.WRITE,
+  )
     .meta({
       openapi: {
         method: "PATCH",
@@ -52,7 +59,10 @@ export const techStackPrivateRouter = router({
       executeService(UpdateTechStackService, ctx, input),
     ),
 
-  delete: permissionProcedure("techStack:delete", FlagEnum.enum.WRITE)
+  delete: permissionProcedure(
+    `${ResourceEnum.enum.techStack}:delete`,
+    FlagEnum.enum.WRITE,
+  )
     .meta({
       openapi: {
         method: "DELETE",
@@ -74,7 +84,10 @@ export const techStackPrivateRouter = router({
       return { success: true };
     }),
 
-  linkProject: permissionProcedure("techStack:linkProject", FlagEnum.enum.WRITE)
+  linkProject: permissionProcedure(
+    `${ResourceEnum.enum.techStack}:linkProject`,
+    FlagEnum.enum.WRITE,
+  )
     .meta({
       openapi: {
         method: "POST",
@@ -94,7 +107,7 @@ export const techStackPrivateRouter = router({
     }),
 
   unlinkProject: permissionProcedure(
-    "techStack:unlinkProject",
+    `${ResourceEnum.enum.project}:unlinkProject`,
     FlagEnum.enum.WRITE,
   )
     .meta({
