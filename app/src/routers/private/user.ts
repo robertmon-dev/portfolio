@@ -111,10 +111,7 @@ export const usersRouter = router({
       executeService(UpdateUserPermissionsService, ctx, input),
     ),
 
-  delete: permissionProcedure(
-    `${ResourceEnum.enum.user}:delete`,
-    FlagEnum.enum.WRITE,
-  )
+  delete: permissionProcedure(ResourceEnum.enum.user, FlagEnum.enum.WRITE)
     .meta({
       openapi: {
         method: "DELETE",
