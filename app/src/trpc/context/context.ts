@@ -26,6 +26,7 @@ export class TrpcContext {
     req,
     res,
   }: trpcExpress.CreateExpressContextOptions): Promise<Context> => {
+    const ip = req.ip || req.socket.remoteAddress || "unknown";
     const authHeader: string | undefined = req.headers.authorization;
     const authenticator: Authenticator = Authenticator.getInstance();
     const permissions: Permission | null = await authenticator.authenticate(
@@ -39,6 +40,7 @@ export class TrpcContext {
       settings: this.settings.config,
       req,
       res,
+      ip,
       logger: this.logger,
       permissions: permissions,
     };
