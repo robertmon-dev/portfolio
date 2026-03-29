@@ -1,4 +1,4 @@
 import { publicProcedure } from "./public";
-import { tokenChecker } from "../middlewares/token";
+import { tokenCheckerMiddleware } from "../middlewares/token";
 
-export const utilityProcedure = publicProcedure.use(tokenChecker);
+export const utilityProcedure = publicProcedure.use(tokenCheckerMiddleware);

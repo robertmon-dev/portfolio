@@ -15,6 +15,7 @@ export const diagnosticsRouter = router({
         summary: "Check application health status",
         description:
           "Returns information about server health, database connectivity, and Redis cache status.",
+        protect: true,
       },
     })
     .input(z.object({}))

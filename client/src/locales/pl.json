@@ -33,6 +33,20 @@
       }
     }
   },
+  "about": {
+    "title": "Software developer",
+    "bio": "Rudyk cwel",
+    "sections": {
+      "techStack": "Tech Stack",
+      "experience": "Doświadczenie zawodowe"
+    },
+    "experience": {
+      "present": "Obecnie",
+      "duration_one": "{{count}} rok",
+      "duration_few": "{{count}} lata",
+      "duration_many": "{{count}} lat"
+    }
+  },
   "errors": {
     "404": {
       "title": "Nie znaleziono strony",

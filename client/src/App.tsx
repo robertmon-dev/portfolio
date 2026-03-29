@@ -3,6 +3,7 @@ import { ToastContainer } from "react-toastify";
 import { NavigationListener } from "./components/utility/navigation/Listener";
 import { Layout } from "@/components/templates/Layout/Layout";
 import { Demo } from "@/pages/Demo/Demo";
+import { AboutPage } from "@/pages/About/About";
 import { GithubAdminPage } from "@/pages/Admin/repos/Repos";
 import { ProjectsAdminPage } from "./pages/Admin/projects/Projects";
 import { TechStackAdminPage } from "./pages/Admin/techstack/Techstack";
@@ -18,6 +19,8 @@ const App = () => {
       <NavigationListener />
       <Layout>
         <Routes>
+          <Route index element={<AboutPage />} />
+          <Route path="/about" element={<AboutPage />} />
           <Route path="/demo" element={<Demo />} />
           <Route path="/error/:code" element={<ErrorPage />} />
 

@@ -21,7 +21,10 @@ export const useModalContent = (
 
     const contentMap = {
       CREATE: {
-        title: t("admin.techStack.modals.create.title"),
+        title: t(
+          "admin.techStack.modals.create.title",
+          "Persist new technology",
+        ),
         component: (
           <TechStackForm
             onCreate={actions.createTechStack}
@@ -45,7 +48,7 @@ export const useModalContent = (
         ) : null,
       },
       LINK: {
-        title: t("admin.techStack.modals.link.title"),
+        title: t("admin.techStack.modals.link.title", "Link projects"),
         component: selectedTechStack ? (
           <LinkTechStackForm
             techStack={selectedTechStack}
@@ -65,7 +68,7 @@ export const useModalContent = (
         ) : null,
       },
       DELETE: {
-        title: t("admin.techStack.modals.delete.title"),
+        title: t("admin.techStack.modals.delete.title", "Remove technology"),
         component: selectedTechStack ? (
           <ConfirmDialog
             message={t("admin.techStack.modals.delete.message", {

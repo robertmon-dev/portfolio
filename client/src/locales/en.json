@@ -9,6 +9,19 @@
     "settings": "Settings",
     "deleteItem": "Delete item"
   },
+  "about": {
+    "title": "Software developer",
+    "bio": "I don't like to talk much about myself, but once I have decided to build portfolio I will fullfill this bio soon",
+    "sections": {
+      "techStack": "Tech Stack",
+      "experience": "Professional Experience"
+    },
+    "experience": {
+      "present": "Present",
+      "durationOne": "{{count}} year",
+      "durationOther": "{{count}} years"
+    }
+  },
   "demo": {
     "header": {
       "title": "Courvogne Palette Demo",

@@ -1,0 +1,97 @@
+@use "sass:color";
+
+.about-page {
+  $accent-about: $primary;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: calc(100vh - 100px);
+  padding: 4rem 2rem;
+  position: relative;
+  overflow: hidden;
+  background-color: $bg-app;
+  font-family: $font-stack;
+
+  &__container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+  &__hero {
+    text-align: center;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__title {
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: $spacing-md;
+
+    background: linear-gradient(135deg, $text-main 10%, $accent-about);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    filter: drop-shadow(0 0 25px color.change($accent-about, $alpha: 0.25));
+    transition: filter 0.3s ease;
+
+    &:hover {
+      filter: drop-shadow(0 0 25px color.change($accent-about, $alpha: 0.2));
+    }
+  }
+
+  &__bio {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: $text-muted;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  &__section {
+    position: relative;
+  }
+
+  &__subtitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $text-main;
+    margin-bottom: $spacing-lg;
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+
+    &::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, color.change($accent-about, $alpha: 0.3), transparent);
+    }
+  }
+
+  &__glow {
+    position: absolute;
+    top: -10%;
+    right: -10%;
+    width: 50vw;
+    height: 50vw;
+    background: radial-gradient(
+      circle,
+      color.change($accent-about, $alpha: 0.08) 0%,
+      transparent 70%
+    );
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 1;
+  }
+}
