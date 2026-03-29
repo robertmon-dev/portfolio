@@ -27,7 +27,7 @@ export abstract class BaseService {
       if (!user) return;
 
       if (user.username === this.settings.ROOT_USERNAME) {
-        keys.add(`user:profile:root`);
+        keys.add(`user:public:root`);
       }
 
       if (user.id) {
