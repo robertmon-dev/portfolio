@@ -36,6 +36,6 @@ export class CreateProjectService
 
     await this.invalidateProjectCache(project);
 
-    return ProjectWithRelationsSchema.parse(data);
+    return ProjectWithRelationsSchema.parse(project);
   }
 }
