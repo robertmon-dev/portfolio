@@ -2,7 +2,12 @@ import { DatabaseSeeder } from "./seeder";
 
 async function main() {
   const seeder = new DatabaseSeeder();
-  await seeder.seed();
+
+  try {
+    await seeder.seed();
+  } finally {
+    process.exit(0);
+  }
 }
 
 main().catch((error) => {
