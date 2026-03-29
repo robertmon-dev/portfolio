@@ -1,13 +1,15 @@
 import { z } from "zod";
+import { zEmail, zUuid, zUrl, zString } from "@portfolio/shared";
 
 export const envSchema = z
   .object({
     NODE_ENV: z
       .enum(["development", "production", "test"])
       .default("development"),
-    PORT: z.string().transform(Number).default(8800),
 
-    DATABASE_URL: z.url(),
+    PORT: z.coerce.number().default(8800),
+
+    DATABASE_URL: zUrl,
     DB_TLS_ENABLED: z
       .string()
       .default("false")
@@ -21,37 +23,34 @@ export const envSchema = z
       .transform((s) => s === "true"),
     REDIS_CA_PATH: z.string().optional().nullable(),
 
-    JWT_SECRET: z.string().min(32),
-    NICKNAME: z.string(),
+    JWT_SECRET: zString.min(32, "Security: JWT_SECRET is too short"),
+    NICKNAME: zString,
 
-    ROOT_EMAIL: z.email().default("admin@example.com"),
+    ROOT_EMAIL: zEmail,
     ROOT_PASSWORD: z.string().min(8).default("admin1234"),
-    ROOT_USERNAME: z.string().default("root"),
+    ROOT_USERNAME: zString.default("root"),
 
     LOG_LEVEL: z
       .enum(["fatal", "error", "warn", "info", "debug", "trace"])
       .default("info"),
-    APP_URL: z.url().default("http://localhost:8800"),
 
-    GITHUB_TOKEN: z.string().min(1, "GitHub Token is required for sync"),
+    APP_URL: zUrl.default("http://localhost:8800"),
 
-    MAIL_HOST: z.string(),
-    MAIL_PORT: z.string().transform(Number).default(587),
-    MAIL_USER: z.string(),
+    GITHUB_TOKEN: z.string().min(1),
+
+    MAIL_HOST: zString,
+    MAIL_PORT: z.coerce.number().default(587),
+    MAIL_USER: zString,
     MAIL_PASS: z.string(),
-    MAIL_FROM: z.email(),
+    MAIL_FROM: zEmail,
 
-    X_API_TOKEN: z.uuid().optional(),
+    X_API_TOKEN: zUuid.optional(),
     CORS_ORIGIN: z.string().optional(),
   })
-  .transform((env) => {
-    const corsOrigin =
+  .transform((env) => ({
+    ...env,
+    CORS_ORIGIN:
       env.NODE_ENV === "development"
         ? "http://localhost:5173"
-        : env.CORS_ORIGIN || env.APP_URL;
-
-    return {
-      ...env,
-      CORS_ORIGIN: corsOrigin,
-    };
-  });
+        : env.CORS_ORIGIN || env.APP_URL,
+  }));

@@ -1,7 +1,7 @@
 import { z } from "zod";
 
-export const zString = z.string().max(255);
-export const zText = z.string().max(2000);
+export const zString = z.string().trim().max(255);
+export const zText = z.string().trim().max(2000);
 export const zContent = z.string().max(30000);
 
 export const zEmail = z.email("Invalid email address").max(255);

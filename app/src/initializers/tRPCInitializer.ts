@@ -11,6 +11,7 @@ import { appRouter } from "../routers/app";
 import { Settings } from "../core/settings/settings";
 import { TRPCError } from "@trpc/server";
 import { getOpenApiDefinitions } from "@portfolio/shared";
+import helmet from "helmet";
 
 export class TrpcInitializer {
   private logger: Logger;
@@ -23,6 +24,15 @@ export class TrpcInitializer {
   }
 
   public setup(app: Express): void {
+    app.use(
+      helmet({
+        contentSecurityPolicy:
+          this.settings.NODE_ENV === "production" ? undefined : false,
+
+        crossOriginEmbedderPolicy: this.settings.NODE_ENV === "production",
+      }),
+    );
+
     this.logger.info("Initializing tRPC & REST OpenAPI layer...");
 
     const createContext = (opts: trpcExpress.CreateExpressContextOptions) =>
