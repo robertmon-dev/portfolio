@@ -5,7 +5,13 @@ import { useAuth } from "@/hooks/useAuth";
 import { useRecover } from "@/hooks/useRecover";
 import { type LoginInput, type ResetPasswordInput } from "@portfolio/shared";
 import { loginReducer, initialState } from "./types";
-import type { LoginStep, LoginFormState } from "./types";
+import type {
+  LoginStep,
+  LoginFormState,
+  LoginState,
+  LoginFormField,
+  UpdateFieldAction,
+} from "./types";
 
 export const useLoginModal = (onSuccess?: () => void) => {
   const { t } = useTranslation();
@@ -13,8 +19,18 @@ export const useLoginModal = (onSuccess?: () => void) => {
   const { requestReset, confirmReset, isRecovering } = useRecover();
   const [state, dispatch] = useReducer(loginReducer, initialState);
 
-  const updateField = (field: keyof typeof initialState, value: any) =>
-    dispatch({ type: "UPDATE_FIELD", payload: { field, value } });
+  const makeUpdateFieldAction = <K extends LoginFormField>(
+    field: K,
+    value: LoginState[K],
+  ): UpdateFieldAction => ({
+    type: "UPDATE_FIELD",
+    payload: { field, value },
+  });
+
+  const updateField = <K extends LoginFormField>(
+    field: K,
+    value: LoginState[K],
+  ) => dispatch(makeUpdateFieldAction(field, value));
 
   const close = useCallback(() => {
     dispatch({ type: "CLOSE_MODAL" });

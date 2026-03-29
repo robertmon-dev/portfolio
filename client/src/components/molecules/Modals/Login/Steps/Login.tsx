@@ -33,7 +33,7 @@ export const LoginForm = ({ form: modalForm, isLoading }: LoginFormProps) => {
         <Input
           {...register("email")}
           label={t("auth.login.fields.email.label", "Email Address")}
-          placeholder="admin@portfolio.com"
+          placeholder="email@example.com"
           error={errors.email?.message}
           leftIcon={<Mail size={18} />}
           fullWidth

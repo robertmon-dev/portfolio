@@ -2,14 +2,6 @@ import type { LoginInput, ResetPasswordInput } from "@portfolio/shared";
 
 export type LoginStep = "LOGIN" | "2FA" | "FORGOT_PASSWORD" | "RESET_PASSWORD";
 
-export type LoginAction =
-  | { type: "OPEN_MODAL" }
-  | { type: "CLOSE_MODAL" }
-  | { type: "SET_STEP"; payload: LoginStep }
-  | { type: "UPDATE_FIELD"; payload: { field: keyof LoginState; value: any } }
-  | { type: "SET_USER_ID"; payload: string | null }
-  | { type: "RESET_FORM" };
-
 export interface LoginState {
   isOpen: boolean;
   step: LoginStep;
@@ -22,6 +14,31 @@ export interface LoginState {
   confirmPassword: string;
   userId: string | null;
 }
+
+export type LoginFormField =
+  | "email"
+  | "password"
+  | "rememberMe"
+  | "twoFactorCode"
+  | "resetCode"
+  | "newPassword"
+  | "confirmPassword";
+
+export type UpdateFieldAction = {
+  type: "UPDATE_FIELD";
+  payload: {
+    field: LoginFormField;
+    value: LoginState[LoginFormField];
+  };
+};
+
+export type LoginAction =
+  | { type: "OPEN_MODAL" }
+  | { type: "CLOSE_MODAL" }
+  | { type: "SET_STEP"; payload: LoginStep }
+  | UpdateFieldAction
+  | { type: "SET_USER_ID"; payload: string | null }
+  | { type: "RESET_FORM" };
 
 export interface LoginFormState {
   email: string;
@@ -88,7 +105,10 @@ export const loginReducer = (
     case "SET_STEP":
       return { ...state, step: action.payload };
     case "UPDATE_FIELD":
-      return { ...state, [action.payload.field]: action.payload.value };
+      return {
+        ...state,
+        [action.payload.field]: action.payload.value,
+      } as LoginState;
     case "SET_USER_ID":
       return { ...state, userId: action.payload };
     case "RESET_FORM":

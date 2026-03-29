@@ -25,7 +25,7 @@ export const getStepTitleKey = (step: LoginStep): string => {
 };
 
 export const STEP_TITLE_FALLBACKS: Record<LoginStep, string> = {
-  LOGIN: "Admin Access",
+  LOGIN: "Login",
   "2FA": "Two-Factor Auth",
   FORGOT_PASSWORD: "Reset Password",
   RESET_PASSWORD: "Set New Password",
