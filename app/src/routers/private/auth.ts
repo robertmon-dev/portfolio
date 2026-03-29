@@ -4,7 +4,9 @@ import { router } from "../../trpc/init";
 import { protectedProcedure } from "../../trpc/procedures/private";
 import { AuthService } from "../../services/auth/AuthService";
 import { Authenticator } from "../../trpc/auth/authenticator";
+import { GetUserService } from "src/services/user/Get";
 import { UserProfileSchema, type UserProfile } from "@portfolio/shared";
+import { executeService } from "src/trpc/executers/base";
 
 export const authPrivateRouter = router({
   me: protectedProcedure
@@ -21,20 +23,8 @@ export const authPrivateRouter = router({
     })
     .input(z.void())
     .output(UserProfileSchema)
-    .query(async ({ ctx }): Promise<UserProfile> => {
-      const user = await ctx.db.user.findUnique({
-        where: { id: ctx.user.id },
-        include: { permissions: true },
-      });
-
-      if (!user) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "User not found",
-        });
-      }
-
-      return UserProfileSchema.parse(user);
+    .query(async ({ ctx }) => {
+      return executeService(GetUserService, ctx, { id: ctx.user.id });
     }),
 
   logout: protectedProcedure
