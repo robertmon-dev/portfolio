@@ -29,16 +29,19 @@ help: ## Display this help message
 # ==============================================================================
 
 .PHONY: setup
-setup: ## Full project orchestration (Install -> Infra -> DB Setup)
+setup: ## Full project orchestration (Install -> Infra -> Build -> DB Setup)
 	@echo "$(CYAN)=> Running full project setup...$(RESET)"
 	@$(MAKE) install
 	@$(MAKE) infra-up
+	@echo "$(CYAN)=> Generating Prisma client...$(RESET)"
+	@$(MAKE) build
 	@echo "$(CYAN)=> Waiting for database to be ready...$(RESET)"
-	@sleep 3
 	@$(MAKE) db-generate
+	@echo "$(CYAN)=> Building all packages (ensuring shared is ready)...$(RESET)"
+	@sleep 3
 	@$(MAKE) db-push
 	@$(MAKE) db-seed
-	i$(YARN) workspace @portfolio/app prisma db seed
+	@echo "$(GREEN)=> Setup complete! Run 'make dev' to start development.$(RESET)"
 
 # ==============================================================================
 # CI/CD & Registry (GitHub Actions)
