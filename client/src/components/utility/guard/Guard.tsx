@@ -1,3 +1,4 @@
+import { handleTrpcError } from "@/lib/trpc/handlers/trpcError";
 import { useAccess } from "@/hooks/useAccess";
 import { LoadingBar } from "@/components/atoms/LoadingBar/LoadingBar";
 import { ErrorPage } from "@/pages/Error/Error";
@@ -9,7 +10,8 @@ export const Guard = ({
   requiredRole,
   requiredPermission,
 }: GuardProps) => {
-  const { isAuthenticated, isLoading, hasRole, can } = useAccess();
+  const { isAuthenticated, isLoading, hasRole, isError, error, can } =
+    useAccess();
 
   if (isLoading) {
     return (
@@ -19,6 +21,11 @@ export const Guard = ({
         </div>
       </div>
     );
+  }
+
+  if (isError && error) {
+    const { isCritical } = handleTrpcError(error);
+    if (isCritical) return <ErrorPage code="offline" />;
   }
 
   if (!isAuthenticated) {

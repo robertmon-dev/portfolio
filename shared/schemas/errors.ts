@@ -14,3 +14,16 @@ export interface ParsedError {
   translationKey: string;
   isNetworkError: boolean;
 }
+
+export const SILENT_TRPC_PATHS = [["account", "me"]] as const;
+
+export const isSilentTRPCPath = (path: unknown): boolean => {
+  if (!Array.isArray(path)) return false;
+
+  return SILENT_TRPC_PATHS.some((silentPath) => {
+    return (
+      silentPath.length === path.length &&
+      silentPath.every((segment, index) => segment === path[index])
+    );
+  });
+};

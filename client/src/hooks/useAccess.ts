@@ -3,9 +3,17 @@ import { trpc } from "../lib/trpc/client";
 import { FlagEnum, RoleEnum, type Flag, type Role } from "@portfolio/shared";
 
 export const useAccess = () => {
-  const { data: user, isLoading } = trpc.account.me.useQuery(undefined, {
+  const {
+    data: user,
+    isLoading,
+    isError,
+    error,
+  } = trpc.account.me.useQuery(undefined, {
     staleTime: Infinity,
     retry: false,
+    meta: {
+      silent: true,
+    },
   });
 
   const permissionsMap = useMemo(() => {
@@ -49,6 +57,8 @@ export const useAccess = () => {
   return {
     user,
     isLoading,
+    isError,
+    error,
     isAuthenticated: !!user,
     isAdmin: user?.role === RoleEnum.enum.ADMIN,
     can,
