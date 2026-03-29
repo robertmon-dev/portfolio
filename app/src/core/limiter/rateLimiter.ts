@@ -29,22 +29,29 @@ export class RateLimiter implements Limiting {
     return RateLimiter.instance;
   }
 
+  private isRateLimiterRes(error: unknown): error is RateLimiterRes {
+    return (
+      !!error &&
+      typeof error === "object" &&
+      "msBeforeNext" in error &&
+      typeof (error as { msBeforeNext?: unknown }).msBeforeNext === "number"
+    );
+  }
+
   public async checkLimit(key: string): Promise<void> {
     try {
       await this.limiter.consume(key, 1);
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        this.logger.error("Internal RateLimiter/Redis error", error);
-        throw error;
+      if (this.isRateLimiterRes(error)) {
+        this.logger.warn(
+          `Rate limit exceeded for key: ${key}. Next attempt in: ${error.msBeforeNext}ms`,
+        );
+
+        throw new RateLimitError(error.msBeforeNext);
       }
 
-      const rejRes = error as RateLimiterRes;
-
-      this.logger.warn(
-        `Rate limit exceeded for key: ${key}. Next attempt in: ${rejRes.msBeforeNext}ms`,
-      );
-
-      throw new RateLimitError(rejRes.msBeforeNext ?? 1000);
+      this.logger.error("Internal RateLimiter/Redis error", error);
+      throw error;
     }
   }
 }

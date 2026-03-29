@@ -80,6 +80,18 @@
       "title": "Server Error",
       "description": "Something went wrong on our end. Will be working soon."
     },
+    "429": {
+      "title": "Slow Down",
+      "description": "Oopsie daisy, Too many attempts. Please wait 15 minutes :)"
+    },
+    "NETWORK_ERROR": {
+      "title": "Connection Lost",
+      "description": "The server is unreachable. Check your internet connection."
+    },
+    "UNKNOWN_ERROR": {
+      "title": "Unexpected Error",
+      "description": "Something went wrong, but we're not sure what."
+    },
     "offline": {
       "title": "No Connection",
       "description": "The server is currently unreachable. Please check your network connection."

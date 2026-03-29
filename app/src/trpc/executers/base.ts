@@ -16,6 +16,6 @@ export const executeService = async <
   try {
     return await service.execute(input);
   } catch (error) {
-    throw handleServiceError(error, ctx.logger);
+    return handleServiceError(error, ctx.logger);
   }
 };

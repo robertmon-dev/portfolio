@@ -1,6 +1,12 @@
 import type { LucideIcon } from "lucide-react";
 
-export type ErrorCode = "404" | "403" | "500" | "offline";
+export type ErrorCode =
+  | "404"
+  | "403"
+  | "500"
+  | "429"
+  | "offline"
+  | "UNKNOWN_ERROR";
 
 export interface ErrorConfigValue {
   icon: LucideIcon;

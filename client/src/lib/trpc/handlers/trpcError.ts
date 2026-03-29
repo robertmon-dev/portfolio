@@ -19,6 +19,9 @@ export const handleTrpcError = (error: unknown) => {
   if (error instanceof TRPCClientError) {
     const code = error.data?.code || "UNKNOWN_ERROR";
 
+    const cause = error.data?.cause;
+    const retryAfter = cause?.retryAfter;
+
     const criticalCodes = ["INTERNAL_SERVER_ERROR", "TIMEOUT"];
     const isCritical = criticalCodes.includes(code);
 
@@ -28,7 +31,10 @@ export const handleTrpcError = (error: unknown) => {
 
     const translationKey = `errors.codes.${code}`;
     const message = i18n.exists(translationKey)
-      ? i18n.t(translationKey)
+      ? i18n.t(translationKey, {
+          count: retryAfter,
+          seconds: retryAfter,
+        })
       : error.message || i18n.t("errors.codes.UNKNOWN_ERROR");
 
     return { message, isCritical };
