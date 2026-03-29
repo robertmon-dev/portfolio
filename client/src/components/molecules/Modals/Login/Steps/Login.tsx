@@ -63,7 +63,7 @@ export const LoginForm = ({ form: modalForm, isLoading }: LoginFormProps) => {
           className="auth-form__forgot-link"
           onClick={() => modalForm.goToStep("FORGOT_PASSWORD")}
         >
-          {t("auth.login.forgot_password", "Forgot password?")}
+          {t("auth.login.forgotPassword", "Forgot password?")}
         </button>
       </div>
 

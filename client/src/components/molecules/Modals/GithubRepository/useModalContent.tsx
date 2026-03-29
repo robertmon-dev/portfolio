@@ -29,7 +29,9 @@ export const useModalContent = (
         ),
       },
       link: {
-        title: t("admin.github.modals.link.title"),
+        title: t("admin.github.modals.link.title", {
+          name: selectedRepo.name,
+        }),
         component: (
           <GithubLinkForm
             repo={selectedRepo}
@@ -40,7 +42,9 @@ export const useModalContent = (
         ),
       },
       delete: {
-        title: t("admin.github.modals.delete.title"),
+        title: t("admin.github.modals.delete.title", {
+          name: selectedRepo.name,
+        }),
         component: (
           <ConfirmDialog
             message={t("admin.github.modals.delete.message", {

@@ -29,7 +29,7 @@ export const ForgotPasswordForm = ({
     <form onSubmit={handleSubmit(onSubmit)} className="auth-form">
       <p className="auth-form__description">
         {t(
-          "auth.recover.forgot_description",
+          "auth.recover.forgotDescription",
           "Lost your password? Enter your email address and we will send you a secure code to reset it.",
         )}
       </p>
@@ -37,14 +37,11 @@ export const ForgotPasswordForm = ({
       <div className="auth-form__fields">
         <Input
           {...register("email", {
-            required: t(
-              "auth.login.errors.email_required",
-              "Email is required",
-            ),
+            required: t("auth.login.errors.emailRequired", "Email is required"),
             pattern: {
               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
               message: t(
-                "auth.login.errors.email_invalid",
+                "auth.login.errors.emailInvalid",
                 "Invalid email address",
               ),
             },

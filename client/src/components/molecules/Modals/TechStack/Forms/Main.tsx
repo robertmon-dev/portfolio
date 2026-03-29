@@ -37,8 +37,11 @@ export const TechStackForm = (props: TechStackFormProps) => {
       <div className="tech-stack-form__grid">
         <Input
           {...register("name")}
-          label={t("admin.techStack.form.name.label")}
-          placeholder={t("admin.techStack.form.name.placeholder")}
+          label={t("admin.techStack.form.name.label", "Name")}
+          placeholder={t(
+            "admin.techStack.form.name.placeholder",
+            "Enter technology name",
+          )}
           error={errors.name?.message}
           leftIcon={<Tag size={18} />}
           fullWidth
@@ -46,7 +49,7 @@ export const TechStackForm = (props: TechStackFormProps) => {
         />
 
         <Select
-          label={t("admin.techStack.form.category.label")}
+          label={t("admin.techStack.form.category.label", "Category")}
           options={categoryOptions}
           value={watchedCategory}
           onChange={(e) =>
@@ -55,14 +58,17 @@ export const TechStackForm = (props: TechStackFormProps) => {
           error={errors.category?.message}
           leftIcon={<Box size={18} />}
           fullWidth
-          placeholder={t("admin.techStack.form.category.placeholder")}
+          placeholder={t(
+            "admin.techStack.form.category.placeholder",
+            "Select a category",
+          )}
           disabled={isLoading}
         />
 
         <div className="tech-stack-form__color-section">
           <Input
             {...register("color")}
-            label={t("admin.techStack.form.color.label")}
+            label={t("admin.techStack.form.color.label", "Color")}
             type="color"
             error={errors.color?.message}
             leftIcon={<Palette size={18} />}
@@ -98,13 +104,13 @@ export const TechStackForm = (props: TechStackFormProps) => {
           onClick={onCancel}
           disabled={isLoading}
         >
-          <X size={18} /> {t("common.cancel")}
+          <X size={18} /> {t("common.cancel", "Cancel")}
         </Button>
         <Button type="submit" variant="primary" isLoading={isLoading}>
           <Save size={18} />{" "}
           {initialData
-            ? t("admin.techStack.form.actions.update")
-            : t("admin.techStack.form.actions.create")}
+            ? t("admin.techStack.form.actions.update", "Update")
+            : t("admin.techStack.form.actions.create", "Create")}
         </Button>
       </div>
     </form>

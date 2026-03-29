@@ -23,7 +23,7 @@ export const ProjectForm = (props: ProjectFormProps) => {
       <div className="project-form__grid">
         <Input
           {...register("title")}
-          label={t("admin.projects.form.title.label")}
+          label={t("admin.projects.form.title.label", "Title")}
           error={errors.title?.message}
           leftIcon={<Layout size={18} />}
           fullWidth
@@ -33,7 +33,7 @@ export const ProjectForm = (props: ProjectFormProps) => {
 
         <Input
           {...register("slug")}
-          label={t("admin.projects.form.slug.label")}
+          label={t("admin.projects.form.slug.label", "Slug")}
           error={errors.slug?.message}
           leftIcon={<Link size={18} />}
           fullWidth
@@ -42,7 +42,7 @@ export const ProjectForm = (props: ProjectFormProps) => {
 
         <TextArea
           {...register("description")}
-          label={t("admin.projects.form.description.label")}
+          label={t("admin.projects.form.description.label", "Description")}
           error={errors.description?.message}
           fullWidth
           disabled={isLoading}
@@ -62,7 +62,7 @@ export const ProjectForm = (props: ProjectFormProps) => {
         <div className="grid-row-dual">
           <Input
             {...register("imageUrl")}
-            label={t("admin.projects.form.imageUrl.label")}
+            label={t("admin.projects.form.imageUrl.label", "Image URL")}
             error={errors.imageUrl?.message}
             leftIcon={<ImageIcon size={18} />}
             fullWidth
@@ -70,7 +70,7 @@ export const ProjectForm = (props: ProjectFormProps) => {
           />
           <Input
             {...register("demoUrl")}
-            label={t("admin.projects.form.demoUrl.label")}
+            label={t("admin.projects.form.demoUrl.label", "Demo URL")}
             error={errors.demoUrl?.message}
             leftIcon={<Globe size={18} />}
             fullWidth
@@ -80,13 +80,13 @@ export const ProjectForm = (props: ProjectFormProps) => {
 
         <div className="project-form__toggles">
           <Checkbox
-            label={t("admin.projects.form.isFeatured")}
+            label={t("admin.projects.form.isFeatured", "Featured")}
             checked={isFeatured}
             onChange={(e) => setValue("isFeatured", e.target.checked)}
             disabled={isLoading}
           />
           <Checkbox
-            label={t("admin.projects.form.isVisible")}
+            label={t("admin.projects.form.isVisible", "Visible")}
             checked={isVisible}
             onChange={(e) => setValue("isVisible", e.target.checked)}
             disabled={isLoading}

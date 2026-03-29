@@ -27,7 +27,7 @@ export const useLoginModal = (onSuccess?: () => void) => {
       dispatch({ type: "SET_USER_ID", payload: result.userId });
       dispatch({ type: "SET_STEP", payload: "2FA" });
       toast.info(
-        t("auth.login.2fa_required", "Two-factor authentication required"),
+        t("auth.login.2faRequired", "Two-factor authentication required"),
       );
     } else if (result?.status === "success") {
       toast.success(t("auth.login.success", "Logged in successfully"));
@@ -38,9 +38,7 @@ export const useLoginModal = (onSuccess?: () => void) => {
 
   const handleRequestReset = async (data: { email: string }) => {
     await requestReset(data);
-    toast.success(
-      t("auth.recover.email_sent", "Reset code sent to your email"),
-    );
+    toast.success(t("auth.recover.emailSent", "Reset code sent to your email"));
     dispatch({ type: "SET_STEP", payload: "RESET_PASSWORD" });
   };
 

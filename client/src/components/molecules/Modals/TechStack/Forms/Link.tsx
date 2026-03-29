@@ -45,7 +45,7 @@ export const LinkTechStackForm = ({
       <div className="tech-stack-form__section">
         <label className="tech-stack-form__label">
           <Info size={14} />
-          {t("admin.techStack.link.current")}
+          {t("admin.techStack.link.current", "Currently Linked Projects")}
         </label>
 
         <div className="tech-stack-form__tags">
@@ -63,7 +63,7 @@ export const LinkTechStackForm = ({
             ))
           ) : (
             <span className="tech-stack-form__empty">
-              {t("admin.techStack.link.noCurrentLinks")}
+              {t("admin.techStack.link.noCurrentLinks", "No linked projects")}
             </span>
           )}
         </div>
@@ -72,17 +72,24 @@ export const LinkTechStackForm = ({
       <div className="tech-stack-form__divider" />
 
       <p className="tech-stack-form__help">
-        {t("admin.techStack.link.help", { name: techStack.name })}
+        {t(
+          "admin.techStack.link.help",
+          "Link {{name}} to an existing project.",
+          { name: techStack.name },
+        )}
       </p>
 
       <div className="tech-stack-form__grid">
         <div className="full-width">
           <Select
-            label={t("admin.techStack.link.label")}
+            label={t("admin.techStack.link.label", "Select Project")}
             value={selectedId}
             onChange={(e) => setSelectedId(String(e.target.value))}
             options={projectOptions}
-            placeholder={t("admin.techStack.link.placeholder")}
+            placeholder={t(
+              "admin.techStack.link.placeholder",
+              "Select a project to link...",
+            )}
             leftIcon={<Layout size={18} />}
             fullWidth
             disabled={isLoading || availableProjects.length === 0}
@@ -92,7 +99,10 @@ export const LinkTechStackForm = ({
 
       {availableProjects.length === 0 && projects.length > 0 && (
         <Alert variant="warning">
-          {t("admin.techStack.link.noAvailableProjects")}
+          {t(
+            "admin.techStack.link.noAvailableProjects",
+            "All available projects are already linked.",
+          )}
         </Alert>
       )}
 
@@ -103,7 +113,7 @@ export const LinkTechStackForm = ({
           onClick={onCancel}
           disabled={isLoading}
         >
-          <X size={18} /> {t("common.cancel")}
+          <X size={18} /> {t("common.cancel", "Cancel")}
         </Button>
         <Button
           type="submit"
@@ -112,7 +122,7 @@ export const LinkTechStackForm = ({
           disabled={!selectedId || availableProjects.length === 0}
           leftIcon={<Link2 size={18} />}
         >
-          {t("admin.techStack.link.submit")}
+          {t("admin.techStack.link.submit", "Link Project")}
         </Button>
       </div>
     </form>
