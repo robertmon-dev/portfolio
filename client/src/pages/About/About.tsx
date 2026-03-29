@@ -1,7 +1,13 @@
 import { useTranslation } from "react-i18next";
-import { useProfileQueries } from "./useQueries";
+import {
+  useExperienceQueries,
+  useProfileQueries,
+  useTechStackQueries,
+} from "./useQueries";
 import { LoadingBar } from "@/components/atoms/LoadingBar/LoadingBar";
 import { AboutHero } from "./sections/AboutHero";
+import { ExperienceTimeline } from "./sections/ExperienceTimeline";
+import { TechStackGrid } from "./sections/TechStackGrid";
 import { motion } from "framer-motion";
 import "./About.scss";
 
@@ -10,6 +16,14 @@ export const AboutPage = () => {
   const {
     get: { data: profile, isLoading: profileLoading },
   } = useProfileQueries();
+
+  const {
+    list: { data: experience },
+  } = useExperienceQueries();
+
+  const {
+    list: { data: techStack, isLoading },
+  } = useTechStackQueries();
 
   if (profileLoading) return <LoadingBar isLoading={true} />;
 
@@ -34,6 +48,7 @@ export const AboutPage = () => {
           <h2 className="about-page__subtitle">
             {t("about.sections.experience")}
           </h2>
+          <ExperienceTimeline items={experience || []} />
         </motion.section>
 
         <motion.section
@@ -45,6 +60,7 @@ export const AboutPage = () => {
           <h2 className="about-page__subtitle">
             {t("about.sections.techStack")}
           </h2>
+          <TechStackGrid items={techStack || []} isLoading={isLoading} />
         </motion.section>
       </div>
     </motion.div>

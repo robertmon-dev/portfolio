@@ -1,0 +1,60 @@
+@use "sass:color";
+
+.experience-timeline {
+  width: 100%;
+}
+
+.experience-card {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: $spacing-md;
+    gap: $spacing-md;
+
+    @media (max-width: 600px) {
+      flex-direction: column;
+      gap: $spacing-xs;
+    }
+  }
+
+  &__meta {
+    display: flex;
+    gap: $spacing-xs;
+    flex-wrap: wrap;
+  }
+
+  &__position {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: $primary;
+    margin: 0;
+  }
+
+  &__company {
+    font-size: 1rem;
+    font-weight: 600;
+    color: $text-main;
+    opacity: 0.8;
+    font-family: $font-stack;
+  }
+
+  &__date {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: $tn-orange;
+    background: color.change($tn-orange, $alpha: 0.1);
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $radius-sm;
+    border: 1px solid color.change($tn-orange, $alpha: 0.2);
+    white-space: nowrap;
+  }
+
+  &__description {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: $text-muted;
+    margin: 0;
+    white-space: pre-wrap;
+  }
+}

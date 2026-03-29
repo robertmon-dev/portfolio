@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { Card } from "@/components/atoms/Card/Card";
 import type { AboutHeroProps } from "../types";
+import "./AboutHero.scss";
 
 export const AboutHero = ({ profile }: AboutHeroProps) => {
   const { t } = useTranslation();
