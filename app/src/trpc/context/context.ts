@@ -64,9 +64,23 @@ export class TrpcContext {
       });
     }
 
-    const user = await ctx.db.user.findUnique({
-      where: { id: userId },
-      ...userWithPermissionsFragment,
+    const user = await ctx.cache.wrap(`user:auth:${userId}`, 900, async () => {
+      const dbUser = await ctx.db.user.findUnique({
+        where: { id: userId },
+        ...userWithPermissionsFragment,
+      });
+
+      if (!dbUser) {
+        ctx.logger.warn("Auth failed: User not found in database", {
+          userId,
+        });
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "User no longer exists",
+        });
+      }
+
+      return dbUser;
     });
 
     if (!user) {

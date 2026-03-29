@@ -25,7 +25,12 @@ export abstract class BaseService {
 
     users.forEach((user) => {
       if (!user) return;
-      if (user.id) keys.add(`user:profile:${user.id}`);
+
+      if (user.id) {
+        keys.add(`user:profile:${user.id}`);
+        keys.add(`user:auth:${user.id}`);
+      }
+
       if (user.email) keys.add(`user:profile:${user.email}`);
       if (user.username) keys.add(`user:profile:${user.username}`);
     });

@@ -15,7 +15,7 @@ export class UpdateUserService extends BaseService implements UserUpdating {
 
     const oldUser = await this.db.user.findUnique({
       where: { id },
-      select: { email: true, username: true },
+      select: { email: true, username: true, id: true },
     });
 
     const updated = await this.db.user.update({
