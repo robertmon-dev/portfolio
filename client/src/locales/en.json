@@ -78,7 +78,7 @@
     },
     "500": {
       "title": "Server Error",
-      "description": "Something went wrong on our end. We are working on a fix."
+      "description": "Something went wrong on our end. Will be working soon."
     },
     "offline": {
       "title": "No Connection",
