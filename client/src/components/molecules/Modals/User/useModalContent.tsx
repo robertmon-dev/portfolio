@@ -18,7 +18,7 @@ export const useModalContent = (
 
     const contentMap = {
       CREATE: {
-        title: t("admin.users.modals.create.title"),
+        title: t("admin.users.modals.create.title", "Create New User"),
         component: (
           <CreateUserForm
             onSubmit={actions.createUser}
@@ -56,7 +56,10 @@ export const useModalContent = (
         ) : null,
       },
       DELETE: {
-        title: t("admin.users.modals.delete.title"),
+        title: t("admin.users.modals.delete.title", {
+          name: selectedUser?.username,
+          defaultValue: "Remove user: @{{name}}",
+        }),
         component: selectedUser ? (
           <ConfirmDialog
             message={t("admin.users.modals.delete.message", {
