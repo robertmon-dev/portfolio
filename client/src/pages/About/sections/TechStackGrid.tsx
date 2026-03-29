@@ -1,6 +1,7 @@
 import { EntityGrid } from "@/components/molecules/EntityGrid/EntityGrid";
 import { Card } from "@/components/atoms/Card/Card";
 import { Badge } from "@/components/atoms/Badge/Badge";
+import { TechIcon } from "@/components/atoms/Icon/Icon";
 import { CATEGORY_VARIANT_MAP } from "./consts";
 import type { TechStackGridProps } from "../types";
 import "./TechStackGrid.scss";
@@ -32,8 +33,8 @@ export const TechStackGrid = ({ items, isLoading }: TechStackGridProps) => {
             </div>
 
             {tech.icon && (
-              <div className="tech-card__icon">
-                <i className={tech.icon} />
+              <div className="tech-card__icon-wrapper">
+                <TechIcon icon={tech.icon} color={tech.color} />
               </div>
             )}
           </div>

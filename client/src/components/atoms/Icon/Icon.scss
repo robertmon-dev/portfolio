@@ -1,0 +1,27 @@
+@use "sass:color";
+
+.tech-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  color: var(--icon-color);
+
+  filter: drop-shadow(0 0 10px color.change($tn-blue, $alpha: 0.15))
+          drop-shadow(0 0 5px color.change($tn-blue, $alpha: 0.1));
+
+  &__glyph {
+    transition: transform 0.3s ease;
+
+    .card:hover & {
+      transform: scale(1.1) rotate(5deg);
+      filter: drop-shadow(0 0 12px var(--icon-color));
+    }
+  }
+
+  i {
+    &::before {
+      color: inherit;
+    }
+  }
+}
