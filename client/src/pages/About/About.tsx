@@ -1,21 +1,17 @@
 import { useTranslation } from "react-i18next";
-import { useExperienceQueries, useTechStackQueries } from "./useQueries";
+import { useProfileQueries } from "./useQueries";
 import { LoadingBar } from "@/components/atoms/LoadingBar/LoadingBar";
+import { AboutHero } from "./sections/AboutHero";
 import { motion } from "framer-motion";
 import "./About.scss";
 
 export const AboutPage = () => {
   const { t } = useTranslation();
-
   const {
-    list: { data: experience, isLoading: expLoading },
-  } = useExperienceQueries();
+    get: { data: profile, isLoading: profileLoading },
+  } = useProfileQueries();
 
-  const {
-    list: { data: techStack, isLoading: techLoading },
-  } = useTechStackQueries();
-
-  if (expLoading || techLoading) return <LoadingBar isLoading={true} />;
+  if (profileLoading) return <LoadingBar isLoading={true} />;
 
   return (
     <motion.div
@@ -26,23 +22,7 @@ export const AboutPage = () => {
       <div className="about-page__glow" />
 
       <div className="about-page__container">
-        <section className="about-page__hero">
-          <motion.h1
-            className="about-page__title"
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-          >
-            {t("about.title")}
-          </motion.h1>
-          <motion.p
-            className="about-page__bio"
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.1 }}
-          >
-            {t("about.bio")}
-          </motion.p>
-        </section>
+        <AboutHero profile={profile} />
 
         <motion.section
           className="about-page__section"

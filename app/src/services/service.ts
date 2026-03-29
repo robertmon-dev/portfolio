@@ -26,6 +26,10 @@ export abstract class BaseService {
     users.forEach((user) => {
       if (!user) return;
 
+      if (user.username === this.settings.ROOT_USERNAME) {
+        keys.add(`user:profile:root`);
+      }
+
       if (user.id) {
         keys.add(`user:profile:${user.id}`);
         keys.add(`user:auth:${user.id}`);

@@ -9,3 +9,4 @@ export type ListUsersInput = z.infer<typeof u.ListUsersInputSchema>;
 export type UpdateUserInput = z.infer<typeof u.UpdateUserInputSchema>;
 export type DeleteUserInput = z.infer<typeof u.DeleteUserInputSchema>;
 export type CreateUserInput = z.infer<typeof u.CreateUserInputSchema>;
+export type UserPublic = z.infer<typeof u.UserPublicSchema>;

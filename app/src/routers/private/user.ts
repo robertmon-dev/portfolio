@@ -20,7 +20,7 @@ import { CreateUserService } from "../../services/user/Create";
 import { UpdateUserPermissionsService } from "../../services/user/UpdatePermission";
 import { executeService } from "../../trpc/executers/base";
 
-export const usersRouter = router({
+export const usersPrivateRouter = router({
   create: permissionProcedure(ResourceEnum.enum.user, FlagEnum.enum.WRITE)
     .meta({
       openapi: {

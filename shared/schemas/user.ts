@@ -71,3 +71,13 @@ export const CreateUserInputSchema = z.object({
   name: zString.min(2).optional(),
   role: RoleEnum.default("USER").optional(),
 });
+
+export const UserPublicSchema = z.object({
+  id: zUuid,
+  username: zString,
+  name: zString.nullable(),
+  headline: zString.nullable(),
+  bio: zText.nullable(),
+  avatarUrl: zUrl.nullable(),
+  socials: z.record(z.string(), z.url()).nullable().default({}),
+});

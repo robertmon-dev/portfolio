@@ -21,3 +21,11 @@ export const useProjectQueries = (onlyFeatured = true) => {
     list: trpc.projects.list.useQuery({ onlyFeatured, onlyVisible: true }),
   };
 };
+
+export const useProfileQueries = () => {
+  return {
+    get: trpc.users.get.useQuery(undefined, {
+      staleTime: 1000 * 60 * 60,
+    }),
+  };
+};

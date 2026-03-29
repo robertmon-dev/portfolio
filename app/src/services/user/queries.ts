@@ -40,3 +40,17 @@ export const userProfileQuery = {
 } satisfies Prisma.UserDefaultArgs;
 
 export type UserWithProfile = Prisma.UserGetPayload<typeof userProfileQuery>;
+
+export const userPublicQuery = {
+  select: {
+    id: true,
+    username: true,
+    name: true,
+    headline: true,
+    bio: true,
+    avatarUrl: true,
+    socials: true,
+  },
+} satisfies Prisma.UserDefaultArgs;
+
+export type UserPublic = Prisma.UserGetPayload<typeof userPublicQuery>;
