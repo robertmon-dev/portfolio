@@ -5,15 +5,14 @@ async function main() {
 
   try {
     await seeder.seed();
+  } catch (err) {
+    console.error(
+      "Unexpected critical error during popualtion of database: ",
+      err,
+    );
   } finally {
     process.exit(0);
   }
 }
 
-main().catch((error) => {
-  console.error(
-    "Unexpected critical error during popualtion of database: ",
-    error,
-  );
-  process.exit(1);
-});
+main();

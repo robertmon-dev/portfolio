@@ -1,15 +1,22 @@
+import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Home, ArrowLeft, AlertTriangle } from "lucide-react";
 import { Button } from "@/components/atoms/Button/Button";
 import { ERROR_CONFIG } from "./consts";
-import type { ErrorPageProps } from "./types";
+import type { ErrorCode, ErrorPageProps } from "./types";
 import "./Error.scss";
 
-export const ErrorPage = ({ code = "404", title, message }: ErrorPageProps) => {
+export const ErrorPage = ({
+  code: propCode,
+  title: propTitle,
+  message: propMessage,
+}: ErrorPageProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { code: urlCode } = useParams<{ code: string }>();
+
+  const code = (propCode || urlCode || "404") as ErrorCode;
 
   const config = ERROR_CONFIG[code] || {
     icon: AlertTriangle,
@@ -28,7 +35,7 @@ export const ErrorPage = ({ code = "404", title, message }: ErrorPageProps) => {
           animate={{ scale: 1, opacity: 1 }}
           transition={{ type: "spring", damping: 15 }}
         >
-          <Icon size={220} strokeWidth={1} />
+          <Icon size={160} strokeWidth={1} />
         </motion.div>
 
         <div className="error-page__content">
@@ -37,7 +44,7 @@ export const ErrorPage = ({ code = "404", title, message }: ErrorPageProps) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            {code}
+            {code === "offline" ? "ERR" : code}
           </motion.h1>
 
           <motion.div
@@ -46,14 +53,11 @@ export const ErrorPage = ({ code = "404", title, message }: ErrorPageProps) => {
             animate={{ opacity: 1 }}
           >
             <h2 className="error-page__title">
-              {title || t(config.titleKey, "Something went wrong")}
+              {propTitle || t(config.titleKey, "Something went wrong")}
             </h2>
             <p className="error-page__description">
-              {message ||
-                t(
-                  config.descKey,
-                  "The page you are looking for doesn't exist.",
-                )}
+              {propMessage ||
+                t(config.descKey, "The server is currently unreachable.")}
             </p>
           </motion.div>
         </div>
@@ -64,23 +68,22 @@ export const ErrorPage = ({ code = "404", title, message }: ErrorPageProps) => {
           animate={{ opacity: 1, y: 0 }}
         >
           <Button variant="ghost" onClick={() => navigate(-1)}>
-            <span className="error-page__button-content">
+            <div className="error-page__button-content">
               <ArrowLeft size={18} />
               {t("common.go_back", "Go Back")}
-            </span>
+            </div>
           </Button>
 
           <Button variant="primary" onClick={() => navigate("/")}>
-            <span className="error-page__button-content">
+            <div className="error-page__button-content">
               <Home size={18} />
               {t("common.back_home", "Home")}
-            </span>
+            </div>
           </Button>
         </motion.div>
       </div>
 
-      <div className="error-page__glow error-page__glow--1" />
-      <div className="error-page__glow error-page__glow--2" />
+      <div className="error-page__glow" />
     </div>
   );
 };

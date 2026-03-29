@@ -1,42 +1,54 @@
-import i18n from '../../../i18n';
-import { TRPCClientError } from '@trpc/client';
-import { toast } from 'react-toastify';
+import { TRPCClientError } from "@trpc/client";
+import { NETWORK_ERROR_MESSAGES } from "@portfolio/shared";
+import i18n from "@/i18n";
+import { navigateTo } from "@/lib/utils/navigation";
+import { toast } from "react-toastify";
 
-export const handleTrpcError = (error: unknown): string | null => {
-  if (!(error instanceof TRPCClientError)) {
-    return i18n.t('errors.codes.NETWORK_ERROR');
+export const handleTrpcError = (error: unknown) => {
+  const isNetworkError =
+    error instanceof Error &&
+    NETWORK_ERROR_MESSAGES.some((msg) => error.message.includes(msg));
+
+  if (isNetworkError) {
+    return {
+      message: i18n.t("errors.codes.NETWORK_ERROR"),
+      isCritical: true,
+    };
   }
 
-  if (error.message === 'unserialize' || error.shape?.message === 'unserialize') {
-    return null;
+  if (error instanceof TRPCClientError) {
+    const code = error.data?.code || "UNKNOWN_ERROR";
+
+    const criticalCodes = ["INTERNAL_SERVER_ERROR", "TIMEOUT"];
+    const isCritical = criticalCodes.includes(code);
+
+    if (code === "UNAUTHORIZED") {
+      localStorage.removeItem("token");
+    }
+
+    const translationKey = `errors.codes.${code}`;
+    const message = i18n.exists(translationKey)
+      ? i18n.t(translationKey)
+      : error.message || i18n.t("errors.codes.UNKNOWN_ERROR");
+
+    return { message, isCritical };
   }
 
-  const code = error.data?.code;
-  const serverMessage = error.message;
-
-  if (serverMessage && i18n.exists(serverMessage)) {
-    return i18n.t(serverMessage);
-  }
-
-  if (code === 'BAD_REQUEST' && error.data?.zodError) {
-    return i18n.t('errors.codes.VALIDATION_ERROR');
-  }
-
-  if (code === 'UNAUTHORIZED') {
-    localStorage.removeItem('token');
-    return i18n.t('errors.codes.UNAUTHORIZED');
-  }
-
-  const translationKey = `errors.codes.${code}`;
-  if (i18n.exists(translationKey)) {
-    return i18n.t(translationKey);
-  }
-
-  return serverMessage || i18n.t('errors.codes.UNKNOWN_ERROR');
+  return { message: i18n.t("errors.codes.UNKNOWN_ERROR"), isCritical: false };
 };
 
 export const notifyError = (error: unknown) => {
-  const message = handleTrpcError(error);
+  const { message, isCritical } = handleTrpcError(error);
+
+  if (isCritical) {
+    const isOffline = message === i18n.t("errors.codes.NETWORK_ERROR");
+    const targetCode = isOffline ? "offline" : "500";
+
+    navigateTo(`/error/${targetCode}`);
+
+    return;
+  }
+
   if (message) {
     toast.error(message);
   }

@@ -7,6 +7,7 @@ export * from "./schemas/experience";
 export * from "./schemas/diagnostics";
 export * from "./schemas/permission";
 export * from "./schemas/registry";
+export * from "./schemas/errors";
 
 export * from "./schemas/generic";
 

@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import { NavigationListener } from "./components/utility/navigation/Listener";
 import { Layout } from "@/components/templates/Layout/Layout";
 import { Demo } from "@/pages/Demo/Demo";
 import { GithubAdminPage } from "@/pages/Admin/repos/Repos";
@@ -14,10 +15,11 @@ import "react-toastify/dist/ReactToastify.css";
 const App = () => {
   return (
     <BrowserRouter>
+      <NavigationListener />
       <Layout>
         <Routes>
           <Route path="/demo" element={<Demo />} />
-          <Route path="/" element={<Navigate to="/admin/github" replace />} />
+          <Route path="/error/:code" element={<ErrorPage />} />
 
           <Route path="/admin">
             <Route index element={<Navigate to="github" replace />} />

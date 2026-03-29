@@ -10,7 +10,7 @@
   position: relative;
   overflow: hidden;
 
-  &--500 {
+  &--500, &--offline {
     --error-primary: var(--danger-color);
     --error-glow: rgba(var(--danger-rgb), 0.2);
   }
