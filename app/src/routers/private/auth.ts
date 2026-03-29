@@ -5,7 +5,7 @@ import { protectedProcedure } from "../../trpc/procedures/private";
 import { AuthService } from "../../services/auth/AuthService";
 import { Authenticator } from "../../trpc/auth/authenticator";
 import { GetUserService } from "src/services/user/Get";
-import { UserProfileSchema, type UserProfile } from "@portfolio/shared";
+import { UserProfileSchema } from "@portfolio/shared";
 import { executeService } from "src/trpc/executers/base";
 
 export const authPrivateRouter = router({
