@@ -6,6 +6,9 @@ async function main() {
 }
 
 main().catch((error) => {
-  console.error('Unexpected critical error during popualtion of database: ', error);
+  console.error(
+    "Unexpected critical error during popualtion of database: ",
+    error,
+  );
   process.exit(1);
 });
