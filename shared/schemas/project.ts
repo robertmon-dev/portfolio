@@ -27,7 +27,7 @@ export const ProjectSchema = z.object({
   content: zContent.optional(),
   imageUrl: zUrl.optional(),
   demoUrl: zUrl.optional(),
-  githubRepoId: zUuid.nullable().optional(),
+  githubRepoId: zUuid.nullable(),
   isFeatured: z.boolean(),
   isVisible: z.boolean(),
   createdAt: zDateOrString,
