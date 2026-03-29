@@ -1,11 +1,13 @@
 import type { User } from "@prisma/client";
 import type {
+  UpdateUserPermissionsInput,
   CreateUserInput,
   UpdateUserInput,
   ListUsersInput,
   GetUserInput,
   DeleteUserInput,
   UserProfile,
+  UserPublic,
 } from "@portfolio/shared";
 
 export type UserListItem = Pick<
@@ -44,4 +46,12 @@ export interface UserUpdating {
 
 export interface UserDeleting {
   execute(input: DeleteUserInput): Promise<void>;
+}
+
+export interface PermittingUsers {
+  execute(input: UpdateUserPermissionsInput): Promise<UserProfile>;
+}
+
+export interface PublicingUsers {
+  execute(): Promise<UserPublic>;
 }

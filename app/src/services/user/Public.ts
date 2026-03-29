@@ -2,8 +2,12 @@ import { BaseService } from "../service";
 import { UserPublicSchema, type UserPublic } from "@portfolio/shared";
 import { userPublicQuery } from "./queries";
 import { TRPCError } from "@trpc/server";
+import { PublicingUsers } from "./types";
 
-export class GetPublicProfileService extends BaseService {
+export class GetPublicProfileService
+  extends BaseService
+  implements PublicingUsers
+{
   public async execute(): Promise<UserPublic> {
     const ownerNickname = this.settings.ROOT_USERNAME;
 

@@ -5,8 +5,12 @@ import {
   UserProfileSchema,
 } from "@portfolio/shared";
 import { userProfileQuery } from "./queries";
+import { PermittingUsers } from "./types";
 
-export class UpdateUserPermissionsService extends BaseService {
+export class UpdateUserPermissionsService
+  extends BaseService
+  implements PermittingUsers
+{
   public async execute(
     input: UpdateUserPermissionsInput,
   ): Promise<UserProfile> {
