@@ -66,5 +66,27 @@
         "todo": "Pending"
       }
     }
+  },
+  "errors": {
+    "404": {
+      "title": "Page Not Found",
+      "description": "The page you are looking for might have been moved or never existed."
+    },
+    "403": {
+      "title": "Access Denied",
+      "description": "Sorry, you don't have permission to view this content."
+    },
+    "500": {
+      "title": "Server Error",
+      "description": "Something went wrong on our end. We are working on a fix."
+    },
+    "offline": {
+      "title": "No Connection",
+      "description": "The server is currently unreachable. Please check your network connection."
+    },
+    "default": {
+      "title": "Error",
+      "description": "An unexpected problem occurred."
+    }
   }
 }

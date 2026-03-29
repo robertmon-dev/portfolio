@@ -1,4 +1,4 @@
-import { ShieldAlert, Ghost, ServerCrash } from "lucide-react";
+import { ShieldAlert, Ghost, ServerCrash, WifiOff } from "lucide-react";
 import type { ErrorConfig } from "./types";
 
 export const ERROR_CONFIG: ErrorConfig = {
@@ -16,5 +16,10 @@ export const ERROR_CONFIG: ErrorConfig = {
     icon: ServerCrash,
     titleKey: "errors.500.title",
     descKey: "errors.500.description",
+  },
+  offline: {
+    icon: WifiOff,
+    titleKey: "errors.offline.title",
+    descKey: "errors.offline.description",
   },
 };

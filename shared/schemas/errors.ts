@@ -3,6 +3,7 @@ export const NETWORK_ERROR_MESSAGES = [
   "NetworkError when attempting to fetch resource",
   "Load failed",
   "Failed to execute 'fetch' on 'Window'",
+  "ERR_CONNECTION_REFUSED",
 ];
 
 export type ErrorSeverity = "CRITICAL" | "WARNING" | "SILENT";

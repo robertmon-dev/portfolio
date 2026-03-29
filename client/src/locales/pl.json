@@ -32,5 +32,27 @@
         "todo": "Oczekuje"
       }
     }
+  },
+  "errors": {
+    "404": {
+      "title": "Nie znaleziono strony",
+      "description": "Strona, której szukasz, mogła zostać przeniesiona lub nigdy nie istniała."
+    },
+    "403": {
+      "title": "Brak dostępu",
+      "description": "Przykro nam, ale nie masz uprawnień do oglądania tej zawartości."
+    },
+    "500": {
+      "title": "Błąd serwera",
+      "description": "Coś poszło nie tak po naszej stronie. Pracujemy nad naprawą."
+    },
+    "offline": {
+      "title": "Brak połączenia",
+      "description": "Serwer jest nieosiągalny. Sprawdź swoje połączenie z siecią."
+    },
+    "default": {
+      "title": "Błąd",
+      "description": "Wystąpił nieoczekiwany problem."
+    }
   }
 }

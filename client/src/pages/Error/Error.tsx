@@ -29,24 +29,27 @@ export const ErrorPage = ({
   return (
     <div className={`error-page error-page--${code}`}>
       <div className="error-page__container">
-        <motion.div
-          className="error-page__icon-wrapper"
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ type: "spring", damping: 15 }}
-        >
-          <Icon size={160} strokeWidth={1} />
-        </motion.div>
+        <div className="error-page__header">
+          <motion.div
+            className="error-page__icon-wrapper"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ type: "spring", damping: 15 }}
+          >
+            <Icon size={120} strokeWidth={1.5} />
+          </motion.div>
 
-        <div className="error-page__content">
           <motion.h1
             className="error-page__code"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.1 }}
           >
             {code === "offline" ? "ERR" : code}
           </motion.h1>
+        </div>
 
+        <div className="error-page__content">
           <motion.div
             className="error-page__text"
             initial={{ opacity: 0 }}
