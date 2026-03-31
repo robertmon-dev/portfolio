@@ -1,5 +1,4 @@
 import { QueryClient, MutationCache, QueryCache } from "@tanstack/react-query";
-import { TRPCClientError } from "@trpc/client";
 import { notifyError } from "./handlers/trpcError";
 import { isSilentTRPCPath } from "@portfolio/shared";
 
@@ -16,10 +15,8 @@ export const queryClient = new QueryClient({
         return;
       }
 
-      if (isSilentTRPCPath(query.queryKey[0])) return;
-
-      if (err instanceof TRPCClientError && err.data?.code === "UNAUTHORIZED") {
-        localStorage.removeItem("token");
+      if (query.meta?.silent || isSilentTRPCPath(query.queryKey[0])) {
+        return;
       }
 
       notifyError(err);

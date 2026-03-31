@@ -11,6 +11,7 @@ export const handleTrpcError = (error: unknown) => {
 
   if (isNetworkError) {
     return {
+      code: "NETWORK_ERROR",
       message: i18n.t("errors.codes.NETWORK_ERROR"),
       isCritical: true,
     };
@@ -18,44 +19,41 @@ export const handleTrpcError = (error: unknown) => {
 
   if (error instanceof TRPCClientError) {
     const code = error.data?.code || "UNKNOWN_ERROR";
-
     const cause = error.data?.cause;
     const retryAfter = cause?.retryAfter;
 
     const criticalCodes = ["INTERNAL_SERVER_ERROR", "TIMEOUT"];
     const isCritical = criticalCodes.includes(code);
 
-    if (code === "UNAUTHORIZED") {
-      localStorage.removeItem("token");
-    }
-
     const translationKey = `errors.codes.${code}`;
     const message = i18n.exists(translationKey)
-      ? i18n.t(translationKey, {
-          count: retryAfter,
-          seconds: retryAfter,
-        })
+      ? i18n.t(translationKey, { count: retryAfter, seconds: retryAfter })
       : error.message || i18n.t("errors.codes.UNKNOWN_ERROR");
 
-    return { message, isCritical };
+    return { code, message, isCritical };
   }
 
-  return { message: i18n.t("errors.codes.UNKNOWN_ERROR"), isCritical: false };
+  return {
+    code: "UNKNOWN_ERROR",
+    message: i18n.t("errors.codes.UNKNOWN_ERROR"),
+    isCritical: false,
+  };
 };
 
 export const notifyError = (error: unknown) => {
-  const { message, isCritical } = handleTrpcError(error);
+  const { code, message, isCritical } = handleTrpcError(error);
+
+  if (code === "UNAUTHORIZED") {
+    localStorage.removeItem("token");
+  }
 
   if (isCritical) {
-    const isOffline = message === i18n.t("errors.codes.NETWORK_ERROR");
-    const targetCode = isOffline ? "offline" : "500";
-
+    const targetCode = code === "NETWORK_ERROR" ? "offline" : "500";
     navigateTo(`/error/${targetCode}`);
-
     return;
   }
 
-  if (message) {
+  if (message && code !== "UNAUTHORIZED") {
     toast.error(message);
   }
 };
