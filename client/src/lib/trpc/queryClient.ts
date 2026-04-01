@@ -15,7 +15,7 @@ export const queryClient = new QueryClient({
         return;
       }
 
-      if (query.meta?.silent || isSilentTRPCPath(query.queryKey[0])) {
+      if (isSilentTRPCPath(query.queryKey[0])) {
         return;
       }
 
