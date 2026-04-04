@@ -26,7 +26,7 @@ export const useProjectModalContent = (
         ),
       },
       UPDATE: {
-        title: t("admin.projects.modals.edit.title", "Edytuj projekt"),
+        title: t("admin.projects.modals.edit.title", "Edit project"),
         component: (
           <ProjectForm
             initialData={selectedProject}
@@ -39,7 +39,7 @@ export const useProjectModalContent = (
         ),
       },
       DELETE: {
-        title: t("admin.projects.modals.delete.title", "Usuń projekt"),
+        title: t("admin.projects.modals.delete.title", "Remove project"),
         component: (
           <ConfirmDialog
             message={t("admin.projects.modals.delete.confirm", {
@@ -55,14 +55,14 @@ export const useProjectModalContent = (
         ),
       },
       RESTORE: {
-        title: t("admin.projects.modals.restore.title", "Przywróć projekt"),
+        title: t("admin.projects.modals.restore.title", "Restore project"),
         component: (
           <ConfirmDialog
             message={t(
               "admin.projects.modals.restore.confirm",
-              "Czy chcesz przywrócić ten projekt do widoku?",
+              "You sure about restoring this project?",
             )}
-            confirmText={t("common.restore", "Przywróć")}
+            confirmText={t("common.restore", "Restore")}
             variant="success"
             onConfirm={() => actions.restoreProject(selectedProject!.id)}
             onCancel={actions.closeModals}
