@@ -48,11 +48,14 @@ export const useAccess = () => {
     [user, permissionsMap],
   );
 
-  const hasRole = (role: Role | Role[]) => {
-    if (!user) return false;
-    const roles = Array.isArray(role) ? role : [role];
-    return roles.includes(user.role);
-  };
+  const hasRole = useCallback(
+    (role: Role | Role[]) => {
+      if (!user) return false;
+      const roles = Array.isArray(role) ? role : [role];
+      return roles.includes(user.role);
+    },
+    [user],
+  );
 
   return {
     user,
