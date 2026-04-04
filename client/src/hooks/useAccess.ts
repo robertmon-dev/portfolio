@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { trpc } from "../lib/trpc/client";
 import { FlagEnum, RoleEnum, type Flag, type Role } from "@portfolio/shared";
 
@@ -26,27 +26,27 @@ export const useAccess = () => {
     return map;
   }, [user]);
 
-  const can = (
-    resource: string,
-    required: string = FlagEnum.enum.READ,
-  ): boolean => {
-    if (!user) return false;
-    if (user.role === RoleEnum.enum.ADMIN) return true;
+  const can = useCallback(
+    (resource: string, required: string = FlagEnum.enum.READ): boolean => {
+      if (!user) return false;
+      if (user.role === RoleEnum.enum.ADMIN) return true;
 
-    let targetResource = resource;
-    let targetFlag = required.toUpperCase() as Flag;
+      let targetResource = resource;
+      let targetFlag = required.toUpperCase() as Flag;
 
-    if (resource.includes(":")) {
-      const [res, fl] = resource.split(":");
-      targetResource = res;
-      targetFlag = fl.toUpperCase() as Flag;
-    }
+      if (resource.includes(":")) {
+        const [res, fl] = resource.split(":");
+        targetResource = res;
+        targetFlag = fl.toUpperCase() as Flag;
+      }
 
-    const flags = permissionsMap.get(targetResource);
-    if (!flags) return false;
+      const flags = permissionsMap.get(targetResource);
+      if (!flags) return false;
 
-    return flags.has(targetFlag) || flags.has(RoleEnum.enum.ADMIN);
-  };
+      return flags.has(targetFlag) || flags.has(RoleEnum.enum.ADMIN);
+    },
+    [user, permissionsMap],
+  );
 
   const hasRole = (role: Role | Role[]) => {
     if (!user) return false;
