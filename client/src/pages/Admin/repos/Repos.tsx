@@ -47,15 +47,13 @@ export const GithubAdminPage = () => {
       getGithubColumns(
         t,
         (repo) => {
-          actions.selectRepo(repo.id);
           actions.openModal("UPDATE", repo.id);
         },
         (id) => {
           actions.openModal("DELETE", id);
         },
         (repo) => {
-          actions.selectRepo(repo.id);
-          actions.openModal("LINK");
+          actions.openModal("LINK", repo.id);
         },
         (repo) => {
           actions.selectRepo(repo.id);
