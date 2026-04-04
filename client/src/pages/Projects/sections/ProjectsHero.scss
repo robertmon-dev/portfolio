@@ -1,4 +1,8 @@
+@use "sass:color";
+
 .projects-hero {
+  $accent-projects: $primary;
+
   min-height: 70vh;
   display: flex;
   flex-direction: column;
@@ -8,16 +12,31 @@
   position: relative;
   padding: $spacing-xl $spacing-md;
 
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $spacing-xs;
+  }
+
   &__title {
-    font-size: 3rem;
-    color: $primary;
-    margin-bottom: $spacing-sm;
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin: 0 0 $spacing-sm 0;
+
+    background: linear-gradient(135deg, $text-main 10%, $accent-projects);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 25px color.change($accent-projects, $alpha: 0.25));
   }
 
   &__subtitle {
     font-size: 1.25rem;
+    line-height: 1.7;
     color: $text-muted;
-    max-width: 600px;
+    max-width: 650px;
     margin: 0 auto;
   }
 
@@ -32,8 +51,8 @@
 
   &__scroll-text {
     font-size: 0.875rem;
-    color: $primary;
-    margin: $spacing-sm;
+    color: $text-muted;
+    margin: 0;
     letter-spacing: 0.05em;
   }
 
