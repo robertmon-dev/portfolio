@@ -2,39 +2,40 @@ import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { Arrow } from "@/components/atoms/Arrow/Arrow";
 import { handleScrollDown } from "@/lib/utils/navigation";
-import "./ProjectsHero.scss";
+import "./ExperienceHero.scss";
 
-export const ProjectsHero = () => {
+export const ExperienceHero = () => {
   const { t } = useTranslation();
 
   return (
-    <section className="projects-hero">
+    <section className="experience-hero">
       <motion.div
-        className="projects-hero__content"
+        className="experience-hero__content"
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
       >
-        <h1 className="projects-hero__title">
-          {t("projects.title", "My Projects")}
+        <h1 className="experience-hero__title">
+          {t("experience.title", "My Experience")}
         </h1>
-        <p className="projects-hero__subtitle">
+        <p className="experience-hero__subtitle">
           {t(
-            "projects.subtitle",
-            "Some of my stuff, I have createn, broken and repaired",
+            "experience.subtitle",
+            "A timeline of my professional journey, roles, and achievements.",
           )}
         </p>
       </motion.div>
+
       <motion.div
-        className="projects-hero__scroll-container"
+        className="experience-hero__scroll-container"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5, duration: 1 }}
       >
-        <p className="projects-hero__scroll-text">
-          {t("projects.moveDown", "Move down")}
+        <p className="experience-hero__scroll-text">
+          {t("experience.moveDown", "Move down")}
         </p>
 
-        <div className="projects-hero__bounce-wrapper">
+        <div className="experience-hero__bounce-wrapper">
           <Arrow
             variant="down"
             title={t("common.scrollDown", "Scroll down")}

@@ -1,0 +1,78 @@
+@use "sass:color";
+
+.experience-hero {
+  $accent-experience: $primary;
+
+  min-height: 50vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  text-align: left;
+  position: relative;
+  padding: $spacing-xl $spacing-sm;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: $spacing-xs;
+    width: 100%;
+  }
+
+  &__title {
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin: 0 0 $spacing-sm 0;
+
+    align-self: center;
+    text-align: center;
+
+    background: linear-gradient(135deg, $text-main 10%, $accent-experience);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 25px color.change($accent-experience, $alpha: 0.25));
+  }
+
+  &__subtitle {
+    font-size: 1.25rem;
+    line-height: 1.7;
+    color: $text-muted;
+    max-width: 650px;
+    margin: 0;
+
+    align-self: center;
+    text-align: center;
+  }
+
+  &__scroll-container {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $spacing-sm;
+  }
+
+  &__scroll-text {
+    font-size: 0.875rem;
+    color: $text-muted;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  &__bounce-wrapper {
+    animation: bounce 2s infinite;
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-10px); }
+  60% { transform: translateY(-5px); }
+}

@@ -5,6 +5,7 @@ import { Layout } from "@/components/templates/Layout/Layout";
 import { Demo } from "@/pages/Demo/Demo";
 import { AboutPage } from "@/pages/About/About";
 import { ProjectsPage } from "./pages/Projects/Projects";
+import { ExperiencePage } from "./pages/Experience/Experience";
 import { GithubAdminPage } from "@/pages/Admin/repos/Repos";
 import { ProjectsAdminPage } from "./pages/Admin/projects/Projects";
 import { TechStackAdminPage } from "./pages/Admin/techstack/Techstack";
@@ -24,6 +25,7 @@ const App = () => {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/demo" element={<Demo />} />
           <Route path="/projects" element={<ProjectsPage />} />
+          <Route path="/experience" element={<ExperiencePage />} />
           <Route path="/error/:code" element={<ErrorPage />} />
 
           <Route path="/admin">

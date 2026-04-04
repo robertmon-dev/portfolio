@@ -1,0 +1,85 @@
+@use "sass:color";
+
+.experience-page {
+  $accent-experience: $primary;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: calc(100vh - 100px);
+  padding: $spacing-xl $spacing-md;
+  position: relative;
+  overflow: hidden;
+  background-color: $bg-app;
+  font-family: $font-stack;
+
+  &__container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xl;
+  }
+
+  &__section {
+    position: relative;
+  }
+
+  &__subtitle {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: $text-main;
+    margin-bottom: $spacing-lg;
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+
+    &::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        color.change($accent-experience, $alpha: 0.4),
+        transparent
+      );
+    }
+  }
+
+  &__glow {
+    position: absolute;
+    top: -10%;
+    right: -10%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(
+      circle,
+      color.change($accent-experience, $alpha: 0.1) 0%,
+      transparent 70%
+    );
+    filter: blur(100px);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: $spacing-xl;
+    padding-bottom: $spacing-lg;
+    margin-top: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .experience-page {
+    padding: $spacing-lg $spacing-sm;
+
+    &__container {
+      gap: $spacing-lg;
+    }
+  }
+}
