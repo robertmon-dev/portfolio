@@ -1,0 +1,101 @@
+@use "sass:color";
+
+.projects-timeline {
+  width: 100%;
+}
+
+.project-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  &--featured {
+    border-color: color.change($tn-yellow, $alpha: 0.4);
+  }
+
+  &__image-wrapper {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    border-bottom: 1px solid $border-color;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+  &__content {
+    padding: $spacing-md;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: $spacing-md;
+  }
+
+  &__title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    color: $text-main;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+  }
+
+  &__featured-icon {
+    color: $warning;
+    fill: $warning;
+  }
+
+  &__date {
+    font-size: 0.875rem;
+    color: $text-muted;
+  }
+
+  &__links {
+    display: flex;
+    gap: $spacing-xs;
+  }
+
+  &__icon-btn {
+    appearance: none;
+    background: none;
+    border: none;
+    padding: 0;
+    color: $text-muted;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      color: $primary;
+      transform: translateY(-2px);
+    }
+  }
+
+  &__description {
+    color: $text-muted;
+    line-height: 1.6;
+    margin: 0;
+  }
+}

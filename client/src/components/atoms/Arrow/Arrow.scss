@@ -1,0 +1,102 @@
+@use "sass:color";
+
+.arrow-btn {
+  appearance: none;
+  background: none;
+  border: none;
+  margin: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-xs;
+  padding: $spacing-sm $spacing-md;
+
+  background-color: $bg-surface;
+  border: 1px solid $border-color;
+  border-radius: $radius-md;
+  color: $text-main;
+  font-family: $font-stack;
+  box-shadow: $shadow-surface-sm;
+  cursor: pointer;
+
+  position: relative;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    background-color: color.adjust($bg-surface, $lightness: 3%);
+    box-shadow: $shadow-surface-md;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: $shadow-surface-sm;
+  }
+
+  .arrow-icon {
+    position: relative;
+    z-index: 9999;
+
+    width: 1.25rem;
+    height: 1.25rem;
+    flex-shrink: 0;
+    transition: color 0.2s ease;
+  }
+
+  .arrow-content {
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.2;
+    z-index: 1;
+  }
+
+  &.variant-info {
+    .arrow-icon {
+      color: $info;
+    }
+    &:hover {
+      border-color: color.change($info, $alpha: 0.4);
+    }
+  }
+
+  &.variant-start {
+    .arrow-icon {
+      color: $success;
+    }
+    &:hover {
+      border-color: color.change($success, $alpha: 0.4);
+      box-shadow: 0 4px 12px -2px color.change($success, $alpha: 0.15), $glow-rim-top;
+    }
+  }
+
+  &.variant-stop {
+    .arrow-icon {
+      color: $danger;
+    }
+    &:hover {
+      border-color: color.change($danger, $alpha: 0.4);
+    }
+  }
+
+  &.variant-down,
+  &.variant-up {
+    .arrow-icon {
+      color: $primary;
+    }
+    &:hover {
+      border-color: color.change($primary, $alpha: 0.4);
+      color: $primary-hover;
+      box-shadow: $shadow-primary-sm;
+    }
+  }
+
+  &.variant-default {
+    .arrow-icon {
+      color: $text-muted;
+    }
+    &:hover {
+      border-color: color.change($text-muted, $alpha: 0.4);
+    }
+  }
+}
