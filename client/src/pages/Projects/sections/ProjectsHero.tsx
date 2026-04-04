@@ -20,7 +20,7 @@ export const ProjectsHero = () => {
         <p className="projects-hero__subtitle">
           {t(
             "projects.subtitle",
-            "Some of my stuff, I have createn, broken and repaired",
+            "Some of my stuff, I have created, broken and repaired",
           )}
         </p>
       </motion.div>
