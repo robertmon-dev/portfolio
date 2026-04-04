@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/atoms/Button/Button";
 import { AlertCircle, Info, RotateCcw } from "lucide-react";
@@ -15,7 +16,7 @@ export const ConfirmDialog = ({
 }: ConfirmDialogProps) => {
   const { t } = useTranslation();
 
-  const getIcon = () => {
+  const Icon = useMemo(() => {
     switch (variant) {
       case "danger":
         return (
@@ -28,11 +29,11 @@ export const ConfirmDialog = ({
       default:
         return <Info size={48} className="confirm-dialog__icon--primary" />;
     }
-  };
+  }, [variant]);
 
   return (
     <div className="confirm-dialog">
-      <div className="confirm-dialog__header">{getIcon()}</div>
+      <div className="confirm-dialog__header">{Icon}</div>
 
       <p className="confirm-dialog__message">{message}</p>
 
@@ -43,7 +44,7 @@ export const ConfirmDialog = ({
           disabled={isLoading}
           fullWidth
         >
-          {cancelText || t("common.cancel")}
+          {cancelText || t("common.cancel", "Cancel")}
         </Button>
         <Button
           variant={variant}
