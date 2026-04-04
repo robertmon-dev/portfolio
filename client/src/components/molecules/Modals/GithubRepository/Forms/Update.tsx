@@ -89,7 +89,7 @@ export const GithubUpdateForm = ({
           leftIcon={<Save size={18} />}
           fullWidth
         >
-          {t("admin.github.update.submit", "Save Changes")}
+          {t("admin.github.update.submit", "Save")}
         </Button>
       </div>
     </form>
