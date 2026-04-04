@@ -65,6 +65,6 @@ export const useModalContent = (
       },
     };
 
-    return contentMap[activeModal as keyof typeof contentMap] || null;
+    return contentMap[activeModal] || null;
   }, [activeModal, selectedRepo, isAnyProcessing, actions, t, state.projects]);
 };
