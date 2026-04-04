@@ -27,18 +27,23 @@ export const ProjectsHero = () => {
           )}
         </p>
       </motion.div>
-
       <motion.div
-        className="projects-hero__scroll"
+        className="projects-hero__scroll-container"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5, duration: 1 }}
       >
-        <Arrow
-          variant="down"
-          title={t("common.scrollDown", "Scroll down")}
-          onClick={handleScrollDown}
-        />
+        <p className="projects-hero__scroll-text">
+          {t("projects.moveDown", "Move down")}
+        </p>
+
+        <div className="projects-hero__bounce-wrapper">
+          <Arrow
+            variant="down"
+            title={t("common.scrollDown", "Scroll down")}
+            onClick={handleScrollDown}
+          />
+        </div>
       </motion.div>
     </section>
   );

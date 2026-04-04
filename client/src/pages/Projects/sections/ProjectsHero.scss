@@ -21,9 +21,23 @@
     margin: 0 auto;
   }
 
-  &__scroll {
+  &__scroll-container {
     position: absolute;
     bottom: $spacing-xl;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $spacing-sm;
+  }
+
+  &__scroll-text {
+    font-size: 0.875rem;
+    color: $primary;
+    margin: $spacing-sm;
+    letter-spacing: 0.05em;
+  }
+
+  &__bounce-wrapper {
     animation: bounce 2s infinite;
   }
 }
