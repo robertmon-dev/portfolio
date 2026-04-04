@@ -13,11 +13,15 @@ export const useSelectDropdown = () => {
 
   const updatePosition = useCallback(() => {
     if (triggerRef.current) {
-      const rect = triggerRef.current.getBoundingClientRect();
-      setDropdownStyles({
-        top: rect.bottom + window.scrollY + 8,
-        left: rect.left + window.scrollX,
-        width: rect.width,
+      requestAnimationFrame(() => {
+        if (!triggerRef.current) return;
+
+        const rect = triggerRef.current.getBoundingClientRect();
+        setDropdownStyles({
+          top: rect.bottom + window.scrollY + 8,
+          left: rect.left + window.scrollX,
+          width: rect.width,
+        });
       });
     }
   }, []);
