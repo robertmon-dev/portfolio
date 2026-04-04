@@ -97,6 +97,10 @@
       "title": "Slow Down",
       "description": "Oopsie daisy, Too many attempts. Please wait 15 minutes :)"
     },
+    "501": {
+      "title": "Coming soon!",
+      "description": "Oopsie daisy, Our Moń is brewing more coffee to get it done. :)"
+    },
     "NETWORK_ERROR": {
       "title": "Connection Lost",
       "description": "The server is unreachable. Check your internet connection."

@@ -4,6 +4,7 @@ export type ErrorCode =
   | "404"
   | "403"
   | "500"
+  | "501"
   | "429"
   | "offline"
   | "UNKNOWN_ERROR";

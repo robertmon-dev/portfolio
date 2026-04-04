@@ -32,6 +32,7 @@ export const useLayout = () => {
       href: "/experience",
     },
     { id: "contact", label: t("nav.contact", "Contact"), href: "/contact" },
+    { id: "blog", label: t("nav.blog", "Blog"), href: "/blog" },
   ];
 
   const adminNavItems: ListOption[] = [

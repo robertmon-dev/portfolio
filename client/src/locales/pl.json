@@ -60,6 +60,10 @@
       "title": "Błąd serwera",
       "description": "Coś poszło nie tak po naszej stronie. Pracujemy nad naprawą."
     },
+    "501": {
+      "title": "Prace w toku!",
+      "description": "Puściutko, ale będzie wszystko, helikopter i lotnisko :)"
+    },
     "offline": {
       "title": "Brak połączenia",
       "description": "Serwer jest nieosiągalny. Sprawdź swoje połączenie z siecią."

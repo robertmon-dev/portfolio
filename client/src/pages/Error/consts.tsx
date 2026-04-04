@@ -5,6 +5,7 @@ import {
   WifiOff,
   Timer,
   AlertTriangle,
+  Construction,
 } from "lucide-react";
 import type { ErrorConfig } from "./types";
 
@@ -28,6 +29,11 @@ export const ERROR_CONFIG: ErrorConfig = {
     icon: Timer,
     titleKey: "errors.429.title",
     descKey: "errors.429.description",
+  },
+  "501": {
+    icon: Construction,
+    titleKey: "errors.501.title",
+    descKey: "errors.501.description",
   },
   UNKNOWN_ERROR: {
     icon: AlertTriangle,
