@@ -2,7 +2,6 @@ import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { GithubUpdateForm } from "./Forms/Update";
 import { GithubLinkForm } from "./Forms/Link";
-import { ConfirmDialog } from "../../ConfirmDialog/ConfirmDialog";
 import type { GithubActions } from "@/pages/Admin/repos/types";
 
 export const useModalContent = (
@@ -19,6 +18,7 @@ export const useModalContent = (
       update: {
         title: t("admin.github.modals.update.title", {
           name: selectedRepo.name,
+          defaultValue: "Update Repository",
         }),
         component: (
           <GithubUpdateForm
@@ -31,6 +31,7 @@ export const useModalContent = (
       link: {
         title: t("admin.github.modals.link.title", {
           name: selectedRepo.name,
+          defaultValue: "Link repository",
         }),
         component: (
           <GithubLinkForm
@@ -38,24 +39,6 @@ export const useModalContent = (
             projects={state.projects}
             onSubmit={(data) => actions.linkToProject(data)}
             isLoading={isAnyProcessing}
-          />
-        ),
-      },
-      delete: {
-        title: t("admin.github.modals.delete.title", {
-          name: selectedRepo.name,
-        }),
-        component: (
-          <ConfirmDialog
-            message={t("admin.github.modals.delete.message", {
-              name: selectedRepo.name,
-            })}
-            confirmText={t("common.delete", "Delete")}
-            cancelText={t("common.cancel", "Cancel")}
-            onConfirm={() => actions.deleteRepo(selectedRepo.id)}
-            onCancel={actions.closeModals}
-            isLoading={isAnyProcessing}
-            variant="danger"
           />
         ),
       },
