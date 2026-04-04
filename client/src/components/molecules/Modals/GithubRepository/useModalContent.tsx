@@ -32,6 +32,7 @@ export const useModalContent = (
       LINK: {
         title: t("admin.github.modals.link.title", {
           name: selectedRepo.name,
+          defaultValue: "Link repository with project",
         }),
         component: (
           <GithubLinkForm
