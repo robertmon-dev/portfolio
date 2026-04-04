@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import { forwardRef, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { ChevronDown, Check } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -39,15 +39,19 @@ export const Select = forwardRef<HTMLDivElement, SelectProps>(
       disabled,
     });
 
-    const setRefs = (element: HTMLDivElement | null) => {
-      (containerRef as React.MutableRefObject<HTMLDivElement | null>).current =
-        element;
-      if (typeof ref === "function") {
-        ref(element);
-      } else if (ref) {
-        ref.current = element;
-      }
-    };
+    const setRefs = useCallback(
+      (element: HTMLDivElement | null) => {
+        (
+          containerRef as React.MutableRefObject<HTMLDivElement | null>
+        ).current = element;
+        if (typeof ref === "function") {
+          ref(element);
+        } else if (ref) {
+          ref.current = element;
+        }
+      },
+      [containerRef, ref],
+    );
 
     return (
       <div
