@@ -75,7 +75,10 @@ export const LinkTechStackForm = ({
         {t(
           "admin.techStack.link.help",
           "Link {{name}} to an existing project.",
-          { name: techStack.name },
+          {
+            name: techStack.name,
+            defaultValue: "Link tech stack to existing project",
+          },
         )}
       </p>
 
