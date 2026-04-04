@@ -15,7 +15,7 @@ export const ProjectsModals = ({ state, actions }: ProjectModalsProps) => {
       open={!!state.activeModal}
       onClose={handleClose}
       title={currentModal?.title ?? ""}
-      size={"40vw"}
+      size={state.activeModal === "DELETE" ? "20vw" : "40vw"}
     >
       {currentModal?.component}
     </Modal>

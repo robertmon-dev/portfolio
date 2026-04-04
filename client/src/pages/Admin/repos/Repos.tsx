@@ -48,12 +48,14 @@ export const GithubAdminPage = () => {
         t,
         (repo) => {
           actions.selectRepo(repo.id);
-          actions.openModal("update");
+          actions.openModal("UPDATE", repo.id);
         },
-        (id) => actions.deleteRepo(id),
+        (id) => {
+          actions.openModal("DELETE", id);
+        },
         (repo) => {
           actions.selectRepo(repo.id);
-          actions.openModal("link");
+          actions.openModal("LINK");
         },
         (repo) => {
           actions.selectRepo(repo.id);

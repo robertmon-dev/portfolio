@@ -59,7 +59,9 @@ export const ProjectsAdminPage = () => {
       getProjectColumns(
         t,
         (project) => actions.openModal("UPDATE", project.id),
-        (id) => actions.deleteProject(id),
+        (id) => {
+          actions.openModal("DELETE", id);
+        },
         (projectId, techStackId) =>
           techStackActions.unlinkProject({ techStackId, projectId }),
         (repoId) => githubActions.unlinkFromProject(repoId),

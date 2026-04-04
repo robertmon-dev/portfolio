@@ -7,12 +7,7 @@ export const PROJECT_ACTIONS = {
   CLOSE_MODALS: "PROJECT/CLOSE_MODALS",
 } as const;
 
-export type ProjectModalType =
-  | "CREATE"
-  | "UPDATE"
-  | "DELETE"
-  | "RESTORE"
-  | null;
+export type ProjectModalType = "CREATE" | "UPDATE" | "DELETE" | null;
 
 export interface ProjectState {
   processingId: string | null;

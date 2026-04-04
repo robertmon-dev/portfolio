@@ -1,13 +1,13 @@
 import { useGithubActions } from "./useGithubActions";
 
 export const GITHUB_ACTIONS = {
-  SET_PROCESSING: 'GITHUB/SET_PROCESSING',
-  SELECT_REPO: 'GITHUB/SELECT_REPO',
-  OPEN_MODAL: 'GITHUB/OPEN_MODAL',
-  CLOSE_MODALS: 'GITHUB/CLOSE_MODALS',
+  SET_PROCESSING: "GITHUB/SET_PROCESSING",
+  SELECT_REPO: "GITHUB/SELECT_REPO",
+  OPEN_MODAL: "GITHUB/OPEN_MODAL",
+  CLOSE_MODALS: "GITHUB/CLOSE_MODALS",
 } as const;
 
-export type GithubModalType = 'update' | 'link' | 'delete' | null;
+export type GithubModalType = "UPDATE" | "LINK" | "DELETE" | null;
 
 export interface GithubState {
   processingId: string | null;
@@ -27,7 +27,10 @@ export const initialState: GithubState = {
   activeModal: null,
 };
 
-export function githubReducer(state: GithubState, action: GithubAction): GithubState {
+export function githubReducer(
+  state: GithubState,
+  action: GithubAction,
+): GithubState {
   switch (action.type) {
     case GITHUB_ACTIONS.SET_PROCESSING:
       return { ...state, processingId: action.payload };

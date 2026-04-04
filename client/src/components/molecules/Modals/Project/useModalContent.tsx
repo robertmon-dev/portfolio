@@ -44,27 +44,11 @@ export const useProjectModalContent = (
           <ConfirmDialog
             message={t("admin.projects.modals.delete.confirm", {
               title: selectedProject?.title,
-              defaultValue: "Czy na pewno chcesz usunąć ten projekt?",
+              defaultValue: "Are you sure about that?",
             })}
-            confirmText={t("common.delete", "Usuń")}
+            confirmText={t("common.delete", "Remove")}
             variant="danger"
             onConfirm={() => actions.deleteProject(selectedProject!.id)}
-            onCancel={actions.closeModals}
-            isLoading={isAnyProcessing}
-          />
-        ),
-      },
-      RESTORE: {
-        title: t("admin.projects.modals.restore.title", "Restore project"),
-        component: (
-          <ConfirmDialog
-            message={t(
-              "admin.projects.modals.restore.confirm",
-              "You sure about restoring this project?",
-            )}
-            confirmText={t("common.restore", "Restore")}
-            variant="success"
-            onConfirm={() => actions.restoreProject(selectedProject!.id)}
             onCancel={actions.closeModals}
             isLoading={isAnyProcessing}
           />
