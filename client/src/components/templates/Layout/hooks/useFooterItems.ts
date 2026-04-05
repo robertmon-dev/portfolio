@@ -12,7 +12,7 @@ export const useFooterItems = () => {
       id: "github",
       label: "GitHub",
       icon: React.createElement(Github, { size: 16 }),
-      onClick: () => window.open("https://github.com/robermon-dev", "_blank"),
+      onClick: () => window.open("https://github.com/robertmon-dev", "_blank"),
     },
     {
       id: "linkedin",
