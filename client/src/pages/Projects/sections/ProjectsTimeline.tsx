@@ -15,6 +15,13 @@ export const ProjectsTimeline = ({ items }: ProjectsTimelineProps) => {
 
   const timelineItems = items.map((item: ProjectWithRelations) => ({
     id: item.id,
+    oppositeContent: (
+      <div className="project-card__opposite">
+        <span className="project-card__opposite-description">
+          {item.description}
+        </span>
+      </div>
+    ),
     content: (
       <Card
         variant="levitating"
@@ -103,7 +110,7 @@ export const ProjectsTimeline = ({ items }: ProjectsTimelineProps) => {
             </div>
           </div>
 
-          <p className="project-card__description">{item.description}</p>
+          <p className="project-card__slug">{item.slug}</p>
 
           {item.techStack && item.techStack.length > 0 && (
             <div className="project-card__tech-stack">

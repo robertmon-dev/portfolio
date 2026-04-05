@@ -19,6 +19,10 @@ export const TimelineGrid = ({
 
         return (
           <div key={item.id} className="timeline-grid__item" style={itemStyles}>
+            <div className="timeline-grid__opposite">
+              {item.oppositeContent}
+            </div>
+
             <div className="timeline-grid__content">{item.content}</div>
           </div>
         );

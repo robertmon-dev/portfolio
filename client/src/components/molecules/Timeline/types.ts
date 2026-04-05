@@ -1,6 +1,7 @@
 export interface TimelineItem {
   id: string | number;
   content: React.ReactNode;
+  oppositeContent?: React.ReactNode;
   gapToNext?: string;
 }
 
