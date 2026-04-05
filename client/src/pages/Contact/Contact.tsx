@@ -66,8 +66,8 @@ export const ContactPage = () => {
             <EntityGrid
               data={contactData}
               isLoading={profileLoading}
-              loadingItemsCount={4}
-              columns={{ default: 1, md: 2, lg: 3 }}
+              loadingItemsCount={5}
+              columns={{ default: 1, md: 3, lg: 3 }}
               gap="1.5rem"
               renderItem={(item) => (
                 <ContactCard

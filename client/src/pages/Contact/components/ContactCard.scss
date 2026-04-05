@@ -51,11 +51,11 @@
 
   &:hover {
     .contact-card__value {
-      color: $highlight;
+      color: $primary;
     }
 
     .contact-card__icon {
-      color: $highlight;
+      color: $primary;
       transform: scale(1.1);
     }
   }
