@@ -1,0 +1,60 @@
+@use "sass:color";
+
+.contact-card {
+  display: flex;
+  flex-direction: column;
+  padding: $spacing-md;
+  background-color: $bg-surface;
+  border: 1px solid $border-color;
+  border-radius: $radius-md;
+  text-decoration: none;
+  box-shadow: $shadow-surface-sm;
+  transition: all 0.3s ease;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+    margin-bottom: $spacing-xs;
+  }
+
+  &__icon {
+    display: flex;
+    color: $primary;
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+
+  &__label {
+    font-size: 0.85rem;
+    color: $text-muted;
+    text-transform: capitalize;
+    font-family: $font-stack;
+  }
+
+  &__value {
+    font-size: 1rem;
+    font-weight: 600;
+    color: $text-main;
+    word-break: break-all;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color 0.3s ease;
+  }
+
+  &:hover {
+    background-color: color.adjust($bg-surface, $lightness: 3%);
+    border-color: color.change($primary, $alpha: 0.5);
+    box-shadow: $shadow-primary-sm;
+    transform: translateY(-3px);
+
+    .contact-card__value {
+      color: $highlight;
+    }
+
+    .contact-card__icon {
+      color: $highlight;
+      transform: scale(1.1);
+    }
+  }
+}

@@ -1,1 +1,5 @@
-export interface ContactSectionProps {}
+export interface ContactCardProps {
+  platform: string;
+  url: string;
+  displayValue: string;
+}
