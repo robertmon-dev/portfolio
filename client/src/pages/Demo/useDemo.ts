@@ -1,5 +1,11 @@
-import { useState, useCallback } from 'react';
-import { SAMPLE_CODE, DEMO_LIST_ITEMS, DEMO_GRID_DATA, HEADER_TAGS, DEMO_TIMELINE_DATA } from './consts';
+import { useState, useCallback } from "react";
+import {
+  SAMPLE_CODE,
+  DEMO_LIST_ITEMS,
+  DEMO_GRID_DATA,
+  HEADER_TAGS,
+  DEMO_TIMELINE_DATA,
+} from "./consts";
 
 export const useDemo = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -13,16 +19,19 @@ export const useDemo = () => {
     setTimeout(() => setIsGridLoading(false), 2000);
   }, []);
 
-  const handleOpenMenu = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-    setMenuAnchorEl(event.currentTarget);
-  }, []);
+  const handleOpenMenu = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      setMenuAnchorEl(event.currentTarget);
+    },
+    [],
+  );
 
   const handleCloseMenu = useCallback(() => {
     setMenuAnchorEl(null);
   }, []);
 
   const toggleGlobalLoading = useCallback(() => {
-    setLoading(prev => !prev);
+    setLoading((prev) => !prev);
   }, []);
 
   return {
@@ -41,6 +50,6 @@ export const useDemo = () => {
     handleSimulateLoading,
     handleOpenMenu,
     handleCloseMenu,
-    toggleGlobalLoading
+    toggleGlobalLoading,
   };
 };

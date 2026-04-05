@@ -1,7 +1,16 @@
-import type { ReactNode, MouseEvent as ReactMouseEvent, LiHTMLAttributes } from 'react';
+import type {
+  ReactNode,
+  MouseEvent as ReactMouseEvent,
+  LiHTMLAttributes,
+} from "react";
 
-export type ListItemVariant = 'default' | 'nav' | 'footer' | 'side';
-export type ListItemStatus = 'default' | 'success' | 'warning' | 'error' | 'info';
+export type ListItemVariant = "default" | "nav" | "footer" | "side";
+export type ListItemStatus =
+  | "default"
+  | "success"
+  | "warning"
+  | "error"
+  | "info";
 
 export interface ListItemStyleProps {
   variant?: ListItemVariant;
@@ -11,7 +20,8 @@ export interface ListItemStyleProps {
   className?: string;
 }
 
-export interface ListItemProps extends Omit<LiHTMLAttributes<HTMLLIElement>, 'onClick'>, ListItemStyleProps {
+export interface ListItemProps
+  extends Omit<LiHTMLAttributes<HTMLLIElement>, "onClick">, ListItemStyleProps {
   children: ReactNode;
   icon?: ReactNode;
   href?: string;
@@ -23,7 +33,7 @@ export interface ListItemContentProps {
   children: ReactNode;
   icon?: ReactNode;
   showIndicator?: boolean;
-  elementType: 'div' | 'a' | 'link';
+  elementType: "div" | "a" | "link";
   href?: string;
   disabled?: boolean;
   onClick?: (e: ReactMouseEvent<HTMLElement>) => void;

@@ -4,11 +4,12 @@ import { NavigationListener } from "./components/utility/navigation/Listener";
 import { Layout } from "@/components/templates/Layout/Layout";
 import { Demo } from "@/pages/Demo/Demo";
 import { AboutPage } from "@/pages/About/About";
-import { ProjectsPage } from "./pages/Projects/Projects";
-import { ExperiencePage } from "./pages/Experience/Experience";
+import { ContactPage } from "@/pages/Contact/Contact";
+import { ProjectsPage } from "@/pages/Projects/Projects";
+import { ExperiencePage } from "@/pages/Experience/Experience";
 import { GithubAdminPage } from "@/pages/Admin/repos/Repos";
-import { ProjectsAdminPage } from "./pages/Admin/projects/Projects";
-import { TechStackAdminPage } from "./pages/Admin/techstack/Techstack";
+import { ProjectsAdminPage } from "@/pages/Admin/projects/Projects";
+import { TechStackAdminPage } from "@/pages/Admin/techstack/Techstack";
 import { UsersAdminPage } from "./pages/Admin/users/Users";
 import { ExperienceAdminPage } from "./pages/Admin/experience/Experience";
 import { Guard } from "@/components/utility/guard/Guard";
@@ -26,6 +27,7 @@ const App = () => {
           <Route path="/demo" element={<Demo />} />
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/experience" element={<ExperiencePage />} />
+          <Route path="/contact" element={<ContactPage />} />
           <Route path="/blog" element={<ErrorPage code="501" />} />
 
           <Route path="/error/:code" element={<ErrorPage />} />
