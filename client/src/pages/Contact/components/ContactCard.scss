@@ -3,11 +3,13 @@
 .contact-card {
   display: flex;
   flex-direction: column;
+  height: 100%;
 
   &__link {
     text-decoration: none;
     display: flex;
     flex-direction: column;
+    flex: 1;
     height: 100%;
 
     &::after {
@@ -43,9 +45,8 @@
     font-weight: 600;
     color: $text-main;
     word-break: break-all;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: normal;
+    line-height: 1.4;
     transition: color 0.3s ease;
   }
 
