@@ -45,5 +45,5 @@ jobs:
             cd ~/portfolio
             git pull origin main
             echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            make up
+            make prod-update
             docker exec portfolio_app npx prisma db push
