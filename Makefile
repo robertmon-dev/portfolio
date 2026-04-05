@@ -2,8 +2,8 @@
 # Portfolio Monorepo Makefile
 # ==============================================================================
 
-COMPOSE_FULL  = docker-compose -f docker/docker-compose.yml
-COMPOSE_LOCAL = docker-compose -f docker/docker-compose.local.yml
+COMPOSE_FULL  = docker compose -f docker/docker-compose.yml
+COMPOSE_LOCAL = docker compose -f docker/docker-compose.local.yml
 YARN          = yarn
 TURBO         = yarn turbo
 
