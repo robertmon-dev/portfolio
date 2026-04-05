@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { useProjectQueries } from "./useQueries";
+import { handleScrollToTop } from "@/lib/utils/navigation";
 import { Arrow } from "@/components/atoms/Arrow/Arrow";
 import { LoadingBar } from "@/components/atoms/LoadingBar/LoadingBar";
 import { ProjectsHero } from "./sections/ProjectsHero";
@@ -12,10 +13,6 @@ export const ProjectsPage = () => {
   const {
     list: { data: projects, isLoading: areProjectsLoading },
   } = useProjectQueries();
-
-  const handleScrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
 
   if (areProjectsLoading) return <LoadingBar isLoading={true} />;
 
