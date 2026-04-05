@@ -1,4 +1,20 @@
 import {
+  SiTypescript,
+  SiJavascript,
+  SiPython,
+  SiGo,
+  SiRust,
+  SiOpenjdk,
+  SiKotlin,
+  SiCplusplus,
+  SiReact,
+  SiNodedotjs,
+  SiDocker,
+  SiPostgresql,
+  SiTailwindcss,
+  SiPrisma,
+} from "react-icons/si";
+import {
   Mail,
   Github,
   Linkedin,
@@ -7,18 +23,7 @@ import {
   Instagram,
   Youtube,
 } from "lucide-react";
-import {
-  Atom,
-  Database,
-  Server,
-  Layout,
-  Code2,
-  Terminal,
-  Box,
-  Palette,
-  Workflow,
-  Cpu,
-} from "lucide-react";
+import { Layout, Terminal, Cpu } from "lucide-react";
 import type { SocialMatcher, TechMatcher } from "./types";
 
 export const ICON_MATCHERS: SocialMatcher[] = [
@@ -32,17 +37,22 @@ export const ICON_MATCHERS: SocialMatcher[] = [
 ];
 
 export const TECH_ICON_MATCHERS: TechMatcher[] = [
-  { keywords: ["react", "next.js", "frontend"], Icon: Atom },
-  { keywords: ["typescript", "javascript", "js", "ts"], Icon: Code2 },
-  { keywords: ["node", "express", "fastify", "backend"], Icon: Server },
-  {
-    keywords: ["postgres", "sql", "redis", "mongodb", "database", "db"],
-    Icon: Database,
-  },
-  { keywords: ["docker", "container", "kubernetes"], Icon: Box },
-  { keywords: ["tailwind", "css", "sass", "style", "ui"], Icon: Palette },
-  { keywords: ["prisma", "orm", "trpc", "api"], Icon: Workflow },
-  { keywords: ["bash", "script", "linux", "terminal"], Icon: Terminal },
-  { keywords: ["shared", "core", "architecture"], Icon: Cpu },
-  { keywords: ["web", "browser", "html"], Icon: Layout },
+  { keywords: ["typescript", "ts"], Icon: SiTypescript },
+  { keywords: ["javascript", "js"], Icon: SiJavascript },
+  { keywords: ["react", "next.js"], Icon: SiReact },
+  { keywords: ["python", "py"], Icon: SiPython },
+  { keywords: ["java", "jvm"], Icon: SiOpenjdk },
+  { keywords: ["go", "golang"], Icon: SiGo },
+  { keywords: ["rust"], Icon: SiRust },
+  { keywords: ["kotlin"], Icon: SiKotlin },
+  { keywords: ["c++", "cpp"], Icon: SiCplusplus },
+  { keywords: ["node", "backend"], Icon: SiNodedotjs },
+  { keywords: ["docker"], Icon: SiDocker },
+  { keywords: ["postgres", "sql"], Icon: SiPostgresql },
+  { keywords: ["tailwind"], Icon: SiTailwindcss },
+  { keywords: ["prisma"], Icon: SiPrisma },
+
+  { keywords: ["bash", "terminal"], Icon: Terminal },
+  { keywords: ["shared", "core"], Icon: Cpu },
+  { keywords: ["web", "html"], Icon: Layout },
 ];
