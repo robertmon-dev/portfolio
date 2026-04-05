@@ -1,22 +1,27 @@
-import type { CardProps } from './types';
-import { bem } from '../../utility/bem';
+import type { CardProps } from "./types";
+import { bem } from "../../utility/bem";
 
-type StyleProps = Pick<CardProps, 'variant' | 'padding' | 'interactive' | 'className'>;
+type StyleProps = Pick<
+  CardProps,
+  "variant" | "padding" | "interactive" | "className" | "width"
+>;
 
 export const getCardClasses = ({
-  variant = 'elevated',
-  padding = 'md',
+  variant = "elevated",
+  padding = "md",
+  width = "auto",
   interactive,
   className,
 }: StyleProps): string => {
   return bem(
-    'card',
+    "card",
     [
       variant,
       `padding-${padding}`,
-      interactive && 'interactive',
-      variant === 'levitating' && 'levitating'
+      width !== "auto" && `width-${width}`,
+      interactive && "interactive",
+      variant === "levitating" && "levitating",
     ],
-    className
+    className,
   );
 };

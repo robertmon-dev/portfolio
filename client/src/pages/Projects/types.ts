@@ -1,5 +1,5 @@
-import type { Project } from "@portfolio/shared";
+import type { ProjectWithRelations } from "@portfolio/shared";
 
 export interface ProjectsTimelineProps {
-  items: Project[];
+  items: ProjectWithRelations[];
 }

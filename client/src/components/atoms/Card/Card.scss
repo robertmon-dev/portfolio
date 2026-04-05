@@ -105,4 +105,14 @@
   &--padding-sm { padding: $spacing-sm; }
   &--padding-md { padding: $spacing-md; }
   &--padding-lg { padding: $spacing-lg; }
+
+  &--width-wide {
+    width: 100%;
+    min-width: 600px;
+    max-width: 800px;
+  }
+
+  &--width-full {
+    width: 100%;
+  }
 }
