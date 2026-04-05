@@ -1,23 +1,13 @@
 import type { TechIconProps } from "./types";
+import { getTechIcon } from "@/lib/utils/render";
 import "./Icon.scss";
 
-export const TechIcon = ({ icon, color }: TechIconProps) => {
-  if (!icon) return null;
-
-  const isClassIcon = icon.includes("-");
+export const TechIcon = ({ name, color, size = 20 }: TechIconProps) => {
+  const IconComponent = getTechIcon(name);
 
   return (
-    <div
-      className="tech-icon"
-      style={
-        { "--icon-color": color || "var(--primary)" } as React.CSSProperties
-      }
-    >
-      {isClassIcon ? (
-        <i className={`${icon} tech-icon__glyph`} />
-      ) : (
-        <span className="tech-icon__fallback">?</span>
-      )}
+    <div className="tech-icon" style={{ color: color || "inherit" }}>
+      <IconComponent size={size} />
     </div>
   );
 };

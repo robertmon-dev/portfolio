@@ -9,6 +9,7 @@ export const ContactCard = ({
   displayValue,
 }: ContactCardProps) => {
   const isMailto = url.startsWith("mailto:");
+  const Icon = getPlatformIcon(platform, url);
 
   return (
     <Card variant="contact" interactive padding="md" className="contact-card">
@@ -20,7 +21,7 @@ export const ContactCard = ({
       >
         <div className="contact-card__header">
           <span className="contact-card__icon">
-            {getPlatformIcon(platform, url)}
+            <Icon size={18} />
           </span>
           <span className="contact-card__label">{platform}</span>
         </div>

@@ -33,33 +33,37 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
 
       {profile?.socials && (
         <div className="about-page__socials">
-          {Object.entries(profile.socials).map(([platform, url], index) => (
-            <motion.div
-              key={platform}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2 + index * 0.1 }}
-            >
-              <Card
-                variant="transparent"
-                interactive
-                padding="none"
-                className="about-page__social-card"
+          {Object.entries(profile.socials).map(([platform, url], index) => {
+            const Icon = getPlatformIcon(platform, url);
+
+            return (
+              <motion.div
+                key={platform}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2 + index * 0.1 }}
               >
-                <a
-                  href={url as string}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="about-page__social-link"
+                <Card
+                  variant="transparent"
+                  interactive
+                  padding="none"
+                  className="about-page__social-card"
                 >
-                  <span className="about-page__social-icon">
-                    {getPlatformIcon(platform, url as string)}
-                  </span>
-                  <span className="about-page__social-name">{platform}</span>
-                </a>
-              </Card>
-            </motion.div>
-          ))}
+                  <a
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="about-page__social-link"
+                  >
+                    <span className="about-page__social-icon">
+                      <Icon size={18} />
+                    </span>
+                    <span className="about-page__social-name">{platform}</span>
+                  </a>
+                </Card>
+              </motion.div>
+            );
+          })}
         </div>
       )}
     </section>

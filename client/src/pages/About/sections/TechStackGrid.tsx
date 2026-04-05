@@ -20,7 +20,7 @@ export const TechStackGrid = ({ items, isLoading }: TechStackGridProps) => {
           padding="md"
           style={
             {
-              "--tech-color": tech.color || "var(--primary)",
+              "--tech-color": tech.color ?? "var(--primary)",
             } as React.CSSProperties
           }
         >
@@ -32,11 +32,9 @@ export const TechStackGrid = ({ items, isLoading }: TechStackGridProps) => {
               </Badge>
             </div>
 
-            {tech.icon && (
-              <div className="tech-card__icon-wrapper">
-                <TechIcon icon={tech.icon} color={tech.color} />
-              </div>
-            )}
+            <div className="tech-card__icon-wrapper">
+              <TechIcon name={tech.name} color={tech.color ?? undefined} />
+            </div>
           </div>
         </Card>
       )}
