@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { Card } from "@/components/atoms/Card/Card";
+import { getPlatformIcon } from "@/lib/utils/render";
 import type { AboutHeroProps } from "../types";
 import "./AboutHero.scss";
 
@@ -46,11 +47,14 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
                 className="about-page__social-card"
               >
                 <a
-                  href={url}
+                  href={url as string}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="about-page__social-link"
                 >
+                  <span className="about-page__social-icon">
+                    {getPlatformIcon(platform, url as string)}
+                  </span>
                   <span className="about-page__social-name">{platform}</span>
                 </a>
               </Card>

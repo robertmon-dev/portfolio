@@ -7,7 +7,8 @@ export type CardVariant =
   | "transparent"
   | "levitating"
   | "levitating-transparent"
-  | "floating";
+  | "floating"
+  | "contact";
 export type CardPadding = "none" | "sm" | "md" | "lg";
 export type CardWidth = "auto" | "wide" | "full";
 

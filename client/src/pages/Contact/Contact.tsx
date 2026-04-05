@@ -1,7 +1,8 @@
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { useProfileQueries } from "../About/useQueries";
-import { LoadingBar } from "@/components/atoms/LoadingBar/LoadingBar";
 import { motion } from "framer-motion";
+import { EntityGrid } from "@/components/molecules/EntityGrid/EntityGrid";
 import { ContactCard } from "./components/ContactCard";
 import "./Contact.scss";
 
@@ -11,7 +12,31 @@ export const ContactPage = () => {
     get: { data: profile, isLoading: profileLoading },
   } = useProfileQueries();
 
-  if (profileLoading) return <LoadingBar isLoading={true} />;
+  const contactData = useMemo(() => {
+    const items = [];
+
+    if (profile?.email) {
+      items.push({
+        id: "email",
+        platform: t("contact.labels.email", "Email"),
+        url: `mailto:${profile.email}`,
+        displayValue: profile.email,
+      });
+    }
+
+    if (profile?.socials) {
+      Object.entries(profile.socials).forEach(([platform, url]) => {
+        items.push({
+          id: platform,
+          platform: platform,
+          url: url,
+          displayValue: url.replace(/^https?:\/\//, ""),
+        });
+      });
+    }
+
+    return items;
+  }, [profile, t]);
 
   return (
     <motion.div
@@ -38,25 +63,20 @@ export const ContactPage = () => {
               {t("contact.description", "Feel free to reach out")}
             </p>
 
-            <div className="contact-page__links">
-              {profile?.email && (
+            <EntityGrid
+              data={contactData}
+              isLoading={profileLoading}
+              loadingItemsCount={4}
+              columns={{ default: 1, md: 2, lg: 3 }}
+              gap="1.5rem"
+              renderItem={(item) => (
                 <ContactCard
-                  platform={t("contact.labels.email", "Email")}
-                  url={`mailto:${profile.email}`}
-                  displayValue={profile.email}
+                  platform={item.platform}
+                  url={item.url}
+                  displayValue={item.displayValue}
                 />
               )}
-
-              {profile?.socials &&
-                Object.entries(profile.socials).map(([platform, url]) => (
-                  <ContactCard
-                    key={platform}
-                    platform={platform}
-                    url={url as string}
-                    displayValue={(url as string).replace(/^https?:\/\//, "")}
-                  />
-                ))}
-            </div>
+            />
           </div>
         </motion.section>
       </div>
