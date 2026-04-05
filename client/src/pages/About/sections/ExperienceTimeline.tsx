@@ -15,7 +15,7 @@ export const ExperienceTimeline = ({ items }: ExperienceTimelineProps) => {
     id: item.id,
     content: (
       <Card
-        variant="levitating"
+        variant="levitating-transparent"
         interactive
         padding="lg"
         className="experience-card"
@@ -39,7 +39,7 @@ export const ExperienceTimeline = ({ items }: ExperienceTimelineProps) => {
         <p className="experience-card__description">{item.description}</p>
       </Card>
     ),
-    gapToNext: "30vh",
+    gapToNext: "20vh",
   }));
 
   return (
