@@ -25,8 +25,7 @@ export const useFooterItems = () => {
       id: "instagram",
       label: "Instagram",
       icon: React.createElement(Instagram, { size: 16 }),
-      onClick: () =>
-        window.open("https://instagram.com/yourusername", "_blank"),
+      onClick: () => window.open("https://instagram.com/monievvv", "_blank"),
     },
     {
       id: "contact-social",
