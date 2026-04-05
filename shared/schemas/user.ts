@@ -75,6 +75,7 @@ export const CreateUserInputSchema = z.object({
 export const UserPublicSchema = z.object({
   id: zUuid,
   username: zString,
+  email: zEmail,
   name: zString.nullable(),
   headline: zString.nullable(),
   bio: zText.nullable(),

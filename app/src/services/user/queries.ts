@@ -44,6 +44,7 @@ export type UserWithProfile = Prisma.UserGetPayload<typeof userProfileQuery>;
 export const userPublicQuery = {
   select: {
     id: true,
+    email: true,
     username: true,
     name: true,
     headline: true,

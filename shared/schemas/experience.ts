@@ -8,6 +8,7 @@ export const ExperienceSchema = z.object({
   startDate: zDateOrString,
   endDate: zDateOrString.nullable(),
   description: zText,
+  notes: zText.nullable(),
   isCurrent: z.boolean(),
   createdAt: zDateOrString,
 });

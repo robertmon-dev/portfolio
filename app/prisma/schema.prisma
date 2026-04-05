@@ -120,6 +120,7 @@ model Experience {
   startDate   DateTime
   endDate     DateTime?
   description String    @db.Text
+  notes       String?   @db.Text
   isCurrent   Boolean   @default(false)
 
   createdAt DateTime @default(now())

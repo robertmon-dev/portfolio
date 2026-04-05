@@ -39,6 +39,7 @@ export const ExperienceTimeline = ({ items }: ExperienceTimelineProps) => {
         <p className="experience-card__description">{item.description}</p>
       </Card>
     ),
+    oppositeContent: item.notes,
     gapToNext: "20vh",
   }));
 

@@ -27,6 +27,7 @@ export const useExperienceForm = ({
       startDate: "",
       endDate: null,
       description: "",
+      notes: "",
       isCurrent: false,
     },
   });

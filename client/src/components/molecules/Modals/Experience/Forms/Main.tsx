@@ -83,6 +83,15 @@ export const ExperienceForm = (props: ExperienceFormProps) => {
           disabled={isLoading}
           rows={4}
         />
+
+        <TextArea
+          {...register("notes")}
+          label={t("admin.experience.form.notes.label", "Notes")}
+          error={errors.notes?.message}
+          fullWidth
+          disabled={isLoading}
+          rows={4}
+        />
       </div>
 
       <div className="experience-form__actions">
