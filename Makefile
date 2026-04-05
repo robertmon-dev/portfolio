@@ -216,6 +216,14 @@ docker-login: ## Login to GitHub Container Registry
 	@echo "=> Logging in to $(REGISTRY)..."
 	@echo $${GITHUB_TOKEN} | docker login $(REGISTRY) -u $${GITHUB_ACTOR} --password-stdin
 
+.PHONY: prod-update
+prod-update: ## Pull new images and restart (Used on server)
+	@echo "=> Updating production stack..."
+	@$(COMPOSE_FULL) pull
+	@$(COMPOSE_FULL) up -d
+	@docker image prune -f
+	@echo "=> Update complete."
+
 # ==============================================================================
 # Quality
 # ==============================================================================
