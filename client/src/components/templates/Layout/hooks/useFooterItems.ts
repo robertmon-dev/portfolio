@@ -12,14 +12,14 @@ export const useFooterItems = () => {
       id: "github",
       label: "GitHub",
       icon: React.createElement(Github, { size: 16 }),
-      onClick: () => window.open("https://github.com/yourusername", "_blank"),
+      onClick: () => window.open("https://github.com/robermon-dev", "_blank"),
     },
     {
       id: "linkedin",
       label: "LinkedIn",
       icon: React.createElement(Linkedin, { size: 16 }),
       onClick: () =>
-        window.open("https://linkedin.com/in/yourusername", "_blank"),
+        window.open("https://linkedin.com/in/robert-moń-7470061a0", "_blank"),
     },
     {
       id: "instagram",
@@ -32,7 +32,7 @@ export const useFooterItems = () => {
       id: "contact-social",
       label: t("footer.links.contact", "Contact"),
       icon: React.createElement(Mail, { size: 16 }),
-      onClick: () => (window.location.href = "mailto:hello@yourdomain.com"),
+      onClick: () => (window.location.href = "mailto:m0ni3v@gmail.com"),
     },
   ];
 

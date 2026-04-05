@@ -24,11 +24,12 @@ const App = () => {
         <Routes>
           <Route index element={<AboutPage />} />
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/demo" element={<Demo />} />
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/experience" element={<ExperiencePage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/blog" element={<ErrorPage code="501" />} />
+
+          <Route path="/demo" element={<Demo />} />
 
           <Route path="/error/:code" element={<ErrorPage />} />
 
