@@ -1,5 +1,8 @@
-node_modules
-dist
-build
 .git
-.env
+**/node_modules
+**/dist
+**/build
+**/.turbo
+npm-debug.log
+yarn-error.log
+.env*

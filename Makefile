@@ -8,7 +8,7 @@ YARN          = yarn
 TURBO         = yarn turbo
 
 REGISTRY      ?= ghcr.io
-IMAGE_PREFIX  ?= robermon-dev/portfolio
+IMAGE_PREFIX  ?= robertmon-dev/portfolio
 TAG           ?= latest
 
 CYAN  := \033[36m
