@@ -7,18 +7,27 @@ import type {
 } from "@portfolio/shared";
 import type { Utils } from "@/lib/trpc/types";
 import type { GithubAction } from "./types";
+import { useTranslation } from "react-i18next";
+
 export const useGithubActions = (
   mutations: GithubMutations,
   utils: Utils,
   dispatch: React.Dispatch<GithubAction>,
 ) => {
+  const { t } = useTranslation();
+
   const handleUpdate = async (input: UpdateGithubRepoInput) => {
     dispatch({ type: GITHUB_ACTIONS.SET_PROCESSING, payload: input.id });
 
     try {
       await mutations.update.mutateAsync(input);
 
-      toast.success("Repo updated successfully");
+      toast.success(
+        t("github.notifications.updateSuccess", {
+          defaultValue: "Repo updated successfully",
+        }),
+      );
+
       dispatch({ type: GITHUB_ACTIONS.CLOSE_MODALS });
 
       await Promise.all([
@@ -34,7 +43,13 @@ export const useGithubActions = (
     dispatch({ type: GITHUB_ACTIONS.SET_PROCESSING, payload: input.repoId });
     try {
       await mutations.linkProject.mutateAsync(input);
-      toast.success("Project linked successfully");
+
+      toast.success(
+        t("github.notifications.linkSuccess", {
+          defaultValue: "Project linked successfully",
+        }),
+      );
+
       dispatch({ type: GITHUB_ACTIONS.CLOSE_MODALS });
 
       await Promise.all([
@@ -50,7 +65,12 @@ export const useGithubActions = (
     dispatch({ type: GITHUB_ACTIONS.SET_PROCESSING, payload: id });
     try {
       await mutations.delete.mutateAsync({ id });
-      toast.success("Repo removed from database");
+
+      toast.success(
+        t("github.notifications.deleteSuccess", {
+          defaultValue: "Repo removed from database",
+        }),
+      );
 
       dispatch({ type: GITHUB_ACTIONS.SELECT_REPO, payload: null });
       dispatch({ type: GITHUB_ACTIONS.CLOSE_MODALS });
@@ -68,7 +88,12 @@ export const useGithubActions = (
     dispatch({ type: GITHUB_ACTIONS.SET_PROCESSING, payload: repoId });
     try {
       await mutations.unlinkProject.mutateAsync({ repoId });
-      toast.success("Project unlinked successfully");
+
+      toast.success(
+        t("github.notifications.unlinkSuccess", {
+          defaultValue: "Project unlinked successfully",
+        }),
+      );
 
       dispatch({ type: GITHUB_ACTIONS.SELECT_REPO, payload: null });
       dispatch({ type: GITHUB_ACTIONS.CLOSE_MODALS });
