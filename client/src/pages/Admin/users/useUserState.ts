@@ -1,7 +1,7 @@
 import { useReducer, useMemo } from "react";
 import { trpc } from "@/lib/trpc/client";
 import { useUserMutations } from "../useMutations";
-import * as handlers from "./actions";
+import { useUserActions } from "./useUserActions";
 import {
   USER_ACTIONS,
   userReducer,
@@ -14,10 +14,11 @@ import type {
   UpdateUserPermissionsInput,
 } from "@portfolio/shared";
 
-export const useUsersActions = () => {
+export const useUsersState = () => {
   const utils = trpc.useUtils();
   const mutations = useUserMutations();
   const [state, dispatch] = useReducer(userReducer, initialState);
+  const handlers = useUserActions(mutations, utils, dispatch);
 
   const { data: users = [], isLoading } = trpc.admin.users.list.useQuery();
 
@@ -37,18 +38,12 @@ export const useUsersActions = () => {
       },
 
       closeModals: () => dispatch({ type: USER_ACTIONS.CLOSE_MODALS }),
-
-      createUser: (data: CreateUserInput) =>
-        handlers.handleCreate(mutations, utils, dispatch, data),
-
-      updateUser: (data: UpdateUserInput) =>
-        handlers.handleUpdate(mutations, utils, dispatch, data),
-
-      deleteUser: (id: string) =>
-        handlers.handleDelete(mutations, utils, dispatch, id),
+      createUser: (data: CreateUserInput) => handlers.handleCreate(data),
+      updateUser: (data: UpdateUserInput) => handlers.handleUpdate(data),
+      deleteUser: (id: string) => handlers.handleDelete(id),
 
       updatePermissions: (data: UpdateUserPermissionsInput) =>
-        handlers.handleUpdatePermissions(mutations, utils, dispatch, data),
+        handlers.handleUpdatePermissions(data),
     }),
     [mutations, utils],
   );

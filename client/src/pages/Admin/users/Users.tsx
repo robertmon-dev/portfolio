@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { useUsersActions } from "./useUsersActions";
+import { useUsersState } from "./useUserState";
 import { getUsersColumns } from "./components/getUserColumns";
 import { Button } from "@/components/atoms/Button/Button";
 import { EntityTable } from "@/components/molecules/EntityTable/EntityTable";
@@ -12,7 +12,7 @@ import "./Users.scss";
 
 export const UsersAdminPage = () => {
   const { t } = useTranslation();
-  const { state, actions } = useUsersActions();
+  const { state, actions } = useUsersState();
 
   const headerTags = useMemo(() => {
     const admins = state.users.filter((u) => u.role === "ADMIN").length;

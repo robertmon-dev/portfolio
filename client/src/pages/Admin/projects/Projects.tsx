@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { useProjectActions } from "./useProjectActions";
+import { useProjectsState } from "./useProjectsState";
 import { getProjectColumns } from "./components/getProjectColumns";
 import { Button } from "@/components/atoms/Button/Button";
 import { EntityTable } from "@/components/molecules/EntityTable/EntityTable";
@@ -8,15 +8,15 @@ import { Header } from "@/components/molecules/Sections/Header/Header";
 import { LoadingBar } from "@/components/atoms/LoadingBar/LoadingBar";
 import { ProjectsModals } from "@/components/molecules/Modals/Project/Modal";
 import { Star, Eye, Code2, Plus } from "lucide-react";
-import { useTechStackActions } from "@/pages/Admin/techstack/useTechstackActions";
-import { useGithubActions } from "../repos/useGithubActions";
+import { useTechStackState } from "../techstack/useTechstackState";
+import { useGithubState } from "../repos/useGithubState";
 import "./Projects.scss";
 
 export const ProjectsAdminPage = () => {
   const { t } = useTranslation();
-  const { state, actions } = useProjectActions();
-  const { actions: techStackActions } = useTechStackActions();
-  const { actions: githubActions } = useGithubActions();
+  const { state, actions } = useProjectsState();
+  const { actions: techStackActions } = useTechStackState();
+  const { actions: githubActions } = useGithubState();
 
   const headerTags = useMemo(() => {
     const total = state.projects.length;

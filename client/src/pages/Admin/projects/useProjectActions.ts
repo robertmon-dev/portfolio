@@ -1,60 +1,88 @@
-import { useReducer, useMemo } from "react";
-import { trpc } from "@/lib/trpc/client";
-import { useProjectMutations } from "../useMutations";
-import * as handlers from "./actions";
-import {
-  PROJECT_ACTIONS,
-  projectReducer,
-  initialState,
-  type ProjectModalType,
-} from "./types";
+import { toast } from "react-toastify";
+import { PROJECT_ACTIONS, type ProjectAction } from "./types";
+import type { ProjectMutations } from "../useMutations";
+import type { Utils } from "@/lib/trpc/types";
 import type { CreateProjectInput, UpdateProjectInput } from "@portfolio/shared";
+import { useTranslation } from "react-i18next";
 
-export const useProjectActions = () => {
-  const utils = trpc.useUtils();
-  const mutations = useProjectMutations();
-  const [state, dispatch] = useReducer(projectReducer, initialState);
+export const useProjectsActions = (
+  mutations: ProjectMutations,
+  utils: Utils,
+  dispatch: React.Dispatch<ProjectAction>,
+) => {
+  const { t } = useTranslation();
 
-  const { data: projects = [], isLoading: isProjectsLoading } =
-    trpc.projects.list.useQuery({});
+  const handleCreate = async (data: CreateProjectInput) => {
+    dispatch({ type: PROJECT_ACTIONS.SET_PROCESSING, payload: "creating" });
+    try {
+      await mutations.create.mutateAsync(data);
+      toast.success(
+        t("projects.create.success", "Project created successfully"),
+      );
 
-  const selectedProject = useMemo(
-    () => projects.find((p) => p.id === state.selectedId) || null,
-    [projects, state.selectedId],
-  );
+      dispatch({ type: PROJECT_ACTIONS.CLOSE_MODALS });
+      await utils.projects.list.invalidate();
+    } finally {
+      dispatch({ type: PROJECT_ACTIONS.SET_PROCESSING, payload: null });
+    }
+  };
+
+  const handleUpdate = async (data: UpdateProjectInput) => {
+    dispatch({ type: PROJECT_ACTIONS.SET_PROCESSING, payload: data.id });
+    try {
+      await mutations.update.mutateAsync({ ...data });
+      toast.success(
+        t("projects.update.success", "Project updated successfully"),
+      );
+
+      dispatch({ type: PROJECT_ACTIONS.SELECT_PROJECT, payload: null });
+      dispatch({ type: PROJECT_ACTIONS.CLOSE_MODALS });
+
+      await utils.projects.list.invalidate();
+    } finally {
+      dispatch({ type: PROJECT_ACTIONS.SET_PROCESSING, payload: null });
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    dispatch({ type: PROJECT_ACTIONS.SET_PROCESSING, payload: id });
+    try {
+      await mutations.delete.mutateAsync({ id });
+      toast.success(t("projects.delete.success", "Project moved to trash"));
+
+      dispatch({ type: PROJECT_ACTIONS.SELECT_PROJECT, payload: null });
+      dispatch({ type: PROJECT_ACTIONS.CLOSE_MODALS });
+
+      await utils.projects.list.invalidate();
+    } finally {
+      dispatch({ type: PROJECT_ACTIONS.SET_PROCESSING, payload: null });
+    }
+  };
+
+  const handleRestore = async (id: string) => {
+    dispatch({ type: PROJECT_ACTIONS.SET_PROCESSING, payload: id });
+    try {
+      await mutations.update.mutateAsync({ id, isVisible: false });
+      toast.success(
+        t(
+          "projects.restore.success",
+          "Project restored successfully. Status set to Draft.",
+        ),
+      );
+
+      dispatch({ type: PROJECT_ACTIONS.SELECT_PROJECT, payload: null });
+      dispatch({ type: PROJECT_ACTIONS.CLOSE_MODALS });
+
+      await utils.projects.list.invalidate();
+    } finally {
+      dispatch({ type: PROJECT_ACTIONS.SET_PROCESSING, payload: null });
+    }
+  };
 
   return {
-    state: {
-      ...state,
-      projects,
-      selectedProject,
-      isLoading: isProjectsLoading,
-      isAnyProcessing: !!state.processingId,
-    },
-    actions: {
-      selectProject: (id: string | null) =>
-        dispatch({ type: PROJECT_ACTIONS.SELECT_PROJECT, payload: id }),
-
-      openModal: (type: ProjectModalType, id?: string) => {
-        if (id) {
-          dispatch({ type: PROJECT_ACTIONS.SELECT_PROJECT, payload: id });
-        }
-        dispatch({ type: PROJECT_ACTIONS.OPEN_MODAL, payload: type });
-      },
-
-      closeModals: () => dispatch({ type: PROJECT_ACTIONS.CLOSE_MODALS }),
-
-      createProject: (data: CreateProjectInput) =>
-        handlers.handleCreate(mutations, utils, dispatch, data),
-
-      updateProject: (data: UpdateProjectInput) =>
-        handlers.handleUpdate(mutations, utils, dispatch, data),
-
-      deleteProject: (id: string) =>
-        handlers.handleDelete(mutations, utils, dispatch, id),
-
-      restoreProject: (id: string) =>
-        handlers.handleRestore(mutations, utils, dispatch, id),
-    },
+    handleCreate,
+    handleRestore,
+    handleDelete,
+    handleUpdate,
   };
 };

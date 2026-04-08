@@ -6,13 +6,13 @@ import { Button } from "@/components/atoms/Button/Button";
 import { LoadingBar } from "@/components/atoms/LoadingBar/LoadingBar";
 import { EntityTable } from "@/components/molecules/EntityTable/EntityTable";
 import { ExperienceModals } from "@/components/molecules/Modals/Experience/Modal";
-import { useExperienceActions } from "./useExperienceActions";
+import { useExperienceState } from "./useExperienceState";
 import { getExperienceColumns } from "./components/getExperienceColums";
 import "./Experience.scss";
 
 export const ExperienceAdminPage = () => {
   const { t } = useTranslation();
-  const { state, actions } = useExperienceActions();
+  const { state, actions } = useExperienceState();
 
   const headerTags = useMemo(
     () => [

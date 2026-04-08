@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { useTechStackActions } from "./useTechstackActions";
+import { useTechStackState } from "./useTechstackState";
 import { getTechStackColumns } from "./components/getTechstackColumns";
 import { Button } from "@/components/atoms/Button/Button";
 import { EntityTable } from "@/components/molecules/EntityTable/EntityTable";
@@ -12,7 +12,7 @@ import "./Techstack.scss";
 
 export const TechStackAdminPage = () => {
   const { t } = useTranslation();
-  const { state, actions } = useTechStackActions();
+  const { state, actions } = useTechStackState();
 
   const headerTags = useMemo(() => {
     return [

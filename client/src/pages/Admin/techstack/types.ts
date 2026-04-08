@@ -1,4 +1,4 @@
-import { useTechStackActions } from "./useTechstackActions";
+import { useTechStackState } from "./useTechstackState";
 
 export const TECH_STACK_ACTIONS = {
   SET_PROCESSING: "TECH_STACK/SET_PROCESSING",
@@ -48,4 +48,4 @@ export function techStackReducer(
   }
 }
 
-export type TechStackActions = ReturnType<typeof useTechStackActions>;
+export type TechStackActions = ReturnType<typeof useTechStackState>;

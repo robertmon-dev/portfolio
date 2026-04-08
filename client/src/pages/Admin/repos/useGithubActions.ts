@@ -1,71 +1,92 @@
-import { useReducer, useMemo } from "react";
-import { trpc } from "@/lib/trpc/client";
-import { useGithubMutations } from "../useMutations";
-import * as handlers from "./actions";
-import {
-  GITHUB_ACTIONS,
-  githubReducer,
-  initialState,
-  type GithubModalType,
-} from "./types";
+import { toast } from "react-toastify";
+import { GITHUB_ACTIONS } from "./types";
+import type { GithubMutations } from "../useMutations";
 import type {
   UpdateGithubRepoInput,
   LinkRepoProjectInput,
-  GithubRepo,
 } from "@portfolio/shared";
+import type { Utils } from "@/lib/trpc/types";
+import type { GithubAction } from "./types";
+export const useGithubActions = (
+  mutations: GithubMutations,
+  utils: Utils,
+  dispatch: React.Dispatch<GithubAction>,
+) => {
+  const handleUpdate = async (input: UpdateGithubRepoInput) => {
+    dispatch({ type: GITHUB_ACTIONS.SET_PROCESSING, payload: input.id });
 
-export const useGithubActions = () => {
-  const utils = trpc.useUtils();
-  const mutations = useGithubMutations();
-  const [state, dispatch] = useReducer(githubReducer, initialState);
+    try {
+      await mutations.update.mutateAsync(input);
 
-  const { data: repos = [], isLoading: isReposLoading } =
-    trpc.githubRepo.listRepos.useQuery();
-  const { data: projects = [], isLoading: isProjectsLoading } =
-    trpc.projects.list.useQuery({});
-  const { data: stats = null, isLoading: isStatsLoading } =
-    trpc.githubStats.getStats.useQuery();
+      toast.success("Repo updated successfully");
+      dispatch({ type: GITHUB_ACTIONS.CLOSE_MODALS });
 
-  const selectedRepo = useMemo(
-    () => repos.find((r: GithubRepo) => r.id === state.selectedId) || null,
-    [repos, state.selectedId],
-  );
+      await Promise.all([
+        utils.githubStats.getStats.invalidate(),
+        utils.githubRepo.listRepos.invalidate(),
+      ]);
+    } finally {
+      dispatch({ type: GITHUB_ACTIONS.SET_PROCESSING, payload: null });
+    }
+  };
+
+  const handleLinkProject = async (input: LinkRepoProjectInput) => {
+    dispatch({ type: GITHUB_ACTIONS.SET_PROCESSING, payload: input.repoId });
+    try {
+      await mutations.linkProject.mutateAsync(input);
+      toast.success("Project linked successfully");
+      dispatch({ type: GITHUB_ACTIONS.CLOSE_MODALS });
+
+      await Promise.all([
+        utils.githubRepo.listRepos.invalidate(),
+        utils.githubStats.getStats.invalidate(),
+      ]);
+    } finally {
+      dispatch({ type: GITHUB_ACTIONS.SET_PROCESSING, payload: null });
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    dispatch({ type: GITHUB_ACTIONS.SET_PROCESSING, payload: id });
+    try {
+      await mutations.delete.mutateAsync({ id });
+      toast.success("Repo removed from database");
+
+      dispatch({ type: GITHUB_ACTIONS.SELECT_REPO, payload: null });
+      dispatch({ type: GITHUB_ACTIONS.CLOSE_MODALS });
+
+      await Promise.all([
+        utils.githubStats.getStats.invalidate(),
+        utils.githubRepo.listRepos.invalidate(),
+      ]);
+    } finally {
+      dispatch({ type: GITHUB_ACTIONS.SET_PROCESSING, payload: null });
+    }
+  };
+
+  const handleUnlinkProject = async (repoId: string) => {
+    dispatch({ type: GITHUB_ACTIONS.SET_PROCESSING, payload: repoId });
+    try {
+      await mutations.unlinkProject.mutateAsync({ repoId });
+      toast.success("Project unlinked successfully");
+
+      dispatch({ type: GITHUB_ACTIONS.SELECT_REPO, payload: null });
+      dispatch({ type: GITHUB_ACTIONS.CLOSE_MODALS });
+
+      await Promise.all([
+        utils.githubRepo.listRepos.invalidate(),
+        utils.githubStats.getStats.invalidate(),
+        utils.projects.list.invalidate(),
+      ]);
+    } finally {
+      dispatch({ type: GITHUB_ACTIONS.SET_PROCESSING, payload: null });
+    }
+  };
 
   return {
-    state: {
-      ...state,
-      repos,
-      projects,
-      stats,
-      selectedRepo,
-      isLoading: isReposLoading || isStatsLoading || isProjectsLoading,
-      isAnyProcessing: !!state.processingId,
-    },
-    actions: {
-      selectRepo: (id: string | null) =>
-        dispatch({ type: GITHUB_ACTIONS.SELECT_REPO, payload: id }),
-
-      openModal: (type: GithubModalType, id?: string) => {
-        if (id) {
-          dispatch({ type: GITHUB_ACTIONS.SELECT_REPO, payload: id });
-        }
-
-        dispatch({ type: GITHUB_ACTIONS.OPEN_MODAL, payload: type });
-      },
-
-      closeModals: () => dispatch({ type: GITHUB_ACTIONS.CLOSE_MODALS }),
-
-      updateRepo: (input: UpdateGithubRepoInput) =>
-        handlers.handleUpdate(mutations, utils, dispatch, input),
-
-      linkToProject: (input: LinkRepoProjectInput) =>
-        handlers.handleLinkProject(mutations, utils, dispatch, input),
-
-      unlinkFromProject: (repoId: string) =>
-        handlers.handleUnlinkProject(mutations, utils, dispatch, repoId),
-
-      deleteRepo: (id: string) =>
-        handlers.handleDelete(mutations, utils, dispatch, id),
-    },
+    handleDelete,
+    handleUpdate,
+    handleLinkProject,
+    handleUnlinkProject,
   };
 };

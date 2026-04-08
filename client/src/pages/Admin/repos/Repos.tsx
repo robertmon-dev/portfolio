@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { useGithubActions } from "./useGithubActions";
+import { useGithubState } from "./useGithubState";
 import { getGithubColumns } from "./components/getGithubColumns";
 import { EntityTable } from "@/components/molecules/EntityTable/EntityTable";
 import { Header } from "@/components/molecules/Sections/Header/Header";
@@ -11,7 +11,7 @@ import "./Repos.scss";
 
 export const GithubAdminPage = () => {
   const { t } = useTranslation();
-  const { state, actions } = useGithubActions();
+  const { state, actions } = useGithubState();
 
   const linkedCount = useMemo(
     () => state.repos.filter((r) => !!r.project).length,

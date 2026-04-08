@@ -1,62 +1,90 @@
-import { useReducer, useMemo } from "react";
-import { trpc } from "@/lib/trpc/client";
-import { useExperienceMutations } from "../useMutations";
-import * as handlers from "./actions";
-import {
-  EXPERIENCE_ACTIONS,
-  experienceReducer,
-  initialState,
-  type ExperienceModalType,
-} from "./types";
+import { toast } from "react-toastify";
+import { EXPERIENCE_ACTIONS, type ExperienceAction } from "./types";
+import { toIso, toNullableIso, toOptionalIso } from "@/lib/utils/date";
+import type { ExperienceMutations } from "../useMutations";
+import type { Utils } from "@/lib/trpc/types";
 import type {
   CreateExperienceInput,
   UpdateExperienceInput,
 } from "@portfolio/shared";
+import { useTranslation } from "react-i18next";
 
-export const useExperienceActions = () => {
-  const utils = trpc.useUtils();
-  const mutations = useExperienceMutations();
-  const [state, dispatch] = useReducer(experienceReducer, initialState);
+export const useExperienceActions = (
+  mutations: ExperienceMutations,
+  utils: Utils,
+  dispatch: React.Dispatch<ExperienceAction>,
+) => {
+  const { t } = useTranslation();
 
-  const { data: experiences = [], isLoading: isExperiencesLoading } =
-    trpc.experience.list.useQuery(undefined);
+  const handleCreate = async (data: CreateExperienceInput) => {
+    dispatch({ type: EXPERIENCE_ACTIONS.SET_PROCESSING, payload: "creating" });
+    try {
+      await mutations.create.mutateAsync({
+        ...data,
+        startDate: toIso(data.startDate),
+        endDate: toNullableIso(data.endDate),
+      });
 
-  const selectedExperience = useMemo(
-    () => experiences.find((e) => e.id === state.selectedId) || null,
-    [experiences, state.selectedId],
-  );
+      toast.success(
+        t("experience.notifications.createSuccess", {
+          defaultValue: "Experience added successfully",
+        }),
+      );
+
+      dispatch({ type: EXPERIENCE_ACTIONS.CLOSE_MODALS });
+      await utils.experience.list.invalidate();
+    } finally {
+      dispatch({ type: EXPERIENCE_ACTIONS.SET_PROCESSING, payload: null });
+    }
+  };
+
+  const handleUpdate = async (data: UpdateExperienceInput) => {
+    dispatch({ type: EXPERIENCE_ACTIONS.SET_PROCESSING, payload: data.id });
+    try {
+      const payload = {
+        ...data,
+        startDate: toOptionalIso(data.startDate),
+        endDate: toNullableIso(data.endDate),
+      };
+
+      await mutations.update.mutateAsync(payload);
+
+      toast.success(
+        t("experience.notifications.updateSuccess", {
+          defaultValue: "Experience updated successfully",
+        }),
+      );
+
+      dispatch({ type: EXPERIENCE_ACTIONS.SELECT_EXPERIENCE, payload: null });
+      dispatch({ type: EXPERIENCE_ACTIONS.CLOSE_MODALS });
+      await utils.experience.list.invalidate();
+    } finally {
+      dispatch({ type: EXPERIENCE_ACTIONS.SET_PROCESSING, payload: null });
+    }
+  };
+
+  const handleDelete = async (ids: string[]) => {
+    dispatch({ type: EXPERIENCE_ACTIONS.SET_PROCESSING, payload: ids[0] });
+    try {
+      await mutations.delete.mutateAsync({ ids });
+
+      toast.success(
+        t("experience.notifications.deleteSuccess", {
+          defaultValue: "Experience(s) deleted permanently",
+        }),
+      );
+
+      dispatch({ type: EXPERIENCE_ACTIONS.SELECT_EXPERIENCE, payload: null });
+      dispatch({ type: EXPERIENCE_ACTIONS.CLOSE_MODALS });
+      await utils.experience.list.invalidate();
+    } finally {
+      dispatch({ type: EXPERIENCE_ACTIONS.SET_PROCESSING, payload: null });
+    }
+  };
 
   return {
-    state: {
-      ...state,
-      experiences,
-      selectedExperience,
-      isLoading: isExperiencesLoading,
-      isAnyProcessing: !!state.processingId,
-    },
-    actions: {
-      selectExperience: (id: string | null) =>
-        dispatch({ type: EXPERIENCE_ACTIONS.SELECT_EXPERIENCE, payload: id }),
-
-      openModal: (type: ExperienceModalType, id?: string) => {
-        if (id) {
-          dispatch({ type: EXPERIENCE_ACTIONS.SELECT_EXPERIENCE, payload: id });
-        }
-        dispatch({ type: EXPERIENCE_ACTIONS.OPEN_MODAL, payload: type });
-      },
-
-      closeModals: () => dispatch({ type: EXPERIENCE_ACTIONS.CLOSE_MODALS }),
-
-      createExperience: (data: CreateExperienceInput) =>
-        handlers.handleCreate(mutations, utils, dispatch, data),
-
-      updateExperience: (data: UpdateExperienceInput) =>
-        handlers.handleUpdate(mutations, utils, dispatch, data),
-
-      deleteExperience: (id: string) =>
-        handlers.handleDelete(mutations, utils, dispatch, [id]),
-    },
+    handleCreate,
+    handleDelete,
+    handleUpdate,
   };
 };
-
-export type ExperienceActions = ReturnType<typeof useExperienceActions>;

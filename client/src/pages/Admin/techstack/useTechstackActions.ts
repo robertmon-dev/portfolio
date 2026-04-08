@@ -1,73 +1,119 @@
-import { useReducer, useMemo } from "react";
-import { trpc } from "@/lib/trpc/client";
-import { useTechStackMutations } from "../useMutations";
-import * as handlers from "./actions";
-import {
-  TECH_STACK_ACTIONS,
-  techStackReducer,
-  initialState,
-  type TechStackModalType,
-} from "./types";
+import { toast } from "react-toastify";
+import { TECH_STACK_ACTIONS, type TechStackAction } from "./types";
+import type { Utils } from "@/lib/trpc/types";
 import type {
   CreateTechStackInput,
   UpdateTechStackInput,
-  LinkTechStackProjectInput,
   UnlinkTechStackProjectInput,
+  LinkTechStackProjectInput,
 } from "@portfolio/shared";
+import type { TechStackMutations } from "../useMutations";
+import { useTranslation } from "react-i18next";
 
-export const useTechStackActions = () => {
-  const utils = trpc.useUtils();
-  const mutations = useTechStackMutations();
-  const [state, dispatch] = useReducer(techStackReducer, initialState);
+export const useTechstackActions = (
+  mutations: TechStackMutations,
+  utils: Utils,
+  dispatch: React.Dispatch<TechStackAction>,
+) => {
+  const { t } = useTranslation();
 
-  const { data: techStacks = [], isLoading: isTechStacksLoading } =
-    trpc.techStack.list.useQuery();
+  const handleCreate = async (data: CreateTechStackInput) => {
+    dispatch({ type: TECH_STACK_ACTIONS.SET_PROCESSING, payload: "creating" });
+    try {
+      await mutations.create.mutateAsync(data);
+      toast.success(
+        t("techStack.create.success", "Tech Stack created successfully"),
+      );
 
-  const selectedTechStack = useMemo(
-    () => techStacks.find((ts) => ts.id === state.selectedId) || null,
-    [techStacks, state.selectedId],
-  );
+      dispatch({ type: TECH_STACK_ACTIONS.CLOSE_MODALS });
+      await utils.techStack.list.invalidate();
+    } finally {
+      dispatch({ type: TECH_STACK_ACTIONS.SET_PROCESSING, payload: null });
+    }
+  };
 
-  const actions = useMemo(
-    () => ({
-      selectTechStack: (id: string | null) =>
-        dispatch({ type: TECH_STACK_ACTIONS.SELECT_TECH_STACK, payload: id }),
+  const handleUpdate = async (data: UpdateTechStackInput) => {
+    dispatch({ type: TECH_STACK_ACTIONS.SET_PROCESSING, payload: data.id });
+    try {
+      await mutations.update.mutateAsync(data);
+      toast.success(
+        t("techStack.update.success", "Tech Stack updated successfully"),
+      );
 
-      openModal: (type: TechStackModalType, id?: string) => {
-        if (id) {
-          dispatch({ type: TECH_STACK_ACTIONS.SELECT_TECH_STACK, payload: id });
-        }
-        dispatch({ type: TECH_STACK_ACTIONS.OPEN_MODAL, payload: type });
-      },
+      dispatch({ type: TECH_STACK_ACTIONS.SELECT_TECH_STACK, payload: null });
+      dispatch({ type: TECH_STACK_ACTIONS.CLOSE_MODALS });
 
-      closeModals: () => dispatch({ type: TECH_STACK_ACTIONS.CLOSE_MODALS }),
+      await utils.techStack.list.invalidate();
+    } finally {
+      dispatch({ type: TECH_STACK_ACTIONS.SET_PROCESSING, payload: null });
+    }
+  };
 
-      createTechStack: (data: CreateTechStackInput) =>
-        handlers.handleCreate(mutations, utils, dispatch, data),
+  const handleDelete = async (id: string) => {
+    dispatch({ type: TECH_STACK_ACTIONS.SET_PROCESSING, payload: id });
+    try {
+      await mutations.delete.mutateAsync({ ids: [id] });
+      toast.success(
+        t("techStack.delete.success", "Tech Stack deleted successfully"),
+      );
 
-      updateTechStack: (data: UpdateTechStackInput) =>
-        handlers.handleUpdate(mutations, utils, dispatch, data),
+      dispatch({ type: TECH_STACK_ACTIONS.SELECT_TECH_STACK, payload: null });
+      dispatch({ type: TECH_STACK_ACTIONS.CLOSE_MODALS });
 
-      deleteTechStack: (id: string) =>
-        handlers.handleDelete(mutations, utils, dispatch, id),
+      await utils.techStack.list.invalidate();
+    } finally {
+      dispatch({ type: TECH_STACK_ACTIONS.SET_PROCESSING, payload: null });
+    }
+  };
 
-      linkProject: (data: LinkTechStackProjectInput) =>
-        handlers.handleLink(mutations, utils, dispatch, data),
+  const handleLink = async (data: LinkTechStackProjectInput) => {
+    dispatch({
+      type: TECH_STACK_ACTIONS.SET_PROCESSING,
+      payload: data.techStackId,
+    });
+    try {
+      await mutations.linkProject.mutateAsync(data);
+      toast.success(
+        t(
+          "techStack.link.success",
+          "Technology linked to project successfully",
+        ),
+      );
 
-      unlinkProject: (data: UnlinkTechStackProjectInput) =>
-        handlers.handleUnlink(mutations, utils, dispatch, data),
-    }),
-    [mutations, utils],
-  );
+      await Promise.all([
+        utils.techStack.list.invalidate(),
+        utils.projects.list.invalidate(),
+      ]);
+    } finally {
+      dispatch({ type: TECH_STACK_ACTIONS.SET_PROCESSING, payload: null });
+    }
+  };
+
+  const handleUnlink = async (data: UnlinkTechStackProjectInput) => {
+    dispatch({
+      type: TECH_STACK_ACTIONS.SET_PROCESSING,
+      payload: data.techStackId,
+    });
+    try {
+      await mutations.unlinkProject.mutateAsync(data);
+      toast.success(
+        t("techStack.unlink.success", "Technology unlinked from project"),
+      );
+
+      await Promise.all([
+        utils.techStack.list.invalidate(),
+        utils.projects.list.invalidate(),
+      ]);
+    } finally {
+      dispatch({ type: TECH_STACK_ACTIONS.SET_PROCESSING, payload: null });
+    }
+  };
 
   return {
-    state: {
-      ...state,
-      techStacks,
-      selectedTechStack,
-      isLoading: isTechStacksLoading,
-      isAnyProcessing: !!state.processingId,
-    },
-    actions,
+    handleCreate,
+    handleDelete,
+    handleUpdate,
+    handleUnlink,
+    handleLink,
   };
 };

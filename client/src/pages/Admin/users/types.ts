@@ -1,4 +1,4 @@
-import { useUsersActions } from "./useUsersActions";
+import { useUsersState } from "./useUserState";
 
 export const USER_ACTIONS = {
   SET_PROCESSING: "USER/SET_PROCESSING",
@@ -47,4 +47,4 @@ export function userReducer(state: UserState, action: UserAction): UserState {
   }
 }
 
-export type UserActions = ReturnType<typeof useUsersActions>;
+export type UserActions = ReturnType<typeof useUsersState>;

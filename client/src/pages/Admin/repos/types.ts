@@ -1,4 +1,4 @@
-import { useGithubActions } from "./useGithubActions";
+import { useGithubState } from "./useGithubState";
 
 export const GITHUB_ACTIONS = {
   SET_PROCESSING: "GITHUB/SET_PROCESSING",
@@ -45,4 +45,4 @@ export function githubReducer(
   }
 }
 
-export type GithubActions = ReturnType<typeof useGithubActions>;
+export type GithubActions = ReturnType<typeof useGithubState>;

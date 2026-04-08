@@ -1,4 +1,4 @@
-import { useProjectActions } from "./useProjectActions";
+import { useProjectsState } from "./useProjectsState";
 
 export const PROJECT_ACTIONS = {
   SET_PROCESSING: "PROJECT/SET_PROCESSING",
@@ -45,4 +45,4 @@ export function projectReducer(
   }
 }
 
-export type ProjectActions = ReturnType<typeof useProjectActions>;
+export type ProjectActions = ReturnType<typeof useProjectsState>;
