@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { TechStackForm } from "./Forms/Main";
 import { LinkTechStackForm } from "./Forms/Link";
 import { ConfirmDialog } from "../../ConfirmDialog/ConfirmDialog";
-import { useProjectActions } from "@/pages/Admin/projects/useProjectActions";
+import { useProjectsState } from "@/pages/Admin/projects/useProjectsState";
 import type { TechStackActions } from "@/pages/Admin/techstack/types";
 
 export const useModalContent = (
@@ -13,7 +13,7 @@ export const useModalContent = (
   const { t } = useTranslation();
   const { activeModal, selectedTechStack, isAnyProcessing } = state;
 
-  const { state: projectState } = useProjectActions();
+  const { state: projectState } = useProjectsState();
   const projects = projectState.projects;
 
   return useMemo(() => {

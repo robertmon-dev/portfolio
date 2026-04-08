@@ -1,4 +1,4 @@
-import type { useExperienceActions } from "./useExperienceActions";
+import { useExperienceState } from "./useExperienceState";
 
 export const EXPERIENCE_ACTIONS = {
   SET_PROCESSING: "EXPERIENCE/SET_PROCESSING",
@@ -52,4 +52,4 @@ export function experienceReducer(
   }
 }
 
-export type ExperienceActions = ReturnType<typeof useExperienceActions>;
+export type ExperienceActions = ReturnType<typeof useExperienceState>;
