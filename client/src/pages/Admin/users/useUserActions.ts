@@ -20,7 +20,12 @@ export const useUserActions = (
     dispatch({ type: USER_ACTIONS.SET_PROCESSING, payload: "creating" });
     try {
       await mutations.create.mutateAsync(data);
-      toast.success(t("users.create.success", "User created successfully"));
+      toast.success(
+        t(
+          "admin.users.notifications.create.success",
+          "User created successfully",
+        ),
+      );
       dispatch({ type: USER_ACTIONS.CLOSE_MODALS });
       await utils.admin.users.list.invalidate();
     } finally {
@@ -32,7 +37,12 @@ export const useUserActions = (
     dispatch({ type: USER_ACTIONS.SET_PROCESSING, payload: data.id });
     try {
       await mutations.update.mutateAsync(data);
-      toast.success(t("users.update.success", "User updated successfully"));
+      toast.success(
+        t(
+          "admin.users.notifications.update.success",
+          "User updated successfully",
+        ),
+      );
       dispatch({ type: USER_ACTIONS.CLOSE_MODALS });
       await utils.admin.users.list.invalidate();
     } finally {
@@ -44,7 +54,12 @@ export const useUserActions = (
     dispatch({ type: USER_ACTIONS.SET_PROCESSING, payload: id });
     try {
       await mutations.delete.mutateAsync({ id });
-      toast.success(t("users.delete.success", "User deleted successfully"));
+      toast.success(
+        t(
+          "admin.users.notifications.delete.success",
+          "User deleted successfully",
+        ),
+      );
       dispatch({ type: USER_ACTIONS.CLOSE_MODALS });
       await utils.admin.users.list.invalidate();
     } finally {
@@ -57,7 +72,10 @@ export const useUserActions = (
     try {
       await mutations.updatePermissions.mutateAsync(data);
       toast.success(
-        t("users.permissions.success", "User permissions updated successfully"),
+        t(
+          "admin.users.notifications.permissions.success",
+          "User permissions updated successfully",
+        ),
       );
       dispatch({ type: USER_ACTIONS.CLOSE_MODALS });
       await utils.admin.users.list.invalidate();

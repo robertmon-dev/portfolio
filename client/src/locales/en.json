@@ -7,20 +7,100 @@
     "add": "Add",
     "send": "Send",
     "settings": "Settings",
-    "deleteItem": "Delete item"
-  },
-  "about": {
-    "title": "Software developer",
-    "bio": "I don't like to talk much about myself, but once I have decided to build portfolio I will fullfill this bio soon",
-    "sections": {
-      "techStack": "Tech Stack",
-      "experience": "Professional Experience"
+    "deleteItem": "Delete item",
+    "present": "Present",
+    "past": "Past",
+    "current": "Current",
+    "visible": "Visible",
+    "draft": "Draft",
+    "unknown": "Unknown",
+    "actions": "Actions",
+    "status": {
+      "active": "Active",
+      "disabled": "Disabled"
     },
-    "experience": {
-      "present": "Present",
-      "durationOne": "{{count}} year",
-      "durationOther": "{{count}} years"
+    "login": "Login to Admin Panel",
+    "logout": "Logout",
+    "management": "Management",
+    "scrollToTop": "Scroll to top",
+    "scrollDown": "Scroll down",
+    "back": "Back"
+  },
+  "auth": {
+    "login": {
+      "success": "Logged in successfully",
+      "2faRequired": "Two-factor authentication required",
+      "remember_me": "Remember me",
+      "forgotPassword": "Forgot password?",
+      "submit": "Sign In",
+      "fields": {
+        "email": {
+          "label": "Email"
+        },
+        "password": {
+          "label": "Password"
+        }
+      },
+      "errors": {
+        "emailRequired": "Email is required",
+        "emailInvalid": "Invalid email address"
+      }
+    },
+    "2fa": {
+      "description": "Enter the 6-digit verification code from your authenticator app to secure your session.",
+      "submit": "Verify & Login",
+      "fields": {
+        "code": {
+          "label": "Verification Code"
+        }
+      },
+      "errors": {
+        "required": "Code is required",
+        "invalid": "Code must be 6 digits"
+      }
+    },
+    "recover": {
+      "forgotDescription": "Lost your password? Enter your email address and we will send you a secure code to reset it.",
+      "emailSent": "Reset code sent to your email",
+      "success": "Password has been updated",
+      "send_code": "Send Reset Code",
+      "submit": "Update Password",
+      "fields": {
+        "code": {
+          "label": "Reset Code"
+        },
+        "password": {
+          "label": "New Password"
+        },
+        "confirmPassword": {
+          "label": "Confirm New Password"
+        }
+      }
     }
+  },
+  "nav": {
+    "about": "About",
+    "projects": "Projects",
+    "experience": "Experience",
+    "contact": "Contact",
+    "blog": "Blog",
+    "admin": {
+      "repos": "Repos",
+      "projects": "Projects",
+      "experience": "Experience",
+      "techstack": "Tech Stack",
+      "users": "Users"
+    }
+  },
+  "footer": {
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "contact": "Contact",
+    "labels": {
+      "language": "Language"
+    },
+    "rights": "All rights reserved.",
+    "social": "Social"
   },
   "demo": {
     "header": {
@@ -34,50 +114,259 @@
       "tags": {
         "title": "2. Tags (Variants, Sizes, Options)"
       },
-      "lists": {
-        "title": "3. Lists"
-      },
-      "grid": {
-        "title": "4. Data Grid"
-      },
-      "forms": {
-        "title": "5. Forms & Selection"
-      },
-      "code": {
-        "title": "6. Code & Data Display"
-      },
-      "cards": {
-        "title": "7. Cards (Variants & Interactions)"
-      },
-      "modals": {
-        "title": "8. Modals"
-      },
       "timeline": {
-        "title": "9. Timeline (Progress)"
+        "title": "9. Timeline"
       }
     },
     "timeline": {
-      "step1": {
-        "title": "Project Initialization",
-        "desc": "Environment configuration, package installation, and Tokyo Night palette setup."
-      },
-      "step2": {
-        "title": "Building Atoms",
-        "desc": "Creating Buttons, Inputs, Checkboxes, and basic Tags with variants."
-      },
-      "step3": {
-        "title": "Molecule Integration",
-        "desc": "Combining atoms into complex components like modals, grids, and data lists."
-      },
-      "step4": {
-        "title": "SelectMolecule",
-        "desc": "Building an advanced dropdown with search and multi-select capabilities."
-      },
       "status": {
         "done": "Completed",
         "inProgress": "In Progress",
         "todo": "Pending"
       }
+    }
+  },
+  "projects": {
+    "title": "My Projects",
+    "subtitle": "Some of my stuff I've created, broken, and repaired",
+    "moveDown": "Move down",
+    "repo": "Repository",
+    "demo": "Live Demo",
+    "sections": {
+      "timeline": "Here we go..."
+    },
+    "create": {
+      "success": "Project created successfully"
+    },
+    "update": {
+      "success": "Project updated successfully"
+    },
+    "delete": {
+      "success": "Project moved to trash"
+    },
+    "restore": {
+      "success": "Project restored successfully. Status set to Draft."
+    }
+  },
+  "experience": {
+    "title": "My Experience",
+    "subtitle": "A timeline of my professional journey, roles, and achievements.",
+    "moveDown": "Move down",
+    "sections": {
+      "timeline": "Career Timeline"
+    },
+    "notifications": {
+      "createSuccess": "Experience added successfully",
+      "updateSuccess": "Experience updated successfully",
+      "deleteSuccess": "Experience deleted permanently"
+    }
+  },
+  "contact": {
+    "labels": {
+      "email": "Email"
+    },
+    "sections": {
+      "getInTouch": "Get in touch"
+    },
+    "description": "Feel free to reach out if you have any questions, collaboration proposals, or just want to chat about tech. I'll try to get back to you as soon as I can!",
+    "platforms": {
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "twitter": "Twitter",
+      "instagram": "Instagram"
+    }
+  },
+  "admin": {
+    "experience": {
+      "title": "Experience Management",
+      "subtitle": "Manage your professional work history and education",
+      "actions": {
+        "add": "Add experience"
+      },
+      "tags": {
+        "total_one": "{{count}} Experience",
+        "total_other": "{{count}} Experiences"
+      },
+      "table": {
+        "position": "Position",
+        "company": "Company",
+        "duration": "Duration",
+        "description": "Description",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "notifications": {
+        "create": {
+          "success": "Experience added successfully"
+        },
+        "update": {
+          "success": "Experience updated successfully"
+        },
+        "delete": {
+          "success": "Experience deleted permanently"
+        }
+      }
+    },
+    "projects": {
+      "title": "Projects Management",
+      "subtitle": "Manage and showcase your portfolio work",
+      "actions": {
+        "add": "Add Project"
+      },
+      "tags": {
+        "total_one": "{{count}} Project",
+        "total_other": "{{count}} Projects",
+        "visible_one": "{{count}} Visible",
+        "visible_other": "{{count}} Visible",
+        "featured_one": "{{count}} Featured",
+        "featured_other": "{{count}} Featured"
+      },
+      "table": {
+        "project": "Project",
+        "featured": "Featured",
+        "status": "Status",
+        "repository": "Repository",
+        "notLinked": "Not linked",
+        "techStack": "Tech Stack",
+        "noTechStack": "No tech stack",
+        "actions": "Actions"
+      },
+      "notifications": {
+        "create": {
+          "success": "Project created successfully"
+        },
+        "update": {
+          "success": "Project updated successfully"
+        },
+        "delete": {
+          "success": "Project moved to trash"
+        },
+        "restore": {
+          "success": "Project restored successfully. Status set to Draft."
+        }
+      }
+    },
+    "github": {
+      "title": "GitHub Repositories",
+      "subtitle": "Sync and manage your public projects",
+      "stats": {
+        "count_one": "{{count}} Repo",
+        "count_other": "{{count}} Repos",
+        "linked_one": "{{count}} Linked",
+        "linked_other": "{{count}} Linked"
+      },
+      "table": {
+        "repository": "Repository",
+        "language": "Language",
+        "stars": "Stars",
+        "linkedProject": "Linked Project",
+        "unlinked": "Unlinked"
+      },
+      "actions": {
+        "link": "Link to project",
+        "unlink": "Unlink from project"
+      }
+    },
+    "techStack": {
+      "title": "Tech Stack Management",
+      "subtitle": "Organize and manage the technologies you use in your projects",
+      "tags": {
+        "total_one": "{{count}} Technology",
+        "total_other": "{{count}} Technologies"
+      },
+      "actions": {
+        "add": "Add technology"
+      },
+      "table": {
+        "headers": {
+          "name": "Technology",
+          "category": "Category",
+          "projects": "Linked projects",
+          "actions": "Actions"
+        },
+        "noProjects": "No projects linked",
+        "actions": {
+          "link": "Link to project"
+        }
+      },
+      "categories": {
+        "FRONTEND": "Frontend",
+        "BACKEND": "Backend",
+        "DATABASE": "Database",
+        "DEVOPS": "DevOps",
+        "TOOLS": "Tools",
+        "MOBILE": "Mobile",
+        "OTHERS": "Others"
+      },
+      "notifications": {
+        "create": {
+          "success": "Technology added successfully"
+        },
+        "update": {
+          "success": "Technology updated successfully"
+        },
+        "delete": {
+          "success": "Technology deleted successfully"
+        },
+        "link": {
+          "success": "Technology linked to project successfully"
+        },
+        "unlink": {
+          "success": "Technology unlinked from project"
+        }
+      }
+    },
+    "users": {
+      "title": "User Management",
+      "subtitle": "Manage access levels and profiles",
+      "actions": {
+        "add": "Add User",
+        "managePermissions": "Manage Permissions"
+      },
+      "tags": {
+        "total_one": "{{count}} User",
+        "total_other": "{{count}} Users",
+        "admins_one": "{{count}} Admin",
+        "admins_other": "{{count}} Admins"
+      },
+      "table": {
+        "headers": {
+          "identity": "User Identity",
+          "role": "Role",
+          "permissions": "Permissions",
+          "2fa": "2FA Status",
+          "joined": "Joined"
+        },
+        "resourcesCount_one": "{{count}} Resource",
+        "resourcesCount_other": "{{count}} Resources"
+      },
+      "notifications": {
+        "create": {
+          "success": "User created successfully"
+        },
+        "update": {
+          "success": "User updated successfully"
+        },
+        "permissions": {
+          "success": "User permissions updated successfully"
+        },
+        "delete": {
+          "success": "User deleted successfully"
+        }
+      }
+    }
+  },
+  "about": {
+    "title": "Software developer",
+    "bio": "A software developer by profession and passion, an enthusiast of clean code and optimization. When I'm not hitting the keyboard, you'll probably find me at the gym trying to hit a new deadlift PR. I believe that in both code and training, the key to success is consistency and solid foundations.",
+    "sections": {
+      "techStack": "Tech Stack",
+      "experience": "Professional Experience"
+    },
+    "experience": {
+      "present": "Present",
+      "duration_one": "{{count}} year",
+      "duration_other": "{{count}} years"
     }
   },
   "errors": {
@@ -91,27 +380,19 @@
     },
     "500": {
       "title": "Server Error",
-      "description": "Something went wrong on our end. Will be working soon."
+      "description": "Something went wrong on our end. We're working on it."
+    },
+    "501": {
+      "title": "Work in Progress!",
+      "description": "It's empty for now, but everything's coming soon – helicopters and airports included :)"
     },
     "429": {
       "title": "Slow Down",
-      "description": "Oopsie daisy, Too many attempts. Please wait 15 minutes :)"
-    },
-    "501": {
-      "title": "Coming soon!",
-      "description": "Oopsie daisy, Moń is brewing more coffee to get it done. :)"
-    },
-    "NETWORK_ERROR": {
-      "title": "Connection Lost",
-      "description": "The server is unreachable. Check your internet connection."
-    },
-    "UNKNOWN_ERROR": {
-      "title": "Unexpected Error",
-      "description": "Something went wrong, but we're not sure what."
+      "description": "Oopsie daisy, too many attempts. Please wait 15 minutes :)"
     },
     "offline": {
       "title": "No Connection",
-      "description": "The server is currently unreachable. Please check your network connection."
+      "description": "The server is unreachable. Please check your network connection."
     },
     "default": {
       "title": "Error",

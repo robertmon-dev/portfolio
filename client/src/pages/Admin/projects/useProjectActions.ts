@@ -17,7 +17,7 @@ export const useProjectsActions = (
     try {
       await mutations.create.mutateAsync(data);
       toast.success(
-        t("projects.create.success", "Project created successfully"),
+        t("admin.projects.create.success", "Project created successfully"),
       );
 
       dispatch({ type: PROJECT_ACTIONS.CLOSE_MODALS });
@@ -32,7 +32,7 @@ export const useProjectsActions = (
     try {
       await mutations.update.mutateAsync({ ...data });
       toast.success(
-        t("projects.update.success", "Project updated successfully"),
+        t("admin.projects.update.success", "Project updated successfully"),
       );
 
       dispatch({ type: PROJECT_ACTIONS.SELECT_PROJECT, payload: null });
@@ -48,7 +48,9 @@ export const useProjectsActions = (
     dispatch({ type: PROJECT_ACTIONS.SET_PROCESSING, payload: id });
     try {
       await mutations.delete.mutateAsync({ id });
-      toast.success(t("projects.delete.success", "Project moved to trash"));
+      toast.success(
+        t("admin.projects.delete.success", "Project moved to trash"),
+      );
 
       dispatch({ type: PROJECT_ACTIONS.SELECT_PROJECT, payload: null });
       dispatch({ type: PROJECT_ACTIONS.CLOSE_MODALS });
@@ -65,7 +67,7 @@ export const useProjectsActions = (
       await mutations.update.mutateAsync({ id, isVisible: false });
       toast.success(
         t(
-          "projects.restore.success",
+          "admin.projects.restore.success",
           "Project restored successfully. Status set to Draft.",
         ),
       );

@@ -7,7 +7,122 @@
     "add": "Dodaj",
     "send": "Wyślij",
     "settings": "Ustawienia",
-    "deleteItem": "Usuń element"
+    "deleteItem": "Usuń element",
+    "present": "Obecnie",
+    "past": "Przeszłe",
+    "current": "Aktualne",
+    "visible": "Widoczny",
+    "draft": "Szkic",
+    "unknown": "Nieznany",
+    "actions": "Akcje",
+    "status": {
+      "active": "Aktywny",
+      "disabled": "Wyłączony"
+    },
+    "login": "Zaloguj do panelu",
+    "logout": "Wyloguj",
+    "management": "Zarządzanie",
+    "scrollToTop": "Wróć na górę",
+    "scrollDown": "Przewiń w dół",
+    "back": "Powrót"
+  },
+  "footer": {
+    "privacy": "Polityka prywatności",
+    "terms": "Regulamin",
+    "contact": "Kontakt",
+    "labels": {
+      "language": "Język"
+    },
+    "rights": "Wszelkie prawa zastrzeżone.",
+    "social": "Media społecznościowe"
+  },
+  "auth": {
+    "login": {
+      "success": "Zalogowano pomyślnie",
+      "2faRequired": "Wymagana weryfikacja dwuetapowa",
+      "remember_me": "Zapamiętaj mnie",
+      "forgotPassword": "Zapomniałeś hasła?",
+      "submit": "Zaloguj się",
+      "fields": {
+        "email": {
+          "label": "Adres Email"
+        },
+        "password": {
+          "label": "Hasło"
+        }
+      },
+      "errors": {
+        "emailRequired": "Email jest wymagany",
+        "emailInvalid": "Nieprawidłowy adres email"
+      }
+    },
+    "2fa": {
+      "description": "Wprowadź 6-cyfrowy kod weryfikacyjny z aplikacji uwierzytelniającej, aby zabezpieczyć sesję.",
+      "submit": "Zweryfikuj i zaloguj",
+      "fields": {
+        "code": {
+          "label": "Kod weryfikacyjny"
+        }
+      },
+      "errors": {
+        "required": "Kod jest wymagany",
+        "invalid": "Kod musi składać się z 6 cyfr"
+      }
+    },
+    "recover": {
+      "forgotDescription": "Zapomniałeś hasła? Podaj swój adres email, a wyślemy Ci bezpieczny kod do jego zresetowania.",
+      "emailSent": "Kod resetujący został wysłany na Twój email",
+      "success": "Hasło zostało zaktualizowane",
+      "send_code": "Wyślij kod resetujący",
+      "submit": "Zaktualizuj hasło",
+      "fields": {
+        "code": {
+          "label": "Kod resetujący"
+        },
+        "password": {
+          "label": "Nowe hasło"
+        },
+        "confirmPassword": {
+          "label": "Potwierdź nowe hasło"
+        }
+      }
+    }
+  },
+  "nav": {
+    "about": "O mnie",
+    "projects": "Projekty",
+    "experience": "Doświadczenie",
+    "contact": "Kontakt",
+    "blog": "Blog",
+    "admin": {
+      "repos": "Repozytoria",
+      "projects": "Projekty",
+      "experience": "Doświadczenie",
+      "techstack": "Tech Stack",
+      "users": "Użytkownicy"
+    }
+  },
+  "projects": {
+    "title": "Moje Projekty",
+    "subtitle": "Trochę rzeczy, które stworzyłem, popsułem i naprawiłem",
+    "moveDown": "Zjedź niżej",
+    "repo": "Repozytorium",
+    "demo": "Demo na żywo",
+    "sections": {
+      "timeline": "No to lecimy..."
+    },
+    "create": {
+      "success": "Projekt został utworzony pomyślnie"
+    },
+    "update": {
+      "success": "Projekt został zaktualizowany"
+    },
+    "delete": {
+      "success": "Projekt został przeniesiony do kosza"
+    },
+    "restore": {
+      "success": "Projekt został przywrócony. Status ustawiono na Szkic."
+    }
   },
   "demo": {
     "header": {
@@ -33,9 +148,229 @@
       }
     }
   },
+  "contact": {
+    "labels": {
+      "email": "Email"
+    },
+    "sections": {
+      "getInTouch": "Kontakt"
+    },
+    "description": "Pisz jeśli masz pytania, propozycje współpracy, lub po prostu chcesz pogadać o technologiach. Staram się odpowiadać tak szybko, jak to możliwe!",
+    "platforms": {
+      "github": "GitHub",
+      "linkedin": "LinkedIn",
+      "twitter": "Twitter",
+      "instagram": "Instagram"
+    }
+  },
+  "experience": {
+    "title": "Doświadczenie",
+    "subtitle": "Oś czasu mojej zawodowej drogi, ról i osiągnięć.",
+    "moveDown": "Zjedź niżej",
+    "sections": {
+      "timeline": "Przebieg kariery"
+    },
+    "notifications": {
+      "createSuccess": "Doświadczenie zostało dodane pomyślnie",
+      "updateSuccess": "Doświadczenie zostało zaktualizowane",
+      "deleteSuccess": "Doświadczenie zostało trwale usunięte"
+    }
+  },
+  "admin": {
+    "experience": {
+      "title": "Zarządzanie doświadczeniem",
+      "subtitle": "Zarządzaj swoją historią pracy zawodowej oraz edukacją",
+      "actions": {
+        "add": "Dodaj doświadczenie"
+      },
+      "tags": {
+        "total_one": "{{count}} Doświadczenie",
+        "total_few": "{{count}} Doświadczenia",
+        "total_many": "{{count}} Doświadczeń"
+      },
+      "table": {
+        "position": "Stanowisko",
+        "company": "Firma",
+        "duration": "Czas trwania",
+        "description": "Opis",
+        "status": "Status",
+        "actions": "Akcje"
+      },
+      "notifications": {
+        "create": {
+          "success": "Doświadczenie zostało dodane pomyślnie"
+        },
+        "update": {
+          "success": "Doświadczenie zostało zaktualizowane"
+        },
+        "delete": {
+          "success": "Doświadczenie zostało trwale usunięte"
+        }
+      }
+    },
+    "projects": {
+      "title": "Zarządzanie projektami",
+      "subtitle": "Zarządzaj i prezentuj swoje projekty w portfolio",
+      "actions": {
+        "add": "Dodaj projekt"
+      },
+      "tags": {
+        "total_one": "{{count}} Projekt",
+        "total_few": "{{count}} Projekty",
+        "total_many": "{{count}} Projektów",
+        "visible_one": "{{count}} Widoczny",
+        "visible_few": "{{count}} Widoczne",
+        "visible_many": "{{count}} Widocznych",
+        "featured_one": "{{count}} Wyróżniony",
+        "featured_few": "{{count}} Wyróżnione",
+        "featured_many": "{{count}} Wyróżnionych"
+      },
+      "table": {
+        "project": "Projekt",
+        "featured": "Wyróżniony",
+        "status": "Status",
+        "repository": "Repozytorium",
+        "notLinked": "Brak powiązania",
+        "techStack": "Tech Stack",
+        "noTechStack": "Brak technologii",
+        "actions": "Akcje"
+      },
+      "notifications": {
+        "create": {
+          "success": "Projekt został utworzony pomyślnie"
+        },
+        "update": {
+          "success": "Projekt został zaktualizowany"
+        },
+        "delete": {
+          "success": "Projekt został przeniesiony do kosza"
+        },
+        "restore": {
+          "success": "Projekt został przywrócony. Status ustawiono na Szkic."
+        }
+      }
+    },
+    "github": {
+      "title": "Repozytoria GitHub",
+      "subtitle": "Synchronizuj i zarządzaj swoimi publicznymi projektami",
+      "stats": {
+        "count_one": "{{count}} Repozytorium",
+        "count_few": "{{count}} Repozytoria",
+        "count_many": "{{count}} Repozytoriów",
+        "linked_one": "{{count}} Połączone",
+        "linked_few": "{{count}} Połączone",
+        "linked_many": "{{count}} Połączonych"
+      },
+      "table": {
+        "repository": "Repozytorium",
+        "language": "Język",
+        "stars": "Gwiazdki",
+        "linkedProject": "Powiązany projekt",
+        "unlinked": "Brak powiązania"
+      },
+      "actions": {
+        "link": "Połącz z projektem",
+        "unlink": "Odłącz od projektu"
+      }
+    },
+    "techStack": {
+      "title": "Zarządzanie Tech Stackiem",
+      "subtitle": "Organizuj i zarządzaj technologiami, których używasz w swoich projektach",
+      "tags": {
+        "total_one": "{{count}} Technologia",
+        "total_few": "{{count}} Technologie",
+        "total_many": "{{count}} Technologii"
+      },
+      "actions": {
+        "add": "Dodaj technologię"
+      },
+      "table": {
+        "headers": {
+          "name": "Technologia",
+          "category": "Kategoria",
+          "projects": "Powiązane projekty",
+          "actions": "Akcje"
+        },
+        "noProjects": "Brak powiązanych projektów",
+        "actions": {
+          "link": "Powiąż z projektem"
+        }
+      },
+      "categories": {
+        "FRONTEND": "Frontend",
+        "BACKEND": "Backend",
+        "DATABASE": "Baza danych",
+        "DEVOPS": "DevOps",
+        "TOOLS": "Narzędzia",
+        "MOBILE": "Mobile",
+        "OTHERS": "Inne"
+      },
+      "notifications": {
+        "create": {
+          "success": "Technologia została dodana pomyślnie"
+        },
+        "update": {
+          "success": "Technologia została zaktualizowana"
+        },
+        "delete": {
+          "success": "Technologia została usunięta"
+        },
+        "link": {
+          "success": "Technologia została pomyślnie powiązana z projektem"
+        },
+        "unlink": {
+          "success": "Technologia została odłączona od projektu"
+        }
+      }
+    },
+    "users": {
+      "title": "Zarządzanie użytkownikami",
+      "subtitle": "Zarządzaj poziomami dostępu i profilami",
+      "actions": {
+        "add": "Dodaj użytkownika",
+        "managePermissions": "Zarządzaj uprawnieniami"
+      },
+      "tags": {
+        "total_one": "{{count}} Użytkownik",
+        "total_few": "{{count}} Użytkownicy",
+        "total_many": "{{count}} Użytkowników",
+        "admins_one": "{{count}} Administrator",
+        "admins_few": "{{count}} Administratorzy",
+        "admins_many": "{{count}} Administratorów"
+      },
+      "table": {
+        "headers": {
+          "identity": "Tożsamość",
+          "role": "Rola",
+          "permissions": "Uprawnienia",
+          "2fa": "Status 2FA",
+          "joined": "Dołączył"
+        },
+        "resourcesCount_one": "{{count}} Zasób",
+        "resourcesCount_few": "{{count}} Zasoby",
+        "resourcesCount_many": "{{count}} Zasobów"
+      },
+      "notifications": {
+        "create": {
+          "success": "Użytkownik został utworzony pomyślnie"
+        },
+        "update": {
+          "success": "Dane użytkownika zostały zaktualizowane"
+        },
+        "permissions": {
+          "success": "Uprawnienia zostały zaktualizowane"
+        }
+      },
+      "delete": {
+        "notifications": {
+          "success": "Użytkownik został trwale usunięty"
+        }
+      }
+    }
+  },
   "about": {
     "title": "Software developer",
-    "bio": "PDW Bombowski, Włodek wiadomo, JC",
+    "bio": "Programista z zawodu i z zamiłowania, entuzjasta czystego kodu i optymalizacji. Kiedy nie walę w klawiaturę prawdopodobnie znajdziesz mnie na siłowni przy próbie bicia kolejnego PR-u w martwym ciągu. Wierzę, że zarówno w kodzie, jak i w treningu, kluczem do sukcesu jest konsekwencja i solidne fundamenty.",
     "sections": {
       "techStack": "Tech Stack",
       "experience": "Doświadczenie zawodowe"
