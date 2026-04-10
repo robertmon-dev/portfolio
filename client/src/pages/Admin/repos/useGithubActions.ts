@@ -23,7 +23,7 @@ export const useGithubActions = (
       await mutations.update.mutateAsync(input);
 
       toast.success(
-        t("github.notifications.updateSuccess", {
+        t("admin.github.notifications.update.success", {
           defaultValue: "Repo updated successfully",
         }),
       );
@@ -45,7 +45,7 @@ export const useGithubActions = (
       await mutations.linkProject.mutateAsync(input);
 
       toast.success(
-        t("github.notifications.linkSuccess", {
+        t("admin.github.notifications.link.success", {
           defaultValue: "Project linked successfully",
         }),
       );
@@ -67,7 +67,7 @@ export const useGithubActions = (
       await mutations.delete.mutateAsync({ id });
 
       toast.success(
-        t("github.notifications.deleteSuccess", {
+        t("admin.github.notifications.delete.success", {
           defaultValue: "Repo removed from database",
         }),
       );
@@ -90,7 +90,7 @@ export const useGithubActions = (
       await mutations.unlinkProject.mutateAsync({ repoId });
 
       toast.success(
-        t("github.notifications.unlinkSuccess", {
+        t("admin.github.notifications.unlink.success", {
           defaultValue: "Project unlinked successfully",
         }),
       );

@@ -24,8 +24,8 @@
   transition: all 0.2s ease-in-out;
 
   &:hover {
-    background-color: color.adjust($bg-surface, $lightness: 3%);
-    box-shadow: $shadow-surface-md;
+    background-color: color.adjust($bg-surface, $lightness: 1%);
+    box-shadow: $shadow-surface-sm;
     transform: translateY(-1px);
   }
 

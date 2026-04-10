@@ -39,7 +39,7 @@ export const FooterLeftSection = ({
 
       <div className="app-footer__group">
         <span className="app-footer__label">
-          {t("footer.labels.social", "Social")}
+          {t("footer.social", "Social")}
         </span>
         <List
           items={socialLinks}

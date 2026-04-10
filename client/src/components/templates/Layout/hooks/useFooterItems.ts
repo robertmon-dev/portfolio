@@ -38,12 +38,12 @@ export const useFooterItems = () => {
   const navLinks: ListOption[] = [
     {
       id: "privacy",
-      label: t("footer.nav.privacy", "Privacy Policy"),
+      label: t("footer.privacy", "Privacy Policy"),
       href: "/privacy",
     },
     {
       id: "contact-nav",
-      label: t("footer.nav.contact", "Contact"),
+      label: t("footer.contact", "Contact"),
       href: "/contact",
     },
   ];

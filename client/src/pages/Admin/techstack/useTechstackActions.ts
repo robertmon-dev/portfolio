@@ -22,7 +22,10 @@ export const useTechstackActions = (
     try {
       await mutations.create.mutateAsync(data);
       toast.success(
-        t("techStack.create.success", "Tech Stack created successfully"),
+        t(
+          "techStack.notifications.create.success",
+          "Tech Stack created successfully",
+        ),
       );
 
       dispatch({ type: TECH_STACK_ACTIONS.CLOSE_MODALS });
@@ -37,7 +40,10 @@ export const useTechstackActions = (
     try {
       await mutations.update.mutateAsync(data);
       toast.success(
-        t("techStack.update.success", "Tech Stack updated successfully"),
+        t(
+          "techStack.notifications.update.success",
+          "Tech Stack updated successfully",
+        ),
       );
 
       dispatch({ type: TECH_STACK_ACTIONS.SELECT_TECH_STACK, payload: null });
@@ -54,7 +60,10 @@ export const useTechstackActions = (
     try {
       await mutations.delete.mutateAsync({ ids: [id] });
       toast.success(
-        t("techStack.delete.success", "Tech Stack deleted successfully"),
+        t(
+          "techStack.notifications.delete.success",
+          "Tech Stack deleted successfully",
+        ),
       );
 
       dispatch({ type: TECH_STACK_ACTIONS.SELECT_TECH_STACK, payload: null });
@@ -75,7 +84,7 @@ export const useTechstackActions = (
       await mutations.linkProject.mutateAsync(data);
       toast.success(
         t(
-          "techStack.link.success",
+          "techStack.notifications.link.success",
           "Technology linked to project successfully",
         ),
       );
@@ -97,7 +106,10 @@ export const useTechstackActions = (
     try {
       await mutations.unlinkProject.mutateAsync(data);
       toast.success(
-        t("techStack.unlink.success", "Technology unlinked from project"),
+        t(
+          "techStack.notifications.unlink.success",
+          "Technology unlinked from project",
+        ),
       );
 
       await Promise.all([

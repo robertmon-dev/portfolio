@@ -26,9 +26,10 @@ export const useExperienceActions = (
       });
 
       toast.success(
-        t("experience.notifications.createSuccess", {
-          defaultValue: "Experience added successfully",
-        }),
+        t(
+          "admin.experience.notifications.create.success",
+          "Experience added successfully",
+        ),
       );
 
       dispatch({ type: EXPERIENCE_ACTIONS.CLOSE_MODALS });
@@ -50,7 +51,7 @@ export const useExperienceActions = (
       await mutations.update.mutateAsync(payload);
 
       toast.success(
-        t("experience.notifications.updateSuccess", {
+        t("admin.experience.notifications.update.success", {
           defaultValue: "Experience updated successfully",
         }),
       );
@@ -69,7 +70,7 @@ export const useExperienceActions = (
       await mutations.delete.mutateAsync({ ids });
 
       toast.success(
-        t("experience.notifications.deleteSuccess", {
+        t("admin.experience.notifications.delete.success", {
           defaultValue: "Experience(s) deleted permanently",
         }),
       );
