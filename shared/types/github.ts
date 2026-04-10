@@ -8,3 +8,5 @@ export type UpdateGithubRepoInput = z.infer<
   typeof g.UpdateGithubRepoInputSchema
 >;
 export type LinkRepoProjectInput = z.infer<typeof g.LinkRepoProjectInputSchema>;
+export type ListCommitsInput = z.infer<typeof g.ListCommitsInputSchema>;
+export type ListCommitsOutput = z.infer<typeof g.ListCommitsOutputSchema>;

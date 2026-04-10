@@ -3,7 +3,12 @@ import { router } from "../../trpc/init";
 import { publicProcedure } from "../../trpc/procedures/public";
 import { GetCommitService } from "src/services/commits/Get";
 import { ListCommitsService } from "src/services/commits/List";
-import { GithubCommitSchema, zUuid } from "@portfolio/shared";
+import {
+  GithubCommitSchema,
+  ListCommitsInputSchema,
+  ListCommitsOutputSchema,
+  zUuid,
+} from "@portfolio/shared";
 import { executeService } from "../../trpc/executers/base";
 
 export const githubCommitPublicRouter = router({
@@ -11,26 +16,26 @@ export const githubCommitPublicRouter = router({
     .meta({
       openapi: {
         method: "GET",
-        path: "/experience",
-        tags: ["Experience"],
+        path: "/github/commit",
+        tags: ["GithubCommit"],
         summary: "List all professional commits",
         description:
           "Fetches all github commits records for the public portfolio view.",
         protect: false,
       },
     })
-    .input(z.void())
-    .output(z.array(GithubCommitSchema))
-    .query(async ({ ctx }) =>
-      executeService(ListCommitsService, ctx, undefined),
+    .input(ListCommitsInputSchema)
+    .output(ListCommitsOutputSchema)
+    .query(async ({ ctx, input }) =>
+      executeService(ListCommitsService, ctx, input),
     ),
 
   getById: publicProcedure
     .meta({
       openapi: {
         method: "GET",
-        path: "/experience/{id}",
-        tags: ["Experience"],
+        path: "/github/commit/{id}",
+        tags: ["GithubCommit"],
         summary: "Get github commit details",
         description: "Fetches a single github commit record by its UUID.",
         protect: false,

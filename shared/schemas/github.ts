@@ -20,13 +20,13 @@ export const GithubRepoSchema = z.object({
 
 export const GithubCommitSchema = z.object({
   id: zUuid,
-  sha: zString,
+  sha: zString.nullable(),
   message: zText,
-  description: zText,
-  url: zUrl,
+  description: zText.nullable(),
+  url: zUrl.nullable(),
   date: zDateOrString,
-  user: UserPublicSchema.nullable(),
-  repo: GithubRepoSchema.nullable(),
+  user: UserPublicSchema.optional(),
+  repo: GithubRepoSchema.optional(),
   createdAt: zDateOrString,
   updatedAt: zDateOrString,
 });
@@ -53,4 +53,14 @@ export const GithubStatsSchema = z.object({
   totalStars: z.number(),
   repos: z.array(GithubRepoSchema),
   updatedAt: zDateOrString,
+});
+
+export const ListCommitsInputSchema = z.object({
+  limit: z.number().min(1).max(50).default(5),
+  cursor: zString.optional(),
+});
+
+export const ListCommitsOutputSchema = z.object({
+  items: z.array(GithubCommitSchema),
+  nextCursor: zString.optional(),
 });

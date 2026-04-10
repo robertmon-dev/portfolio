@@ -1,7 +1,11 @@
-import type { GithubCommit } from "@portfolio/shared";
+import type {
+  GithubCommit,
+  ListCommitsInput,
+  ListCommitsOutput,
+} from "@portfolio/shared";
 
 export interface CommitsListing {
-  execute(): Promise<GithubCommit[]>;
+  execute(input: ListCommitsInput): Promise<ListCommitsOutput>;
 }
 
 export interface CommitRetrieving {
@@ -9,5 +13,5 @@ export interface CommitRetrieving {
 }
 
 export interface CommitDeleting {
-  execute(ids: string[]): Promise<void>;
+  execute(ids: string[]): Promise<ListCommitsOutput>;
 }

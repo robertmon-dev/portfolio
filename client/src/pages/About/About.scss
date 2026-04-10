@@ -63,6 +63,12 @@
     pointer-events: none;
     z-index: 1;
   }
+
+  &__load-more {
+    display: flex;
+    justify-content: center;
+    margin-top: $spacing-lg;
+  }
 }
 
 @media (max-width: 768px) {
