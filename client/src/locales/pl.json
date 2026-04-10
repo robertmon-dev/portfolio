@@ -153,9 +153,26 @@
       "email": "Email"
     },
     "sections": {
-      "getInTouch": "Kontakt"
+      "getInTouch": "Bądźmy w kontakcie",
+      "message": "Wyślij wiadomość"
     },
     "description": "Pisz jeśli masz pytania, propozycje współpracy, lub po prostu chcesz pogadać o technologiach. Staram się odpowiadać tak szybko, jak to możliwe!",
+    "leave": {
+      "message": "Możesz też skontaktować się ze mną bezpośrednio przez poniższy formularz"
+    },
+    "form": {
+      "name": "Twoje imię",
+      "email": "Twój email",
+      "subject": "Temat",
+      "message": "Twoja wiadomość..."
+    },
+    "success": {
+      "title": "Wiadomość wysłana!",
+      "text": "Dzięki! Potwierdzenie oraz szczegóły zgłoszenia znajdziesz na swoim mailu."
+    },
+    "notifications": {
+      "success": "Wiadomość została przekazana do systemu!"
+    },
     "platforms": {
       "github": "GitHub",
       "linkedin": "LinkedIn",
@@ -417,6 +434,19 @@
     }
   },
   "errors": {
+    "tooManyRequests": "Zwolnij! Odczekaj {{seconds}}s przed kolejną próbą.",
+    "unauthorized": "Twoja sesja wygasła. Zaloguj się ponownie.",
+    "forbidden": "Nie masz uprawnień do wykonania tej akcji.",
+    "internalServerError": "Serwer napotkał problem. Już nad tym pracujemy!",
+    "badRequest": "Nieprawidłowe dane. Sprawdź poprawność formularza.",
+    "timeout": "Upłynął czas oczekiwania na odpowiedź. Sprawdź połączenie.",
+    "networkError": "Błąd sieci. Czy jesteś offline?",
+    "codes": {
+      "TOO_MANY_REQUESTS": "Zbyt wiele prób.",
+      "UNAUTHORIZED": "Brak autoryzacji.",
+      "INTERNAL_SERVER_ERROR": "Krytyczny błąd serwera.",
+      "NETWORK_ERROR": "Brak połączenia z internetem."
+    },
     "404": {
       "title": "Nie znaleziono strony",
       "description": "Strona, której szukasz, mogła zostać przeniesiona lub nigdy nie istniała."
@@ -432,6 +462,10 @@
     "501": {
       "title": "Prace w toku!",
       "description": "Puściutko, ale będzie wszystko, helikopter i lotnisko :)"
+    },
+    "429": {
+      "title": "Zwolnij!",
+      "description": "Przekroczono limit wiadomości. Spróbuj ponownie za 15min :)"
     },
     "offline": {
       "title": "Brak połączenia",

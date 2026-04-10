@@ -4,38 +4,46 @@ import i18n from "@/i18n";
 import { navigateTo } from "@/lib/utils/navigation";
 import { toast } from "react-toastify";
 
+const toCamelCase = (str: string) =>
+  str.toLowerCase().replace(/_([a-z])/g, (g) => g[1].toUpperCase());
+
 export const handleTrpcError = (error: unknown) => {
-  const isNetworkError =
+  const isNetwork =
     error instanceof Error &&
     NETWORK_ERROR_MESSAGES.some((msg) => error.message.includes(msg));
-
-  if (isNetworkError) {
+  if (isNetwork) {
     return {
       code: "NETWORK_ERROR",
-      message: i18n.t("errors.codes.NETWORK_ERROR"),
+      message: i18n.t("errors.offline.title"),
       isCritical: true,
     };
   }
 
   if (error instanceof TRPCClientError) {
     const code = error.data?.code || "UNKNOWN_ERROR";
-    const cause = error.data?.cause;
-    const retryAfter = cause?.retryAfter;
+    const cause = error.data?.cause as { retryAfter?: number } | undefined;
+    const seconds = cause?.retryAfter;
 
-    const criticalCodes = ["INTERNAL_SERVER_ERROR", "TIMEOUT"];
-    const isCritical = criticalCodes.includes(code);
+    const translationKeys = [
+      `errors.${toCamelCase(code)}`,
+      `errors.codes.${code}`,
+      "errors.default",
+    ];
 
-    const translationKey = `errors.codes.${code}`;
-    const message = i18n.exists(translationKey)
-      ? i18n.t(translationKey, { count: retryAfter, seconds: retryAfter })
-      : error.message || i18n.t("errors.codes.UNKNOWN_ERROR");
+    const message = i18n.t(translationKeys, {
+      seconds,
+      count: seconds,
+      defaultValue: error.message,
+    });
+
+    const isCritical = ["INTERNAL_SERVER_ERROR", "TIMEOUT"].includes(code);
 
     return { code, message, isCritical };
   }
 
   return {
-    code: "UNKNOWN_ERROR",
-    message: i18n.t("errors.codes.UNKNOWN_ERROR"),
+    code: "UNKNOWN",
+    message: i18n.t("errors.default"),
     isCritical: false,
   };
 };
@@ -48,12 +56,12 @@ export const notifyError = (error: unknown) => {
   }
 
   if (isCritical) {
-    const targetCode = code === "NETWORK_ERROR" ? "offline" : "500";
-    navigateTo(`/error/${targetCode}`);
+    const target = code === "NETWORK_ERROR" ? "offline" : "500";
+    navigateTo(`/error/${target}`);
     return;
   }
 
   if (message && code !== "UNAUTHORIZED") {
-    toast.error(message);
+    toast.error(message, { toastId: code });
   }
 };

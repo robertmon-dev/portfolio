@@ -4,6 +4,7 @@ import { useProfileQueries } from "../About/useQueries";
 import { motion } from "framer-motion";
 import { EntityGrid } from "@/components/molecules/EntityGrid/EntityGrid";
 import { ContactCard } from "./components/ContactCard";
+import { ContactForm } from "./section/ContactForm";
 import "./Contact.scss";
 
 export const ContactPage = () => {
@@ -30,7 +31,7 @@ export const ContactPage = () => {
           id: platform,
           platform: platform,
           url: url,
-          displayValue: url.replace(/^https?:\/\//, ""),
+          displayValue: (url as string).replace(/^https?:\/\//, ""),
         });
       });
     }
@@ -77,6 +78,26 @@ export const ContactPage = () => {
                 />
               )}
             />
+          </div>
+        </motion.section>
+
+        <motion.section
+          className="contact-page__section"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4 }}
+        >
+          <h2 className="contact-page__subtitle">
+            {t("contact.sections.message", "Send a message")}
+          </h2>
+
+          <p className="contact-page__text">
+            {t("contact.leave.message", "Feel free to contact me directly")}
+          </p>
+
+          <div className="contact-page__form-wrapper">
+            <ContactForm />
           </div>
         </motion.section>
       </div>

@@ -1,0 +1,40 @@
+@use "sass:color";
+
+.contact-form-container {
+  max-width: 600px;
+  margin: $spacing-lg auto 0;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+}
+
+.contact-success {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__icon {
+    font-size: 3.5rem;
+    color: $tn-green;
+    margin-bottom: $spacing-md;
+  }
+
+  h3 { color: $text-main; margin-bottom: $spacing-sm; }
+  p { color: $text-muted; margin-bottom: $spacing-lg; }
+
+  &__ticket {
+    font-family: $font-stack;
+    font-size: 0.9rem;
+    color: $tn-orange;
+    background: color.change($tn-orange, $alpha: 0.1);
+    padding: $spacing-xs $spacing-sm;
+    border-radius: $radius-sm;
+    margin-bottom: $spacing-xl;
+
+    span { font-weight: 800; }
+  }
+}

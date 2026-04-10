@@ -19,7 +19,7 @@ export const createRateLimitMiddleware = (
       if (error instanceof RateLimitError) {
         throw new TRPCError({
           code: "TOO_MANY_REQUESTS",
-          message: "errors.codes.TOO_MANY_REQUESTS",
+          message: "errors.codes.429",
           cause: { retryAfter: Math.ceil(error.msBeforeNext / 1000) },
         });
       }
