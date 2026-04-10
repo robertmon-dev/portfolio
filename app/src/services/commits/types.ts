@@ -7,3 +7,7 @@ export interface CommitsListing {
 export interface CommitRetrieving {
   execute(id: string): Promise<GithubCommit | null>;
 }
+
+export interface CommitDeleting {
+  execute(ids: string[]): Promise<void>;
+}
