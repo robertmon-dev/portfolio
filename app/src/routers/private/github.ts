@@ -28,7 +28,7 @@ export const githubPrivateRouter = router({
     })
     .input(UpdateGithubRepoInputSchema)
     .output(GithubRepoSchema)
-    .mutation(async ({ ctx, input }) =>
+    .mutation(({ ctx, input }) =>
       executeService(UpdateGithubRepoService, ctx, input),
     ),
 
@@ -49,8 +49,8 @@ export const githubPrivateRouter = router({
     })
     .input(LinkRepoProjectInputSchema)
     .output(z.object({ success: z.boolean() }))
-    .mutation(async ({ ctx, input }) => {
-      await executeService(LinkRepoProjectService, ctx, input);
+    .mutation(({ ctx, input }) => {
+      executeService(LinkRepoProjectService, ctx, input);
       return { success: true };
     }),
 
@@ -71,8 +71,8 @@ export const githubPrivateRouter = router({
     })
     .input(z.object({ repoId: zUuid }))
     .output(z.object({ success: z.boolean() }))
-    .mutation(async ({ ctx, input }) => {
-      await executeService(UnlinkRepoProjectService, ctx, input.repoId);
+    .mutation(({ ctx, input }) => {
+      executeService(UnlinkRepoProjectService, ctx, input.repoId);
       return { success: true };
     }),
 
@@ -90,8 +90,8 @@ export const githubPrivateRouter = router({
     })
     .input(z.object({ id: zUuid }))
     .output(z.object({ success: z.boolean() }))
-    .mutation(async ({ ctx, input }) => {
-      await executeService(DeleteGithubRepoService, ctx, input.id);
+    .mutation(({ ctx, input }) => {
+      executeService(DeleteGithubRepoService, ctx, input.id);
       return { success: true };
     }),
 });

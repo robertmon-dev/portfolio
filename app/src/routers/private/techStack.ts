@@ -32,7 +32,7 @@ export const techStackPrivateRouter = router({
     })
     .input(CreateTechStackSchema)
     .output(TechStackSchema)
-    .mutation(async ({ ctx, input }) =>
+    .mutation(({ ctx, input }) =>
       executeService(CreateTechStackService, ctx, input),
     ),
 
@@ -50,7 +50,7 @@ export const techStackPrivateRouter = router({
     })
     .input(UpdateTechStackSchema)
     .output(TechStackSchema)
-    .mutation(async ({ ctx, input }) =>
+    .mutation(({ ctx, input }) =>
       executeService(UpdateTechStackService, ctx, input),
     ),
 
@@ -67,8 +67,8 @@ export const techStackPrivateRouter = router({
     })
     .input(DeleteTechStackInputSchema)
     .output(z.object({ success: z.boolean() }))
-    .mutation(async ({ ctx, input }) => {
-      await executeService(DeleteTechStackService, ctx, input.ids);
+    .mutation(({ ctx, input }) => {
+      executeService(DeleteTechStackService, ctx, input.ids);
       return { success: true };
     }),
 
@@ -89,8 +89,8 @@ export const techStackPrivateRouter = router({
     })
     .input(LinkTechStackProjectSchema)
     .output(z.object({ success: z.boolean() }))
-    .mutation(async ({ ctx, input }) => {
-      await executeService(LinkTechStackProjectService, ctx, input);
+    .mutation(({ ctx, input }) => {
+      executeService(LinkTechStackProjectService, ctx, input);
       return { success: true };
     }),
 
@@ -111,8 +111,8 @@ export const techStackPrivateRouter = router({
     })
     .input(LinkTechStackProjectSchema)
     .output(z.object({ success: z.boolean() }))
-    .mutation(async ({ ctx, input }) => {
-      await executeService(UnlinkTechStackProjectService, ctx, input);
+    .mutation(({ ctx, input }) => {
+      executeService(UnlinkTechStackProjectService, ctx, input);
       return { success: true };
     }),
 });

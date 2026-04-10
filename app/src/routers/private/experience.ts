@@ -29,7 +29,7 @@ export const experiencePrivateRouter = router({
     })
     .input(CreateExperienceSchema)
     .output(ExperienceSchema)
-    .mutation(async ({ ctx, input }) =>
+    .mutation(({ ctx, input }) =>
       executeService(CreateExperienceService, ctx, input),
     ),
 
@@ -46,7 +46,7 @@ export const experiencePrivateRouter = router({
     })
     .input(UpdateExperienceSchema)
     .output(ExperienceSchema)
-    .mutation(async ({ ctx, input }) =>
+    .mutation(({ ctx, input }) =>
       executeService(UpdateExperienceService, ctx, input),
     ),
 
@@ -64,8 +64,7 @@ export const experiencePrivateRouter = router({
     })
     .input(DeleteExperienceInputSchema)
     .output(z.void())
-    .mutation(
-      async ({ ctx, input }) =>
-        await executeService(DeleteExperienceService, ctx, input.ids),
+    .mutation(({ ctx, input }) =>
+      executeService(DeleteExperienceService, ctx, input.ids),
     ),
 });
