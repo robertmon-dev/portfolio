@@ -15,12 +15,11 @@ export const AboutHero = ({ profile }: AboutHeroProps) => {
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
       >
-        {profile?.name || t("about.title")}
+        <span className="about-page__title__phrase">
+          {t("about.hello", "Hi, I'm ")}
+        </span>
+        <span className="about-page__title__name">{profile?.name}</span>
       </motion.h1>
-
-      {profile?.headline && (
-        <p className="about-page__headline">{profile.headline}</p>
-      )}
 
       <motion.p
         className="about-page__bio"

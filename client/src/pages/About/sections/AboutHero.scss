@@ -8,38 +8,42 @@
     margin-bottom: $spacing-md;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
+    text-align: left;
     gap: $spacing-xs;
   }
 
   &__title {
-    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    font-size: clamp(2.5rem, 2vw, 4.5rem);
     font-weight: 900;
     line-height: 1.1;
     letter-spacing: -0.02em;
-    margin: 0;
-    background: linear-gradient(135deg, $text-main 10%, $accent-about);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 25px color.change($accent-about, $alpha: 0.25));
-  }
+    margin: 0 0 $spacing-xs 0;
+    color: $text-main;
 
-  &__headline {
-    font-size: 1.1rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    color: $accent-about;
-    margin-bottom: $spacing-md;
-    opacity: 0.8;
+    &__name {
+      display: inline;
+      background: linear-gradient(135deg, $text-main 10%, $accent-about);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 20px color.change($accent-about, $alpha: 0.2));
+    }
+
+    &__phrase {
+      font-weight: 700;
+      opacity: 0.9;
+    }
   }
 
   &__bio {
     font-size: 1.25rem;
     line-height: 1.7;
     color: $text-muted;
-    max-width: 650px;
-    margin: 0 auto $spacing-md;
+
+    text-align: left;
+    hyphens: auto;
+
+    text-align-last: left;
   }
 
   &__socials {

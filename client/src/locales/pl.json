@@ -386,6 +386,7 @@
     }
   },
   "about": {
+    "hello": "Cześć, Jestem  ",
     "title": "Software developer",
     "bio": "Programista z zawodu i z zamiłowania, entuzjasta czystego kodu i optymalizacji. Kiedy nie walę w klawiaturę prawdopodobnie znajdziesz mnie na siłowni przy próbie bicia kolejnego PR-u w martwym ciągu. Wierzę, że zarówno w kodzie, jak i w treningu, kluczem do sukcesu jest konsekwencja i solidne fundamenty.",
     "sections": {
