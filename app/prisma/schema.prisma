@@ -50,6 +50,8 @@ model GithubRepo {
   project Project?
   order   Int      @default(0)
 
+  commits     GithubCommit[]
+
   @@index([statsId])
 }
 
@@ -176,4 +178,21 @@ model VerificationCode {
   createdAt DateTime @default(now())
 
   @@index([userId, type])
+}
+
+model GithubCommit {
+  id        String   @id @default(uuid())
+  sha       String   @unique
+  message   String   @db.Text
+  description   String?   @db.Text
+  url       String
+  date      DateTime
+
+  repoId    String
+  repo      GithubRepo @relation(fields: [repoId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt        DateTime           @updatedAt
+
+  @@index([repoId, date(sort: Desc)])
 }
