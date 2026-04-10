@@ -187,6 +187,8 @@ model GithubCommit {
   description   String?   @db.Text
   url       String
   date      DateTime
+  isFeatured Boolean  @default(true)
+
 
   repoId    String
   repo      GithubRepo @relation(fields: [repoId], references: [id], onDelete: Cascade)
