@@ -8,7 +8,7 @@ export const Navbar = ({ children, className = "", ...rest }: NavbarProps) => {
   return (
     <header
       className={`navbar ${className}`.trim()}
-      aria-label={t("navbar.mainAria", "Główna nawigacja")}
+      aria-label={t("navbar.mainAria", "Main navigation")}
       {...rest}
     >
       <div className="navbar__container">{children}</div>

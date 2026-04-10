@@ -382,6 +382,40 @@
       "duration_many": "{{count}} lat"
     }
   },
+  "privacy": {
+    "title": "Polityka Prywatności",
+    "lastUpdated": "Ostatnia aktualizacja: Kwiecień 2026",
+    "intro": {
+      "title": "1. Wstęp",
+      "text": "Witaj w moim portfolio. Niniejsza Polityka Prywatności wyjaśnia, w jaki sposób informacje o użytkownikach są gromadzone, używane i chronione podczas odwiedzania tej witryny. Jako deweloper szanuję Twoją prywatność i dążę do ograniczenia zbierania danych do absolutnego minimum."
+    },
+    "data": {
+      "title": "2. Gromadzenie Informacji",
+      "text": "Ta witryna funkcjonuje głównie jako cyfrowe portfolio. Nie zbieram aktywnie danych osobowych, takich jak imiona, adresy czy numery telefonów, chyba że zostaną one dobrowolnie podane (np. poprzez wysłanie wiadomości e-mail).",
+      "list": {
+        "analytics": "Analityka:",
+        "analyticsDesc": "Mogę korzystać z podstawowych, przyjaznych prywatności narzędzi analitycznych, aby zrozumieć ruch na stronie. Narzędzia te nie śledzą indywidualnych użytkowników w sieci.",
+        "logs": "Logi Serwera:",
+        "logsDesc": "Standardowe logi serwera mogą rejestrować anonimowe dane, takie jak adresy IP (przetwarzane w celu zapewnienia bezpieczeństwa i stabilności strony na podstawie art. 6 ust. 1 lit. f RODO), typy przeglądarek i znaczniki czasu."
+      }
+    },
+    "rights": {
+      "title": "3. Twoje Prawa",
+      "text": "W związku z przetwarzaniem danych (np. jeśli wyślesz do mnie e-mail), przysługuje Ci prawo do wglądu w swoje dane, ich sprostowania, usunięcia ('prawo do bycia zapomnianym') oraz wniesienia skargi do organu nadzorczego (Prezesa Urzędu Ochrony Danych Osobowych)."
+    },
+    "storage": {
+      "title": "4. Okres przechowywania",
+      "text": "Dane przekazane w korespondencji e-mail będą przechowywane przez okres niezbędny do obsługi zapytania lub do momentu zgłoszenia żądania ich usunięcia."
+    },
+    "cookies": {
+      "title": "5. Ciasteczka i Local Storage",
+      "text": "Strona może używać wyłącznie technicznych plików cookie lub pamięci lokalnej (Local Storage) w celu zapisania Twoich preferencji (np. wybór języka lub motywu). Nie stosuję ciasteczek śledzących firm trzecich."
+    },
+    "contact": {
+      "title": "6. Kontakt i Administrator",
+      "text": "Administratorem danych osobowych jest [Twoje Imię i Nazwisko]. W razie pytań dotyczących prywatności, zapraszam do kontaktu:"
+    }
+  },
   "errors": {
     "404": {
       "title": "Nie znaleziono strony",

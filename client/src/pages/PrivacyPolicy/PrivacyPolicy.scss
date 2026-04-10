@@ -1,0 +1,155 @@
+@use "sass:color";
+
+.privacy-page {
+  $accent-privacy: $tn-purple;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: calc(100vh - 100px);
+  padding: $spacing-xl $spacing-md;
+  position: relative;
+  overflow: hidden;
+  background-color: $bg-app;
+  font-family: $font-stack;
+
+  &__glow {
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(
+      circle,
+      color.change($accent-privacy, $alpha: 0.08) 0%,
+      transparent 70%
+    );
+    filter: blur(100px);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  &__container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xl;
+  }
+
+  &__header {
+    text-align: center;
+    border-bottom: 1px solid $border-color;
+    padding-bottom: $spacing-md;
+  }
+
+  &__title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: $text-main;
+    margin: 0 0 $spacing-sm 0;
+  }
+
+  &__last-updated {
+    font-size: 0.9rem;
+    color: $text-muted;
+    font-style: italic;
+    margin: 0;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+  }
+
+  &__block {
+    background-color: $bg-surface;
+    padding: $spacing-lg;
+    border-radius: $radius-md-l;
+    border: 1px solid $border-color;
+    box-shadow: $shadow-surface-sm;
+
+    h2 {
+      color: $accent-privacy;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0 0 $spacing-md 0;
+    }
+
+    p {
+      color: $text-main;
+      font-size: 1rem;
+      line-height: 1.7;
+      margin: 0 0 $spacing-sm 0;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    ul {
+      color: $text-main;
+      font-size: 1rem;
+      line-height: 1.7;
+      margin: $spacing-sm 0 0 0;
+      padding-left: $spacing-md-l;
+
+      li {
+        margin-bottom: $spacing-xs;
+
+        strong {
+          color: $tn-cyan-dim;
+        }
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  &__link {
+    display: inline-block;
+    color: $tn-cyan;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: $spacing-xs;
+    transition: color 0.2s ease, text-shadow 0.2s ease;
+
+    &:hover {
+      color: $tn-cyan-pale;
+      text-shadow: 0 0 8px color.change($tn-cyan, $alpha: 0.4);
+    }
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: center;
+    padding-top: $spacing-md;
+  }
+}
+
+@media (max-width: 768px) {
+  .privacy-page {
+    padding: $spacing-lg $spacing-sm;
+
+    &__title {
+      font-size: 2rem;
+    }
+
+    &__block {
+      padding: $spacing-md;
+
+      h2 {
+        font-size: 1.25rem;
+      }
+
+      p, ul {
+        font-size: 0.95rem;
+      }
+    }
+  }
+}

@@ -369,6 +369,40 @@
       "duration_other": "{{count}} years"
     }
   },
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated: April 2026",
+    "intro": {
+      "title": "1. Introduction",
+      "text": "Welcome to my portfolio. This Privacy Policy explains how user information is collected, used, and protected when visiting this site. As a developer, I respect your privacy and aim to limit data collection to an absolute minimum."
+    },
+    "data": {
+      "title": "2. Information Collection",
+      "text": "This website primarily functions as a digital portfolio. I do not actively collect personal data such as names, addresses, or phone numbers unless voluntarily provided (e.g., via email).",
+      "list": {
+        "analytics": "Analytics:",
+        "analyticsDesc": "I may use basic, privacy-friendly analytics tools to understand site traffic. These tools do not track individual users across the web.",
+        "logs": "Server Logs:",
+        "logsDesc": "Standard server logs may record anonymous data such as IP addresses (processed for security and stability based on Art. 6(1)(f) GDPR), browser types, and timestamps."
+      }
+    },
+    "rights": {
+      "title": "3. Your Rights",
+      "text": "Regarding data processing (e.g., if you send me an email), you have the right to access your data, rectify it, delete it ('the right to be forgotten'), and file a complaint with the supervisory authority."
+    },
+    "storage": {
+      "title": "4. Retention period",
+      "text": "Data provided in email correspondence will be stored for the period necessary to handle the inquiry or until a request for its deletion is submitted."
+    },
+    "cookies": {
+      "title": "5. Cookies & Local Storage",
+      "text": "The site may only use technical cookies or Local Storage to save your preferences (e.g., language or theme selection). I do not use third-party tracking cookies."
+    },
+    "contact": {
+      "title": "6. Contact & Controller",
+      "text": "The controller of personal data is [Your Name and Surname]. For privacy-related questions, please contact me at:"
+    }
+  },
   "errors": {
     "404": {
       "title": "Page Not Found",
