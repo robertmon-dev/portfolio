@@ -86,6 +86,20 @@ export class MailQueueWorker extends BaseWorker<
           );
           break;
         }
+
+        case MAIL_ACTIONS.CONTACT_FORM_ADMIN_ALERT: {
+          const { senderEmail, senderName, subject, fullMessage, adminEmail } =
+            jobPacket.data;
+
+          await this.mailer.sendAdminContactAlert(adminEmail, {
+            senderEmail,
+            senderName,
+            subject,
+            message: fullMessage,
+            ip: "",
+          });
+          break;
+        }
       }
 
       return {
