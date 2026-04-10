@@ -1,10 +1,13 @@
-import type { InputHTMLAttributes, CSSProperties } from 'react';
+import type { InputHTMLAttributes, CSSProperties } from "react";
 
 export interface CustomCSS extends CSSProperties {
-  '--checkbox-color'?: string;
+  "--checkbox-color"?: string;
 }
 
-export interface CheckboxProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
+export interface CheckboxProps extends Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  "size"
+> {
   label?: string;
   error?: boolean;
   colorChecked?: string;

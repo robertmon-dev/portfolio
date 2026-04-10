@@ -20,5 +20,5 @@ export const diagnosticsRouter = router({
     })
     .input(z.object({}))
     .output(HealthResponseSchema)
-    .query(async ({ ctx }) => executeService(HealthService, ctx, undefined)),
+    .query(({ ctx }) => executeService(HealthService, ctx, undefined)),
 });

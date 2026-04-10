@@ -4,7 +4,8 @@ import type { MailSend, MailSendJob, MailSendResult, Queueing } from "./types";
 
 export class MailQueueService
   extends QueueService<MailSendJob, MailSendResult, MailSend>
-  implements Queueing<MailSendJob, MailSendResult, MailSend> {
+  implements Queueing<MailSendJob, MailSendResult, MailSend>
+{
   private static instance: MailQueueService;
 
   private constructor(options?: Partial<QueueOptions>) {
@@ -22,14 +23,14 @@ export class MailQueueService
   public override async addJob(
     name: MailSend,
     data: MailSendJob,
-    opts?: BulkJobOptions
+    opts?: BulkJobOptions,
   ): Promise<Job<MailSendJob, MailSendResult, MailSend>> {
     this.logger.debug(`Adding job for mail`);
     return await super.addJob(name, data, opts);
   }
 
   public override async addBulk(
-    jobs: { name: MailSend; data: MailSendJob; opts?: BulkJobOptions; }[]
+    jobs: { name: MailSend; data: MailSendJob; opts?: BulkJobOptions }[],
   ): Promise<Job<MailSendJob, MailSendResult, MailSend>[]> {
     this.logger.debug(`Batching ${jobs.length} emails...`);
     return await super.addBulk(jobs);

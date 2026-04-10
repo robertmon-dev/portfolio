@@ -8,6 +8,7 @@ export * from "./schemas/diagnostics";
 export * from "./schemas/permission";
 export * from "./schemas/registry";
 export * from "./schemas/errors";
+export * from "./schemas/mail";
 
 export * from "./schemas/generic";
 
@@ -19,5 +20,6 @@ export * from "./types/project";
 export * from "./types/experience";
 export * from "./types/diagnostics";
 export * from "./types/permission";
+export * from "./types/mail";
 
 export * from "./types/generic";

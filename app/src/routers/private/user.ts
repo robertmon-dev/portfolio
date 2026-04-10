@@ -34,7 +34,7 @@ export const usersPrivateRouter = router({
     })
     .input(CreateUserInputSchema)
     .output(UserProfileSchema)
-    .mutation(async ({ ctx, input }) =>
+    .mutation(({ ctx, input }) =>
       executeService(CreateUserService, ctx, input),
     ),
 
@@ -52,9 +52,7 @@ export const usersPrivateRouter = router({
     })
     .input(ListUsersInputSchema)
     .output(z.array(UserProfileSchema))
-    .query(async ({ ctx, input }) =>
-      executeService(ListUsersService, ctx, input),
-    ),
+    .query(({ ctx, input }) => executeService(ListUsersService, ctx, input)),
 
   get: permissionProcedure(ResourceEnum.enum.user, FlagEnum.enum.READ)
     .meta({
@@ -69,9 +67,7 @@ export const usersPrivateRouter = router({
     })
     .input(GetUserInputSchema)
     .output(UserProfileSchema)
-    .query(async ({ ctx, input }) =>
-      executeService(GetUserService, ctx, input),
-    ),
+    .query(({ ctx, input }) => executeService(GetUserService, ctx, input)),
 
   update: permissionProcedure(ResourceEnum.enum.user, FlagEnum.enum.WRITE)
     .meta({
@@ -86,7 +82,7 @@ export const usersPrivateRouter = router({
     })
     .input(UpdateUserInputSchema)
     .output(UserProfileSchema)
-    .mutation(async ({ ctx, input }) =>
+    .mutation(({ ctx, input }) =>
       executeService(UpdateUserService, ctx, input),
     ),
 
@@ -107,7 +103,7 @@ export const usersPrivateRouter = router({
     })
     .input(UpdateUserPermissionsInputSchema)
     .output(UserProfileSchema)
-    .mutation(async ({ ctx, input }) =>
+    .mutation(({ ctx, input }) =>
       executeService(UpdateUserPermissionsService, ctx, input),
     ),
 
@@ -125,7 +121,7 @@ export const usersPrivateRouter = router({
     })
     .input(DeleteUserInputSchema)
     .output(z.void())
-    .mutation(async ({ ctx, input }) =>
+    .mutation(({ ctx, input }) =>
       executeService(DeleteUserService, ctx, input),
     ),
 });

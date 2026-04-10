@@ -6,6 +6,7 @@ import { Demo } from "@/pages/Demo/Demo";
 import { AboutPage } from "@/pages/About/About";
 import { ContactPage } from "@/pages/Contact/Contact";
 import { ProjectsPage } from "@/pages/Projects/Projects";
+import { PrivacyPolicyPage } from "./pages/PrivacyPolicy/PrivacyPolicy";
 import { ExperiencePage } from "@/pages/Experience/Experience";
 import { GithubAdminPage } from "@/pages/Admin/repos/Repos";
 import { ProjectsAdminPage } from "@/pages/Admin/projects/Projects";
@@ -28,6 +29,7 @@ const App = () => {
           <Route path="/experience" element={<ExperiencePage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/blog" element={<ErrorPage code="501" />} />
+          <Route path="/privacy" element={<PrivacyPolicyPage />} />
 
           <Route path="/demo" element={<Demo />} />
 

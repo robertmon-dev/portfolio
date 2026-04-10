@@ -1,0 +1,16 @@
+@use "sass:color";
+
+
+.latest-commits {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+
+  &__empty {
+    color: $text-muted;
+    font-style: italic;
+    font-size: 0.9rem;
+    text-align: center;
+    padding: $spacing-lg 0;
+  }
+}

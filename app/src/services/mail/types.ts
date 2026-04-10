@@ -1,15 +1,16 @@
 import { BulkJobOptions, Job } from "bullmq";
-import type { User } from '@prisma/client';
+import type { User } from "@prisma/client";
 
 export const MAIL_ACTIONS = {
-  WELCOME: 'WELCOME_EMAIL',
-  PASSWORD_RESET: 'PASSWORD_RESET',
-  MARKETING: 'MARKETING_AD',
-  CONTACT_CONFIRMATION: 'CONTACT_FORM_CONFIRMATION',
-  TWO_FACTOR_CODE: 'TWO_FACTOR_CODE',
+  WELCOME: "WELCOME_EMAIL",
+  PASSWORD_RESET: "PASSWORD_RESET",
+  MARKETING: "MARKETING_AD",
+  CONTACT_CONFIRMATION: "CONTACT_FORM_CONFIRMATION",
+  TWO_FACTOR_CODE: "TWO_FACTOR_CODE",
+  CONTACT_FORM_ADMIN_ALERT: "CONTACT_FORM_ADMIN_ALERT",
 } as const;
 
-export type MailActionName = typeof MAIL_ACTIONS[keyof typeof MAIL_ACTIONS];
+export type MailActionName = (typeof MAIL_ACTIONS)[keyof typeof MAIL_ACTIONS];
 
 interface TwoFactorEmailData {
   user: User;
@@ -43,12 +44,21 @@ interface ContactFormConfirmationData {
   ticketId: string;
 }
 
+interface ContactAdminAlertData {
+  senderName: string;
+  senderEmail: string;
+  subject: string;
+  fullMessage: string;
+  adminEmail: string;
+}
+
 export interface MailActionMap {
   [MAIL_ACTIONS.WELCOME]: WelcomeEmailData;
   [MAIL_ACTIONS.PASSWORD_RESET]: PasswordResetData;
   [MAIL_ACTIONS.MARKETING]: MarketingEmailData;
   [MAIL_ACTIONS.CONTACT_CONFIRMATION]: ContactFormConfirmationData;
   [MAIL_ACTIONS.TWO_FACTOR_CODE]: TwoFactorEmailData;
+  [MAIL_ACTIONS.CONTACT_FORM_ADMIN_ALERT]: ContactAdminAlertData;
 }
 
 export type MailSend = keyof MailActionMap;
@@ -59,12 +69,16 @@ export type MailSendResult =
   | { success: false; error: string; attemptedAt: Date };
 
 export type MailJobUnion = {
-  [K in MailSend]: { name: K; data: MailActionMap[K] }
+  [K in MailSend]: { name: K; data: MailActionMap[K] };
 }[MailSend];
 
 export interface Queueing<TData, TResult, TName extends string> {
-  addJob(name: TName, data: TData, opts?: BulkJobOptions): Promise<Job<TData, TResult, TName>>;
-  addBulk(jobs: { name: TName; data: TData; opts?: BulkJobOptions }[]): Promise<Job<TData, TResult, TName>[]>;
+  addJob(
+    name: TName,
+    data: TData,
+    opts?: BulkJobOptions,
+  ): Promise<Job<TData, TResult, TName>>;
+  addBulk(
+    jobs: { name: TName; data: TData; opts?: BulkJobOptions }[],
+  ): Promise<Job<TData, TResult, TName>[]>;
 }
-
-

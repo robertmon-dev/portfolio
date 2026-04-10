@@ -29,7 +29,7 @@ export const projectPrivateRouter = router({
     })
     .input(CreateProjectSchema)
     .output(ProjectSchema)
-    .mutation(async ({ ctx, input }) =>
+    .mutation(({ ctx, input }) =>
       executeService(CreateProjectService, ctx, input),
     ),
 
@@ -47,7 +47,7 @@ export const projectPrivateRouter = router({
     })
     .input(UpdateProjectSchema)
     .output(ProjectSchema)
-    .mutation(async ({ ctx, input }) =>
+    .mutation(({ ctx, input }) =>
       executeService(UpdateProjectService, ctx, input),
     ),
 
@@ -66,7 +66,7 @@ export const projectPrivateRouter = router({
     .input(z.object({ id: zUuid }))
     .output(z.object({ success: z.boolean() }))
     .mutation(async ({ ctx, input }) => {
-      await executeService(DeleteProjectService, ctx, input.id);
+      executeService(DeleteProjectService, ctx, input.id);
       return { success: true };
     }),
 });

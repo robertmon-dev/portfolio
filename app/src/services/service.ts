@@ -5,6 +5,7 @@ import {
   Project,
   TechStack,
   GithubRepo,
+  GithubCommit,
 } from "@prisma/client";
 import type { Logging } from "../core/logger/types";
 import type { Caching } from "../infrastructure/cache/types";
@@ -73,7 +74,10 @@ export abstract class BaseService {
     ...repos: (Partial<GithubRepo> | null | undefined)[]
   ) {
     const keys = new Set<string>([
+      "github:commit:list:all",
+      "github:commit:list:*",
       "github:repos:list:all",
+      "github:repos:*",
       "github:stats:*",
       "projects:list:*",
     ]);
@@ -81,6 +85,26 @@ export abstract class BaseService {
     repos.forEach((repo) => {
       if (!repo) return;
       if (repo.id) keys.add(`github:repo:id:${repo.id}`);
+    });
+
+    await this.multiDel(Array.from(keys));
+  }
+
+  protected async invalidateCommitsCache(
+    ...commits: (Partial<GithubCommit> | null | undefined)[]
+  ) {
+    const keys = new Set<string>([
+      "github:commit:list:all",
+      "github:commit:list:*",
+      "github:repos:list:all",
+      "github:repos:*",
+      "github:stats:*",
+    ]);
+
+    commits.forEach((commit) => {
+      if (!commit) return;
+      if (commit.id) keys.add(`github:commit:id:${commit.id}`);
+      if (commit.repoId) keys.add(`github:repo:id:${commit.repoId}`);
     });
 
     await this.multiDel(Array.from(keys));

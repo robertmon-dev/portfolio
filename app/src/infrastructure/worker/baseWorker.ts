@@ -1,12 +1,12 @@
-import { Worker, Job, WorkerOptions } from 'bullmq';
-import { RedisClient } from '../../core/redis/redis';
-import type { Redis } from 'ioredis';
-import { Logger } from '../../core/logger/logger';
+import { Worker, Job, WorkerOptions } from "bullmq";
+import { RedisClient } from "../../core/redis/redis";
+import type { Redis } from "ioredis";
+import { Logger } from "../../core/logger/logger";
 
 export abstract class BaseWorker<
   TActionMap extends object,
   ResultType,
-  NameType extends string & keyof TActionMap
+  NameType extends string & keyof TActionMap,
 > {
   protected worker: Worker<TActionMap[NameType], ResultType, NameType>;
   protected logger: Logger;
@@ -21,11 +21,13 @@ export abstract class BaseWorker<
         this.logger.info(`Processing job ${job.id} (${job.name})`);
         return this.process(job);
       },
-      { connection, ...options }
+      { connection, ...options },
     );
   }
 
-  protected abstract process(job: Job<TActionMap[NameType], ResultType, NameType>): Promise<ResultType>;
+  protected abstract process(
+    job: Job<TActionMap[NameType], ResultType, NameType>,
+  ): Promise<ResultType>;
 
   public async close(): Promise<void> {
     await this.worker.close();

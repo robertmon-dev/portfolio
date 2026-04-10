@@ -10,30 +10,35 @@ import {
   type MailActionMap,
   type MailSendResult,
   type MailSend,
-  type MailJobUnion
+  type MailJobUnion,
 } from "./types";
 
-
-export class MailQueueWorker extends BaseWorker<MailActionMap, MailSendResult, MailSend> {
+export class MailQueueWorker extends BaseWorker<
+  MailActionMap,
+  MailSendResult,
+  MailSend
+> {
   private mailer: Mailing;
 
   public constructor(
     private readonly db: PrismaClient,
     private readonly cache: Caching,
-    private readonly settings: Settings['config'],
-    options?: Partial<WorkerOptions>
+    private readonly settings: Settings["config"],
+    options?: Partial<WorkerOptions>,
   ) {
-    super('mail-queue', options);
+    super("mail-queue", options);
 
     this.mailer = new MailSenderService(
       this.db,
       this.cache,
       this.logger,
-      settings
+      settings,
     );
   }
 
-  protected async process(job: Job<MailActionMap[MailSend], MailSendResult, MailSend>): Promise<MailSendResult> {
+  protected async process(
+    job: Job<MailActionMap[MailSend], MailSendResult, MailSend>,
+  ): Promise<MailSendResult> {
     const jobPacket = { name: job.name, data: job.data } as MailJobUnion;
     const baseUrl = this.settings.APP_URL;
 
@@ -42,9 +47,10 @@ export class MailQueueWorker extends BaseWorker<MailActionMap, MailSendResult, M
         case MAIL_ACTIONS.WELCOME: {
           const { user, verificationUrl } = jobPacket.data;
 
-          if (!user.email) throw new Error(`User ${user.id} has no email address`);
+          if (!user.email)
+            throw new Error(`User ${user.id} has no email address`);
 
-          const fullUrl = verificationUrl.startsWith('http')
+          const fullUrl = verificationUrl.startsWith("http")
             ? verificationUrl
             : `${baseUrl}${verificationUrl}`;
 
@@ -54,7 +60,8 @@ export class MailQueueWorker extends BaseWorker<MailActionMap, MailSendResult, M
 
         case MAIL_ACTIONS.PASSWORD_RESET: {
           const { user, resetToken } = jobPacket.data;
-          if (!user.email) throw new Error(`User ${user.id} has no email address`);
+          if (!user.email)
+            throw new Error(`User ${user.id} has no email address`);
 
           const resetUrl = `${baseUrl}/auth/reset-password?token=${resetToken}`;
           await this.mailer.sendResetPassword(user.email, user.name, resetUrl);
@@ -63,7 +70,8 @@ export class MailQueueWorker extends BaseWorker<MailActionMap, MailSendResult, M
 
         case MAIL_ACTIONS.TWO_FACTOR_CODE: {
           const { user, code } = jobPacket.data;
-          if (!user.email) throw new Error(`User ${user.id} has no email address`);
+          if (!user.email)
+            throw new Error(`User ${user.id} has no email address`);
 
           await this.mailer.send2FACode(user.email, code);
           break;
@@ -72,10 +80,24 @@ export class MailQueueWorker extends BaseWorker<MailActionMap, MailSendResult, M
         case MAIL_ACTIONS.CONTACT_CONFIRMATION: {
           const { senderEmail, senderName, messageSnippet } = jobPacket.data;
           await this.mailer.sendContactConfirmation(
-            senderEmail ?? '',
-            senderName ?? 'User',
-            messageSnippet ?? ''
+            senderEmail ?? "",
+            senderName ?? "User",
+            messageSnippet ?? "",
           );
+          break;
+        }
+
+        case MAIL_ACTIONS.CONTACT_FORM_ADMIN_ALERT: {
+          const { senderEmail, senderName, subject, fullMessage, adminEmail } =
+            jobPacket.data;
+
+          await this.mailer.sendAdminContactAlert(adminEmail, {
+            senderEmail,
+            senderName,
+            subject,
+            message: fullMessage,
+            ip: "",
+          });
           break;
         }
       }
@@ -84,9 +106,8 @@ export class MailQueueWorker extends BaseWorker<MailActionMap, MailSendResult, M
         success: true,
         messageId: `msg_${crypto.randomUUID()}`,
         sentAt: new Date(),
-        provider: 'nodemailer'
+        provider: "nodemailer",
       };
-
     } catch (error) {
       this.logger.error(`Mail job ${job.id} failed:`, error);
       throw error;

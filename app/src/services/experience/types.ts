@@ -1,8 +1,8 @@
 import type {
   Experience,
   CreateExperienceInput,
-  UpdateExperienceInput
-} from '@portfolio/shared';
+  UpdateExperienceInput,
+} from "@portfolio/shared";
 
 export interface ExperienceListing {
   execute(): Promise<Experience[]>;
@@ -17,7 +17,10 @@ export interface ExperienceCreating {
 }
 
 export interface ExperienceUpdating {
-  execute(input: { id: string; data: Omit<UpdateExperienceInput, 'id'> }): Promise<Experience>;
+  execute(input: {
+    id: string;
+    data: Omit<UpdateExperienceInput, "id">;
+  }): Promise<Experience>;
 }
 
 export interface ExperienceDeleting {

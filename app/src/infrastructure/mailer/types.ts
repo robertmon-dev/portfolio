@@ -16,6 +16,14 @@ export interface MailOptions {
   html?: string;
 }
 
+export interface AdminContactAlertProps {
+  senderName: string;
+  senderEmail: string;
+  subject: string;
+  message: string;
+  ip: string;
+}
+
 export interface Mailing {
   sendWelcomeEmail(
     to: string,
@@ -32,5 +40,15 @@ export interface Mailing {
     to: string,
     name: string | null,
     message: string,
+  ): Promise<SentMessageInfo>;
+  sendAdminContactAlert(
+    to: string,
+    data: {
+      senderName: string;
+      senderEmail: string;
+      subject: string;
+      message: string;
+      ip: string;
+    },
   ): Promise<SentMessageInfo>;
 }

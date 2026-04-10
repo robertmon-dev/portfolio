@@ -23,7 +23,7 @@ export const authPrivateRouter = router({
     })
     .input(z.void())
     .output(UserProfileSchema)
-    .query(async ({ ctx }) => {
+    .query(({ ctx }) => {
       return executeService(GetUserService, ctx, { id: ctx.user.id });
     }),
 
