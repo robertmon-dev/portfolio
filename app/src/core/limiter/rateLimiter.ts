@@ -2,23 +2,31 @@ import { RateLimiterRedis, RateLimiterRes } from "rate-limiter-flexible";
 import { RateLimitError } from "../error/rateLimit";
 import { RedisClient } from "../redis/redis";
 import { Logger } from "../logger/logger";
-import { Limiting } from "./types";
+import { Limiting, RateLimitProfile } from "./types";
 
 export class RateLimiter implements Limiting {
   private static instance: RateLimiter;
-  private limiter: RateLimiterRedis;
+  private defaultLimiter: RateLimiterRedis;
+  private strictLimiter: RateLimiterRedis;
   private logger: Logger;
 
   private constructor() {
     this.logger = new Logger("RateLimiter");
     const redisClient = RedisClient.getInstance().client;
 
-    this.limiter = new RateLimiterRedis({
+    this.defaultLimiter = new RateLimiterRedis({
       storeClient: redisClient,
-      keyPrefix: "rlflx",
+      keyPrefix: "rl_default",
       points: 10,
       duration: 1,
-      blockDuration: 60 * 15,
+    });
+
+    this.strictLimiter = new RateLimiterRedis({
+      storeClient: redisClient,
+      keyPrefix: "rl_strict",
+      points: 3,
+      duration: 60 * 30,
+      blockDuration: 60 * 60,
     });
   }
 
@@ -26,6 +34,7 @@ export class RateLimiter implements Limiting {
     if (!RateLimiter.instance) {
       RateLimiter.instance = new RateLimiter();
     }
+
     return RateLimiter.instance;
   }
 
@@ -38,13 +47,19 @@ export class RateLimiter implements Limiting {
     );
   }
 
-  public async checkLimit(key: string): Promise<void> {
+  public async checkLimit(
+    key: string,
+    profile: RateLimitProfile = "default",
+  ): Promise<void> {
+    const limiter =
+      profile === "strict" ? this.strictLimiter : this.defaultLimiter;
+
     try {
-      await this.limiter.consume(key, 1);
+      await limiter.consume(key, 1);
     } catch (error: unknown) {
       if (this.isRateLimiterRes(error)) {
         this.logger.warn(
-          `Rate limit exceeded for key: ${key}. Next attempt in: ${error.msBeforeNext}ms`,
+          `[${profile.toUpperCase()}] Rate limit exceeded for key: ${key}. Next attempt in: ${error.msBeforeNext}ms`,
         );
 
         throw new RateLimitError(error.msBeforeNext);
