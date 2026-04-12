@@ -39,6 +39,8 @@ import {
   SiApachekafka,
   SiRabbitmq,
   SiGin,
+  SiN8N,
+  SiNeovim,
 } from "react-icons/si";
 import {
   Mail,
@@ -111,6 +113,8 @@ export const TECH_ICON_MATCHERS: TechMatcher[] = [
   { keywords: ["sentry"], Icon: SiSentry },
   { keywords: ["nginx"], Icon: SiNginx },
 
+  { keywords: ["n8n"], Icon: SiN8N },
+  { keywords: ["nvim", "neovim"], Icon: SiNeovim },
   { keywords: ["bash", "terminal", "shell"], Icon: Terminal },
   { keywords: ["shared", "core", "architecture"], Icon: Cpu },
   { keywords: ["web", "html", "css"], Icon: Layout },
