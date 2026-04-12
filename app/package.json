@@ -26,7 +26,7 @@
     "test": "vitest run"
   },
   "prisma": {
-    "seed": "npx tsx ./src/scripts/seeder/main.ts"
+    "seed": "node dist/scripts/seeder/main.js"
   },
   "dependencies": {
     "@fastify/rate-limit": "^10.3.0",
