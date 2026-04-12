@@ -1,15 +1,15 @@
 {
   "name": "@portfolio/shared",
   "version": "1.0.0",
-  "main": "./src/index.ts",
+  "main": "./dist/index.d.ts",
   "type": "module",
-  "types": "./src/index.ts",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./src/index.ts",
+      "types": "./dist/index.d.ts",
       "import": "./src/index.ts",
       "require": "./dist/index.js",
-      "default": "./src/index.ts"
+      "default": "./dist/index.ts"
     }
   },
   "scripts": {
