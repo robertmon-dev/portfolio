@@ -1,11 +1,9 @@
-import { describe, it, expect, beforeEach } from "vitest";
-import type { ServiceMock } from "../../../mocks/types";
+import { describe, it, expect } from "vitest";
 import { ListCommitsService } from "../../commits/List";
-import { baseServiceUtilities, MOCK_UUID } from "../../../mocks/core";
+import { useServiceTest, MOCK_UUID } from "../../../mocks/core";
 
 describe("ListCommitsService", () => {
-  let mocks: ServiceMock;
-  let service: ListCommitsService;
+  const ctx = useServiceTest(ListCommitsService);
 
   const createFakeCommits = (count: number) =>
     Array.from({ length: count }).map((_, i) => ({
@@ -21,29 +19,17 @@ describe("ListCommitsService", () => {
       updatedAt: new Date(),
     }));
 
-  beforeEach(() => {
-    mocks = baseServiceUtilities();
-    mocks.clearAll();
-
-    service = new ListCommitsService(
-      mocks.prisma,
-      mocks.cache,
-      mocks.logger,
-      mocks.settings,
-    );
-  });
-
   it("should return a list of commits and no nextCursor when items < limit", async () => {
     const limit = 5;
     const fakeItems = createFakeCommits(3);
 
-    mocks.prisma.githubCommit.findMany.mockResolvedValue(fakeItems);
+    ctx.mocks.prisma.githubCommit.findMany.mockResolvedValue(fakeItems);
 
-    const result = await service.execute({ limit });
+    const result = await ctx.service.execute({ limit });
 
     expect(result.items).toHaveLength(3);
     expect(result.nextCursor).toBeUndefined();
-    expect(mocks.prisma.githubCommit.findMany).toHaveBeenCalledWith(
+    expect(ctx.mocks.prisma.githubCommit.findMany).toHaveBeenCalledWith(
       expect.objectContaining({
         take: limit + 1,
         orderBy: { date: "desc" },
@@ -56,9 +42,9 @@ describe("ListCommitsService", () => {
     const fakeItems = createFakeCommits(3);
     const expectedNextCursor = fakeItems[2].id;
 
-    mocks.prisma.githubCommit.findMany.mockResolvedValue(fakeItems);
+    ctx.mocks.prisma.githubCommit.findMany.mockResolvedValue(fakeItems);
 
-    const result = await service.execute({ limit });
+    const result = await ctx.service.execute({ limit });
 
     expect(result.items).toHaveLength(2);
     expect(result.nextCursor).toBe(expectedNextCursor);
@@ -69,11 +55,11 @@ describe("ListCommitsService", () => {
     const limit = 10;
     const cursor = MOCK_UUID;
 
-    mocks.prisma.githubCommit.findMany.mockResolvedValue([]);
+    ctx.mocks.prisma.githubCommit.findMany.mockResolvedValue([]);
 
-    await service.execute({ limit, cursor });
+    await ctx.service.execute({ limit, cursor });
 
-    expect(mocks.prisma.githubCommit.findMany).toHaveBeenCalledWith(
+    expect(ctx.mocks.prisma.githubCommit.findMany).toHaveBeenCalledWith(
       expect.objectContaining({
         cursor: { id: cursor },
         take: limit + 1,
@@ -86,8 +72,8 @@ describe("ListCommitsService", () => {
     // @ts-expect-error
     delete fakeItems[0].message;
 
-    mocks.prisma.githubCommit.findMany.mockResolvedValue(fakeItems);
+    ctx.mocks.prisma.githubCommit.findMany.mockResolvedValue(fakeItems);
 
-    await expect(service.execute({ limit: 10 })).rejects.toThrow();
+    await expect(ctx.service.execute({ limit: 10 })).rejects.toThrow();
   });
 });

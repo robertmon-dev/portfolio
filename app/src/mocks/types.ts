@@ -26,3 +26,8 @@ export interface ServiceMock {
   cache: Caching;
   clearAll: () => void;
 }
+
+export interface ServiceTestContext<T> {
+  mocks: ServiceMock;
+  service: T;
+}

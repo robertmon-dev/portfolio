@@ -1,8 +1,13 @@
-import { vi } from "vitest";
-import type { MockedPrismaClient, ServiceMock } from "./types";
+import { vi, beforeEach } from "vitest";
+import type {
+  MockedPrismaClient,
+  ServiceMock,
+  ServiceTestContext,
+} from "./types";
 import type { Caching } from "../infrastructure/cache/types";
 import type { Logging } from "../core/logger/types";
 import type { EnvConfig } from "../core/settings/types";
+import type { BaseServiceConstructor } from "../trpc/executers/types";
 import { randomUUID } from "node:crypto";
 
 export const MOCK_UUID = randomUUID();
@@ -78,3 +83,34 @@ export const baseServiceUtilities = (): ServiceMock => {
     clearAll: () => vi.clearAllMocks(),
   };
 };
+
+export function setupServiceTest<T>(Constructor: BaseServiceConstructor<T>) {
+  const mocks = baseServiceUtilities();
+
+  const service = new Constructor(
+    mocks.prisma,
+    mocks.cache,
+    mocks.logger,
+    mocks.settings,
+  );
+
+  return { mocks, service };
+}
+
+export function useServiceTest<T>(Constructor: BaseServiceConstructor<T>) {
+  const context: ServiceTestContext<T> = {
+    mocks: null as unknown as ServiceMock,
+    service: null as unknown as T,
+  };
+
+  beforeEach(() => {
+    const { mocks, service } = setupServiceTest(Constructor);
+
+    context.mocks = mocks;
+    context.service = service;
+
+    context.mocks.clearAll();
+  });
+
+  return context;
+}

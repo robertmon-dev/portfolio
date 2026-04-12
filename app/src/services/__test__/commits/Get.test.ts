@@ -1,33 +1,18 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect } from "vitest";
 import { GetCommitService } from "../../commits/Get";
 import { GithubCommitSchema } from "@portfolio/shared";
-import { baseServiceUtilities, MOCK_UUID } from "../../../mocks/core";
-import { ServiceMock } from "../../../mocks/types";
-import type { CommitRetrieving } from "../../../services/commits/types";
+import { useServiceTest, MOCK_UUID } from "../../../mocks/core";
 
 describe("GetCommitService", () => {
-  let mocks: ServiceMock;
-  let service: CommitRetrieving;
-
-  beforeEach(() => {
-    mocks = baseServiceUtilities();
-    mocks.clearAll();
-
-    service = new GetCommitService(
-      mocks.prisma,
-      mocks.cache,
-      mocks.logger,
-      mocks.settings,
-    );
-  });
+  const ctx = useServiceTest(GetCommitService);
 
   it("should return null if commit is not found", async () => {
-    mocks.prisma.githubCommit.findUnique.mockResolvedValue(null);
+    ctx.mocks.prisma.githubCommit.findUnique.mockResolvedValue(null);
 
-    const result = await service.execute(MOCK_UUID);
+    const result = await ctx.service.execute(MOCK_UUID);
 
     expect(result).toBeNull();
-    expect(mocks.prisma.githubCommit.findUnique).toHaveBeenCalledWith({
+    expect(ctx.mocks.prisma.githubCommit.findUnique).toHaveBeenCalledWith({
       where: { id: MOCK_UUID },
     });
   });
@@ -46,14 +31,13 @@ describe("GetCommitService", () => {
       updatedAt: new Date(),
     };
 
-    mocks.prisma.githubCommit.findUnique.mockResolvedValue(fakeCommit);
+    ctx.mocks.prisma.githubCommit.findUnique.mockResolvedValue(fakeCommit);
 
-    const result = await service.execute(MOCK_UUID);
-
+    const result = await ctx.service.execute(MOCK_UUID);
     const validated = GithubCommitSchema.parse(result);
 
     expect(validated.id).toBe(MOCK_UUID);
     expect(result?.sha).toBe("abc123sha");
-    expect(mocks.logger.debug).toHaveBeenCalled();
+    expect(ctx.mocks.logger.debug).toHaveBeenCalled();
   });
 });
