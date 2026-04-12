@@ -44,7 +44,7 @@ export const Layout = ({ children, previewText }: LayoutProps) => {
                 expecting this email, you can safely ignore it.
               </Text>
               <Link
-                href="https://github.com/Moniev"
+                href="https://github.com/robertmon-dev"
                 className="text-tn-blue text-[12px] font-medium no-underline mt-2 inline-block"
               >
                 View GitHub Profile →
