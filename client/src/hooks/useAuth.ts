@@ -24,19 +24,27 @@ export const useAuth = () => {
   };
 
   const login = async (data: LoginInput) => {
-    const response = await loginMutation.mutateAsync(data);
-    if (response.status === "success") {
-      await saveSession(response.token);
+    try {
+      const response = await loginMutation.mutateAsync(data);
+      if (response.status === "success" && response.token) {
+        await saveSession(response.token);
+      }
+      return response;
+    } catch {
+      return undefined;
     }
-    return response;
   };
 
   const confirm2FA = async (data: VerifyTwoFactorInput) => {
-    const response = await verify2FAMutation.mutateAsync(data);
-    if (response.status === "success") {
-      await saveSession(response.token);
+    try {
+      const response = await verify2FAMutation.mutateAsync(data);
+      if (response.status === "success" && response.token) {
+        await saveSession(response.token);
+      }
+      return response;
+    } catch {
+      return undefined;
     }
-    return response;
   };
 
   const logout = async () => {
@@ -53,7 +61,7 @@ export const useAuth = () => {
   };
 
   return {
-    user: { ...data },
+    user: data ?? null,
     isLoggedIn: !!data,
     isUserLoading,
     login,
