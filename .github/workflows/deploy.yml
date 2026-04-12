@@ -80,4 +80,4 @@ jobs:
               sleep 2
             done
 
-            docker exec portfolio_app npx prisma db push
+            docker exec -w /usr/src/app/app portfolio_app npx prisma db push
