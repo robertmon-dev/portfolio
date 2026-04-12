@@ -15,6 +15,7 @@ CYAN  := \033[36m
 RESET := \033[0m
 
 .DEFAULT_GOAL := help
+VITE_API_URL ?= http://localhost:8800
 
 # ==============================================================================
 # Utility
@@ -50,8 +51,12 @@ setup: ## Full project orchestration (Install -> Infra -> Build -> DB Setup)
 .PHONY: docker-build-ci
 docker-build-ci: ## Build images for production (CI only)
 	@echo "=> Building production images for $(TAG)..."
+	@echo "=> Using API URL: $(VITE_API_URL)"
 	@docker build -t $(REGISTRY)/$(IMAGE_PREFIX)-app:$(TAG) -f docker/Dockerfile.app .
-	@docker build -t $(REGISTRY)/$(IMAGE_PREFIX)-client:$(TAG) -f docker/Dockerfile.client .
+	@docker build \
+		--build-arg VITE_API_URL=$(VITE_API_URL) \
+		-t $(REGISTRY)/$(IMAGE_PREFIX)-client:$(TAG) \
+		-f docker/Dockerfile.client .
 
 .PHONY: docker-push
 docker-push: ## Push production images to registry
