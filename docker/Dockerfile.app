@@ -29,11 +29,13 @@ COPY shared/package.json ./shared/
 
 RUN yarn install --production --frozen-lockfile --ignore-scripts && yarn cache clean
 
+COPY --from=builder /usr/src/app/app/prisma.config.ts ./app/prisma.config.ts
 COPY --from=builder /usr/src/app/shared/dist ./shared/dist
 COPY --from=builder /usr/src/app/app/dist ./app/dist
 COPY --from=builder /usr/src/app/app/prisma ./app/prisma
 
 COPY --from=builder /usr/src/app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /usr/src/app/node_modules/@prisma ./node_modules/@prisma
+
 
 CMD ["yarn", "workspace", "@portfolio/app", "start"]

@@ -80,4 +80,4 @@ jobs:
               sleep 2
             done
 
-            docker exec -e DATABASE_URL="postgresql://${DB_USER}:${DB_PASSWORD}@postgres:5432/${DB_NAME}?schema=public" -w /usr/src/app/app portfolio_app npx prisma db push --accept-data-loss
+            docker exec -w /usr/src/app/app portfolio_app npx prisma migrate deploy
