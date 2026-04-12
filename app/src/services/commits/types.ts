@@ -13,5 +13,5 @@ export interface CommitRetrieving {
 }
 
 export interface CommitDeleting {
-  execute(ids: string[]): Promise<ListCommitsOutput>;
+  execute(ids: string[]): Promise<void>;
 }

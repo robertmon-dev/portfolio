@@ -1,5 +1,5 @@
-import { z } from 'zod';
-import { envSchema } from './schemas';
+import { z } from "zod";
+import { envSchema, baseEnvSchema } from "./schemas";
 
-export type EnvConfig = z.infer<typeof envSchema>;
-
+export type EnvInput = z.input<typeof baseEnvSchema>;
+export type EnvConfig = z.output<typeof envSchema>;
