@@ -33,6 +33,12 @@ import {
   SiNginx,
   SiZod,
   SiStorybook,
+  SiTrpc,
+  SiRuby,
+  SiRubyonrails,
+  SiApachekafka,
+  SiRabbitmq,
+  SiGin,
 } from "react-icons/si";
 import {
   Mail,
@@ -45,7 +51,6 @@ import {
   Layout,
   Terminal,
   Cpu,
-  Workflow,
   Database,
 } from "lucide-react";
 import type { SocialMatcher, TechMatcher } from "./types";
@@ -69,6 +74,7 @@ export const TECH_ICON_MATCHERS: TechMatcher[] = [
   { keywords: ["rust"], Icon: SiRust },
   { keywords: ["kotlin"], Icon: SiKotlin },
   { keywords: ["c++", "cpp"], Icon: SiCplusplus },
+  { keywords: ["ruby"], Icon: SiRuby },
 
   { keywords: ["react", "next.js"], Icon: SiReact },
   { keywords: ["vite"], Icon: SiVite },
@@ -82,9 +88,11 @@ export const TECH_ICON_MATCHERS: TechMatcher[] = [
   { keywords: ["nestjs", "nest"], Icon: SiNestjs },
   { keywords: ["express"], Icon: SiExpress },
   { keywords: ["fastify"], Icon: SiFastify },
-  { keywords: ["trpc"], Icon: Workflow },
+  { keywords: ["trpc"], Icon: SiTrpc },
   { keywords: ["graphql", "apollo"], Icon: SiGraphql },
   { keywords: ["zod"], Icon: SiZod },
+  { keywords: ["rails", "rubyonrails"], Icon: SiRubyonrails },
+  { keywords: ["gin"], Icon: SiGin },
 
   { keywords: ["postgres", "postgresql"], Icon: SiPostgresql },
   { keywords: ["redis"], Icon: SiRedis },
@@ -92,6 +100,8 @@ export const TECH_ICON_MATCHERS: TechMatcher[] = [
   { keywords: ["mysql", "mariadb"], Icon: SiMysql },
   { keywords: ["sqlite"], Icon: SiSqlite },
   { keywords: ["prisma"], Icon: SiPrisma },
+  { keywords: ["rabbitmq"], Icon: SiRabbitmq },
+  { keywords: ["kafka", "apachekafka"], Icon: SiApachekafka },
 
   { keywords: ["docker", "container"], Icon: SiDocker },
   { keywords: ["gcp", "google cloud"], Icon: SiGooglecloud },
