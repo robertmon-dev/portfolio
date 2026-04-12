@@ -69,6 +69,14 @@ docker-login: ## Login to GitHub Container Registry
 	@echo "=> Logging in to $(REGISTRY)..."
 	@echo $${GITHUB_TOKEN} | docker login $(REGISTRY) -u $${GITHUB_ACTOR} --password-stdin
 
+.PHONY: prod-update
+prod-update: ## Pull new images and restart (Used on server)
+	@echo "=> Updating production stack..."
+	@$(COMPOSE_FULL) pull
+	@$(COMPOSE_FULL) up -d
+	@docker image prune -f
+	@echo "=> Update complete."
+
 # ==============================================================================
 # Quality
 # ==============================================================================
@@ -199,35 +207,6 @@ db-studio: ## Launch Prisma Studio
 db-seed: ## Seed the database with initial data
 	@echo "=> Seeding database..."
 	@$(YARN) workspace @portfolio/app prisma db seed
-
-# ==============================================================================
-# CI/CD & Registry (GitHub Actions)
-# ==============================================================================
-
-.PHONY: docker-build-ci
-docker-build-ci: ## Build images for production (CI only)
-	@echo "=> Building production images for $(TAG)..."
-	@docker build -t $(REGISTRY)/$(IMAGE_PREFIX)-app:$(TAG) -f docker/Dockerfile.app .
-	@docker build -t $(REGISTRY)/$(IMAGE_PREFIX)-client:$(TAG) -f docker/Dockerfile.client .
-
-.PHONY: docker-push
-docker-push: ## Push production images to registry
-	@echo "=> Pushing images to $(REGISTRY)..."
-	@docker push $(REGISTRY)/$(IMAGE_PREFIX)-app:$(TAG)
-	@docker push $(REGISTRY)/$(IMAGE_PREFIX)-client:$(TAG)
-
-.PHONY: docker-login
-docker-login: ## Login to GitHub Container Registry
-	@echo "=> Logging in to $(REGISTRY)..."
-	@echo $${GITHUB_TOKEN} | docker login $(REGISTRY) -u $${GITHUB_ACTOR} --password-stdin
-
-.PHONY: prod-update
-prod-update: ## Pull new images and restart (Used on server)
-	@echo "=> Updating production stack..."
-	@$(COMPOSE_FULL) pull
-	@$(COMPOSE_FULL) up -d
-	@docker image prune -f
-	@echo "=> Update complete."
 
 # ==============================================================================
 # Quality
