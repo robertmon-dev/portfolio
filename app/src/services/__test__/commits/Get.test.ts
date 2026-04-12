@@ -10,9 +10,9 @@ describe("GetCommitService", () => {
   let service: CommitRetrieving;
 
   beforeEach(() => {
+    mocks = baseServiceUtilities();
     mocks.clearAll();
 
-    mocks = baseServiceUtilities();
     service = new GetCommitService(
       mocks.prisma,
       mocks.cache,

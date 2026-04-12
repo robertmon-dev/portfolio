@@ -22,9 +22,9 @@ describe("ListCommitsService", () => {
     }));
 
   beforeEach(() => {
+    mocks = baseServiceUtilities();
     mocks.clearAll();
 
-    mocks = baseServiceUtilities();
     service = new ListCommitsService(
       mocks.prisma,
       mocks.cache,
