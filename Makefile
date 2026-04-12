@@ -244,3 +244,8 @@ lint-fix: ## Run ESLint with autofix where supported
 	@echo "=> Running linter with autofix..."
 	@$(TURBO) run lint:fix
 	@echo "=> Lint fix complete."
+
+.PHONY: test
+test: ## Run tests across the monorepo
+	@echo "=> Running tests..."
+	@$(TURBO) run test
