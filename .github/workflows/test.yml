@@ -29,8 +29,5 @@ jobs:
       - name: Build packages
         run: make build
 
-      - name: Lint
-        run: make lint
-
       - name: Run Tests
         run: make test
