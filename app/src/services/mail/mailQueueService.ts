@@ -9,7 +9,7 @@ export class MailQueueService
   private static instance: MailQueueService;
 
   private constructor(options?: Partial<QueueOptions>) {
-    super("Mail Queue Service", options);
+    super("mail-queue", options);
   }
 
   public static getInstance(): MailQueueService {
