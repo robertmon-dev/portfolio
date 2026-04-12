@@ -1,42 +1,33 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach } from "vitest";
 import { GetCommitService } from "../../commits/Get";
 import { GithubCommitSchema } from "@portfolio/shared";
-import {
-  createPrismaMock,
-  createCacheMock,
-  createLoggerMock,
-  createSettingsMock,
-  MOCK_UUID,
-} from "../../../mocks/core";
-import { Caching } from "src/infrastructure/cache/types";
-import { Logging } from "src/core/logger/types";
-import { Settings } from "src/core/settings/settings";
+import { baseServiceUtilities, MOCK_UUID } from "../../../mocks/core";
+import { ServiceMock } from "../../../mocks/types";
+import type { CommitRetrieving } from "../../../services/commits/types";
 
 describe("GetCommitService", () => {
-  let mockDb: ReturnType<typeof createPrismaMock>;
-  let mockCache: Caching;
-  let mockLogger: Logging;
-  let mockSettings: Settings["config"];
-  let service: GetCommitService;
+  let mocks: ServiceMock;
+  let service: CommitRetrieving;
 
   beforeEach(() => {
-    vi.clearAllMocks();
+    mocks.clearAll();
 
-    mockDb = createPrismaMock();
-    mockCache = createCacheMock();
-    mockLogger = createLoggerMock();
-    mockSettings = createSettingsMock();
-
-    service = new GetCommitService(mockDb, mockCache, mockLogger, mockSettings);
+    mocks = baseServiceUtilities();
+    service = new GetCommitService(
+      mocks.prisma,
+      mocks.cache,
+      mocks.logger,
+      mocks.settings,
+    );
   });
 
   it("should return null if commit is not found", async () => {
-    mockDb.githubCommit.findUnique.mockResolvedValue(null);
+    mocks.prisma.githubCommit.findUnique.mockResolvedValue(null);
 
     const result = await service.execute(MOCK_UUID);
 
     expect(result).toBeNull();
-    expect(mockDb.githubCommit.findUnique).toHaveBeenCalledWith({
+    expect(mocks.prisma.githubCommit.findUnique).toHaveBeenCalledWith({
       where: { id: MOCK_UUID },
     });
   });
@@ -55,7 +46,7 @@ describe("GetCommitService", () => {
       updatedAt: new Date(),
     };
 
-    mockDb.githubCommit.findUnique.mockResolvedValue(fakeCommit);
+    mocks.prisma.githubCommit.findUnique.mockResolvedValue(fakeCommit);
 
     const result = await service.execute(MOCK_UUID);
 
@@ -63,6 +54,6 @@ describe("GetCommitService", () => {
 
     expect(validated.id).toBe(MOCK_UUID);
     expect(result?.sha).toBe("abc123sha");
-    expect(mockLogger.debug).toHaveBeenCalled();
+    expect(mocks.logger.debug).toHaveBeenCalled();
   });
 });

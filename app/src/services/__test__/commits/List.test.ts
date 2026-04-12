@@ -1,27 +1,15 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach } from "vitest";
+import type { ServiceMock } from "../../../mocks/types";
 import { ListCommitsService } from "../../commits/List";
-import {
-  createPrismaMock,
-  createCacheMock,
-  createLoggerMock,
-  createSettingsMock,
-  MOCK_UUID,
-  type MockedPrismaClient,
-} from "../../../mocks/core";
-import type { Caching } from "src/infrastructure/cache/types";
-import type { Logging } from "src/core/logger/types";
-import type { EnvConfig } from "src/core/settings/types";
+import { baseServiceUtilities, MOCK_UUID } from "../../../mocks/core";
 
 describe("ListCommitsService", () => {
-  let mockDb: MockedPrismaClient;
-  let mockCache: Caching;
-  let mockLogger: Logging;
-  let mockSettings: EnvConfig;
+  let mocks: ServiceMock;
   let service: ListCommitsService;
 
   const createFakeCommits = (count: number) =>
     Array.from({ length: count }).map((_, i) => ({
-      id: `${MOCK_UUID.slice(0, -1)}${i}`, // Unikalne UUID-ish
+      id: `${MOCK_UUID.slice(0, -1)}${i}`,
       sha: `sha-${i}`,
       message: `Commit ${i}`,
       author: "Robert",
@@ -34,18 +22,14 @@ describe("ListCommitsService", () => {
     }));
 
   beforeEach(() => {
-    vi.clearAllMocks();
+    mocks.clearAll();
 
-    mockDb = createPrismaMock();
-    mockCache = createCacheMock();
-    mockLogger = createLoggerMock();
-    mockSettings = createSettingsMock();
-
+    mocks = baseServiceUtilities();
     service = new ListCommitsService(
-      mockDb,
-      mockCache,
-      mockLogger,
-      mockSettings,
+      mocks.prisma,
+      mocks.cache,
+      mocks.logger,
+      mocks.settings,
     );
   });
 
@@ -53,13 +37,13 @@ describe("ListCommitsService", () => {
     const limit = 5;
     const fakeItems = createFakeCommits(3);
 
-    mockDb.githubCommit.findMany.mockResolvedValue(fakeItems);
+    mocks.prisma.githubCommit.findMany.mockResolvedValue(fakeItems);
 
     const result = await service.execute({ limit });
 
     expect(result.items).toHaveLength(3);
     expect(result.nextCursor).toBeUndefined();
-    expect(mockDb.githubCommit.findMany).toHaveBeenCalledWith(
+    expect(mocks.prisma.githubCommit.findMany).toHaveBeenCalledWith(
       expect.objectContaining({
         take: limit + 1,
         orderBy: { date: "desc" },
@@ -72,7 +56,7 @@ describe("ListCommitsService", () => {
     const fakeItems = createFakeCommits(3);
     const expectedNextCursor = fakeItems[2].id;
 
-    mockDb.githubCommit.findMany.mockResolvedValue(fakeItems);
+    mocks.prisma.githubCommit.findMany.mockResolvedValue(fakeItems);
 
     const result = await service.execute({ limit });
 
@@ -85,11 +69,11 @@ describe("ListCommitsService", () => {
     const limit = 10;
     const cursor = MOCK_UUID;
 
-    mockDb.githubCommit.findMany.mockResolvedValue([]);
+    mocks.prisma.githubCommit.findMany.mockResolvedValue([]);
 
     await service.execute({ limit, cursor });
 
-    expect(mockDb.githubCommit.findMany).toHaveBeenCalledWith(
+    expect(mocks.prisma.githubCommit.findMany).toHaveBeenCalledWith(
       expect.objectContaining({
         cursor: { id: cursor },
         take: limit + 1,
@@ -102,7 +86,7 @@ describe("ListCommitsService", () => {
     // @ts-expect-error
     delete fakeItems[0].message;
 
-    mockDb.githubCommit.findMany.mockResolvedValue(fakeItems);
+    mocks.prisma.githubCommit.findMany.mockResolvedValue(fakeItems);
 
     await expect(service.execute({ limit: 10 })).rejects.toThrow();
   });

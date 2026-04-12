@@ -1,11 +1,26 @@
-import { vi } from "vitest";
-import type { MockedPrismaClient, ServiceMock } from "./types";
+import { vi, type Mock } from "vitest";
+import type { PrismaClient } from "@prisma/client";
 import type { Caching } from "../infrastructure/cache/types";
 import type { Logging } from "../core/logger/types";
 import type { EnvConfig } from "../core/settings/types";
 import { randomUUID } from "node:crypto";
 
 export const MOCK_UUID = randomUUID();
+
+export interface MockPrisma {
+  githubCommit: {
+    findUnique: Mock;
+    findMany: Mock;
+    delete: Mock;
+    update: Mock;
+  };
+  $connect: Mock;
+  $disconnect: Mock;
+  $on: Mock;
+  $transaction: Mock;
+}
+
+export type MockedPrismaClient = PrismaClient & MockPrisma;
 
 export const createPrismaMock = (): MockedPrismaClient => {
   return {
@@ -69,12 +84,11 @@ export const createSettingsMock = (
   return config;
 };
 
-export const baseServiceUtilities = (): ServiceMock => {
+export const baseService() => {
   return {
     prisma: createPrismaMock(),
     cache: createCacheMock(),
     logger: createLoggerMock(),
-    settings: createSettingsMock(),
-    clearAll: () => vi.clearAllMocks(),
-  };
-};
+    settings: createSettingsMock()
+  }
+}
