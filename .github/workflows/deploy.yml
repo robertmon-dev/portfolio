@@ -65,7 +65,9 @@ jobs:
           script: |
             cd ~/portfolio
 
-            [ -d docker/default.conf ] && rm -rf docker/default.conf
+            if [ -d docker/default.conf ]; then
+              rm -rf docker/default.conf
+            fi
             echo "$BACKEND_DOT_ENV" > docker/.env
 
             echo ${{ secrets.GHCR_READ_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
