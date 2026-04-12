@@ -61,7 +61,7 @@ export const notifyError = (error: unknown) => {
     return;
   }
 
-  if (message && code !== "UNAUTHORIZED") {
+  if (message) {
     toast.error(message, { toastId: code });
   }
 };
