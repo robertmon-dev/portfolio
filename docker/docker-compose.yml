@@ -5,11 +5,11 @@ services:
     image: postgres:15-alpine
     container_name: portfolio_db
     ports:
-      - "51214:5432"
+      - "${DB_EXTERNAL_PORT:-51214}:5432"
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
@@ -18,24 +18,21 @@ services:
   redis:
     image: redis:alpine
     container_name: portfolio_redis
-    ports:
-      - "6379:6379"
     volumes:
       - redis_data:/data
     networks:
       - portfolio-network
 
   app:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile.app
+    image: ghcr.io/robertmon-dev/portfolio-app:latest
     container_name: portfolio_app
+    restart: always
     env_file:
       - ../.env
     ports:
-      - "8800:8800"
+      - "${APP_PORT:-8800}:8800"
     environment:
-      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres?schema=public
+      - DATABASE_URL=postgresql://${DB_USER}:${DB_PASSWORD}@postgres:5432/${DB_NAME}?schema=public
       - REDIS_URL=redis://redis:6379
       - PORT=8800
     depends_on:
@@ -45,12 +42,11 @@ services:
       - portfolio-network
 
   client:
-    build:
-      context: ..
-      dockerfile: docker/Dockerfile.client
+    image: ghcr.io/robertmon-dev/portfolio-client:latest
     container_name: portfolio_client
+    restart: always
     ports:
-      - "8080:80"
+      - "${CLIENT_PORT:-8080}:80"
     depends_on:
       - app
     networks:
