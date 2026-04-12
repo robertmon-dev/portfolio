@@ -15,7 +15,7 @@
   },
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "tsup src/index.ts src/contract.ts --format esm --dts --no-external @portfolio/shared",
+    "build": "tsup src/index.ts src/contract.ts --format esm --dts --no-external=\"@portfolio/shared\"",
     "start": "node --enable-source-maps dist/index.js",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
