@@ -74,4 +74,10 @@ jobs:
             echo ${{ secrets.GHCR_READ_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
             make prod-update
+            echo "==> Pushing migrations"
+            until docker exec portfolio_db pg_isready -U ${DB_USER}; do
+              echo "-> Waiting 2 seconds for container, and retrying migration"
+              sleep 2
+            done
+
             docker exec portfolio_app npx prisma db push
