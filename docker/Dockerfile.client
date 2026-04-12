@@ -9,14 +9,12 @@ COPY shared/package.json ./shared/
 RUN yarn install --frozen-lockfile
 COPY . .
 
-ARG VITE_API_URL
-ENV VITE_API_URL=$VITE_API_URL
-
 WORKDIR /usr/src/app/app
 RUN npx prisma generate
-
 WORKDIR /usr/src/app
+
 RUN yarn workspace @portfolio/shared build
+RUN yarn workspace @portfolio/app build
 RUN yarn workspace @portfolio/client build
 
 FROM nginx:alpine
