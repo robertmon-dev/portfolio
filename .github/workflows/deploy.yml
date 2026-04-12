@@ -48,7 +48,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           passphrase: ${{ secrets.SSH_PASSPHRASE }}
-          source: "docker/docker-compose.yml,Makefile"
+          source: "docker/docker-compose.yml,docker/default.conf,Makefile"
           target: "~/portfolio"
           strip_components: 0
 
