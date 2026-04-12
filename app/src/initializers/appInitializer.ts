@@ -65,9 +65,13 @@ export class AppInitializer {
     this.workerInitializer.init();
 
     const port = this.settings.config.PORT;
+    const host =
+      this.settings.config.NODE_ENV === "production" ? "0.0.0.0" : "127.0.0.1";
 
-    this.server = this.app.listen(port, () => {
-      this.logger.info(`Server listening on http://localhost:${port}`);
+    this.server = this.app.listen(port, host, () => {
+      this.logger.info(
+        `Server listening on http://localhost:${port} [Env: ${this.settings.config.NODE_ENV}]`,
+      );
     });
   }
 
