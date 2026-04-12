@@ -6,7 +6,9 @@ import { trpc } from "./client";
 import { queryClient } from "./queryClient";
 
 export const TRPCProvider = ({ children }: { children: React.ReactNode }) => {
-  const API_URL = import.meta.env?.VITE_API_URL || "http://localhost:8800";
+  const API_URL = import.meta.env.PROD
+    ? ""
+    : import.meta.env.VITE_API_URL || "http://localhost:8800";
 
   const [trpcClient] = useState(() =>
     trpc.createClient({
