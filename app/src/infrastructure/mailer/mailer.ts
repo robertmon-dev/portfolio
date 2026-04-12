@@ -45,11 +45,17 @@ export class MailSenderService extends BaseService implements Mailing {
     return this.send(to, "Welcome aboard! 🚀", html);
   }
 
-  public async sendResetPassword(to: string, name: string | null, url: string) {
+  public async sendResetPassword(
+    to: string,
+    name: string | null,
+    code: string,
+    expiration: number,
+  ) {
     const html = await render(
       React.createElement(ResetPasswordEmail, {
         name: name ?? "User",
-        url,
+        code,
+        expiration,
       }),
     );
     return this.send(to, "Reset your password 🔐", html);

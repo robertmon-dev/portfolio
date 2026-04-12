@@ -33,7 +33,8 @@ export interface Mailing {
   sendResetPassword(
     to: string,
     name: string | null,
-    url: string,
+    code: string,
+    expiration: number,
   ): Promise<SentMessageInfo>;
   send2FACode(to: string, code: string): Promise<SentMessageInfo>;
   sendContactConfirmation(

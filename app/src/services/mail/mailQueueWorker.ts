@@ -59,12 +59,16 @@ export class MailQueueWorker extends BaseWorker<
         }
 
         case MAIL_ACTIONS.PASSWORD_RESET: {
-          const { user, resetToken } = jobPacket.data;
+          const { user, resetToken, expiryMinutes } = jobPacket.data;
           if (!user.email)
             throw new Error(`User ${user.id} has no email address`);
 
-          const resetUrl = `${baseUrl}/auth/reset-password?token=${resetToken}`;
-          await this.mailer.sendResetPassword(user.email, user.name, resetUrl);
+          await this.mailer.sendResetPassword(
+            user.email,
+            user.name,
+            resetToken,
+            expiryMinutes,
+          );
           break;
         }
 

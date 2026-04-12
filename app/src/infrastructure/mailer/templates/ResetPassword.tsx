@@ -1,12 +1,14 @@
-import { Section, Text, Button, Heading } from "@react-email/components";
+import { Section, Text, Heading } from "@react-email/components";
 import { Layout } from "./components/Layout";
 
 export const ResetPasswordEmail = ({
   name,
-  url,
+  code,
+  expiration,
 }: {
   name: string;
-  url: string;
+  code: string;
+  expiration: number;
 }) => (
   <Layout previewText="Reset your password">
     <Heading className="text-tn-red text-[22px] font-bold p-0 my-[20px]">
@@ -16,16 +18,13 @@ export const ResetPasswordEmail = ({
       Hi {name}, we received a request to reset your password. If you didn't
       make this request, you can safely ignore this email.
     </Text>
-    <Section className="text-center mt-[32px] mb-[32px]">
-      <Button
-        className="bg-tn-red rounded-md text-tn-bgNight text-[14px] font-bold no-underline text-center px-6 py-4 shadow-lg"
-        href={url}
-      >
-        Reset Password
-      </Button>
+    <Section className="bg-tn-bgNight/50 border border-dashed border-tn-yellow/50 rounded-lg p-[24px] my-[32px] text-center">
+      <Text className="text-tn-yellow text-[32px] font-mono font-bold tracking-[10px] m-0">
+        {code}
+      </Text>
     </Section>
     <Text className="text-tn-slate text-[12px]">
-      This link will expire in 1 hour for security reasons.
+      This link will expire in ${expiration} minutes for security reasons.
     </Text>
   </Layout>
 );
