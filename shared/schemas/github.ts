@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { zUuid, zString, zUrl, zText, zDateOrString } from "./generic";
-import { UserPublicSchema } from "./user";
 
 export const GithubRepoSchema = z.object({
   id: zUuid,
@@ -25,7 +24,6 @@ export const GithubCommitSchema = z.object({
   description: zText.nullable(),
   url: zUrl.nullable(),
   date: zDateOrString,
-  user: UserPublicSchema.optional(),
   repo: GithubRepoSchema.optional(),
   createdAt: zDateOrString,
   updatedAt: zDateOrString,
@@ -63,4 +61,13 @@ export const ListCommitsInputSchema = z.object({
 export const ListCommitsOutputSchema = z.object({
   items: z.array(GithubCommitSchema),
   nextCursor: zString.optional(),
+});
+
+export const UpdateGithubCommitSchema = GithubCommitSchema.omit({
+  repo: true,
+});
+
+export const LinkGithubCommitSchema = z.object({
+  githubCommitId: zUuid,
+  githubRepoId: zUuid,
 });

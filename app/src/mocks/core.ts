@@ -15,10 +15,15 @@ export const MOCK_UUID = randomUUID();
 export const createPrismaMock = (): MockedPrismaClient => {
   return {
     githubCommit: {
+      deleteMany: vi.fn(),
       findUnique: vi.fn(),
+      findFirst: vi.fn(),
       findMany: vi.fn(),
       delete: vi.fn(),
       update: vi.fn(),
+    },
+    githubRepo: {
+      findFirst: vi.fn(),
     },
     $connect: vi.fn(),
     $disconnect: vi.fn(),

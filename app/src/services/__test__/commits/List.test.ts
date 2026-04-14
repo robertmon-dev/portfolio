@@ -1,23 +1,10 @@
 import { describe, it, expect } from "vitest";
 import { ListCommitsService } from "../../commits/List";
 import { useServiceTest, MOCK_UUID } from "../../../mocks/core";
+import { createFakeCommits } from "./utils";
 
 describe("ListCommitsService", () => {
   const ctx = useServiceTest(ListCommitsService);
-
-  const createFakeCommits = (count: number) =>
-    Array.from({ length: count }).map((_, i) => ({
-      id: `${MOCK_UUID.slice(0, -1)}${i}`,
-      sha: `sha-${i}`,
-      message: `Commit ${i}`,
-      author: "Robert",
-      date: new Date().toISOString(),
-      url: `https://github.com/repo/commit/${i}`,
-      repoId: MOCK_UUID,
-      description: "Description",
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    }));
 
   it("should return a list of commits and no nextCursor when items < limit", async () => {
     const limit = 5;

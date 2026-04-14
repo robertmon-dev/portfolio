@@ -6,10 +6,15 @@ import type { Caching } from "../infrastructure/cache/types";
 
 export interface MockPrisma {
   githubCommit: {
+    deleteMany: Mock;
+    findFirst: Mock;
     findUnique: Mock;
     findMany: Mock;
     delete: Mock;
     update: Mock;
+  };
+  githubRepo: {
+    findFirst: Mock;
   };
   $connect: Mock;
   $disconnect: Mock;
