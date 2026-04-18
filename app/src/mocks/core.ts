@@ -24,6 +24,16 @@ export const createPrismaMock = (): MockedPrismaClient => {
     },
     githubRepo: {
       findFirst: vi.fn(),
+      findUnique: vi.fn(),
+      deleteMany: vi.fn(),
+    },
+    experience: {
+      create: vi.fn(),
+      deleteMany: vi.fn(),
+      findFirst: vi.fn(),
+      findMany: vi.fn(),
+      findUnique: vi.fn(),
+      update: vi.fn(),
     },
     $connect: vi.fn(),
     $disconnect: vi.fn(),
