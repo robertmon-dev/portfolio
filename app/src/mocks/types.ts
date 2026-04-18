@@ -16,6 +16,7 @@ export interface MockPrisma {
   githubRepo: {
     findFirst: Mock;
     findUnique: Mock;
+    findMany: Mock;
     deleteMany: Mock;
   };
   experience: {

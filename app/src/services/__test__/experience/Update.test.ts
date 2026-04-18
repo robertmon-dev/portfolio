@@ -19,7 +19,7 @@ describe("UpdateExperienceService", async () => {
       data,
     });
     expect(ctx.mocks.logger.info).toHaveBeenCalledOnce();
-    expect(ctx.mocks.cache.del).toHaveBeenCalledTimes(1);
+    expect(ctx.mocks.cache.del).toHaveBeenCalledTimes(2);
   });
 
   it("Shall returns parsable result", async () => {

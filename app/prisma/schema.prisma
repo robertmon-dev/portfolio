@@ -50,6 +50,9 @@ model GithubRepo {
   project Project?
   order   Int      @default(0)
 
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
   commits     GithubCommit[]
 
   @@index([statsId])
@@ -64,7 +67,8 @@ model GithubStats {
 
   repos GithubRepo[]
 
-  updatedAt DateTime @updatedAt
+  createdAt  DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
 
 model Project {
@@ -79,7 +83,9 @@ model Project {
 
   isFeatured Boolean  @default(false)
   isVisible  Boolean  @default(true)
+
   createdAt  DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 
   techStack TechStack[]
   gallery   ProjectImage[]
@@ -100,6 +106,9 @@ model ProjectImage {
   projectId String
   project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 
+  createdAt  DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
   @@index([projectId, order])
 }
 
@@ -111,6 +120,9 @@ model TechStack {
   color    String?
 
   projects Project[]
+
+  createdAt  DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 
   @@index([category])
 }
@@ -126,6 +138,7 @@ model Experience {
   isCurrent   Boolean   @default(false)
 
   createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 
   @@index([startDate(sort: Desc)])
 }
@@ -148,7 +161,8 @@ model User {
   role Role @default(USER)
 
   createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
+  updatedAt        DateTime          @default(now()) @updatedAt
+
   VerificationCode VerificationCode[]
 
   @@index([email])
@@ -161,6 +175,9 @@ model UserPermission {
 
   resource  String
   flags     PermissionFlag[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 
   @@unique([userId, resource])
   @@index([userId])
@@ -176,6 +193,7 @@ model VerificationCode {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 
   @@index([userId, type])
 }
@@ -194,7 +212,7 @@ model GithubCommit {
   repo      GithubRepo @relation(fields: [repoId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
-  updatedAt        DateTime           @updatedAt
+  updatedAt        DateTime    @default(now())       @updatedAt
 
   @@index([repoId, date(sort: Desc)])
 }
