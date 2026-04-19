@@ -24,6 +24,7 @@ export interface MockPrisma {
   };
   githubStats: {
     upsert: Mock;
+    findUnique: Mock;
   };
   experience: {
     create: Mock;

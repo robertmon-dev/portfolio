@@ -33,6 +33,7 @@ export const createPrismaMock = (): MockedPrismaClient => {
     },
     githubStats: {
       upsert: vi.fn(),
+      findUnique: vi.fn(),
     },
     experience: {
       create: vi.fn(),

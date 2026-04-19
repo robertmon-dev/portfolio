@@ -16,8 +16,6 @@ export class GetGithubStatsService extends BaseService {
         ...githubStatsWithDeepRelationsQuery,
       });
 
-      if (!stats) return null;
-
       return stats;
     });
   }
