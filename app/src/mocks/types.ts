@@ -19,6 +19,7 @@ export interface MockPrisma {
     findMany: Mock;
     deleteMany: Mock;
     upsert: Mock;
+    update: Mock;
   };
   githubStats: {
     upsert: Mock;
@@ -30,6 +31,10 @@ export interface MockPrisma {
     findMany: Mock;
     findUnique: Mock;
     update: Mock;
+  };
+  project: {
+    findMany: Mock;
+    findUniqueOrThrow: Mock;
   };
   $connect: Mock;
   $disconnect: Mock;

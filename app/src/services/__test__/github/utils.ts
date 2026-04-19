@@ -62,17 +62,42 @@ export const createFakeGithubRepos = (
   count: number,
   commits = false,
   projects = false,
-): GithubRepo[] => {
+  stats = false,
+) => {
   return Array.from({ length: count }).map((_, idx) => ({
-    id: randomUUID(),
+    id: MOCK_UUID,
     name: `name-${idx}`,
     stars: idx,
     language: `language-${idx}`,
     description: `description-${MOCK_UUID}`,
     url: `http://web.com`,
-    statsId: randomUUID(),
+    stats: stats ? {} : null,
+    statsId: randomUUID() as string,
     commits: commits ? createFakeCommits(count) : [],
-    projects: projects ? [] : [],
+    project: projects
+      ? {
+          id: randomUUID(),
+          slug: `slug-${idx}`,
+          title: `title-${idx}`,
+          description: `description-${idx}`,
+          content: `content-${idx}`,
+
+          imageUrl: `https://web.com`,
+          demoUrl: `https://demo.com`,
+
+          isFeatured: idx % 2 === 0,
+          isVisible: idx % 2 === 0,
+
+          createdAt: new Date(),
+          updatedAt: new Date(),
+
+          techStack: [],
+          gallery: [],
+
+          githubRepoId: MOCK_UUID,
+          githubRepo: { id: MOCK_UUID },
+        }
+      : null,
     order: idx,
     createdAt: new Date(),
     updatedAt: new Date(),

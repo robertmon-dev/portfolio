@@ -56,6 +56,6 @@ describe("GithubCommitFetchWorker", async () => {
       });
     });
     expect(ctx.mocks.prisma.$transaction).toHaveBeenCalledTimes(20);
-    expect(ctx.mocks.cache.del).toHaveBeenCalledTimes(26);
+    expect(ctx.mocks.cache.del).toHaveBeenCalledTimes(7);
   });
 });

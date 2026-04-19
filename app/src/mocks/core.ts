@@ -28,6 +28,7 @@ export const createPrismaMock = (): MockedPrismaClient => {
       findUnique: vi.fn(),
       deleteMany: vi.fn(),
       upsert: vi.fn(),
+      update: vi.fn(),
     },
     githubStats: {
       upsert: vi.fn(),
@@ -39,6 +40,10 @@ export const createPrismaMock = (): MockedPrismaClient => {
       findMany: vi.fn(),
       findUnique: vi.fn(),
       update: vi.fn(),
+    },
+    project: {
+      findMany: vi.fn(),
+      findUniqueOrThrow: vi.fn(),
     },
     $connect: vi.fn(),
     $disconnect: vi.fn(),
