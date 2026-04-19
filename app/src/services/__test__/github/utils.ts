@@ -98,7 +98,7 @@ export const createFakeGithubRepos = (
           githubRepo: { id: MOCK_UUID },
         }
       : null,
-    projectId: MOCK_UUID,
+    projectId: projects ? MOCK_UUID : null,
     order: idx,
     createdAt: new Date(),
     updatedAt: new Date(),

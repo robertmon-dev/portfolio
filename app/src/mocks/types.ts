@@ -20,6 +20,7 @@ export interface MockPrisma {
     deleteMany: Mock;
     upsert: Mock;
     update: Mock;
+    delete: Mock;
   };
   githubStats: {
     upsert: Mock;

@@ -7,7 +7,7 @@ import { createFakeProjects } from "../projects/utils";
 describe("LinkRepoProjectsService", async () => {
   const ctx = useServiceTest(LinkRepoProjectService);
 
-  it("Shall properly unlink repo from project", async () => {
+  it("Shall properly link repo for project", async () => {
     let updatedRepo = createFakeGithubRepos(1)[0];
     const project = createFakeProjects(1)[0];
     const stats = createFakeGithubStats(1)[0];

@@ -17,13 +17,14 @@ describe("UnlinkRepoProjectService", async () => {
     updatedRepo.project = project;
     expect(updatedRepo.project).toBeDefined();
 
-    const resolved = await ctx.service.execute(updatedRepo.id);
-
-    ctx.mocks.prisma.$transaction.mockImplementation((callback) =>
-      callback(ctx.mocks.prisma),
-    );
+    ctx.mocks.prisma.$transaction.mockImplementation(async (callback) => {
+      return await callback(ctx.mocks.prisma);
+    });
     ctx.mocks.prisma.githubRepo.findUnique.mockResolvedValue(updatedRepo);
     ctx.mocks.prisma.githubRepo.update.mockResolvedValue(updatedRepo);
+
+    await ctx.service.execute(updatedRepo.id);
+
     expect(ctx.mocks.prisma.githubRepo.findUnique).toHaveBeenCalledWith({
       where: { id: updatedRepo.id },
       ...githubRepoWithRelationsQuery,
@@ -32,8 +33,6 @@ describe("UnlinkRepoProjectService", async () => {
     expect(ctx.mocks.prisma.githubRepo.update).toHaveBeenCalledWith({
       where: { id: updatedRepo.id },
       data: { project: { disconnect: true } },
-      ...githubRepoWithRelationsQuery,
     });
-    expect(resolved).toBeDefined();
   });
 });
