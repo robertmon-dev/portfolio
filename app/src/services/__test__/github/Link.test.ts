@@ -30,5 +30,6 @@ describe("LinkRepoProjectsService", async () => {
     });
 
     expect(mergedRepo).toBe(updatedRepo);
+    expect(ctx.mocks.cache.del).toHaveBeenCalledTimes(10);
   });
 });

@@ -76,7 +76,7 @@ export const createFakeGithubRepos = (
     commits: commits ? createFakeCommits(count) : [],
     project: projects
       ? {
-          id: randomUUID(),
+          id: MOCK_UUID,
           slug: `slug-${idx}`,
           title: `title-${idx}`,
           description: `description-${idx}`,
@@ -98,6 +98,7 @@ export const createFakeGithubRepos = (
           githubRepo: { id: MOCK_UUID },
         }
       : null,
+    projectId: MOCK_UUID,
     order: idx,
     createdAt: new Date(),
     updatedAt: new Date(),
