@@ -18,6 +18,10 @@ export interface MockPrisma {
     findUnique: Mock;
     findMany: Mock;
     deleteMany: Mock;
+    upsert: Mock;
+  };
+  githubStats: {
+    upsert: Mock;
   };
   experience: {
     create: Mock;

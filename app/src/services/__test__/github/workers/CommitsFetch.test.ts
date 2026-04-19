@@ -1,7 +1,10 @@
-import { useServiceTest } from "../../../../mocks/core";
+import { MOCK_UUID, useServiceTest } from "../../../../mocks/core";
 import { describe, it, expect, vi } from "vitest";
 import { GithubCommitFetchWorker } from "../../../github/workers/CommitsFetch";
-import { createFakeGithubRepos, createFakeOctokitResponse } from "../utils";
+import {
+  createFakeGithubRepos,
+  createFakeOctokitCommitsResponse,
+} from "../utils";
 
 const local = vi.hoisted(() => {
   const listCommitsMock = vi.fn();
@@ -34,7 +37,7 @@ describe("GithubCommitFetchWorker", async () => {
 
   it("Shall properly loads persisted repos", async () => {
     const persistedRepos = createFakeGithubRepos(20);
-    const fakeList = createFakeOctokitResponse(20);
+    const fakeList = createFakeOctokitCommitsResponse(20);
 
     ctx.mocks.prisma.githubRepo.findMany.mockResolvedValue(persistedRepos);
     local.listCommits.mockResolvedValue(fakeList);
