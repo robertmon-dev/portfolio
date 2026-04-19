@@ -47,6 +47,7 @@ export const createPrismaMock = (): MockedPrismaClient => {
       findMany: vi.fn(),
       findUniqueOrThrow: vi.fn(),
     },
+    $queryRaw: vi.fn(),
     $connect: vi.fn(),
     $disconnect: vi.fn(),
     $on: vi.fn(),
@@ -54,9 +55,9 @@ export const createPrismaMock = (): MockedPrismaClient => {
   } as unknown as MockedPrismaClient;
 };
 
-export const createCacheMock = (): Caching => ({
+export const createCacheMock = (throws = false): Caching => ({
   set: vi.fn().mockResolvedValue(undefined),
-  get: vi.fn().mockResolvedValue(null),
+  get: throws ? vi.fn() : vi.fn().mockResolvedValue(null),
   del: vi.fn().mockResolvedValue(undefined),
   wrap: vi.fn((_key, _ttl, fetcher) => fetcher()),
 });
@@ -101,18 +102,21 @@ export const createSettingsMock = (
   return config;
 };
 
-export const baseServiceUtilities = (): ServiceMock => {
+export const baseServiceUtilities = (cacheThrows = false): ServiceMock => {
   return {
     prisma: createPrismaMock(),
-    cache: createCacheMock(),
+    cache: createCacheMock(cacheThrows),
     logger: createLoggerMock(),
     settings: createSettingsMock(),
     clearAll: () => vi.clearAllMocks(),
   };
 };
 
-export function setupServiceTest<T>(Constructor: BaseServiceConstructor<T>) {
-  const mocks = baseServiceUtilities();
+export function setupServiceTest<T>(
+  Constructor: BaseServiceConstructor<T>,
+  cacheThrows = false,
+) {
+  const mocks = baseServiceUtilities(cacheThrows);
 
   const service = new Constructor(
     mocks.prisma,
@@ -124,14 +128,17 @@ export function setupServiceTest<T>(Constructor: BaseServiceConstructor<T>) {
   return { mocks, service };
 }
 
-export function useServiceTest<T>(Constructor: BaseServiceConstructor<T>) {
+export function useServiceTest<T>(
+  Constructor: BaseServiceConstructor<T>,
+  cacheTrows = false,
+) {
   const context: ServiceTestContext<T> = {
     mocks: null as unknown as ServiceMock,
     service: null as unknown as T,
   };
 
   beforeEach(() => {
-    const { mocks, service } = setupServiceTest(Constructor);
+    const { mocks, service } = setupServiceTest(Constructor, cacheTrows);
 
     context.mocks = mocks;
     context.service = service;

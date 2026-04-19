@@ -38,6 +38,7 @@ export interface MockPrisma {
     findMany: Mock;
     findUniqueOrThrow: Mock;
   };
+  $queryRaw: Mock;
   $connect: Mock;
   $disconnect: Mock;
   $on: Mock;
