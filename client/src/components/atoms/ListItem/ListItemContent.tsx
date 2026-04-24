@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import type { ListItemContentProps } from './types';
+import { Link } from "react-router-dom";
+import type { ListItemContentProps } from "./types";
 
 export const ListItemContent = ({
   children,
@@ -9,9 +9,8 @@ export const ListItemContent = ({
   href,
   disabled,
   onClick,
-  handleInteraction
+  handleInteraction,
 }: ListItemContentProps) => {
-
   const content = (
     <>
       {icon && <span className="list-item__icon">{icon}</span>}
@@ -20,17 +19,26 @@ export const ListItemContent = ({
     </>
   );
 
-  if (elementType === 'div') {
+  if (elementType === "div") {
     return (
-      <div className="list-item__content" onClick={disabled ? undefined : (onClick as any)}>
+      <div
+        className="list-item__content"
+        onClick={disabled ? undefined : (onClick as any)}
+      >
         {content}
       </div>
     );
   }
 
-  if (elementType === 'a') {
+  if (elementType === "a") {
     return (
-      <a href={href} className="list-item__link" target="_blank" rel="noopener noreferrer" onClick={handleInteraction}>
+      <a
+        href={href}
+        className="list-item__link"
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={handleInteraction}
+      >
         {content}
       </a>
     );

@@ -36,6 +36,15 @@ enum CodeType {
   PASSWORD_RESET
 }
 
+enum ReactionType {
+  LIKE
+  LOVE
+  HAHA
+  WOW
+  SAD
+  ANGRY
+}
+
 model GithubRepo {
   id          String  @id @default(uuid())
   name        String
@@ -164,6 +173,9 @@ model User {
   updatedAt        DateTime          @default(now()) @updatedAt
 
   VerificationCode VerificationCode[]
+  posts Post[]
+  comments Comment[]
+  reactions Reaction[]
 
   @@index([email])
 }
@@ -207,7 +219,6 @@ model GithubCommit {
   date      DateTime
   isFeatured Boolean  @default(true)
 
-
   repoId    String
   repo      GithubRepo @relation(fields: [repoId], references: [id], onDelete: Cascade)
 
@@ -215,4 +226,126 @@ model GithubCommit {
   updatedAt        DateTime    @default(now())       @updatedAt
 
   @@index([repoId, date(sort: Desc)])
+}
+
+model Post {
+  id        String   @id @default(uuid())
+  title       String
+  subtitle    String?   @db.Text
+  slug        String    @unique
+  excerpt     String?   @db.Text
+  content     String    @db.Text
+  footer      String?   @db.Text
+  coverImageUrl  String?
+
+  visibility Role @default(USER)
+
+
+  viewCount   Int       @default(0)
+
+  userId    String
+  author      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  tags Tag[]
+  reactions Reaction[]
+  comments Comment[]
+
+  publishedAt DateTime?
+  deletedAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt        DateTime    @default(now())       @updatedAt
+
+  @@index([userId])
+  @@index([slug])
+  @@index([createdAt(sort: Desc)])
+  @@index([visibility, publishedAt])
+  @@index([deletedAt])
+}
+
+model Tag {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  slug        String   @unique
+  description String?  @db.Text
+  color       String?
+
+  posts       Post[]
+
+  categoryId String?
+  category   TagCategory? @relation(fields: [categoryId], references: [id])
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([categoryId])
+  @@index([slug])
+}
+
+model TagCategory {
+  id    String @id @default(uuid())
+  name  String @unique
+
+  tags  Tag[]
+
+  parentId String?
+
+  parent TagCategory? @relation("categories", fields: [parentId], references: [id])
+  categories TagCategory[] @relation("categories")
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([parentId])
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  visibility Role @default(USER)
+
+  userId    String
+  author      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  content String @db.Text
+  isReply Boolean
+
+  parentId String?
+
+  parent Comment? @relation("replies", fields: [parentId], references: [id])
+  replies Comment[] @relation("replies")
+
+  postId String
+  post Post @relation(fields: [postId], references: [id])
+
+  reactions Reaction[]
+
+  deletedAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt        DateTime    @default(now())       @updatedAt
+
+  @@index([postId])
+  @@index([parentId])
+  @@index([userId])
+  @@index([createdAt(sort: Desc)])
+}
+
+model Reaction {
+  id        String   @id @default(uuid())
+
+  type ReactionType
+  postId    String?
+  post      Post?        @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  userId    String
+  author      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  commentId String
+  comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  deletedAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt        DateTime    @default(now())       @updatedAt
+
+  @@index([commentId])
+  @@index([postId])
+  @@index([userId])
 }
