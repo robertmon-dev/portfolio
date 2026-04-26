@@ -86,6 +86,11 @@ export const DeletePostSchema = PostSchema.pick({
   id: true,
 });
 
+export const AssignReactionsForPostSchema = PostSchema.pick({
+  id: true,
+  reactionIds: true,
+});
+
 export const ListPostsInputSchema = z.object({
   limit: z.number().min(1).max(50).default(5),
   cursor: zString.optional(),

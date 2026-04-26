@@ -5,6 +5,9 @@ export type Post = z.infer<typeof p.PostSchema>;
 export type CreatePostInput = z.infer<typeof p.CreatePostSchema>;
 export type UpdatePostInput = z.infer<typeof p.UpdatePostSchema>;
 export type AssignTagsForPostInput = z.infer<typeof p.AssignTagsForPostSchema>;
+export type AssignReactionsForPostInput = z.infer<
+  typeof p.AssignReactionsForPostSchema
+>;
 export type ChangeVisibilityForPostInput = z.infer<
   typeof p.ChangeVisibilityForPostSchema
 >;

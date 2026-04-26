@@ -1,15 +1,15 @@
 import { TRPCError } from "@trpc/server";
 import { AuthorizedBaseService } from "../service";
 import {
-  AssignTagsForPostInput,
+  AssignReactionsForPostInput,
   PostSchema,
   type Post,
 } from "@portfolio/shared";
 import { postWithRelationsQuery } from "./queries";
 
-export class AssignTagsForPostService extends AuthorizedBaseService {
-  public async execute(input: AssignTagsForPostInput): Promise<Post> {
-    const { id: postId, tagIds } = input;
+export class AssignReactionsForPostService extends AuthorizedBaseService {
+  public async execute(input: AssignReactionsForPostInput): Promise<Post> {
+    const { id: postId, reactionIds } = input;
 
     return this.db.$transaction(async (tx) => {
       const persisted = await tx.post.findUnique({
@@ -27,9 +27,9 @@ export class AssignTagsForPostService extends AuthorizedBaseService {
       const updated = await tx.post.update({
         where: { id: postId },
         data: {
-          tags: tagIds
+          tags: reactionIds
             ? {
-                set: tagIds.map((id) => ({ id })),
+                set: reactionIds.map((id) => ({ id })),
               }
             : undefined,
         },

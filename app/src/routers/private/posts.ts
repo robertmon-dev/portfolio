@@ -5,12 +5,20 @@ import {
   DeletePostSchema,
   PostSchema,
   UpdatePostSchema,
+  AssignCommentsForPostSchema,
+  ChangePublishionForPostSchema,
+  AssignTagsForPostSchema,
+  AssignReactionsForPostSchema,
 } from "@portfolio/shared";
 import { ResourceEnum, FlagEnum } from "@portfolio/shared";
 import { executeAuthorizedService } from "../../trpc/executers/base";
 import { CreatePostService } from "../../services/post/Create";
 import { UpdatePostService } from "../../services/post/Update";
 import { DeletePostService } from "../../services/post/Delete";
+import { ChangePostVisilibityService } from "../../services/post/ChangePostVisibility";
+import { AssignCommentsForPostService } from "../../services/post/AssignCommentsForPost";
+import { AssignTagsForPostService } from "../../services/post/AssignTagsForPost";
+import { AssignReactionsForPostService } from "../../services/post/AssignReactionsForPost";
 
 export const postsPrivateRouter = router({
   create: permissionProcedure(ResourceEnum.enum.posts, FlagEnum.enum.WRITE)
@@ -63,5 +71,88 @@ export const postsPrivateRouter = router({
     .output(PostSchema)
     .mutation(({ ctx, input }) => {
       return executeAuthorizedService(DeletePostService, ctx, input);
+    }),
+
+  changeVisibility: permissionProcedure(
+    ResourceEnum.enum.posts,
+    FlagEnum.enum.WRITE,
+  )
+    .meta({
+      openapi: {
+        method: "PATCH",
+        path: "/admin/posts/visibility",
+        tags: ["Posts"],
+        summary: "Change post visibility",
+        description:
+          "Updates the publish status or visibility of a specific post.",
+        protect: true,
+      },
+    })
+    .input(ChangePublishionForPostSchema)
+    .output(PostSchema)
+    .mutation(({ ctx, input }) => {
+      return executeAuthorizedService(ChangePostVisilibityService, ctx, input);
+    }),
+
+  assignTags: permissionProcedure(ResourceEnum.enum.posts, FlagEnum.enum.WRITE)
+    .meta({
+      openapi: {
+        method: "POST",
+        path: "/admin/posts/tags",
+        tags: ["Posts"],
+        summary: "Assign tags to a post",
+        description: "Links a set of tags to a specific post.",
+        protect: true,
+      },
+    })
+    .input(AssignTagsForPostSchema)
+    .output(PostSchema)
+    .mutation(({ ctx, input }) => {
+      return executeAuthorizedService(AssignTagsForPostService, ctx, input);
+    }),
+
+  assignComments: permissionProcedure(
+    ResourceEnum.enum.posts,
+    FlagEnum.enum.WRITE,
+  )
+    .meta({
+      openapi: {
+        method: "POST",
+        path: "/admin/posts/comments",
+        tags: ["Posts"],
+        summary: "Assign comments to a post",
+        description:
+          "Links or manages comments associated with a specific post.",
+        protect: true,
+      },
+    })
+    .input(AssignCommentsForPostSchema)
+    .output(PostSchema)
+    .mutation(({ ctx, input }) => {
+      return executeAuthorizedService(AssignCommentsForPostService, ctx, input);
+    }),
+
+  assignReactions: permissionProcedure(
+    ResourceEnum.enum.posts,
+    FlagEnum.enum.WRITE,
+  )
+    .meta({
+      openapi: {
+        method: "POST",
+        path: "/admin/posts/reactions",
+        tags: ["Posts"],
+        summary: "Assign reactions to a post",
+        description: "Links a set of reactions to a specific post.",
+        protect: true,
+      },
+    })
+    .input(AssignReactionsForPostSchema)
+    .output(PostSchema)
+    .mutation(({ ctx, input }) => {
+      return executeAuthorizedService(
+        AssignReactionsForPostService,
+        ctx,
+        input,
+      );
     }),
 });
