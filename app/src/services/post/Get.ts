@@ -8,7 +8,7 @@ export class GetPostService extends BaseService {
 
     return await this.cache.wrap(cacheKey, 3600, async () => {
       const persisted = await this.db.post.findUnique({
-        where: { id: postId },
+        where: { id: postId, deletedAt: null },
         ...postWithRelationsQuery,
       });
 

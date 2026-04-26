@@ -9,9 +9,15 @@ import {
   ChangePublishionForPostSchema,
   AssignTagsForPostSchema,
   AssignReactionsForPostSchema,
+  ListPostsInputSchema,
+  ListPostsOutputSchema,
 } from "@portfolio/shared";
 import { ResourceEnum, FlagEnum } from "@portfolio/shared";
-import { executeAuthorizedService } from "../../trpc/executers/base";
+import {
+  executeAuthorizedService,
+  executeService,
+} from "../../trpc/executers/base";
+import { ListPostsService } from "../../services/post/List";
 import { CreatePostService } from "../../services/post/Create";
 import { UpdatePostService } from "../../services/post/Update";
 import { DeletePostService } from "../../services/post/Delete";
@@ -21,6 +27,26 @@ import { AssignTagsForPostService } from "../../services/post/AssignTagsForPost"
 import { AssignReactionsForPostService } from "../../services/post/AssignReactionsForPost";
 
 export const postsPrivateRouter = router({
+  list: permissionProcedure(ResourceEnum.enum.posts, FlagEnum.enum.READ)
+    .meta({
+      openapi: {
+        method: "GET",
+        path: "/admin/posts",
+        tags: ["Posts"],
+        summary: "List posts",
+        description: "Retrieves a paginated list of posts.",
+        protect: false,
+      },
+    })
+    .input(ListPostsInputSchema)
+    .output(ListPostsOutputSchema)
+    .query(({ ctx, input }) => {
+      return executeService(ListPostsService, ctx, {
+        ...input,
+        includeDeleted: true,
+      });
+    }),
+
   create: permissionProcedure(ResourceEnum.enum.posts, FlagEnum.enum.WRITE)
     .meta({
       openapi: {

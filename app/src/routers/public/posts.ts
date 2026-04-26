@@ -43,6 +43,9 @@ export const postsRouter = router({
     .input(ListPostsInputSchema)
     .output(ListPostsOutputSchema)
     .query(({ ctx, input }) => {
-      return executeService(ListPostsService, ctx, input);
+      return executeService(ListPostsService, ctx, {
+        ...input,
+        includeDeleted: false,
+      });
     }),
 });

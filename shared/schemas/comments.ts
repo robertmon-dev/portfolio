@@ -17,23 +17,37 @@ export interface Comment {
   updatedAt: string | Date | null;
 }
 
-export const CommentSchema: z.ZodType<Comment> = z.lazy(() =>
-  z.object({
-    id: zUuid,
-    visibility: RoleEnum,
+const BaseCommentSchema = z.object({
+  id: zUuid,
+  visibility: RoleEnum,
+  authorId: zUuid,
+  content: zString,
+  isReply: z.boolean(),
+  parentId: zUuid.nullable(),
+  reactions: zSafeArray(ReactionSchema),
+  deletedAt: zDateOrString.nullable(),
+  createdAt: zDateOrString,
+  updatedAt: zDateOrString.nullable(),
+});
 
-    authorId: zUuid,
-    content: zString,
-    isReply: z.boolean(),
+export const CreateCommentSchema = BaseCommentSchema.omit({
+  id: true,
+  deletedAt: true,
+  reactions: true,
+  createdAt: true,
+  updatedAt: true,
+});
 
-    parentId: zUuid.nullable(),
-    parent: CommentSchema.nullable(),
+export const UpdateCommentSchema = BaseCommentSchema.pick({
+  id: true,
+  content: true,
+});
 
-    replies: zSafeArray(CommentSchema),
-    reactions: zSafeArray(ReactionSchema),
+export const CommentSchema: z.ZodType<Comment> = BaseCommentSchema.extend({
+  parent: z.lazy(() => CommentSchema.nullable()),
+  replies: z.lazy(() => zSafeArray(CommentSchema)),
+});
 
-    deletedAt: zDateOrString.nullable(),
-    createdAt: zDateOrString,
-    updatedAt: zDateOrString.nullable(),
-  }),
-);
+export const DeleteCommentsSchema = z.object({
+  commentIds: zUuid,
+});

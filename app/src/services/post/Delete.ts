@@ -20,8 +20,9 @@ export class DeletePostService extends AuthorizedBaseService {
         });
       }
 
-      const updated = await tx.post.delete({
+      const updated = await tx.post.update({
         where: { id: postId },
+        data: { deletedAt: new Date() },
         ...postWithRelationsQuery,
       });
 
