@@ -10,6 +10,7 @@ export * from "./schemas/registry";
 export * from "./schemas/errors";
 export * from "./schemas/mail";
 export * from "./schemas/post";
+export * from "./schemas/comments";
 
 export * from "./schemas/generic";
 
@@ -23,5 +24,6 @@ export * from "./types/diagnostics";
 export * from "./types/permission";
 export * from "./types/mail";
 export * from "./types/post";
+export * from "./types/comments";
 
 export * from "./types/generic";

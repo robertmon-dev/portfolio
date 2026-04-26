@@ -7,6 +7,7 @@ import {
   GithubRepo,
   GithubCommit,
   Post,
+  Comment,
 } from "@prisma/client";
 import type { Logging } from "../core/logger/types";
 import type { Caching } from "../infrastructure/cache/types";
@@ -133,8 +134,37 @@ export abstract class BaseService {
 
     posts.forEach((post) => {
       if (!post) return;
-      if (post.id) keys.add(`posts:id:${post.id}`);
+      if (post.id) {
+        keys.add(`posts:id:${post.id}`);
+        keys.add(`comments:post:id:${post.id}`);
+      }
       if (post.slug) keys.add(`post:slug:${post.slug}`);
+    });
+
+    await this.multiDel(Array.from(keys));
+  }
+
+  protected async invalidateCommentsCache(
+    ...comments: (Partial<Comment> | null | undefined)[]
+  ) {
+    const keys = new Set([
+      "comments:list:*",
+      "comments:list:both:*",
+      "comments:list:post:both:*",
+      "comments:list:post:*",
+      "comments:list:parent:",
+      "comments:list:parent:both:*",
+    ]);
+
+    comments.forEach((comment) => {
+      if (!comment) return;
+      if (comment.id) {
+        keys.add(`comments:id:${comment.id}`);
+      }
+      if (comment.postId) {
+        keys.add(`comments:post:id:${comment.postId}`);
+        keys.add(`posts:id:${comment.postId}`);
+      }
     });
 
     await this.multiDel(Array.from(keys));

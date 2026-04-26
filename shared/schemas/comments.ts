@@ -17,10 +17,11 @@ export interface Comment {
   updatedAt: string | Date | null;
 }
 
-const BaseCommentSchema = z.object({
+export const BaseCommentSchema = z.object({
   id: zUuid,
   visibility: RoleEnum,
   authorId: zUuid,
+  postId: zUuid,
   content: zString,
   isReply: z.boolean(),
   parentId: zUuid.nullable(),
@@ -32,6 +33,7 @@ const BaseCommentSchema = z.object({
 
 export const CreateCommentSchema = BaseCommentSchema.omit({
   id: true,
+  authorId: true,
   deletedAt: true,
   reactions: true,
   createdAt: true,
@@ -50,4 +52,26 @@ export const CommentSchema: z.ZodType<Comment> = BaseCommentSchema.extend({
 
 export const DeleteCommentsSchema = z.object({
   commentIds: zUuid,
+});
+
+export const CreateReplySchema = BaseCommentSchema.extend({
+  parentId: zUuid,
+});
+
+export const ListCommentsInputSchema = z.object({
+  limit: z.number().min(1).max(50).default(5),
+  cursor: zString.optional(),
+});
+
+export const ListCommentsOutputSchema = z.object({
+  items: z.array(CommentSchema),
+  nextCursor: zString.optional(),
+});
+
+export const ListCommentsByPostSchema = ListCommentsInputSchema.extend({
+  postId: zUuid,
+});
+
+export const ListCommentsByParentSchema = ListCommentsInputSchema.extend({
+  parentId: zUuid,
 });

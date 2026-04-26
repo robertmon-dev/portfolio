@@ -1,22 +1,24 @@
 import { z } from "zod";
+import { CommentSchema, ListCommentsOutput } from "@portfolio/shared";
 import { BaseService } from "../service";
-import { PostSchema, ListPostsOutput } from "@portfolio/shared";
-import { postWithRelationsQuery } from "./queries";
-import type { ListPostsServiceInput, ListingPosts } from "./types";
+import type { ListCommentsServiceInput } from "./types";
+import { commentWithRelationsQuery } from "./queries";
 
-export class ListPostsService extends BaseService implements ListingPosts {
-  public async execute(input: ListPostsServiceInput): Promise<ListPostsOutput> {
+export class ListCommentsService extends BaseService {
+  public async execute(
+    input: ListCommentsServiceInput,
+  ): Promise<ListCommentsOutput> {
     const { limit, cursor, includeDeleted = false } = input;
     const prefix = includeDeleted ? "both" : "";
-    const cacheKey = `posts:list:${prefix}:${limit}:${cursor ?? "first"}`;
+    const cacheKey = `comments:list:${prefix}:${limit}:${cursor ?? "first"}`;
 
     return await this.cache.wrap(cacheKey, 3600, async () => {
-      const items = await this.db.post.findMany({
+      const items = await this.db.comment.findMany({
         where: { ...(includeDeleted ? {} : { deletedAt: null }) },
         take: limit + 1,
         cursor: cursor ? { id: cursor } : undefined,
         orderBy: { createdAt: "desc" },
-        ...postWithRelationsQuery,
+        ...commentWithRelationsQuery,
       });
 
       let nextCursor: string | undefined = undefined;
@@ -27,7 +29,7 @@ export class ListPostsService extends BaseService implements ListingPosts {
       }
 
       return {
-        items: z.array(PostSchema).parse(items),
+        items: z.array(CommentSchema).parse(items),
         nextCursor,
       };
     });

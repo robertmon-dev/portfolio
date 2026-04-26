@@ -12,7 +12,7 @@ import { GetPostService } from "../../services/post/Get";
 import { ListPostsService } from "../../services/post/List";
 
 export const postsRouter = router({
-  get: publicProcedure
+  getById: publicProcedure
     .meta({
       openapi: {
         method: "GET",

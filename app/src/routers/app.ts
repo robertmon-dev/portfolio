@@ -17,6 +17,8 @@ import { experiencePrivateRouter } from "./private/experience";
 import { experiencePublicRouter } from "./public/experience";
 import { postsPrivateRouter } from "./private/posts";
 import { postsRouter } from "./public/posts";
+import { commentsRouter } from "./public/comments";
+import { commentsPrivateRouter } from "./private/comments";
 
 export const appRouter = router({
   diagnostics: diagnosticsRouter,
@@ -31,6 +33,7 @@ export const appRouter = router({
   experience: experiencePublicRouter,
   users: usersRouter,
   posts: postsRouter,
+  comments: commentsRouter,
 
   admin: router({
     projects: projectPrivateRouter,
@@ -39,6 +42,7 @@ export const appRouter = router({
     users: usersPrivateRouter,
     experience: experiencePrivateRouter,
     posts: postsPrivateRouter,
+    comments: commentsPrivateRouter,
   }),
 });
 
