@@ -34,7 +34,8 @@ export const postsPrivateRouter = router({
         path: "/admin/posts",
         tags: ["Posts"],
         summary: "List posts",
-        description: "Retrieves a paginated list of posts.",
+        description:
+          "Retrieves a paginated list of posts (both deleted and not)",
         protect: false,
       },
     })
@@ -76,7 +77,7 @@ export const postsPrivateRouter = router({
       },
     })
     .input(UpdatePostSchema)
-    .output(PostSchema.nullable())
+    .output(PostSchema)
     .mutation(({ ctx, input }) => {
       return executeAuthorizedService(UpdatePostService, ctx, input);
     }),
