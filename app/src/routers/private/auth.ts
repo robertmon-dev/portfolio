@@ -57,6 +57,7 @@ export const authPrivateRouter = router({
         ctx.cache,
         ctx.logger,
         ctx.settings,
+        ctx,
       );
 
       await authService.logout(token);

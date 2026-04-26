@@ -25,6 +25,11 @@ export const AVAILABLE_RESOURCES = [
   "project",
   "techStack",
   "experience",
+  "comments",
+  "posts",
+  "tags",
+  "tagCategories",
+  "reactions",
 ] as const;
 
 export const ResourceEnum = z.enum(AVAILABLE_RESOURCES);

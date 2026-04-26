@@ -240,11 +240,10 @@ model Post {
 
   visibility Role @default(USER)
 
-
   viewCount   Int       @default(0)
 
-  userId    String
-  author      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  authorId    String
+  author      User             @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
   tags Tag[]
   reactions Reaction[]
@@ -255,7 +254,7 @@ model Post {
   createdAt DateTime @default(now())
   updatedAt        DateTime    @default(now())       @updatedAt
 
-  @@index([userId])
+  @@index([authorId])
   @@index([slug])
   @@index([createdAt(sort: Desc)])
   @@index([visibility, publishedAt])
@@ -302,8 +301,8 @@ model Comment {
   id        String   @id @default(uuid())
   visibility Role @default(USER)
 
-  userId    String
-  author      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  authorId    String
+  author      User             @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
   content String @db.Text
   isReply Boolean
@@ -324,7 +323,7 @@ model Comment {
 
   @@index([postId])
   @@index([parentId])
-  @@index([userId])
+  @@index([authorId])
   @@index([createdAt(sort: Desc)])
 }
 
@@ -335,8 +334,8 @@ model Reaction {
   postId    String?
   post      Post?        @relation(fields: [postId], references: [id], onDelete: Cascade)
 
-  userId    String
-  author      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  authorId    String
+  author      User             @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
   commentId String
   comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
@@ -347,5 +346,5 @@ model Reaction {
 
   @@index([commentId])
   @@index([postId])
-  @@index([userId])
+  @@index([authorId])
 }
