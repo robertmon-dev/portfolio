@@ -7,7 +7,8 @@ import type { ListPostsServiceInput } from "./types";
 export class ListPostsService extends BaseService {
   public async execute(input: ListPostsServiceInput): Promise<ListPostsOutput> {
     const { limit, cursor, includeDeleted = false } = input;
-    const cacheKey = `posts:list:${limit}:${cursor ?? "first"}`;
+    const prefix = includeDeleted ? "both" : "";
+    const cacheKey = `posts:list${prefix}:${limit}:${cursor ?? "first"}`;
 
     return await this.cache.wrap(cacheKey, 3600, async () => {
       return this.db.$transaction(async (tx) => {

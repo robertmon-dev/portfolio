@@ -129,7 +129,7 @@ export abstract class BaseService {
   protected async invalidatePostCache(
     ...posts: (Partial<Post> | null | undefined)[]
   ) {
-    const keys = new Set<string>(["posts:list:*"]);
+    const keys = new Set<string>(["posts:list:*", "posts:list:both:*"]);
 
     posts.forEach((post) => {
       if (!post) return;
