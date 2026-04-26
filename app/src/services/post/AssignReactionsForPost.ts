@@ -6,8 +6,12 @@ import {
   type Post,
 } from "@portfolio/shared";
 import { postWithRelationsQuery } from "./queries";
+import type { AssigningReactions } from "./types";
 
-export class AssignReactionsForPostService extends AuthorizedBaseService {
+export class AssignReactionsForPostService
+  extends AuthorizedBaseService
+  implements AssigningReactions
+{
   public async execute(input: AssignReactionsForPostInput): Promise<Post> {
     const { id: postId, reactionIds } = input;
 

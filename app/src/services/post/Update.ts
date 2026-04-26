@@ -1,9 +1,13 @@
 import { TRPCError } from "@trpc/server";
 import { AuthorizedBaseService } from "../service";
 import { type UpdatePostInput, type Post, PostSchema } from "@portfolio/shared";
+import type { UpdatingPosts } from "./types";
 import { postWithRelationsQuery } from "./queries";
 
-export class UpdatePostService extends AuthorizedBaseService {
+export class UpdatePostService
+  extends AuthorizedBaseService
+  implements UpdatingPosts
+{
   public async execute(input: UpdatePostInput): Promise<Post> {
     const { id: postId } = input;
 

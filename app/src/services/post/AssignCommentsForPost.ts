@@ -6,8 +6,12 @@ import {
   PostSchema,
 } from "@portfolio/shared";
 import { postWithRelationsQuery } from "./queries";
+import type { AssigningComments } from "./types";
 
-export class AssignCommentsForPostService extends AuthorizedBaseService {
+export class AssignCommentsForPostService
+  extends AuthorizedBaseService
+  implements AssigningComments
+{
   public async execute(input: AssignCommentsForPostInput): Promise<Post> {
     const { id: postId, commentIds } = input;
 

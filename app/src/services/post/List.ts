@@ -2,9 +2,9 @@ import { z } from "zod";
 import { BaseService } from "../service";
 import { PostSchema, ListPostsOutput } from "@portfolio/shared";
 import { postWithRelationsQuery } from "./queries";
-import type { ListPostsServiceInput } from "./types";
+import type { ListPostsServiceInput, ListingPosts } from "./types";
 
-export class ListPostsService extends BaseService {
+export class ListPostsService extends BaseService implements ListingPosts {
   public async execute(input: ListPostsServiceInput): Promise<ListPostsOutput> {
     const { limit, cursor, includeDeleted = false } = input;
     const prefix = includeDeleted ? "both" : "";

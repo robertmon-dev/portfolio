@@ -6,8 +6,12 @@ import {
   type Post,
 } from "@portfolio/shared";
 import { postWithRelationsQuery } from "./queries";
+import type { ChangingVisibility } from "./types";
 
-export class ChangePostVisilibityService extends AuthorizedBaseService {
+export class ChangePostVisilibityService
+  extends AuthorizedBaseService
+  implements ChangingVisibility
+{
   public async execute(input: ChangePublishionForPostInput): Promise<Post> {
     const { id: postId, publishedAt } = input;
 

@@ -1,8 +1,9 @@
 import { Post, PostSchema } from "@portfolio/shared";
 import { BaseService } from "../service";
 import { postWithRelationsQuery } from "./queries";
+import type { FetchingPosts } from "./types";
 
-export class GetPostService extends BaseService {
+export class GetPostService extends BaseService implements FetchingPosts {
   public async execute(postId: string): Promise<Post> {
     const cacheKey = `post:id:${postId}`;
 

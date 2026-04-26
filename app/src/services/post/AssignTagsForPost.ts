@@ -6,8 +6,12 @@ import {
   type Post,
 } from "@portfolio/shared";
 import { postWithRelationsQuery } from "./queries";
+import type { AssigningTags } from "./types";
 
-export class AssignTagsForPostService extends AuthorizedBaseService {
+export class AssignTagsForPostService
+  extends AuthorizedBaseService
+  implements AssigningTags
+{
   public async execute(input: AssignTagsForPostInput): Promise<Post> {
     const { id: postId, tagIds } = input;
 

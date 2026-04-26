@@ -2,8 +2,12 @@ import { TRPCError } from "@trpc/server";
 import { AuthorizedBaseService } from "../service";
 import { type Post, PostSchema, DeletePostInput } from "@portfolio/shared";
 import { postWithRelationsQuery } from "./queries";
+import type { DeletingPosts } from "./types";
 
-export class DeletePostService extends AuthorizedBaseService {
+export class DeletePostService
+  extends AuthorizedBaseService
+  implements DeletingPosts
+{
   public async execute(input: DeletePostInput): Promise<Post> {
     const { id: postId } = input;
 
