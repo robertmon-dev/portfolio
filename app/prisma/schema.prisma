@@ -337,12 +337,15 @@ model Reaction {
   authorId    String
   author      User             @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
-  commentId String
-  comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  commentId String?
+  comment Comment? @relation(fields: [commentId], references: [id], onDelete: Cascade)
 
   deletedAt DateTime?
   createdAt DateTime @default(now())
   updatedAt        DateTime    @default(now())       @updatedAt
+
+  @@unique([authorId, postId], name: "authorId_postId")
+  @@unique([authorId, commentId], name: "authorId_commentId")
 
   @@index([commentId])
   @@index([postId])
