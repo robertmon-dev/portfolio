@@ -11,9 +11,13 @@ export * from "./schemas/errors";
 export * from "./schemas/mail";
 export * from "./schemas/post";
 export * from "./schemas/comments";
+export * from "./schemas/reactions";
+export * from "./schemas/tags";
+export * from "./schemas/categories";
 
 export * from "./schemas/generic";
 
+export * from "./types/tags";
 export * from "./types/auth";
 export * from "./types/user";
 export * from "./types/github";
@@ -25,5 +29,7 @@ export * from "./types/permission";
 export * from "./types/mail";
 export * from "./types/post";
 export * from "./types/comments";
+export * from "./types/reactions";
+export * from "./types/categories";
 
 export * from "./types/generic";
