@@ -7,9 +7,12 @@ export class UpdateCommentService extends AuthorizedBaseService {
   public async execute(input: UpdateCommentInput): Promise<Comment> {
     const { id: commentId, content } = input;
 
+    const actor = this.ctx.user;
+    const isStaff = ["ADMIN", "MODERATOR"].includes(actor.role);
+
     return this.db.$transaction(async (tx) => {
       const persisted = await tx.post.findUnique({
-        where: { id: commentId },
+        where: { id: commentId, authorId: isStaff ? undefined : actor.id },
         select: { id: true },
       });
 
@@ -28,8 +31,10 @@ export class UpdateCommentService extends AuthorizedBaseService {
         ...commentWithRelationsQuery,
       });
 
-      await this.invalidatePostCache(updated.post);
-      await this.invalidateCommentsCache(updated);
+      await Promise.all([
+        this.invalidatePostCache(updated.post),
+        this.invalidateCommentsCache(updated),
+      ]);
 
       return CommentSchema.parse(updated);
     });

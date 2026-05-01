@@ -16,6 +16,7 @@ export class ListCommentsService extends BaseService {
       const items = await this.db.comment.findMany({
         where: { ...(includeDeleted ? {} : { deletedAt: null }) },
         take: limit + 1,
+        skip: cursor ? 1 : undefined,
         cursor: cursor ? { id: cursor } : undefined,
         orderBy: { createdAt: "desc" },
         ...commentWithRelationsQuery,
