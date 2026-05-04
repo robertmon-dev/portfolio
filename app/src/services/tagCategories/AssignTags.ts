@@ -1,0 +1,31 @@
+import {
+  type TagCategory,
+  type AssignTagsInput,
+  zSafeArray,
+  TagCategorySchema,
+} from "@portfolio/shared";
+import { BaseService } from "../service";
+import { tagCategoryWithRelationsQuery } from "./queries";
+
+export class AssignTagsService extends BaseService {
+  public async execute(input: AssignTagsInput): Promise<TagCategory[]> {
+    const assigned = await this.db.$transaction(async (tx) => {
+      const persisted = await tx.tagCategory.update({
+        where: { id: input.tagCategoryId },
+        data: {
+          tags: input.tags,
+        },
+        ...tagCategoryWithRelationsQuery,
+      });
+
+      return persisted;
+    });
+
+    await Promise.all([
+      this.invalidateCategoriesCache(assigned),
+      this.invalidateTagsCache(...assigned.tags),
+    ]);
+
+    return zSafeArray(TagCategorySchema).parse(assigned);
+  }
+}

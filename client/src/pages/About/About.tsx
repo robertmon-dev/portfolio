@@ -79,7 +79,7 @@ export const AboutPage = () => {
           transition={{ delay: 0.2 }}
         >
           <h2 className="about-page__subtitle">
-            {t("about.sections.commits", "Latest commits")}
+            {t("about.sections.commits.latest", "Latest commits")}
           </h2>
           <LatestCommits items={allCommits} />
           {hasNextPage && (
@@ -90,7 +90,7 @@ export const AboutPage = () => {
                 onClick={() => fetchNextPage()}
                 isLoading={isFetchingNextPage}
               >
-                {t("about.commits.loadMore", "Show more activity")}
+                {t("about.sections.commits.loadMore", "Show more activity")}
               </Button>
             </div>
           )}
