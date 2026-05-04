@@ -37,8 +37,10 @@ export class DeleteCommentsService extends AuthorizedBaseService {
         return comment.post;
       });
 
-      await this.invalidateCommentsCache(...deleted);
-      await this.invalidatePostCache(...posts);
+      await Promise.all([
+        this.invalidateCommentsCache(...deleted),
+        this.invalidatePostCache(...posts),
+      ]);
 
       return z.array(CommentSchema).parse(deleted);
     });

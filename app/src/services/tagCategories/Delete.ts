@@ -1,4 +1,4 @@
-import { TagCategory } from "@prisma/client";
+import type { TagCategory, Tag } from "@prisma/client";
 import { BaseService } from "../service";
 import { TRPCError } from "@trpc/server";
 import { tagCategoryWithFullRelationsQuery } from "./queries";
@@ -28,6 +28,16 @@ export class DeleteTagCategoriesService extends BaseService {
 
       return persisted;
     });
+
+    const tags: Tag[] = [];
+    removed.forEach((category) => {
+      tags.push(...category.tags);
+    });
+
+    await Promise.all([
+      this.invalidateTagsCache(...tags),
+      this.invalidateCategoriesCache(...removed),
+    ]);
 
     return removed;
   }

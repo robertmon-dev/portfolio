@@ -21,8 +21,10 @@ export class CreateCommentService extends AuthorizedBaseService {
       ...commentWithRelationsQuery,
     });
 
-    this.invalidateCommentsCache(created);
-    this.invalidatePostCache(created.post);
+    await Promise.all([
+      this.invalidateCommentsCache(created),
+      this.invalidatePostCache(created.post),
+    ]);
 
     return CommentSchema.parse(created);
   }
