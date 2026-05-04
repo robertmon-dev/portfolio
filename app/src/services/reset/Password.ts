@@ -24,7 +24,7 @@ export class PasswordResetService
 
     const user = await this.db.user.findUnique({ where: { email } });
 
-    if (!user) {
+    if (user === null) {
       this.logger.info(`Password reset requested for non-existent email`, {
         email,
       });
