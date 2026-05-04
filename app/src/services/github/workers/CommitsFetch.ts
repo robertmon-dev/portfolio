@@ -14,7 +14,7 @@ export class GithubCommitFetchWorker extends BaseService {
     logger: Logging,
     settings: Settings["config"],
   ) {
-    super(db, cache, logger, settings, null);
+    super(db, cache, logger, settings);
     this.octokit = new Octokit({
       auth: this.settings.GITHUB_TOKEN,
     });

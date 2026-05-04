@@ -17,13 +17,7 @@ export async function invokeAction<
   method: TMethod,
   input: TInput,
 ): Promise<Awaited<TReturn>> {
-  const service = new ServiceClass(
-    ctx.db,
-    ctx.cache,
-    ctx.logger,
-    ctx.settings,
-    ctx,
-  );
+  const service = new ServiceClass(ctx.db, ctx.cache, ctx.logger, ctx.settings);
 
   try {
     const action = service[method];
