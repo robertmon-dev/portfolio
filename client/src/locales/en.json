@@ -165,12 +165,6 @@
     "labels": {
       "email": "Email"
     },
-    "form": {
-      "name": "Your name",
-      "email": "Your email",
-      "subject": "Subject",
-      "message": "Your message..."
-    },
     "sections": {
       "getInTouch": "Get in touch"
     },
@@ -368,11 +362,7 @@
     "bio": "A software developer by profession and passion, an enthusiast of clean code and optimization. When I'm not hitting the keyboard, you'll probably find me at the gym trying to hit a new deadlift PR. I believe that in both code and training, the key to success is consistency and solid foundations. (And yes, I use Arch btw)",
     "sections": {
       "techStack": "Tech Stack",
-      "experience": "Professional Experience",
-      "commits": {
-        "latest": "Latest commits",
-        "loadMore": "Load more"
-      }
+      "experience": "Professional Experience"
     },
     "experience": {
       "present": "Present",
