@@ -8,11 +8,14 @@ import {
   GithubCommit,
   Post,
   Comment,
+  Reaction,
+  TagCategory,
 } from "@prisma/client";
 import type { Logging } from "../core/logger/types";
 import type { Caching } from "../infrastructure/cache/types";
 import type { Settings } from "../core/settings/settings";
 import type { AuthorizedContext, Context } from "../trpc/context/types";
+import { TagWithRelations } from "./tag/types";
 
 export abstract class BaseService {
   constructor(
@@ -164,6 +167,77 @@ export abstract class BaseService {
       if (comment.postId) {
         keys.add(`comments:post:id:${comment.postId}`);
         keys.add(`posts:id:${comment.postId}`);
+      }
+    });
+
+    await this.multiDel(Array.from(keys));
+  }
+
+  protected async invalidateReactionsCache(
+    ...reactions: (Partial<Reaction> | null | undefined)[]
+  ): Promise<void> {
+    const keys = new Set([
+      "reactions:list:*",
+      "reactions:list:both:*",
+      "reactions:list:comment:*",
+      "reactions:list:post:*",
+    ]);
+
+    reactions.forEach((reaction) => {
+      if (!reaction) return;
+
+      if (reaction.id) {
+        keys.add(`reactions:id:${reaction.id}`);
+      }
+
+      if (reaction.postId) {
+        keys.add(`posts:id:${reaction.postId}`);
+      }
+
+      if (reaction.commentId) {
+        keys.add(`comments:id:${reaction.commentId}`);
+      }
+    });
+
+    await this.multiDel(Array.from(keys));
+  }
+
+  protected async invalidateTagsCache(
+    ...tags: Partial<TagWithRelations | null | undefined>[]
+  ): Promise<void> {
+    const keys = new Set(["tags:list:*", "tags:list:category:*"]);
+
+    tags.forEach((tag) => {
+      if (!tag) return;
+
+      if (tag.id) {
+        keys.add(`tags:id:${tag.id}`);
+      }
+
+      if (tag.categoryId) {
+        keys.add(`category:id:${tag.categoryId}`);
+      }
+
+      if (tag.posts) {
+        tag.posts.forEach((post) => {
+          keys.add(`posts:id:${post.id}`);
+        });
+      }
+    });
+
+    await this.multiDel(Array.from(keys));
+  }
+
+  protected async invalidateCategoriesCache(
+    ...categories: Partial<TagCategory | null | undefined>[]
+  ): Promise<void> {
+    const keys = new Set(["categories:list:*"]);
+
+    categories.forEach((category) => {
+      if (!category) return;
+
+      if (category.id) {
+        keys.add(`category:id:${category.id}`);
       }
     });
 
