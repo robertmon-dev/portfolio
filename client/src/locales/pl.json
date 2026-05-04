@@ -390,8 +390,12 @@
     "title": "Software developer",
     "bio": "Programista z zawodu i z zamiłowania, entuzjasta czystego kodu i optymalizacji. Kiedy nie walę w klawiaturę prawdopodobnie znajdziesz mnie na siłowni przy próbie bicia kolejnego PR-u w martwym ciągu. Wierzę, że zarówno w kodzie, jak i w treningu, kluczem do sukcesu jest konsekwencja i solidne fundamenty.",
     "sections": {
-      "techStack": "Tech Stack",
-      "experience": "Doświadczenie zawodowe"
+      "techStack": "Mój Stack",
+      "experience": "Doświadczenie zawodowe",
+      "commits": {
+        "latest": "Ostatnie commity",
+        "loadMore": "Wczytaj kolejne"
+      }
     },
     "experience": {
       "present": "Obecnie",

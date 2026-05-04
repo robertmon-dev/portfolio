@@ -19,6 +19,10 @@ import { postsPrivateRouter } from "./private/posts";
 import { postsRouter } from "./public/posts";
 import { commentsRouter } from "./public/comments";
 import { commentsPrivateRouter } from "./private/comments";
+import { reactionsRouter } from "./public/reaction";
+import { reactionsPrivateRouter } from "./private/reaction";
+import { tagsRouter } from "./public/tag";
+import { tagsPrivateRouter } from "./private/tag";
 
 export const appRouter = router({
   diagnostics: diagnosticsRouter,
@@ -34,6 +38,8 @@ export const appRouter = router({
   users: usersRouter,
   posts: postsRouter,
   comments: commentsRouter,
+  reactions: reactionsRouter,
+  tags: tagsRouter,
 
   admin: router({
     projects: projectPrivateRouter,
@@ -43,6 +49,8 @@ export const appRouter = router({
     experience: experiencePrivateRouter,
     posts: postsPrivateRouter,
     comments: commentsPrivateRouter,
+    reactions: reactionsPrivateRouter,
+    tags: tagsPrivateRouter,
   }),
 });
 
