@@ -14,6 +14,10 @@ describe("DeleteCommitService", () => {
     ctx.mocks.prisma.githubCommit.deleteMany.mockResolvedValue({
       count: commits.length,
     });
+    ctx.mocks.prisma.$transaction.mockImplementation(
+      (callback: (tx: unknown) => Promise<unknown>) =>
+        callback(ctx.mocks.prisma),
+    );
 
     await ctx.service.execute(commitsIds);
 
