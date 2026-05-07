@@ -16,9 +16,10 @@ export const ExperienceTimeline = ({ items }: ExperienceTimelineProps) => {
     content: (
       <Card
         variant="levitating-transparent"
-        interactive
         padding="lg"
         className="experience-card"
+        hover={false}
+        interactive={false}
       >
         <div className="experience-card__header">
           <div className="experience-card__title-group">
