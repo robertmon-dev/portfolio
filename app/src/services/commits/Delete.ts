@@ -5,18 +5,22 @@ export class DeleteCommitService extends BaseService implements CommitDeleting {
   public async execute(ids: string[]): Promise<void> {
     this.logger.warn(`Atomic hard-delete for GitHub repos: ${ids}`);
 
-    const commitsToDelete = await this.db.githubCommit.findMany({
-      where: { id: { in: ids } },
-      select: { id: true, repoId: true },
+    const deleted = await this.db.$transaction(async (tx) => {
+      const commitsToDelete = await this.db.githubCommit.findMany({
+        where: { id: { in: ids } },
+        select: { id: true, repoId: true },
+      });
+
+      await this.db.githubCommit.deleteMany({
+        where: {
+          id: { in: ids },
+        },
+      });
+
+      return commitsToDelete;
     });
 
-    await this.db.githubCommit.deleteMany({
-      where: {
-        id: { in: ids },
-      },
-    });
-
-    await this.invalidateCommitsCache(...commitsToDelete);
+    await this.invalidateCommitsCache(...deleted);
 
     this.logger.info(`GitHub commit delelted and associated cache cleared`);
   }
