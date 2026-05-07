@@ -1,15 +1,16 @@
 import { AuthorizedBaseService } from "../service";
 import { TRPCError } from "@trpc/server";
-import { reactionQueryWithoutRelations } from "./queries";
+import { reactionQueryWithRelations } from "./queries";
 import { type Reaction } from "@portfolio/shared";
 import type { DeletingReactions } from "./types";
+import { Comment, Post } from "@prisma/client";
 
 export class DeleteReactionsService
   extends AuthorizedBaseService
   implements DeletingReactions
 {
   public async execute(ids: string[]): Promise<Reaction[]> {
-    return await this.db.$transaction(async (tx) => {
+    const removed = await this.db.$transaction(async (tx) => {
       const actor = this.ctx.user;
       const isStaff = ["ADMIN", "MODERATOR"].includes(actor.role);
 
@@ -35,10 +36,21 @@ export class DeleteReactionsService
         data: {
           deletedAt: new Date(),
         },
-        ...reactionQueryWithoutRelations,
+        ...reactionQueryWithRelations,
       });
 
       return removed;
     });
+
+    const posts = removed.map((r) => r.post).filter(Boolean) as Post[];
+    const comments = removed.map((r) => r.comment).filter(Boolean) as Comment[];
+
+    await Promise.all([
+      this.invalidatePostCache(...posts),
+      this.invalidateCommentsCache(...comments),
+      this.invalidateReactionsCache(...removed),
+    ]);
+
+    return removed;
   }
 }
