@@ -76,12 +76,6 @@ export const createLoggerMock = (): Logging => ({
   error: vi.fn(),
 });
 
-export const mockTransaction = (prisma: MockedPrismaClient) => {
-  prisma.$transaction.mockImplementation(
-    (callback: (tx: unknown) => Promise<unknown>) => callback(prisma),
-  );
-};
-
 export const createSettingsMock = (
   overrides: Partial<EnvConfig> = {},
 ): EnvConfig => {
