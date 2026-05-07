@@ -7,16 +7,6 @@
   align-items: center;
   border: 2px solid transparent;
 
-  &:hover {
-    border-color: var(--local-color) !important;
-
-    box-shadow:
-      0 0 20px color.change($primary, $alpha: 0.1),
-      0 0 30px var(--local-color-low-alpha) !important;
-
-    transform: translateY(-4px);
-  }
-
   &__content {
     display: flex;
     justify-content: space-between;

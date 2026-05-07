@@ -21,7 +21,6 @@ export const getCardClasses = ({
       `padding-${padding}`,
       width !== "auto" && `width-${width}`,
       interactive && "interactive",
-      variant === "levitating" && "levitating",
       hover && "hover",
     ],
     className,

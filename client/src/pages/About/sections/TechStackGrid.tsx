@@ -13,11 +13,11 @@ export const TechStackGrid = ({ items, isLoading }: TechStackGridProps) => {
       isLoading={isLoading}
       columns={{ default: 2, md: 3, lg: 4 }}
       gap="1.5rem"
+      hoverable={false}
       renderItem={(tech) => (
         <Card
           variant="transparent"
           hover={false}
-          interactive={false}
           padding="md"
           style={
             {

@@ -1,7 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { getGridStyles } from "./utils";
+import { bem } from "@/components/utility/bem";
 import type { EntityGridProps } from "./types";
 import "./EntityGrid.scss";
+import { getGridStyles } from "./utils";
 
 export const EntityGrid = <T extends { id: string | number }>({
   data,
@@ -11,8 +12,14 @@ export const EntityGrid = <T extends { id: string | number }>({
   isLoading,
   loadingItemsCount = 6,
   className = "",
+  hoverable = true,
 }: EntityGridProps<T>) => {
   const gridStyles = getGridStyles(columns, gap);
+  const containerClasses = bem(
+    "entity-grid",
+    [hoverable && "hoverable"],
+    className,
+  );
 
   return (
     <div
@@ -20,7 +27,7 @@ export const EntityGrid = <T extends { id: string | number }>({
       style={gridStyles}
       aria-busy={isLoading}
     >
-      <div className="entity-grid">
+      <div className={containerClasses}>
         <AnimatePresence mode="popLayout">
           {isLoading
             ? Array.from({ length: loadingItemsCount }).map((_, idx) => (

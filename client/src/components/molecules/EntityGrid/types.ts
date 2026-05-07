@@ -14,6 +14,7 @@ export interface EntityGridProps<T> {
   isLoading?: boolean;
   loadingItemsCount?: number;
   className?: string;
+  hoverable?: boolean;
 }
 
 export interface GridCSSVariables extends CSSProperties {
