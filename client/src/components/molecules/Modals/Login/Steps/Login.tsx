@@ -34,7 +34,7 @@ export const LoginForm = ({ form: modalForm, isLoading }: LoginFormProps) => {
           {...register("email")}
           label={t("auth.login.fields.email.label", "Email Address")}
           placeholder="email@example.com"
-          error={errors.email?.message}
+          error={errors.email?.message ? t(errors.email?.message) : undefined}
           leftIcon={<Mail size={18} />}
           fullWidth
           disabled={isLoading}
@@ -45,7 +45,9 @@ export const LoginForm = ({ form: modalForm, isLoading }: LoginFormProps) => {
           type="password"
           label={t("auth.login.fields.password.label", "Password")}
           placeholder="••••••••"
-          error={errors.password?.message}
+          error={
+            errors.password?.message ? t(errors.password.message) : undefined
+          }
           leftIcon={<Lock size={18} />}
           fullWidth
           disabled={isLoading}

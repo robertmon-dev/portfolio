@@ -480,5 +480,11 @@
       "title": "Błąd",
       "description": "Wystąpił nieoczekiwany problem."
     }
+  },
+  "validation": {
+    "email": "Nieprawidłowy adres email",
+    "passwordTooShort": "Hasło musi mieć co najmniej 8 znaków",
+    "required": "To pole jest wymagane",
+    "invalidHexColor": "Popraw se kolora"
   }
 }

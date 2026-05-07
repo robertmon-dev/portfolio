@@ -456,5 +456,11 @@
       "title": "Error",
       "description": "An unexpected problem occurred."
     }
+  },
+  "validation": {
+    "email": "Invalid email address",
+    "passwordTooShort": "Password must be at least 8 characters long",
+    "required": "This field is required",
+    "invalidHexColor": "Adjust color formatting for hex"
   }
 }

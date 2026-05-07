@@ -48,7 +48,7 @@ export const ForgotPasswordForm = ({
           })}
           label={t("auth.login.fields.email.label", "Email Address")}
           type="email"
-          placeholder="your@email.com"
+          placeholder={t("auth.login.fields.email.label", "Email Address")}
           error={errors.email?.message}
           leftIcon={<Mail size={18} />}
           fullWidth

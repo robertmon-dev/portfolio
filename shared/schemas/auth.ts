@@ -31,12 +31,12 @@ export const RequestPasswordResetSchema = z.object({
 
 export const ResetPasswordSchema = z
   .object({
-    token: zString.min(1, "Token is required"),
+    token: zString.min(1, "auth.errors.tokenRequired"),
     password: zPassword,
     confirmPassword: zString,
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
+    message: "auth.errors.passwordsMismatch",
     path: ["confirmPassword"],
   });
 
