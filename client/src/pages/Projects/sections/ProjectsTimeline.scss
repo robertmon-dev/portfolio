@@ -10,7 +10,7 @@
   overflow: hidden;
 
   &--featured {
-    border-color: color.change($tn-yellow, $alpha: 0.4);
+    border-color: color.change($tn-yellow, $alpha: 0.3);
   }
 
   &__image-wrapper {
