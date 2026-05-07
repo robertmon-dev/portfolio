@@ -2,9 +2,12 @@ import { z } from "zod";
 import { BaseService } from "../service";
 import { commentWithRelationsQuery } from "./queries";
 import { CommentSchema, ListCommentsOutput } from "@portfolio/shared";
-import { ListCommentsByPostServiceInput } from "./types";
+import { ListCommentsByPostServiceInput, ListingCommentsByPost } from "./types";
 
-export class ListCommentsByPostService extends BaseService {
+export class ListCommentsByPostService
+  extends BaseService
+  implements ListingCommentsByPost
+{
   public async execute(
     input: ListCommentsByPostServiceInput,
   ): Promise<ListCommentsOutput> {

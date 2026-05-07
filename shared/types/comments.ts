@@ -1,7 +1,6 @@
 import { z } from "zod";
 import * as c from "../schemas/comments";
 
-export type BaseComment = z.infer<typeof c.BaseCommentSchema>;
 export type CreateCommentInput = z.infer<typeof c.CreateCommentSchema>;
 export type UpdateCommentInput = z.infer<typeof c.UpdateCommentSchema>;
 export type CommentWithReplies = z.infer<typeof c.CommentSchema>;

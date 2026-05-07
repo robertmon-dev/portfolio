@@ -3,14 +3,15 @@ import { zUuid, zString, zSafeArray, zDateOrString } from "./generic";
 import { RoleEnum } from "./permission";
 import { ReactionSchema } from "./reactions";
 
-export interface Comment {
+export interface Comment extends BaseComment {
   id: string;
   visibility: z.infer<typeof RoleEnum>;
   authorId: string;
   content: string;
   isReply: boolean;
   parentId: string | null;
-  replies: Comment[];
+  parent?: BaseComment | null;
+  replies: BaseComment[];
   reactions: z.infer<typeof ReactionSchema>[];
   deletedAt: string | Date | null;
   createdAt: string | Date;
@@ -31,6 +32,8 @@ export const BaseCommentSchema = z.object({
   updatedAt: zDateOrString.nullable(),
 });
 
+export type BaseComment = z.infer<typeof BaseCommentSchema>;
+
 export const CreateCommentSchema = BaseCommentSchema.omit({
   id: true,
   authorId: true,
@@ -46,8 +49,9 @@ export const UpdateCommentSchema = BaseCommentSchema.pick({
 });
 
 export const CommentSchema: z.ZodType<Comment> = BaseCommentSchema.extend({
-  parent: z.lazy(() => CommentSchema.nullable()),
-  replies: z.lazy(() => zSafeArray(CommentSchema)),
+  reactions: zSafeArray(ReactionSchema),
+  replies: z.array(BaseCommentSchema),
+  parent: BaseCommentSchema.nullable().optional(),
 });
 
 export const DeleteCommentsSchema = z.object({

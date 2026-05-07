@@ -1,10 +1,18 @@
 import { AuthorizedBaseService } from "../service";
-import { Comment, CommentSchema, UpdateCommentInput } from "@portfolio/shared";
+import {
+  CommentSchema,
+  CommentWithReplies,
+  UpdateCommentInput,
+} from "@portfolio/shared";
 import { commentWithRelationsQuery } from "./queries";
 import { TRPCError } from "@trpc/server";
+import { UpdatingComments } from "./types";
 
-export class UpdateCommentService extends AuthorizedBaseService {
-  public async execute(input: UpdateCommentInput): Promise<Comment> {
+export class UpdateCommentService
+  extends AuthorizedBaseService
+  implements UpdatingComments
+{
+  public async execute(input: UpdateCommentInput): Promise<CommentWithReplies> {
     const { id: commentId, content } = input;
 
     const actor = this.ctx.user;

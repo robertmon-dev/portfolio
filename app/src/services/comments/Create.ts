@@ -5,8 +5,12 @@ import {
   type CreateCommentInput,
 } from "@portfolio/shared";
 import { commentWithRelationsQuery } from "./queries";
+import { CreatingComments } from "./types";
 
-export class CreateCommentService extends AuthorizedBaseService {
+export class CreateCommentService
+  extends AuthorizedBaseService
+  implements CreatingComments
+{
   public async execute(input: CreateCommentInput): Promise<CommentWithReplies> {
     const authorId = this.ctx.user.id;
     const { parentId, postId, ...rest } = input;

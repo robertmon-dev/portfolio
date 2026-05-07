@@ -7,8 +7,12 @@ import {
 import { AuthorizedBaseService } from "../service";
 import { TRPCError } from "@trpc/server";
 import { commentWithRelationsQuery } from "./queries";
+import { DeletingComments } from "./types";
 
-export class DeleteCommentsService extends AuthorizedBaseService {
+export class DeleteCommentsService
+  extends AuthorizedBaseService
+  implements DeletingComments
+{
   public async execute(
     input: DeleteCommentsInput,
   ): Promise<CommentWithReplies[]> {
