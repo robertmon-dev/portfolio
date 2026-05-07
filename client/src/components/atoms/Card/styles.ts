@@ -3,7 +3,7 @@ import { bem } from "../../utility/bem";
 
 type StyleProps = Pick<
   CardProps,
-  "variant" | "padding" | "interactive" | "className" | "width"
+  "variant" | "padding" | "interactive" | "className" | "width" | "hover"
 >;
 
 export const getCardClasses = ({
@@ -12,6 +12,7 @@ export const getCardClasses = ({
   width = "auto",
   interactive,
   className,
+  hover,
 }: StyleProps): string => {
   return bem(
     "card",
@@ -21,6 +22,7 @@ export const getCardClasses = ({
       width !== "auto" && `width-${width}`,
       interactive && "interactive",
       variant === "levitating" && "levitating",
+      hover && "hover",
     ],
     className,
   );

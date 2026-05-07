@@ -16,7 +16,8 @@ export const TechStackGrid = ({ items, isLoading }: TechStackGridProps) => {
       renderItem={(tech) => (
         <Card
           variant="transparent"
-          interactive
+          hover={false}
+          interactive={false}
           padding="md"
           style={
             {

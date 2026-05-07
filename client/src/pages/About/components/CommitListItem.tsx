@@ -33,8 +33,9 @@ export const CommitListItem = memo(
         transition={{ delay: (index % 5) * 0.1, duration: 0.4 }}
       >
         <Card
-          variant="levitating-transparent"
+          variant="transparent"
           padding="md"
+          hover={true}
           interactive={!!commit.url}
           className="latest-commits__item"
         >
