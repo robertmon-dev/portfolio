@@ -31,7 +31,7 @@ export const ContactPage = () => {
           id: platform,
           platform: platform,
           url: url,
-          displayValue: (url as string).replace(/^https?:\/\//, ""),
+          displayValue: url.replace(/^https?:\/\//, ""),
         });
       });
     }
