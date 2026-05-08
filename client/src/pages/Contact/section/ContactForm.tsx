@@ -54,28 +54,44 @@ export const ContactForm = () => {
                 <Input
                   {...register("name")}
                   placeholder={t("contact.form.name", "Your name")}
-                  error={errors.name?.message}
+                  error={
+                    errors.subject?.message
+                      ? t(errors.subject?.message)
+                      : undefined
+                  }
                   fullWidth
                 />
 
                 <Input
                   {...register("email")}
                   placeholder={t("contact.form.email", "Your email")}
-                  error={errors.email?.message}
+                  error={
+                    errors.subject?.message
+                      ? t(errors.subject?.message)
+                      : undefined
+                  }
                   fullWidth
                 />
 
                 <Input
                   {...register("subject")}
                   placeholder={t("contact.form.subject", "Subject")}
-                  error={errors.subject?.message}
+                  error={
+                    errors.subject?.message
+                      ? t(errors.subject?.message)
+                      : undefined
+                  }
                   fullWidth
                 />
 
                 <TextArea
                   {...register("message")}
                   placeholder={t("contact.form.message", "Your message...")}
-                  error={errors.message?.message}
+                  error={
+                    errors.subject?.message
+                      ? t(errors.subject?.message)
+                      : undefined
+                  }
                   fullWidth
                   rows={10}
                 />
