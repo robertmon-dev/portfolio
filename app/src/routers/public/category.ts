@@ -6,10 +6,7 @@ import {
 import { router } from "../../trpc/init";
 import { publicProcedure } from "../../trpc/procedures/public";
 import { zUuid, TagCategorySchema } from "@portfolio/shared";
-import {
-  executeAuthorizedService,
-  executeService,
-} from "src/trpc/executers/base";
+import { executeService } from "src/trpc/executers/base";
 import { GetTagCategoriesService } from "src/services/tagCategories/Get";
 import { ListTagCategoriesService } from "src/services/tagCategories/List";
 

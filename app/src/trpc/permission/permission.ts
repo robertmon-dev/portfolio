@@ -35,6 +35,20 @@ export class Permission {
     return this.permissionsMap;
   }
 
+  public addEndpoint(source: Endpoint): Permission {
+    this.permissionsMap.set(
+      source.name,
+      new Set(source.flags.map((f) => f.toUpperCase() as PermissionFlag)),
+    );
+
+    return this;
+  }
+
+  public removeEndpoint(target: Endpoint): Permission {
+    this.permissionsMap.delete(target.name);
+    return this;
+  }
+
   public can(endpointName: string, required: Flag): boolean {
     if (this.role === Role.ADMIN) {
       this.logger.debug(`Access granted: User is global Admin`, {
