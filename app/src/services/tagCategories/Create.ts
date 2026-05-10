@@ -5,7 +5,7 @@ import { tagCategoryWithRelationsQuery } from "./queries";
 
 export class CreateTagCategoryService extends BaseService {
   public async execute(input: CreateTagCategoryInput): Promise<TagCategory> {
-    const created = this.db.$transaction(async (tx) => {
+    return await this.db.$transaction(async (tx) => {
       const persisted = await tx.tagCategory.findUnique({
         where: { name: input.name },
       });
@@ -30,7 +30,5 @@ export class CreateTagCategoryService extends BaseService {
 
       return created;
     });
-
-    return created;
   }
 }
