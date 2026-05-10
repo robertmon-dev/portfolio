@@ -24,7 +24,7 @@ import { reactionsPrivateRouter } from "./private/reaction";
 import { tagsRouter } from "./public/tag";
 import { tagsPrivateRouter } from "./private/tag";
 import { categoryRouter } from "./public/category";
-import { privateCategoryRouter } from "./private/category";
+import { categoriesPrivateRouter } from "./private/categories";
 
 export const appRouter = router({
   diagnostics: diagnosticsRouter,
@@ -54,7 +54,7 @@ export const appRouter = router({
     comments: commentsPrivateRouter,
     reactions: reactionsPrivateRouter,
     tags: tagsPrivateRouter,
-    categories: privateCategoryRouter,
+    categories: categoriesPrivateRouter,
   }),
 });
 
