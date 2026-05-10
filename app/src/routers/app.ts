@@ -23,9 +23,11 @@ import { reactionsRouter } from "./public/reaction";
 import { reactionsPrivateRouter } from "./private/reaction";
 import { tagsRouter } from "./public/tag";
 import { tagsPrivateRouter } from "./private/tag";
+import { categoryRouter } from "./public/router";
 
 export const appRouter = router({
   diagnostics: diagnosticsRouter,
+  categories: categoryRouter,
   auth: authRouter,
   projects: projectsRouter,
   githubCommit: githubCommitPublicRouter,
