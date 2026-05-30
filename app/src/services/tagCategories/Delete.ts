@@ -1,5 +1,6 @@
-import type { TagCategory, Tag } from "@prisma/client";
 import { BaseService } from "../service";
+import type { TagCategory } from "@portfolio/shared";
+import type { Tag } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 import { tagCategoryWithFullRelationsQuery } from "./queries";
 

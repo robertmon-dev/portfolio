@@ -54,6 +54,7 @@ export const categoriesPrivateRouter = router({
       },
     })
     .input(z.object({ ids: zSafeArray(zUuid) }))
+    .output(zSafeArray(TagCategorySchema))
     .mutation(async ({ ctx, input }) => {
       return executeAuthorizedService(
         DeleteTagCategoriesService,
