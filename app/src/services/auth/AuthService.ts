@@ -16,6 +16,7 @@ import { Authenticating } from "./types";
 import { MAIL_ACTIONS } from "../mail/types";
 import { CodeType } from "@prisma/client";
 import { userAuthQuery } from "./queries";
+import { randomInt } from "node:crypto";
 
 export class AuthService extends BaseService implements Authenticating {
   private mailQueue = MailQueueService.getInstance();
@@ -118,7 +119,7 @@ export class AuthService extends BaseService implements Authenticating {
     user: User,
     locale: Locale,
   ): Promise<LoginResponse> {
-    const code = Math.floor(100000 + Math.random() * 900000).toString();
+    const code = randomInt(100000, 999999).toString();
     const expiresAt = new Date(Date.now() + 5 * 60 * 1000);
 
     await this.db.$transaction([
