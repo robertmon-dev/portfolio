@@ -1,5 +1,6 @@
 import { BulkJobOptions, Job } from "bullmq";
 import type { User } from "@prisma/client";
+import type { Locale } from "../../infrastructure/mailer/types";
 
 export const MAIL_ACTIONS = {
   WELCOME: "WELCOME_EMAIL",
@@ -8,6 +9,7 @@ export const MAIL_ACTIONS = {
   CONTACT_CONFIRMATION: "CONTACT_FORM_CONFIRMATION",
   TWO_FACTOR_CODE: "TWO_FACTOR_CODE",
   CONTACT_FORM_ADMIN_ALERT: "CONTACT_FORM_ADMIN_ALERT",
+  LOCALE: "LOCALE",
 } as const;
 
 export type MailActionName = (typeof MAIL_ACTIONS)[keyof typeof MAIL_ACTIONS];
@@ -15,17 +17,20 @@ export type MailActionName = (typeof MAIL_ACTIONS)[keyof typeof MAIL_ACTIONS];
 interface TwoFactorEmailData {
   user: User;
   code: string;
+  locale: Locale;
 }
 
 interface WelcomeEmailData {
   user: User;
   verificationUrl: string;
+  locale: Locale;
 }
 
 interface PasswordResetData {
   user: User;
   resetToken: string;
   expiryMinutes: number;
+  locale: Locale;
 }
 
 interface MarketingEmailData {
@@ -34,6 +39,7 @@ interface MarketingEmailData {
   offerTitle: string;
   discountCode?: string;
   ctaUrl: string;
+  locale: Locale;
 }
 
 interface ContactFormConfirmationData {
@@ -42,6 +48,7 @@ interface ContactFormConfirmationData {
   subject: string;
   messageSnippet: string;
   ticketId: string;
+  locale: Locale;
 }
 
 interface ContactAdminAlertData {
@@ -50,6 +57,7 @@ interface ContactAdminAlertData {
   subject: string;
   fullMessage: string;
   adminEmail: string;
+  locale: Locale;
 }
 
 export interface MailActionMap {

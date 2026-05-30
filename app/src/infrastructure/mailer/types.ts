@@ -1,5 +1,7 @@
 import type { SentMessageInfo } from "nodemailer";
 
+export type Locale = "pl" | "en";
+
 export type MailValue =
   | string
   | number
@@ -22,6 +24,25 @@ export interface AdminContactAlertProps {
   subject: string;
   message: string;
   ip: string;
+  locale: Locale;
+}
+
+export interface VerificationAlertProps {
+  code: string;
+  locale: Locale;
+}
+
+export interface ResetAlertProps {
+  name: string;
+  code: string;
+  expiration: number;
+  locale: Locale;
+}
+
+export interface WelcomeEmailProps {
+  name: string;
+  url: string;
+  locale: Locale;
 }
 
 export interface Mailing {
@@ -29,18 +50,25 @@ export interface Mailing {
     to: string,
     name: string | null,
     url: string,
+    locale: Locale,
   ): Promise<SentMessageInfo>;
   sendResetPassword(
     to: string,
     name: string | null,
     code: string,
     expiration: number,
+    locale: Locale,
   ): Promise<SentMessageInfo>;
-  send2FACode(to: string, code: string): Promise<SentMessageInfo>;
+  send2FACode(
+    to: string,
+    code: string,
+    locale: Locale,
+  ): Promise<SentMessageInfo>;
   sendContactConfirmation(
     to: string,
     name: string | null,
     message: string,
+    locale: Locale,
   ): Promise<SentMessageInfo>;
   sendAdminContactAlert(
     to: string,
@@ -50,6 +78,7 @@ export interface Mailing {
       subject: string;
       message: string;
       ip: string;
+      locale: Locale;
     },
   ): Promise<SentMessageInfo>;
 }

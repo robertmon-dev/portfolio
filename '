@@ -1,5 +1,3 @@
-import type { Locale } from "../../types";
-
 export interface LayoutProps {
   children: React.ReactNode;
   previewText: string;

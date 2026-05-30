@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { trpc } from "../lib/trpc/client";
-import type { LoginInput, VerifyTwoFactorInput } from "@portfolio/shared";
+import { type LoginInput, type VerifyTwoFactorInput } from "@portfolio/shared";
 
 export const useAuth = () => {
   const navigate = useNavigate();

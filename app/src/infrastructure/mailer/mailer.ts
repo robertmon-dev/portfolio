@@ -6,7 +6,7 @@ import { PrismaClient } from "@prisma/client";
 import type { Logging } from "../../core/logger/types";
 import type { Caching } from "../../infrastructure/cache/types";
 import type { Settings } from "../../core/settings/settings";
-import type { Mailing } from "./types";
+import type { Mailing, Locale } from "./types";
 import { WelcomeEmail } from "../../infrastructure/mailer/templates/Welcome";
 import { ResetPasswordEmail } from "../../infrastructure/mailer/templates/ResetPassword";
 import { TwoFactorEmail } from "../../infrastructure/mailer/templates/2FA";
@@ -22,8 +22,7 @@ export class MailSenderService extends BaseService implements Mailing {
     logger: Logging,
     settings: Settings["config"],
   ) {
-    super(db, cache, logger, settings);
-
+    super(db, cache, logger, settings, null);
     this.transporter = nodemailer.createTransport({
       host: this.settings.MAIL_HOST,
       port: this.settings.MAIL_PORT,
@@ -35,11 +34,17 @@ export class MailSenderService extends BaseService implements Mailing {
     });
   }
 
-  public async sendWelcomeEmail(to: string, name: string | null, url: string) {
+  public async sendWelcomeEmail(
+    to: string,
+    name: string | null,
+    url: string,
+    locale: Locale,
+  ) {
     const html = await render(
       React.createElement(WelcomeEmail, {
         name: name ?? "User",
         url,
+        locale,
       }),
     );
     return this.send(to, "Welcome aboard! 🚀", html);
@@ -50,19 +55,23 @@ export class MailSenderService extends BaseService implements Mailing {
     name: string | null,
     code: string,
     expiration: number,
+    locale: Locale = "en",
   ) {
     const html = await render(
       React.createElement(ResetPasswordEmail, {
         name: name ?? "User",
         code,
         expiration,
+        locale,
       }),
     );
     return this.send(to, "Reset your password 🔐", html);
   }
 
-  public async send2FACode(to: string, code: string) {
-    const html = await render(React.createElement(TwoFactorEmail, { code }));
+  public async send2FACode(to: string, code: string, locale: Locale = "en") {
+    const html = await render(
+      React.createElement(TwoFactorEmail, { code, locale }),
+    );
     return this.send(to, "Your verification code ⚡", html);
   }
 
@@ -70,14 +79,19 @@ export class MailSenderService extends BaseService implements Mailing {
     to: string,
     name: string | null,
     message: string | null,
+    locale: Locale = "en",
   ) {
+    const subject =
+      locale === "pl" ? "Wiadomość odebrana! 📥" : "Message received! 📥";
+
     const html = await render(
       React.createElement(ContactConfirmationEmail, {
         name: name ?? "User",
         message: message ?? "No message content",
+        locale,
       }),
     );
-    return this.send(to, "Message received! 📥", html);
+    return this.send(to, subject, html);
   }
 
   public async sendAdminContactAlert(
@@ -88,6 +102,7 @@ export class MailSenderService extends BaseService implements Mailing {
       subject: string;
       message: string;
       ip: string;
+      locale: Locale;
     },
   ) {
     const html = await render(
@@ -97,9 +112,9 @@ export class MailSenderService extends BaseService implements Mailing {
         subject: data.subject,
         message: data.message,
         ip: data.ip,
+        locale: data.locale,
       }),
     );
-
     return this.send(
       to,
       `🔥 New contact from ${data.senderName}: ${data.subject}`,
@@ -109,7 +124,6 @@ export class MailSenderService extends BaseService implements Mailing {
 
   private async send(to: string, subject: string, html: string) {
     this.logger.info(`Email transmission started: [${subject}] to ${to}`);
-
     return await this.transporter.sendMail({
       from: `"Robert Moń" <${this.settings.MAIL_FROM}>`,
       to,

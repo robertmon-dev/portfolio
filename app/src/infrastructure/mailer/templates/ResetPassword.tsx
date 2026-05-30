@@ -1,16 +1,14 @@
 import { Section, Text, Heading } from "@react-email/components";
 import { Layout } from "./components/Layout";
+import type { ResetAlertProps } from "../types";
 
 export const ResetPasswordEmail = ({
   name,
   code,
   expiration,
-}: {
-  name: string;
-  code: string;
-  expiration: number;
-}) => (
-  <Layout previewText="Reset your password">
+  locale,
+}: ResetAlertProps) => (
+  <Layout previewText="Reset your password" locale={locale}>
     <Heading className="text-tn-red text-[22px] font-bold p-0 my-[20px]">
       Password Reset Request 🔐
     </Heading>

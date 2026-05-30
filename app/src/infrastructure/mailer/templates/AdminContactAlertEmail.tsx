@@ -8,8 +8,12 @@ export const AdminContactAlertEmail = ({
   subject,
   message,
   ip,
+  locale,
 }: AdminContactAlertProps) => (
-  <Layout previewText={`New message from ${senderName}: ${subject}`}>
+  <Layout
+    previewText={`New message from ${senderName}: ${subject}`}
+    locale={locale}
+  >
     <Heading className="text-tn-orange text-[20px] font-bold p-0 my-[20px]">
       New Portfolio Message 📬
     </Heading>

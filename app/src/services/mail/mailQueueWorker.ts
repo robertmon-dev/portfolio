@@ -45,7 +45,7 @@ export class MailQueueWorker extends BaseWorker<
     try {
       switch (jobPacket.name) {
         case MAIL_ACTIONS.WELCOME: {
-          const { user, verificationUrl } = jobPacket.data;
+          const { user, verificationUrl, locale } = jobPacket.data;
 
           if (!user.email)
             throw new Error(`User ${user.id} has no email address`);
@@ -54,12 +54,17 @@ export class MailQueueWorker extends BaseWorker<
             ? verificationUrl
             : `${baseUrl}${verificationUrl}`;
 
-          await this.mailer.sendWelcomeEmail(user.email, user.name, fullUrl);
+          await this.mailer.sendWelcomeEmail(
+            user.email,
+            user.name,
+            fullUrl,
+            locale,
+          );
           break;
         }
 
         case MAIL_ACTIONS.PASSWORD_RESET: {
-          const { user, resetToken, expiryMinutes } = jobPacket.data;
+          const { user, resetToken, expiryMinutes, locale } = jobPacket.data;
           if (!user.email)
             throw new Error(`User ${user.id} has no email address`);
 
@@ -68,32 +73,41 @@ export class MailQueueWorker extends BaseWorker<
             user.name,
             resetToken,
             expiryMinutes,
+            locale,
           );
           break;
         }
 
         case MAIL_ACTIONS.TWO_FACTOR_CODE: {
-          const { user, code } = jobPacket.data;
+          const { user, code, locale } = jobPacket.data;
           if (!user.email)
             throw new Error(`User ${user.id} has no email address`);
 
-          await this.mailer.send2FACode(user.email, code);
+          await this.mailer.send2FACode(user.email, code, locale);
           break;
         }
 
         case MAIL_ACTIONS.CONTACT_CONFIRMATION: {
-          const { senderEmail, senderName, messageSnippet } = jobPacket.data;
+          const { senderEmail, senderName, messageSnippet, locale } =
+            jobPacket.data;
           await this.mailer.sendContactConfirmation(
             senderEmail ?? "",
             senderName ?? "User",
             messageSnippet ?? "",
+            locale,
           );
           break;
         }
 
         case MAIL_ACTIONS.CONTACT_FORM_ADMIN_ALERT: {
-          const { senderEmail, senderName, subject, fullMessage, adminEmail } =
-            jobPacket.data;
+          const {
+            senderEmail,
+            senderName,
+            subject,
+            fullMessage,
+            adminEmail,
+            locale,
+          } = jobPacket.data;
 
           await this.mailer.sendAdminContactAlert(adminEmail, {
             senderEmail,
@@ -101,6 +115,7 @@ export class MailQueueWorker extends BaseWorker<
             subject,
             message: fullMessage,
             ip: "",
+            locale: locale,
           });
           break;
         }
