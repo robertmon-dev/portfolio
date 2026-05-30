@@ -3,7 +3,7 @@ import { githubCommitPublicRouter } from "./public/commits";
 import { githubRepoPublicRouter } from "./public/githubRepo";
 import { githubStatsPublicRouter } from "./public/githubStats";
 import { projectsRouter } from "./public/projects";
-import { diagnosticsRouter } from "./diagnostics/health";
+import { diagnosticsRouter } from "./diagnostics/diagnostics";
 import { contactPublicRouter } from "./public/mail";
 import { authRouter } from "./public/auth";
 import { authPrivateRouter } from "./private/auth";
