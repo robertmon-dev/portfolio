@@ -3,14 +3,13 @@ import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 import { useAuth } from "@/hooks/useAuth";
 import { useRecover } from "@/hooks/useRecover";
-import { type LoginInput, type ResetPasswordInput } from "@portfolio/shared";
+import type { LoginInput, ResetPasswordInput, Locale } from "@portfolio/shared";
 import { loginReducer, initialState } from "./types";
 import type {
   LoginStep,
   LoginFormState,
   LoginState,
   LoginFormField,
-  UpdateFieldAction,
 } from "./types";
 
 export const useLoginModal = (onSuccess?: () => void) => {
@@ -19,18 +18,10 @@ export const useLoginModal = (onSuccess?: () => void) => {
   const { requestReset, confirmReset, isRecovering } = useRecover();
   const [state, dispatch] = useReducer(loginReducer, initialState);
 
-  const makeUpdateFieldAction = <K extends LoginFormField>(
-    field: K,
-    value: LoginState[K],
-  ): UpdateFieldAction => ({
-    type: "UPDATE_FIELD",
-    payload: { field, value },
-  });
-
   const updateField = <K extends LoginFormField>(
     field: K,
     value: LoginState[K],
-  ) => dispatch(makeUpdateFieldAction(field, value));
+  ) => dispatch({ type: "UPDATE_FIELD", payload: { field, value } });
 
   const close = useCallback(() => {
     dispatch({ type: "CLOSE_MODAL" });
@@ -52,7 +43,10 @@ export const useLoginModal = (onSuccess?: () => void) => {
     }
   };
 
-  const handleRequestReset = async (data: { email: string }) => {
+  const handleRequestReset = async (data: {
+    email: string;
+    locale: Locale;
+  }) => {
     await requestReset(data);
     toast.success(t("auth.recover.emailSent", "Reset code sent to your email"));
     dispatch({ type: "SET_STEP", payload: "RESET_PASSWORD" });

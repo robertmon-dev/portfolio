@@ -21,7 +21,7 @@ export class AuthService extends BaseService implements Authenticating {
   private mailQueue = MailQueueService.getInstance();
 
   public async login(input: LoginInput): Promise<LoginResponse> {
-    const { email, password } = input;
+    const { email, password, locale } = input;
 
     const user = await this.db.user.findUnique({
       where: { email },
@@ -48,7 +48,7 @@ export class AuthService extends BaseService implements Authenticating {
     }
 
     if (user.twoFactorEnabled) {
-      return this.handleTwoFactorFlow(user);
+      return this.handleTwoFactorFlow(user, locale);
     }
 
     return this.generateSuccessResponse(user);
@@ -88,7 +88,7 @@ export class AuthService extends BaseService implements Authenticating {
   public async resend2FACode(
     input: Resend2FAInput,
   ): Promise<{ message: string }> {
-    const { userId } = input;
+    const { userId, locale } = input;
 
     const lockKey = `resend_lock:2fa:${userId}`;
     const isLocked = await this.cache.get(lockKey);
@@ -108,7 +108,7 @@ export class AuthService extends BaseService implements Authenticating {
       });
     }
 
-    await this.handleTwoFactorFlow(user);
+    await this.handleTwoFactorFlow(user, locale);
     await this.cache.set(lockKey, "true", 60);
 
     return { message: "New verification code sent." };

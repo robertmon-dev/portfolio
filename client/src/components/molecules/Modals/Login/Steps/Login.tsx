@@ -5,11 +5,15 @@ import { Mail, Lock, LogIn } from "lucide-react";
 import { Input } from "@/components/atoms/Input/Input";
 import { Button } from "@/components/atoms/Button/Button";
 import { Checkbox } from "@/components/atoms/CheckBox/CheckBox";
-import { LoginInputSchema, type LoginInput } from "@portfolio/shared";
+import {
+  LoginInputSchema,
+  type LoginInput,
+  type Locale,
+} from "@portfolio/shared";
 import type { LoginFormProps } from "../types";
 
 export const LoginForm = ({ form: modalForm, isLoading }: LoginFormProps) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const {
     register,
     handleSubmit,
@@ -19,6 +23,7 @@ export const LoginForm = ({ form: modalForm, isLoading }: LoginFormProps) => {
     defaultValues: {
       email: modalForm.email,
       password: "",
+      locale: (i18n.language as Locale) ?? "en",
     },
   });
 

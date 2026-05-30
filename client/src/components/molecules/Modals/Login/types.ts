@@ -1,4 +1,4 @@
-import type { LoginInput, ResetPasswordInput } from "@portfolio/shared";
+import type { LoginInput, ResetPasswordInput, Locale } from "@portfolio/shared";
 
 export type LoginStep = "LOGIN" | "2FA" | "FORGOT_PASSWORD" | "RESET_PASSWORD";
 
@@ -57,7 +57,10 @@ export interface LoginFormState {
   setConfirmPassword: (v: string) => void;
   handleLoginSubmit: (data: LoginInput) => Promise<void>;
   handle2FASubmit: (code: string) => Promise<void>;
-  handleRequestReset: (data: { email: string }) => Promise<void>;
+  handleRequestReset: (data: {
+    email: string;
+    locale: Locale;
+  }) => Promise<void>;
   handleResetSubmit: (data: ResetPasswordInput) => Promise<void>;
   goToStep: (step: LoginStep) => void;
 }

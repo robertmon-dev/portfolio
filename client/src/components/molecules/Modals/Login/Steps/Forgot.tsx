@@ -4,24 +4,26 @@ import { Mail, ArrowLeft, Send } from "lucide-react";
 import { Button } from "@/components/atoms/Button/Button";
 import { Input } from "@/components/atoms/Input/Input";
 import type { LoginFormProps } from "../types";
+import type { Locale } from "@portfolio/shared";
 
 export const ForgotPasswordForm = ({
   form: modalForm,
   isLoading,
 }: LoginFormProps) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<{ email: string }>({
+  } = useForm<{ email: string; locale: Locale }>({
     defaultValues: {
       email: modalForm.email,
+      locale: (i18n.language as Locale) ?? "en",
     },
   });
 
-  const onSubmit = (data: { email: string }) => {
+  const onSubmit = (data: { email: string; locale: Locale }) => {
     modalForm.handleRequestReset(data);
   };
 
