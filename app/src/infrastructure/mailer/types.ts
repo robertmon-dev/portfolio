@@ -1,6 +1,5 @@
 import type { SentMessageInfo } from "nodemailer";
-
-export type Locale = "pl" | "en";
+import type { Locale } from "@portfolio/shared";
 
 export type MailValue =
   | string

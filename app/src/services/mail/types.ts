@@ -1,6 +1,6 @@
 import { BulkJobOptions, Job } from "bullmq";
 import type { User } from "@prisma/client";
-import type { Locale } from "../../infrastructure/mailer/types";
+import type { Locale } from "@portfolio/shared";
 
 export const MAIL_ACTIONS = {
   WELCOME: "WELCOME_EMAIL",

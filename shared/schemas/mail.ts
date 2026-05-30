@@ -1,12 +1,12 @@
 import z from "zod";
-import { zString } from "./generic";
-import { zEmail } from "./generic";
+import { zString, zLocale, zEmail } from "./generic";
 
 export const ContactFormInputSchema = z.object({
   name: zString,
   email: zEmail,
   subject: zString,
   message: zString,
+  locale: zLocale,
 });
 
 export const ContactFormOutputSchema = z.object({

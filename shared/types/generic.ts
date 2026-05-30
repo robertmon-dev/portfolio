@@ -4,6 +4,7 @@ import * as g from "../schemas/generic";
 export type StringValue = z.infer<typeof g.zString>;
 export type TextValue = z.infer<typeof g.zText>;
 export type ContentValue = z.infer<typeof g.zContent>;
+export type Locale = z.infer<typeof g.zLocale>;
 
 export type EmailValue = z.infer<typeof g.zEmail>;
 export type PasswordValue = z.infer<typeof g.zPassword>;

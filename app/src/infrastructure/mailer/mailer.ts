@@ -6,12 +6,13 @@ import { PrismaClient } from "@prisma/client";
 import type { Logging } from "../../core/logger/types";
 import type { Caching } from "../../infrastructure/cache/types";
 import type { Settings } from "../../core/settings/settings";
-import type { Mailing, Locale } from "./types";
+import type { Mailing } from "./types";
 import { WelcomeEmail } from "../../infrastructure/mailer/templates/Welcome";
 import { ResetPasswordEmail } from "../../infrastructure/mailer/templates/ResetPassword";
 import { TwoFactorEmail } from "../../infrastructure/mailer/templates/2FA";
 import { ContactConfirmationEmail } from "../../infrastructure/mailer/templates/Contact";
 import { AdminContactAlertEmail } from "./templates/AdminContactAlertEmail";
+import type { Locale } from "@portfolio/shared";
 
 export class MailSenderService extends BaseService implements Mailing {
   private transporter: nodemailer.Transporter;

@@ -4,6 +4,8 @@ export const zString = z.string().trim().max(255);
 export const zText = z.string().trim().max(2000);
 export const zContent = z.string().max(30000);
 
+export const zLocale = z.enum(["en", "pl"]).default("en");
+
 export const zEmail = z.email("validation.email").max(255);
 export const zPassword = z
   .string()

@@ -17,6 +17,7 @@ export class SubmitContactService extends BaseService {
           subject: input.subject,
           messageSnippet: input.message.substring(0, 100),
           ticketId,
+          locale: input.locale,
         },
       },
       {
@@ -27,6 +28,7 @@ export class SubmitContactService extends BaseService {
           subject: input.subject,
           fullMessage: input.message,
           adminEmail: process.env.MAIL_FROM as string,
+          locale: input.locale,
         },
       },
     ]);
