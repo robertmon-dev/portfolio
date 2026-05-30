@@ -1,10 +1,11 @@
 import { z } from "zod";
-import { zEmail, zPassword, zString, zUuid } from "./generic";
+import { zEmail, zLocale, zPassword, zString, zUuid } from "./generic";
 import { UserProfileSchema } from "./user";
 
 export const LoginInputSchema = z.object({
   email: zEmail,
   password: zPassword,
+  locale: zLocale,
 });
 
 export const LoginResponseSchema = z.union([
@@ -27,6 +28,7 @@ export const Verify2FASchema = z.object({
 
 export const RequestPasswordResetSchema = z.object({
   email: zEmail,
+  locale: zLocale,
 });
 
 export const ResetPasswordSchema = z
@@ -42,6 +44,7 @@ export const ResetPasswordSchema = z
 
 export const Resend2FASchema = z.object({
   userId: zUuid,
+  locale: zLocale,
 });
 
 export const MessageResponseSchema = z.object({

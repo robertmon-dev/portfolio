@@ -3,7 +3,7 @@ import type { User } from "@prisma/client";
 import argon2 from "argon2";
 import { Authenticator } from "../../trpc/auth/authenticator";
 import { Permission } from "../../trpc/permission/permission";
-import { UserProfileSchema } from "@portfolio/shared";
+import { UserProfileSchema, type Locale } from "@portfolio/shared";
 import { MailQueueService } from "../mail/mailQueueService";
 import type {
   LoginResponse,
@@ -114,7 +114,10 @@ export class AuthService extends BaseService implements Authenticating {
     return { message: "New verification code sent." };
   }
 
-  private async handleTwoFactorFlow(user: User): Promise<LoginResponse> {
+  private async handleTwoFactorFlow(
+    user: User,
+    locale: Locale,
+  ): Promise<LoginResponse> {
     const code = Math.floor(100000 + Math.random() * 900000).toString();
     const expiresAt = new Date(Date.now() + 5 * 60 * 1000);
 
@@ -138,6 +141,7 @@ export class AuthService extends BaseService implements Authenticating {
       await this.mailQueue.addJob(MAIL_ACTIONS.TWO_FACTOR_CODE, {
         user,
         code,
+        locale,
       });
       this.logger.info(`2FA Code generated and queued`, { userId: user.id });
     } catch (err) {
