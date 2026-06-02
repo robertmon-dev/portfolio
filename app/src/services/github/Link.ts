@@ -1,9 +1,12 @@
 import { BaseService } from "../service";
-import type { LinkRepoProjectInput } from "@portfolio/shared";
+import type { LinkRepoProjectInput, GithubRepo } from "@portfolio/shared";
 import { githubRepoWithRelationsQuery } from "./queries";
 
-export class LinkRepoProjectService extends BaseService {
-  public async execute(input: LinkRepoProjectInput) {
+export class LinkRepoProjectService extends BaseService<
+  LinkRepoProjectInput,
+  GithubRepo
+> {
+  public async execute(input: LinkRepoProjectInput): Promise<GithubRepo> {
     const { repoId, projectId } = input;
 
     const { updatedRepo, project } = await this.db.$transaction(async (tx) => {

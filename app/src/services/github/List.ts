@@ -1,7 +1,10 @@
 import { BaseService } from "../service";
 import type { GithubRepo } from "@portfolio/shared";
 
-export class ListGithubReposService extends BaseService {
+export class ListGithubReposService extends BaseService<
+  undefined,
+  GithubRepo[]
+> {
   public async execute(): Promise<GithubRepo[]> {
     const cacheKey = "github:repos:list:all";
 
