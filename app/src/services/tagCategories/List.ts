@@ -7,7 +7,10 @@ import {
 } from "@portfolio/shared";
 import { tagCategoryWithRelationsQuery } from "./queries";
 
-export class ListTagCategoriesService extends BaseService {
+export class ListTagCategoriesService extends BaseService<
+  ListTagCategoriesInput,
+  ListTagCategoriesOutput
+> {
   public async execute(
     input: ListTagCategoriesInput,
   ): Promise<ListTagCategoriesOutput> {

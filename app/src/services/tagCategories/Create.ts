@@ -3,7 +3,10 @@ import { BaseService } from "../service";
 import { TRPCError } from "@trpc/server";
 import { tagCategoryWithRelationsQuery } from "./queries";
 
-export class CreateTagCategoryService extends BaseService {
+export class CreateTagCategoryService extends BaseService<
+  CreateTagCategoryInput,
+  TagCategory
+> {
   public async execute(input: CreateTagCategoryInput): Promise<TagCategory> {
     return await this.db.$transaction(async (tx) => {
       const persisted = await tx.tagCategory.findUnique({
