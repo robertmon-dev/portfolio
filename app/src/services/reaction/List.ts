@@ -5,7 +5,7 @@ import type { ListingReactions, ListReactionsServiceInput } from "./types";
 import { reactionQueryWithoutRelations } from "./queries";
 
 export class ListReactionsService
-  extends BaseService
+  extends BaseService<ListReactionsServiceInput, ListReactionsOutput>
   implements ListingReactions
 {
   public async execute(
