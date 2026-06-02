@@ -4,7 +4,10 @@ import { commentWithRelationsQuery } from "./queries";
 import type { FetchingComments, GetCommentByIdServiceInput } from "./types";
 import { type CommentWithReplies, CommentSchema } from "@portfolio/shared";
 
-export class GetCommentService extends BaseService implements FetchingComments {
+export class GetCommentService
+  extends BaseService<GetCommentByIdServiceInput, CommentWithReplies>
+  implements FetchingComments
+{
   public async execute(
     input: GetCommentByIdServiceInput,
   ): Promise<CommentWithReplies> {

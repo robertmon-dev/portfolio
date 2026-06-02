@@ -8,7 +8,7 @@ import {
 } from "./types";
 
 export class ListCommentsByParentService
-  extends BaseService
+  extends BaseService<ListCommentsByParentServiceInput, ListCommentsOutput>
   implements ListingCommentsByParent
 {
   public async execute(

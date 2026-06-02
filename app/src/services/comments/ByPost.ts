@@ -5,7 +5,7 @@ import { CommentSchema, ListCommentsOutput } from "@portfolio/shared";
 import { ListCommentsByPostServiceInput, ListingCommentsByPost } from "./types";
 
 export class ListCommentsByPostService
-  extends BaseService
+  extends BaseService<ListCommentsByPostServiceInput, ListCommentsOutput>
   implements ListingCommentsByPost
 {
   public async execute(

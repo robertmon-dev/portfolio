@@ -10,7 +10,7 @@ import { commentWithRelationsQuery } from "./queries";
 import { DeletingComments } from "./types";
 
 export class DeleteCommentsService
-  extends AuthorizedBaseService
+  extends AuthorizedBaseService<DeleteCommentsInput, CommentWithReplies[]>
   implements DeletingComments
 {
   public async execute(
