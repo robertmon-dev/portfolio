@@ -9,7 +9,10 @@ import { z } from "zod";
 import type { ProjectListing } from "./types";
 import { projectWithRelationsQuery } from "./queries";
 
-export class ListProjectsService extends BaseService implements ProjectListing {
+export class ListProjectsService
+  extends BaseService<ListProjectsOptions, ProjectWithRelations[]>
+  implements ProjectListing
+{
   public async execute(
     options: ListProjectsOptions,
   ): Promise<ProjectWithRelations[]> {

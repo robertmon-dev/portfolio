@@ -7,7 +7,7 @@ import type { ProjectDeleting } from "./types";
 import { projectWithRelationsQuery } from "./queries";
 
 export class DeleteProjectService
-  extends BaseService
+  extends BaseService<string, ProjectWithRelations>
   implements ProjectDeleting
 {
   public async execute(id: string): Promise<ProjectWithRelations> {

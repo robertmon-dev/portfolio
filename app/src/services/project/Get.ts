@@ -7,7 +7,7 @@ import { projectWithOrderedRelationsQuery } from "./queries";
 import type { ProjectRetrieving } from "./types";
 
 export class GetProjectBySlugService
-  extends BaseService
+  extends BaseService<string, ProjectWithRelations | null>
   implements ProjectRetrieving
 {
   public async execute(slug: string): Promise<ProjectWithRelations | null> {

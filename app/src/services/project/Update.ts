@@ -8,7 +8,7 @@ import { ProjectUpdating } from "./types";
 import { projectWithRelationsQuery } from "./queries";
 
 export class UpdateProjectService
-  extends BaseService
+  extends BaseService<UpdateProjectInput, ProjectWithRelations>
   implements ProjectUpdating
 {
   public async execute(
