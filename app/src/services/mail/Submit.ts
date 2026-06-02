@@ -3,8 +3,13 @@ import { MailQueueService } from "./mailQueueService";
 import type { ContactFormInput } from "@portfolio/shared";
 import { MAIL_ACTIONS } from "./types";
 
-export class SubmitContactService extends BaseService {
-  async execute(input: ContactFormInput) {
+export class SubmitContactService extends BaseService<
+  ContactFormInput,
+  { success: boolean; ticketId: string }
+> {
+  async execute(
+    input: ContactFormInput,
+  ): Promise<{ success: boolean; ticketId: string }> {
     const mailQueue = MailQueueService.getInstance();
     const ticketId = `TKT-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
 
