@@ -2,7 +2,10 @@ import { BaseService } from "../service";
 import type { DeleteUserInput } from "@portfolio/shared";
 import type { UserDeleting } from "./types";
 
-export class DeleteUserService extends BaseService implements UserDeleting {
+export class DeleteUserService
+  extends BaseService<DeleteUserInput, void>
+  implements UserDeleting
+{
   public async execute(input: DeleteUserInput): Promise<void> {
     const { id } = input;
     this.logger.warn(`Critical action: Attempting to remove user ID ${id}`);

@@ -5,7 +5,7 @@ import { TRPCError } from "@trpc/server";
 import { PublicingUsers } from "./types";
 
 export class GetPublicProfileService
-  extends BaseService
+  extends BaseService<undefined, UserPublic>
   implements PublicingUsers
 {
   public async execute(): Promise<UserPublic> {

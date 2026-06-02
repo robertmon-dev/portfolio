@@ -9,7 +9,10 @@ import { Prisma } from "@prisma/client";
 import { UserRetrieving } from "./types";
 import { userProfileQuery } from "./queries";
 
-export class GetUserService extends BaseService implements UserRetrieving {
+export class GetUserService
+  extends BaseService<GetUserInput, UserProfile>
+  implements UserRetrieving
+{
   public async execute(input: GetUserInput): Promise<UserProfile> {
     const { id, email, username } = input;
 

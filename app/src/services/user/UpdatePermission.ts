@@ -8,7 +8,7 @@ import { userProfileQuery } from "./queries";
 import { PermittingUsers } from "./types";
 
 export class UpdateUserPermissionsService
-  extends BaseService
+  extends BaseService<UpdateUserPermissionsInput, UserProfile>
   implements PermittingUsers
 {
   public async execute(

@@ -8,7 +8,10 @@ import { Prisma } from "@prisma/client";
 import type { UserUpdating } from "./types";
 import { userProfileQuery } from "./queries";
 
-export class UpdateUserService extends BaseService implements UserUpdating {
+export class UpdateUserService
+  extends BaseService<UpdateUserInput, UserProfile>
+  implements UserUpdating
+{
   public async execute(input: UpdateUserInput): Promise<UserProfile> {
     const { id, socials, role, ...data } = input;
     this.logger.info(`Updating user profile for ID: ${id}`);
