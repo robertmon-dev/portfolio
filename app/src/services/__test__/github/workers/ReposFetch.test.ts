@@ -66,7 +66,7 @@ describe("GithubFetchWorker", () => {
     ctx.mocks.prisma.githubRepo.upsert.mockResolvedValue(persistedRepo);
     ctx.mocks.prisma.project.findMany.mockResolvedValue(persistedProjects);
 
-    await ctx.service.run();
+    await ctx.service.execute();
 
     expect(ctx.mocks.cache.del).toHaveBeenCalledTimes(10);
   });

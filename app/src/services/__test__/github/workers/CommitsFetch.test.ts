@@ -1,4 +1,4 @@
-import { MOCK_UUID, useServiceTest } from "../../../../mocks/core";
+import { useServiceTest } from "../../../../mocks/core";
 import { describe, it, expect, vi } from "vitest";
 import { GithubCommitFetchWorker } from "../../../github/workers/CommitsFetch";
 import {
