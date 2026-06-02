@@ -6,7 +6,7 @@ import type { GithubApiRepo } from "../types";
 import type { GithubRepo, PrismaClient } from "@prisma/client";
 import type { Settings } from "../../../core/settings/settings";
 
-export class GithubFetchWorker extends BaseService {
+export class GithubFetchWorker extends BaseService<undefined, void> {
   private octokit: Octokit;
 
   constructor(
@@ -21,7 +21,7 @@ export class GithubFetchWorker extends BaseService {
     });
   }
 
-  public async run(): Promise<void> {
+  public async execute(): Promise<void> {
     const username = this.settings.NICKNAME;
     this.logger.info(`GitHub Sync Worker started for: ${username}`);
     const start = Date.now();

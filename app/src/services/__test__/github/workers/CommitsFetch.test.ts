@@ -46,7 +46,7 @@ describe("GithubCommitFetchWorker", async () => {
       return await callback(ctx.mocks.prisma);
     });
 
-    await ctx.service.run();
+    await ctx.service.execute();
 
     persistedRepos.map((repo, idx) => {
       expect(local.listCommits).toHaveBeenNthCalledWith(idx + 1, {
