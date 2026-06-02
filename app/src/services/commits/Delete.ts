@@ -1,7 +1,10 @@
 import { BaseService } from "../service";
 import { CommitDeleting } from "./types";
 
-export class DeleteCommitService extends BaseService implements CommitDeleting {
+export class DeleteCommitService
+  extends BaseService<string[], void>
+  implements CommitDeleting
+{
   public async execute(ids: string[]): Promise<void> {
     this.logger.warn(`Atomic hard-delete for GitHub repos: ${ids}`);
 

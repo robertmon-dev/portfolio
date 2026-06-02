@@ -3,7 +3,10 @@ import { BaseService } from "../service";
 import { githubCommitWithRelationsQuery } from "./queries";
 import type { LinkGithubCommitInput, GithubCommit } from "@portfolio/shared";
 
-export class LinkGithubCommitService extends BaseService {
+export class LinkGithubCommitService extends BaseService<
+  LinkGithubCommitInput,
+  GithubCommit
+> {
   public async execute(input: LinkGithubCommitInput): Promise<GithubCommit> {
     const { githubCommitId, githubRepoId } = input;
 

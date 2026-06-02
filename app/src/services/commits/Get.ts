@@ -2,7 +2,10 @@ import { type GithubCommit, GithubCommitSchema } from "@portfolio/shared";
 import { BaseService } from "../service";
 import type { CommitRetrieving } from "./types";
 
-export class GetCommitService extends BaseService implements CommitRetrieving {
+export class GetCommitService
+  extends BaseService<string, GithubCommit | null>
+  implements CommitRetrieving
+{
   execute(id: string): Promise<GithubCommit | null> {
     const cacheKey = `githubCommit:id:${id}`;
 
