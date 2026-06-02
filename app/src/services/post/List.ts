@@ -4,7 +4,10 @@ import { PostSchema, ListPostsOutput } from "@portfolio/shared";
 import { postWithRelationsQuery } from "./queries";
 import type { ListPostsServiceInput, ListingPosts } from "./types";
 
-export class ListPostsService extends BaseService implements ListingPosts {
+export class ListPostsService
+  extends BaseService<ListPostsServiceInput, ListPostsOutput>
+  implements ListingPosts
+{
   public async execute(input: ListPostsServiceInput): Promise<ListPostsOutput> {
     const { limit, cursor, includeDeleted = false } = input;
     const prefix = includeDeleted ? "both" : "";

@@ -9,7 +9,7 @@ import { postWithRelationsQuery } from "./queries";
 import type { AssigningTags } from "./types";
 
 export class AssignTagsForPostService
-  extends AuthorizedBaseService
+  extends AuthorizedBaseService<AssignTagsForPostInput, Post>
   implements AssigningTags
 {
   public async execute(input: AssignTagsForPostInput): Promise<Post> {

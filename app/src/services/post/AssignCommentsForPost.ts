@@ -9,7 +9,7 @@ import { postWithRelationsQuery } from "./queries";
 import type { AssigningComments } from "./types";
 
 export class AssignCommentsForPostService
-  extends AuthorizedBaseService
+  extends AuthorizedBaseService<AssignCommentsForPostInput, Post>
   implements AssigningComments
 {
   public async execute(input: AssignCommentsForPostInput): Promise<Post> {

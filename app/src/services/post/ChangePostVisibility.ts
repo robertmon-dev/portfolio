@@ -9,7 +9,7 @@ import { postWithRelationsQuery } from "./queries";
 import type { ChangingVisibility } from "./types";
 
 export class ChangePostVisilibityService
-  extends AuthorizedBaseService
+  extends AuthorizedBaseService<ChangePublishionForPostInput, Post>
   implements ChangingVisibility
 {
   public async execute(input: ChangePublishionForPostInput): Promise<Post> {
