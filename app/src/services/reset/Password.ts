@@ -9,18 +9,36 @@ import {
   RequestPasswordResetInput,
   ResetPasswordInput,
 } from "@portfolio/shared";
-import { PasswordResetting } from "./types";
+import {
+  Operands,
+  PasswordResetting,
+  PasswordResetServiceInput,
+  PasswordResetServiceOutput,
+} from "./types";
 
 export class PasswordResetService
-  extends BaseService
+  extends BaseService<PasswordResetServiceInput, PasswordResetServiceOutput>
   implements PasswordResetting
 {
   private mailQueue = MailQueueService.getInstance();
 
+  public async execute(
+    input: PasswordResetServiceInput,
+  ): Promise<PasswordResetServiceOutput> {
+    switch (input.ops) {
+      case Operands.Request:
+        return this.requestReset(input.input);
+      case Operands.Resend:
+        return this.resendReset(input.input);
+      case Operands.Reset:
+        return this.reset(input.input);
+    }
+  }
+
   public async requestReset(
     input: RequestPasswordResetInput,
   ): Promise<{ message: string }> {
-    const { email } = input;
+    const { email, locale } = input;
 
     const user = await this.db.user.findUnique({ where: { email } });
 
@@ -51,6 +69,7 @@ export class PasswordResetService
     });
 
     await this.mailQueue.addJob(MAIL_ACTIONS.PASSWORD_RESET, {
+      locale,
       user,
       resetToken: token,
       expiryMinutes: 60,
