@@ -2,7 +2,7 @@ import { BaseService } from "../service";
 import type { TechStackDeleting } from "./types";
 
 export class DeleteTechStackService
-  extends BaseService
+  extends BaseService<string[], void>
   implements TechStackDeleting
 {
   public async execute(ids: string[]): Promise<void> {

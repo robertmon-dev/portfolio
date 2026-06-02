@@ -3,7 +3,7 @@ import { type TechStack, type UpdateTechStackInput } from "@portfolio/shared";
 import type { TechStackUpdating } from "./types";
 
 export class UpdateTechStackService
-  extends BaseService
+  extends BaseService<UpdateTechStackInput, TechStack>
   implements TechStackUpdating
 {
   public async execute(input: UpdateTechStackInput): Promise<TechStack> {

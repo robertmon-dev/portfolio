@@ -6,7 +6,7 @@ import {
 import type { TechStackProjectLinking } from "./types";
 
 export class UnlinkTechStackProjectService
-  extends BaseService
+  extends BaseService<LinkTechStackProjectInput, TechStack>
   implements TechStackProjectLinking
 {
   public async execute(input: LinkTechStackProjectInput): Promise<TechStack> {
