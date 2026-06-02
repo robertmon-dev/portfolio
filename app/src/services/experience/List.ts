@@ -3,7 +3,7 @@ import { type Experience } from "@portfolio/shared";
 import type { ExperienceListing } from "./types";
 
 export class ListExperienceService
-  extends BaseService
+  extends BaseService<undefined, Experience[]>
   implements ExperienceListing
 {
   public async execute(): Promise<Experience[]> {

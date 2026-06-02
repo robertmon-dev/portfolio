@@ -2,7 +2,7 @@ import { BaseService } from "../service";
 import type { ExperienceDeleting } from "./types";
 
 export class DeleteExperienceService
-  extends BaseService
+  extends BaseService<string[], void>
   implements ExperienceDeleting
 {
   public async execute(ids: string[]): Promise<void> {
