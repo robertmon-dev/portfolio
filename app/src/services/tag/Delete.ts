@@ -4,7 +4,7 @@ import { TRPCError } from "@trpc/server";
 import { tagWithRelationsQuery } from "./queries";
 import { Post } from "@prisma/client";
 
-export class DeleteTagsService extends BaseService {
+export class DeleteTagsService extends BaseService<string[], Tag[]> {
   public async execute(ids: string[]): Promise<Tag[]> {
     const removed = await this.db.$transaction(async (tx) => {
       const persisted = await tx.tag.findMany({

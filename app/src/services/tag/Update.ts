@@ -3,7 +3,7 @@ import { BaseService } from "../service";
 import { TRPCError } from "@trpc/server";
 import { tagWithRelationsQuery } from "./queries";
 
-export class UpdateTagService extends BaseService {
+export class UpdateTagService extends BaseService<UpdateTagInput, Tag> {
   public async execute(input: UpdateTagInput): Promise<Tag> {
     const updated = await this.db.$transaction(async (tx) => {
       const { id: tagId, ...rest } = input;

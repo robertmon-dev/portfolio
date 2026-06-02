@@ -7,7 +7,10 @@ import {
 import { BaseService } from "../service";
 import { tagWithoutRelationsQuery } from "./queries";
 
-export class ListTagsByCategoryService extends BaseService {
+export class ListTagsByCategoryService extends BaseService<
+  ListTagsByCategoryInput,
+  ListTagsOutput
+> {
   public async execute(
     input: ListTagsByCategoryInput,
   ): Promise<ListTagsOutput> {
