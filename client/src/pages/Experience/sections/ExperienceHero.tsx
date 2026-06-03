@@ -1,7 +1,5 @@
 import { motion } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import { Arrow } from "@/components/atoms/Arrow/Arrow";
-import { handleScrollDown } from "@/lib/utils/navigation";
 import "./ExperienceHero.scss";
 
 export const ExperienceHero = () => {
@@ -23,25 +21,6 @@ export const ExperienceHero = () => {
             "A timeline of my professional journey, roles, and achievements.",
           )}
         </p>
-      </motion.div>
-
-      <motion.div
-        className="experience-hero__scroll-container"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5, duration: 1 }}
-      >
-        <p className="experience-hero__scroll-text">
-          {t("experience.moveDown", "Move down")}
-        </p>
-
-        <div className="experience-hero__bounce-wrapper">
-          <Arrow
-            variant="down"
-            title={t("common.scrollDown", "Scroll down")}
-            onClick={handleScrollDown}
-          />
-        </div>
       </motion.div>
     </section>
   );
