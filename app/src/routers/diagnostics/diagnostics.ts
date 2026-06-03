@@ -27,7 +27,7 @@ export const diagnosticsRouter = router({
     .meta({
       openapi: {
         method: "GET",
-        path: "/diagnostics/check",
+        path: "/diagnostics/metrics",
         tags: ["Diagnostics"],
         summary: "Check application current metrics",
         description:
