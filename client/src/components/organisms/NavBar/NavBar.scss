@@ -3,7 +3,6 @@
 .navbar {
   width: 100%;
   background-color: $bg-surface;
-  border-bottom: 1px solid $border-color;
   font-family: $font-stack;
   position: sticky;
   top: 0;
@@ -13,7 +12,7 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 $spacing-md;
-    height: 4rem;
+    height: 6rem;
 
     display: flex;
     align-items: center;
