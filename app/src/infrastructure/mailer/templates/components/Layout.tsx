@@ -30,7 +30,7 @@ export const Layout = ({
   previewText,
   locale = "en",
 }: LayoutProps) => {
-  const t = translations[locale];
+  const t = translations[locale as keyof typeof translations];
 
   return (
     <Html>
