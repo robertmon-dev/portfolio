@@ -1,4 +1,4 @@
-import type { Locale } from "../../types";
+import type { Locale } from "@portfolio/shared";
 
 export interface LayoutProps {
   children: React.ReactNode;
