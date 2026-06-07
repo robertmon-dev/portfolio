@@ -81,3 +81,41 @@ export interface Mailing {
     },
   ): Promise<SentMessageInfo>;
 }
+
+export enum MailOperation {
+  WELCOME,
+  RESET_PASSWORD,
+  TWO_FACTOR,
+  CONTACT_CONFIRMATION,
+  ADMIN_CONTACT_ALERT,
+}
+
+export type MailSenderInput =
+  | {
+      ops: MailOperation.WELCOME;
+      to: string;
+      name: string | null;
+      url: string;
+      locale: Locale;
+    }
+  | {
+      ops: MailOperation.RESET_PASSWORD;
+      to: string;
+      name: string | null;
+      code: string;
+      expiration: number;
+      locale?: Locale;
+    }
+  | { ops: MailOperation.TWO_FACTOR; to: string; code: string; locale?: Locale }
+  | {
+      ops: MailOperation.CONTACT_CONFIRMATION;
+      to: string;
+      name: string | null;
+      message: string | null;
+      locale?: Locale;
+    }
+  | {
+      ops: MailOperation.ADMIN_CONTACT_ALERT;
+      to: string;
+      data: AdminContactAlertProps;
+    };

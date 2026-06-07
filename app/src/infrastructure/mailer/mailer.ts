@@ -1,4 +1,4 @@
-import nodemailer from "nodemailer";
+import nodemailer, { SentMessageInfo } from "nodemailer";
 import React from "react";
 import { render } from "@react-email/render";
 import { BaseService } from "../../services/service";
@@ -6,15 +6,19 @@ import { PrismaClient } from "@prisma/client";
 import type { Logging } from "../../core/logger/types";
 import type { Caching } from "../../infrastructure/cache/types";
 import type { Settings } from "../../core/settings/settings";
-import type { Mailing } from "./types";
+import type { Mailing, MailSenderInput } from "./types";
 import { WelcomeEmail } from "../../infrastructure/mailer/templates/Welcome";
 import { ResetPasswordEmail } from "../../infrastructure/mailer/templates/ResetPassword";
 import { TwoFactorEmail } from "../../infrastructure/mailer/templates/2FA";
 import { ContactConfirmationEmail } from "../../infrastructure/mailer/templates/Contact";
 import { AdminContactAlertEmail } from "./templates/AdminContactAlertEmail";
 import type { Locale } from "@portfolio/shared";
+import { MailOperation } from "./types";
 
-export class MailSenderService extends BaseService implements Mailing {
+export class MailSenderService
+  extends BaseService<MailSenderInput, SentMessageInfo>
+  implements Mailing
+{
   private transporter: nodemailer.Transporter;
 
   constructor(
@@ -33,6 +37,48 @@ export class MailSenderService extends BaseService implements Mailing {
         pass: this.settings.MAIL_PASS,
       },
     });
+  }
+
+  public async execute(input: MailSenderInput): Promise<SentMessageInfo> {
+    switch (input.ops) {
+      case MailOperation.WELCOME:
+        return this.sendWelcomeEmail(
+          input.to,
+          input.name,
+          input.url,
+          input.locale,
+        );
+
+      case MailOperation.RESET_PASSWORD:
+        return this.sendResetPassword(
+          input.to,
+          input.name,
+          input.code,
+          input.expiration,
+          input.locale,
+        );
+
+      case MailOperation.TWO_FACTOR:
+        return this.send2FACode(input.to, input.code, input.locale);
+
+      case MailOperation.CONTACT_CONFIRMATION:
+        return this.sendContactConfirmation(
+          input.to,
+          input.name,
+          input.message,
+          input.locale,
+        );
+
+      case MailOperation.ADMIN_CONTACT_ALERT:
+        return this.sendAdminContactAlert(input.to, input.data);
+
+      default: {
+        const _exhaustiveCheck: never = input;
+        throw new Error(
+          `Unhandled mailer operation: ${(_exhaustiveCheck as any)?.ops}`,
+        );
+      }
+    }
   }
 
   public async sendWelcomeEmail(
