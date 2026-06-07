@@ -71,13 +71,6 @@ export class MailSenderService
 
       case MailOperation.ADMIN_CONTACT_ALERT:
         return this.sendAdminContactAlert(input.to, input.data);
-
-      default: {
-        const _exhaustiveCheck: never = input;
-        throw new Error(
-          `Unhandled mailer operation: ${(_exhaustiveCheck as any)?.ops}`,
-        );
-      }
     }
   }
 
