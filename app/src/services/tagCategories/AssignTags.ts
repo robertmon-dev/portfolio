@@ -7,7 +7,10 @@ import {
 import { BaseService } from "../service";
 import { tagCategoryWithRelationsQuery } from "./queries";
 
-export class AssignTagsService extends BaseService {
+export class AssignTagsService extends BaseService<
+  AssignTagsInput,
+  TagCategory[]
+> {
   public async execute(input: AssignTagsInput): Promise<TagCategory[]> {
     const assigned = await this.db.$transaction(async (tx) => {
       const persisted = await tx.tagCategory.update({

@@ -4,7 +4,7 @@ import type { TechStackListing } from "./types";
 import { techStackWithRelationsQuery } from "./queries";
 
 export class ListTechStacksService
-  extends BaseService
+  extends BaseService<undefined, TechStackWithRelations[]>
   implements TechStackListing
 {
   public async execute(): Promise<TechStackWithRelations[]> {

@@ -5,7 +5,7 @@ import type { ListCommentsServiceInput, ListingComments } from "./types";
 import { commentWithRelationsQuery } from "./queries";
 
 export class ListCommentsService
-  extends BaseService
+  extends BaseService<ListCommentsServiceInput, ListCommentsOutput>
   implements ListingComments
 {
   public async execute(

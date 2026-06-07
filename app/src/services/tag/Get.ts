@@ -3,7 +3,7 @@ import { BaseService } from "../service";
 import { tagWithRelationsQuery } from "./queries";
 import { TRPCError } from "@trpc/server";
 
-export class GetTagService extends BaseService {
+export class GetTagService extends BaseService<string, Tag | null> {
   public async execute(id: string): Promise<Tag | null> {
     const cacheKey = `tag:id:${id}`;
 

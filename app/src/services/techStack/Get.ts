@@ -4,7 +4,7 @@ import { techStackWithRelationsQuery } from "./queries";
 import type { TechStackRetrieving } from "./types";
 
 export class GetTechStackService
-  extends BaseService
+  extends BaseService<string, TechStackWithRelations | null>
   implements TechStackRetrieving
 {
   public async execute(id: string): Promise<TechStackWithRelations | null> {

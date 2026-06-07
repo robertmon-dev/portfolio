@@ -6,7 +6,7 @@ import type { DeletingReactions } from "./types";
 import { Comment, Post } from "@prisma/client";
 
 export class DeleteReactionsService
-  extends AuthorizedBaseService
+  extends AuthorizedBaseService<string[], Reaction[]>
   implements DeletingReactions
 {
   public async execute(ids: string[]): Promise<Reaction[]> {

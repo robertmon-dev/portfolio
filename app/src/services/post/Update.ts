@@ -5,7 +5,7 @@ import type { UpdatingPosts } from "./types";
 import { postWithRelationsQuery } from "./queries";
 
 export class UpdatePostService
-  extends AuthorizedBaseService
+  extends AuthorizedBaseService<UpdatePostInput, Post>
   implements UpdatingPosts
 {
   public async execute(input: UpdatePostInput): Promise<Post> {

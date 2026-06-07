@@ -5,7 +5,7 @@ import { postWithRelationsQuery } from "./queries";
 import type { CreatingPosts } from "./types";
 
 export class CreatePostService
-  extends AuthorizedBaseService
+  extends AuthorizedBaseService<CreatePostInput, Post>
   implements CreatingPosts
 {
   public async execute(input: CreatePostInput): Promise<Post> {

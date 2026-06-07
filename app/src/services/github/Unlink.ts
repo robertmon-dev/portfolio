@@ -2,8 +2,8 @@ import { BaseService } from "../service";
 import { githubRepoWithRelationsQuery } from "./queries";
 import { TRPCError } from "@trpc/server";
 
-export class UnlinkRepoProjectService extends BaseService {
-  public async execute(repoId: string) {
+export class UnlinkRepoProjectService extends BaseService<String, void> {
+  public async execute(repoId: string): Promise<void> {
     await this.db.$transaction(async (tx) => {
       const targetRepo = await tx.githubRepo.findUnique({
         where: { id: repoId },

@@ -54,8 +54,8 @@ export class SchedulerInitializer {
     this.isSyncing = true;
 
     try {
-      await this.githubWorker.run();
-      await this.commitsWorker.run();
+      await this.githubWorker.execute();
+      await this.commitsWorker.execute();
     } catch (err) {
       this.logger.error("GitHub sync failed", err);
     } finally {

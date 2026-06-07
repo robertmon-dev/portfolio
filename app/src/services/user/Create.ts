@@ -8,7 +8,10 @@ import * as argon2 from "argon2";
 import type { UserCreating } from "./types";
 import { userProfileQuery } from "./queries";
 
-export class CreateUserService extends BaseService implements UserCreating {
+export class CreateUserService
+  extends BaseService<CreateUserInput, UserProfile>
+  implements UserCreating
+{
   public async execute(input: CreateUserInput): Promise<UserProfile> {
     const { password, ...data } = input;
 

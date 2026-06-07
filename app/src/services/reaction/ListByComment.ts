@@ -4,7 +4,7 @@ import { reactionQueryWithoutRelations } from "./queries";
 import { ListingReactionsByComment } from "./types";
 
 export class ListReactionsByCommentService
-  extends BaseService
+  extends BaseService<string, Reaction[]>
   implements ListingReactionsByComment
 {
   public async execute(commentId: string): Promise<Reaction[]> {

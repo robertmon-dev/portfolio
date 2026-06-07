@@ -9,7 +9,7 @@ import { postWithRelationsQuery } from "./queries";
 import type { AssigningReactions } from "./types";
 
 export class AssignReactionsForPostService
-  extends AuthorizedBaseService
+  extends AuthorizedBaseService<AssignReactionsForPostInput, Post>
   implements AssigningReactions
 {
   public async execute(input: AssignReactionsForPostInput): Promise<Post> {

@@ -3,7 +3,7 @@ import { type TechStack } from "@portfolio/shared";
 import type { TechStackProjectLinking } from "./types";
 
 export class LinkTechStackProjectService
-  extends BaseService
+  extends BaseService<{ techStackId: string; projectId: string }, TechStack>
   implements TechStackProjectLinking
 {
   public async execute(input: {

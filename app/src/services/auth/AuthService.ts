@@ -12,14 +12,36 @@ import type {
   Resend2FAInput,
 } from "@portfolio/shared";
 import { BaseService } from "../service";
-import { Authenticating } from "./types";
+import {
+  Authenticating,
+  AuthServiceInput,
+  AuthServiceOutput,
+  LogoutInput,
+  Operanda,
+} from "./types";
 import { MAIL_ACTIONS } from "../mail/types";
 import { CodeType } from "@prisma/client";
 import { userAuthQuery } from "./queries";
 import { randomInt } from "node:crypto";
 
-export class AuthService extends BaseService implements Authenticating {
+export class AuthService
+  extends BaseService<AuthServiceInput, AuthServiceOutput>
+  implements Authenticating
+{
   private mailQueue = MailQueueService.getInstance();
+
+  public async execute(input: AuthServiceInput): Promise<AuthServiceOutput> {
+    switch (input.ops) {
+      case Operanda.Login:
+        return await this.login(input.input);
+      case Operanda.SecondFactor:
+        return await this.verify2FA(input.input);
+      case Operanda.Resend:
+        return await this.resend2FACode(input.input);
+      case Operanda.Logout:
+        return await this.logout(input.input);
+    }
+  }
 
   public async login(input: LoginInput): Promise<LoginResponse> {
     const { email, password, locale } = input;
@@ -156,7 +178,9 @@ export class AuthService extends BaseService implements Authenticating {
     };
   }
 
-  public async logout(token: string): Promise<{ success: true }> {
+  public async logout(input: LogoutInput): Promise<{ success: true }> {
+    const { token } = input;
+
     const authenticator = Authenticator.getInstance();
     const ttl = authenticator.getTokenRemainingTTL(token);
 

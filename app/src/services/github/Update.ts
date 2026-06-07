@@ -2,7 +2,10 @@ import { BaseService } from "../service";
 import { UpdateGithubRepoInput, type GithubRepo } from "@portfolio/shared";
 import { githubRepoWithRelationsQuery } from "./queries";
 
-export class UpdateGithubRepoService extends BaseService {
+export class UpdateGithubRepoService extends BaseService<
+  UpdateGithubRepoInput,
+  GithubRepo
+> {
   public async execute(input: UpdateGithubRepoInput): Promise<GithubRepo> {
     const { id, ...data } = input;
 

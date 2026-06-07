@@ -5,7 +5,7 @@ import { reactionQueryWithRelations } from "./queries";
 import { UpdatingReactions } from "./types";
 
 export class UpdateReactionService
-  extends AuthorizedBaseService
+  extends AuthorizedBaseService<UpdateReactionInput, Reaction>
   implements UpdatingReactions
 {
   public async execute(input: UpdateReactionInput): Promise<Reaction> {

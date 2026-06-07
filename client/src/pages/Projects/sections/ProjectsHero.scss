@@ -3,7 +3,6 @@
 .projects-hero {
   $accent-experience: $primary;
 
-  min-height: 50vh;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -45,29 +44,6 @@
 
     align-self: center;
     text-align: center;
-  }
-
-  &__scroll-container {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: $spacing-sm;
-  }
-
-  &__scroll-text {
-    font-size: 0.875rem;
-    color: $text-muted;
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  &__bounce-wrapper {
-    animation: bounce 2s infinite;
   }
 }
 

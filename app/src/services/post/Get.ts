@@ -3,7 +3,10 @@ import { BaseService } from "../service";
 import { postWithRelationsQuery } from "./queries";
 import type { FetchingPosts } from "./types";
 
-export class GetPostService extends BaseService implements FetchingPosts {
+export class GetPostService
+  extends BaseService<string, Post>
+  implements FetchingPosts
+{
   public async execute(postId: string): Promise<Post> {
     const cacheKey = `post:id:${postId}`;
 

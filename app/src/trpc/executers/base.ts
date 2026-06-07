@@ -5,10 +5,14 @@ import type {
 } from "./types";
 import { handleServiceError } from "./handlers/serviceError";
 
+export interface Serving<TInput, TOutput> {
+  execute(input: TInput): Promise<TOutput>;
+}
+
 export const executeService = async <
   TInput,
   TOutput,
-  TService extends { execute: (input: TInput) => Promise<TOutput> },
+  TService extends Serving<TInput, TOutput>,
 >(
   ServiceClass: BaseServiceConstructor<TService>,
   ctx: Context | AuthorizedContext,

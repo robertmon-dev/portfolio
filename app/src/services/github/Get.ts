@@ -2,7 +2,10 @@ import { BaseService } from "../service";
 import { type GithubStats } from "@portfolio/shared";
 import { githubStatsWithDeepRelationsQuery } from "./queries";
 
-export class GetGithubStatsService extends BaseService {
+export class GetGithubStatsService extends BaseService<
+  string,
+  GithubStats | null
+> {
   public async execute(
     username: string = this.settings.NICKNAME,
   ): Promise<GithubStats | null> {

@@ -3,7 +3,7 @@ import type { CreateReactionInput, Reaction } from "@portfolio/shared";
 import type { CreatingReactions } from "./types";
 
 export class CreateReactionService
-  extends AuthorizedBaseService
+  extends AuthorizedBaseService<CreateReactionInput, Reaction>
   implements CreatingReactions
 {
   public async execute(input: CreateReactionInput): Promise<Reaction> {

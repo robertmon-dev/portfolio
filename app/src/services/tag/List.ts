@@ -7,7 +7,10 @@ import {
 import { BaseService } from "../service";
 import { tagWithoutRelationsQuery } from "./queries";
 
-export class ListTagsService extends BaseService {
+export class ListTagsService extends BaseService<
+  ListTagsInput,
+  ListTagsOutput
+> {
   public async execute(input: ListTagsInput): Promise<ListTagsOutput> {
     const { limit, cursor } = input;
     const cacheKey = `tags:list:${limit}:${cursor ?? "first"}`;

@@ -16,8 +16,12 @@ import type { Caching } from "../infrastructure/cache/types";
 import type { Settings } from "../core/settings/settings";
 import type { AuthorizedContext, Context } from "../trpc/context/types";
 import { TagWithRelations } from "./tag/types";
+import type { Serving } from "../trpc/executers/base";
 
-export abstract class BaseService {
+export abstract class BaseService<TInput, TOutput> implements Serving<
+  TInput,
+  TOutput
+> {
   constructor(
     protected readonly db: PrismaClient,
     protected readonly cache: Caching,
@@ -25,6 +29,8 @@ export abstract class BaseService {
     protected readonly settings: Settings["config"],
     protected readonly ctx: Context | AuthorizedContext | null,
   ) {}
+
+  abstract execute(input: TInput): Promise<TOutput>;
 
   protected async invalidateUserCache(
     ...users: (Partial<User> | null | undefined)[]
@@ -256,7 +262,10 @@ export abstract class BaseService {
   }
 }
 
-export abstract class AuthorizedBaseService extends BaseService {
+export abstract class AuthorizedBaseService<
+  TInput,
+  TOutput,
+> extends BaseService<TInput, TOutput> {
   constructor(
     protected readonly db: PrismaClient,
     protected readonly cache: Caching,

@@ -8,7 +8,10 @@ import { BaseService } from "../service";
 import { CommitsListing } from "./types";
 import { githubCommitWithRelationsQuery } from "./queries";
 
-export class ListCommitsService extends BaseService implements CommitsListing {
+export class ListCommitsService
+  extends BaseService<ListCommitsInput, ListCommitsOutput>
+  implements CommitsListing
+{
   public async execute(input: ListCommitsInput): Promise<ListCommitsOutput> {
     const { limit, cursor } = input;
 

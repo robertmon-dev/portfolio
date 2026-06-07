@@ -8,7 +8,7 @@ import { commentWithRelationsQuery } from "./queries";
 import { CreatingComments } from "./types";
 
 export class CreateCommentService
-  extends AuthorizedBaseService
+  extends AuthorizedBaseService<CreateCommentInput, CommentWithReplies>
   implements CreatingComments
 {
   public async execute(input: CreateCommentInput): Promise<CommentWithReplies> {

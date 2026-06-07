@@ -5,7 +5,7 @@ import { postWithRelationsQuery } from "./queries";
 import type { DeletingPosts } from "./types";
 
 export class DeletePostService
-  extends AuthorizedBaseService
+  extends AuthorizedBaseService<DeletePostInput, Post>
   implements DeletingPosts
 {
   public async execute(input: DeletePostInput): Promise<Post> {

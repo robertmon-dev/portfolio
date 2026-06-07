@@ -1,4 +1,4 @@
-import { MOCK_UUID, useServiceTest } from "../../../../mocks/core";
+import { useServiceTest } from "../../../../mocks/core";
 import { describe, it, expect, vi } from "vitest";
 import { GithubCommitFetchWorker } from "../../../github/workers/CommitsFetch";
 import {
@@ -46,7 +46,7 @@ describe("GithubCommitFetchWorker", async () => {
       return await callback(ctx.mocks.prisma);
     });
 
-    await ctx.service.run();
+    await ctx.service.execute();
 
     persistedRepos.map((repo, idx) => {
       expect(local.listCommits).toHaveBeenNthCalledWith(idx + 1, {

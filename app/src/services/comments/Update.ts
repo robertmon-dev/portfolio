@@ -9,7 +9,7 @@ import { TRPCError } from "@trpc/server";
 import { UpdatingComments } from "./types";
 
 export class UpdateCommentService
-  extends AuthorizedBaseService
+  extends AuthorizedBaseService<UpdateCommentInput, CommentWithReplies>
   implements UpdatingComments
 {
   public async execute(input: UpdateCommentInput): Promise<CommentWithReplies> {

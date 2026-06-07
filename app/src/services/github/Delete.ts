@@ -2,7 +2,7 @@ import { GithubRepo } from "@prisma/client";
 import { BaseService } from "../service";
 import { githubRepoWithRelationsQuery } from "./queries";
 
-export class DeleteGithubRepoService extends BaseService {
+export class DeleteGithubRepoService extends BaseService<string, GithubRepo> {
   public async execute(id: string): Promise<GithubRepo> {
     this.logger.warn(`Atomic hard-delete for GitHub repo: ${id}`);
 

@@ -1,31 +1,35 @@
-import { BaseService } from '../service';
-import { HealthChecking } from './types';
-import { HealtCheckReponse } from '@portfolio/shared';
+import { BaseService } from "../service";
+import { HealthChecking } from "./types";
+import { HealtCheckReponse } from "@portfolio/shared";
 
-export class HealthService extends BaseService implements HealthChecking {
+export class HealthService
+  extends BaseService<undefined, HealtCheckReponse>
+  implements HealthChecking
+{
   public async execute(): Promise<HealtCheckReponse> {
     let dbConnected = false;
-    let dbMessage = 'Connected';
+    let dbMessage = "Connected";
     let redisConnected = false;
 
     try {
       await this.db.$queryRaw`SELECT 1`;
       dbConnected = true;
     } catch (error) {
-      this.logger.error('Health check: Database connection failed', error);
-      dbMessage = error instanceof Error ? error.message : 'Unknown database error';
+      this.logger.error("Health check: Database connection failed", error);
+      dbMessage =
+        error instanceof Error ? error.message : "Unknown database error";
     }
 
     try {
-      await this.cache.get('health-check-ping');
+      await this.cache.get("health-check-ping");
       redisConnected = true;
     } catch (error) {
-      this.logger.error('Health check: Redis connection failed', error);
+      this.logger.error("Health check: Redis connection failed", error);
       redisConnected = false;
     }
 
     return {
-      status: (dbConnected && redisConnected) ? 'ok' : 'error',
+      status: dbConnected && redisConnected ? "ok" : "error",
       uptime: process.uptime(),
       timestamp: new Date().toISOString(),
       database: {

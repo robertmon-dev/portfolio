@@ -9,7 +9,10 @@ import { Prisma } from "@prisma/client";
 import type { UserListing } from "./types";
 import { userProfileQuery } from "./queries";
 
-export class ListUsersService extends BaseService implements UserListing {
+export class ListUsersService
+  extends BaseService<ListUsersInput, UserProfile[]>
+  implements UserListing
+{
   public async execute(input: ListUsersInput): Promise<UserProfile[]> {
     const cacheKey = `users:list:${JSON.stringify(input || "all")}`;
 

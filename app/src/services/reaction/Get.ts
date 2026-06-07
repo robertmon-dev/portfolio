@@ -4,7 +4,7 @@ import { reactionQueryWithRelations } from "./queries";
 import type { FetchingReactions } from "./types";
 
 export class GetReactionService
-  extends BaseService
+  extends BaseService<string, Reaction>
   implements FetchingReactions
 {
   public async execute(id: string): Promise<Reaction> {

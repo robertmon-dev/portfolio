@@ -5,7 +5,7 @@ import { BaseService } from "../../service";
 import type { PrismaClient } from "@prisma/client";
 import type { Settings } from "../../../core/settings/settings";
 
-export class GithubCommitFetchWorker extends BaseService {
+export class GithubCommitFetchWorker extends BaseService<undefined, void> {
   private octokit: Octokit;
 
   constructor(
@@ -20,7 +20,7 @@ export class GithubCommitFetchWorker extends BaseService {
     });
   }
 
-  public async run(): Promise<void> {
+  public async execute(): Promise<void> {
     const username = this.settings.NICKNAME;
     this.logger.info(`GitHub Commits Sync Worker started for: ${username}`);
     const start = Date.now();
