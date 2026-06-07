@@ -4,10 +4,10 @@ import {
   zSafeArray,
   TagCategorySchema,
 } from "@portfolio/shared";
-import { BaseService } from "../service";
+import { AuthorizedBaseService } from "../service";
 import { tagCategoryWithRelationsQuery } from "./queries";
 
-export class AssignTagsService extends BaseService<
+export class AssignTagsService extends AuthorizedBaseService<
   AssignTagsInput,
   TagCategory[]
 > {

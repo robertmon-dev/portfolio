@@ -36,7 +36,7 @@ export const executeService = async <
 export const executeAuthorizedService = async <
   TInput,
   TOutput,
-  TService extends { execute: (input: TInput) => Promise<TOutput> },
+  TService extends Serving<TInput, TOutput>,
 >(
   ServiceClass: AuthorizedBaseServiceConstructor<TService>,
   ctx: AuthorizedContext,

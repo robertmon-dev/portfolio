@@ -1,9 +1,9 @@
 import { CreateTagCategoryInput, TagCategory } from "@portfolio/shared";
-import { BaseService } from "../service";
+import { AuthorizedBaseService } from "../service";
 import { TRPCError } from "@trpc/server";
 import { tagCategoryWithRelationsQuery } from "./queries";
 
-export class CreateTagCategoryService extends BaseService<
+export class CreateTagCategoryService extends AuthorizedBaseService<
   CreateTagCategoryInput,
   TagCategory
 > {
