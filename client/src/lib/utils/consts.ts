@@ -41,6 +41,11 @@ import {
   SiGin,
   SiN8N,
   SiNeovim,
+  SiGrafana,
+  SiPrometheus,
+  SiDatadog,
+  SiGooglecloudstorage,
+  SiK6,
 } from "react-icons/si";
 import {
   Mail,
@@ -96,6 +101,7 @@ export const TECH_ICON_MATCHERS: TechMatcher[] = [
   { keywords: ["rails", "rubyonrails"], Icon: SiRubyonrails },
   { keywords: ["gin"], Icon: SiGin },
 
+  { keywords: ["SiGooglecloudstorage"], Icon: SiGooglecloudstorage },
   { keywords: ["postgres", "postgresql"], Icon: SiPostgresql },
   { keywords: ["redis"], Icon: SiRedis },
   { keywords: ["mongodb", "mongo"], Icon: SiMongodb },
@@ -104,6 +110,11 @@ export const TECH_ICON_MATCHERS: TechMatcher[] = [
   { keywords: ["prisma"], Icon: SiPrisma },
   { keywords: ["rabbitmq"], Icon: SiRabbitmq },
   { keywords: ["kafka", "apachekafka"], Icon: SiApachekafka },
+
+  { keywords: ["datadog"], Icon: SiDatadog },
+  { keywords: ["prometheus"], Icon: SiPrometheus },
+  { keywords: ["grafana"], Icon: SiGrafana },
+  { keywords: ["k6"], Icon: SiK6 },
 
   { keywords: ["docker", "container"], Icon: SiDocker },
   { keywords: ["gcp", "google cloud"], Icon: SiGooglecloud },
