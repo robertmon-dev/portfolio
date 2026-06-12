@@ -40,10 +40,17 @@ export class GithubCommitFetchWorker extends BaseService<undefined, void> {
 
     for (const repo of storedRepos) {
       try {
+        const last = await this.db.githubCommit.findFirst({
+          where: { repoId: repo.id },
+          orderBy: { date: "desc" },
+          select: { date: true },
+        });
+
         const { data: commits } = await this.octokit.rest.repos.listCommits({
           owner: username,
           repo: repo.name,
-          per_page: 5,
+          per_page: 100,
+          ...(last?.date ? { since: last.date.toISOString() } : {}),
         });
 
         await this.db.$transaction(async (tx) => {
