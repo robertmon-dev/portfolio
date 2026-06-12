@@ -2,6 +2,8 @@ import { BaseService } from "../service";
 import { MailQueueService } from "./mailQueueService";
 import type { ContactFormInput } from "@portfolio/shared";
 import { MAIL_ACTIONS } from "./types";
+import { Settings } from "src/core/settings/settings";
+import { randomUUID } from "crypto";
 
 export class SubmitContactService extends BaseService<
   ContactFormInput,
@@ -11,7 +13,8 @@ export class SubmitContactService extends BaseService<
     input: ContactFormInput,
   ): Promise<{ success: boolean; ticketId: string }> {
     const mailQueue = MailQueueService.getInstance();
-    const ticketId = `TKT-${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
+    const ticketId = `TKT-${randomUUID()}`;
+    const mailFrom = Settings.getInstance().config.MAIL_FROM;
 
     await mailQueue.addBulk([
       {
@@ -32,7 +35,7 @@ export class SubmitContactService extends BaseService<
           senderEmail: input.email,
           subject: input.subject,
           fullMessage: input.message,
-          adminEmail: process.env.MAIL_FROM as string,
+          adminEmail: mailFrom,
           locale: input.locale,
         },
       },
