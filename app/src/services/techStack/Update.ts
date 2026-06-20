@@ -27,8 +27,8 @@ export class UpdateTechStackService
     );
 
     await Promise.all([
-      this.invalidateTechStackCache(updated),
-      this.invalidateProjectCache(...affectedProjects),
+      this.cacheInvalidator.invalidateTechStackCache(updated),
+      this.cacheInvalidator.invalidateProjectCache(...affectedProjects),
     ]);
 
     this.logger.info(

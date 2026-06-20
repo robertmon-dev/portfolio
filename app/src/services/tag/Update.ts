@@ -28,8 +28,8 @@ export class UpdateTagService extends BaseService<UpdateTagInput, Tag> {
     });
 
     await Promise.all([
-      this.invalidateTagsCache(updated),
-      this.invalidatePostCache(...updated.posts),
+      this.cacheInvalidator.invalidateTagsCache(updated),
+      this.cacheInvalidator.invalidatePostCache(...updated.posts),
     ]);
 
     return updated;

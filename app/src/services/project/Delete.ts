@@ -19,8 +19,10 @@ export class DeleteProjectService
     });
 
     await Promise.all([
-      this.invalidateProjectCache(deletedProject),
-      this.invalidateTechStackCache(...deletedProject.techStack),
+      this.cacheInvalidator.invalidateProjectCache(deletedProject),
+      this.cacheInvalidator.invalidateTechStackCache(
+        ...deletedProject.techStack,
+      ),
     ]);
 
     this.logger.info(

@@ -17,7 +17,9 @@ export class DeleteExperienceService
     });
 
     const deletedExperiences = ids.map((id) => ({ id }));
-    await this.invalidateExperienceCache(...deletedExperiences);
+    await this.cacheInvalidator.invalidateExperienceCache(
+      ...deletedExperiences,
+    );
 
     this.logger.info(
       `Successfully hard-deleted ${result.count} Experience(s) and invalidated cache.`,

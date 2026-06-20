@@ -32,8 +32,11 @@ export class UnlinkTechStackProjectService
     );
 
     await Promise.all([
-      this.invalidateTechStackCache(updatedTechStack),
-      this.invalidateProjectCache({ id: projectId, slug: project.slug }),
+      this.cacheInvalidator.invalidateTechStackCache(updatedTechStack),
+      this.cacheInvalidator.invalidateProjectCache({
+        id: projectId,
+        slug: project.slug,
+      }),
     ]);
 
     this.logger.info(

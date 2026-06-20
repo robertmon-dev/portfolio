@@ -32,7 +32,7 @@ export class UpdateUserService
       ...userProfileQuery,
     });
 
-    await this.invalidateUserCache(oldUser, updated);
+    await this.cacheInvalidator.invalidateUserCache(oldUser, updated);
 
     return UserProfileSchema.parse(updated);
   }

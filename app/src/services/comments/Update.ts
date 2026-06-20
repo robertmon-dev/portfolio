@@ -40,8 +40,8 @@ export class UpdateCommentService
       });
 
       await Promise.all([
-        this.invalidatePostCache(updated.post),
-        this.invalidateCommentsCache(updated),
+        this.cacheInvalidator.invalidatePostCache(updated.post),
+        this.cacheInvalidator.invalidateCommentsCache(updated),
       ]);
 
       return CommentSchema.parse(updated);

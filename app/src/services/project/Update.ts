@@ -46,8 +46,8 @@ export class UpdateProjectService
     ]);
 
     await Promise.all([
-      this.invalidateProjectCache(oldProject, project),
-      this.invalidateTechStackCache(
+      this.cacheInvalidator.invalidateProjectCache(oldProject, project),
+      this.cacheInvalidator.invalidateTechStackCache(
         ...Array.from(techIdsToInvalidate).map((id) => ({ id })),
       ),
     ]);

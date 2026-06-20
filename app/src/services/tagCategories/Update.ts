@@ -31,8 +31,8 @@ export class UpdateTagCategory extends BaseService<
     });
 
     await Promise.all([
-      this.invalidateCategoriesCache(updated),
-      this.invalidateTagsCache(...updated.tags),
+      this.cacheInvalidator.invalidateCategoriesCache(updated),
+      this.cacheInvalidator.invalidateTagsCache(...updated.tags),
     ]);
 
     return updated;

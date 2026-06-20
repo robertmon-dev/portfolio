@@ -28,8 +28,10 @@ export class DeleteTechStackService
     });
 
     await Promise.all([
-      this.invalidateTechStackCache(...ids.map((id) => ({ id }))),
-      this.invalidateProjectCache(...affectedProjects),
+      this.cacheInvalidator.invalidateTechStackCache(
+        ...ids.map((id) => ({ id })),
+      ),
+      this.cacheInvalidator.invalidateProjectCache(...affectedProjects),
     ]);
 
     this.logger.info(

@@ -23,7 +23,7 @@ export class DeleteCommitService
       return commitsToDelete;
     });
 
-    await this.invalidateCommitsCache(...deleted);
+    await this.cacheInvalidator.invalidateCommitsCache(...deleted);
 
     this.logger.info(`GitHub commit delelted and associated cache cleared`);
   }

@@ -38,7 +38,7 @@ export class AssignCommentsForPostService
         ...postWithRelationsQuery,
       });
 
-      await this.invalidatePostCache(updated);
+      await this.cacheInvalidator.invalidatePostCache(updated);
 
       return PostSchema.parse(updated);
     });

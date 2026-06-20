@@ -26,8 +26,8 @@ export class CreateCommentService
     });
 
     await Promise.all([
-      this.invalidateCommentsCache(created),
-      this.invalidatePostCache(created.post),
+      this.cacheInvalidator.invalidateCommentsCache(created),
+      this.cacheInvalidator.invalidatePostCache(created.post),
     ]);
 
     return CommentSchema.parse(created);

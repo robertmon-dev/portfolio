@@ -34,7 +34,7 @@ export class ChangePostVisilibityService
         ...postWithRelationsQuery,
       });
 
-      await this.invalidatePostCache(persisted);
+      await this.cacheInvalidator.invalidatePostCache(persisted);
 
       return PostSchema.parse(updated);
     });

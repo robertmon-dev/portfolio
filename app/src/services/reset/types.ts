@@ -8,16 +8,16 @@ export interface PasswordResetting {
   reset(input: ResetPasswordInput): Promise<{ success: true }>;
 }
 
-export enum Operands {
+export enum Actions {
   Request,
   Reset,
   Resend,
 }
 
 export type PasswordResetServiceInput =
-  | { ops: Operands.Request; input: RequestPasswordResetInput }
-  | { ops: Operands.Resend; input: RequestPasswordResetInput }
-  | { ops: Operands.Reset; input: ResetPasswordInput };
+  | { ops: Actions.Request; input: RequestPasswordResetInput }
+  | { ops: Actions.Resend; input: RequestPasswordResetInput }
+  | { ops: Actions.Reset; input: ResetPasswordInput };
 
 export type PasswordResetServiceOutput =
   | { message: string }

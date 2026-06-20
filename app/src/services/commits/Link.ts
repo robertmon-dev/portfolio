@@ -33,8 +33,10 @@ export class LinkGithubCommitService extends BaseService<
       });
     });
 
-    await this.invalidateCommitsCache(updated);
-    await this.invalidateGithubCache(updated.repo);
+    await Promise.all([
+      await this.cacheInvalidator.invalidateCommitsCache(updated),
+      await this.cacheInvalidator.invalidateGithubCache(updated.repo),
+    ]);
 
     return updated;
   }

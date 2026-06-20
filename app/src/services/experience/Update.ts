@@ -16,7 +16,7 @@ export class UpdateExperienceService
       data,
     });
 
-    await this.invalidateExperienceCache(updated);
+    await this.cacheInvalidator.invalidateExperienceCache(updated);
 
     return updated;
   }

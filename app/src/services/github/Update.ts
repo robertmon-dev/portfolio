@@ -18,8 +18,8 @@ export class UpdateGithubRepoService extends BaseService<
     });
 
     await Promise.all([
-      this.invalidateGithubCache(updated),
-      this.invalidateProjectCache(updated.project),
+      this.cacheInvalidator.invalidateGithubCache(updated),
+      this.cacheInvalidator.invalidateProjectCache(updated.project),
     ]);
 
     this.logger.info(

@@ -32,8 +32,8 @@ export class DeleteTagsService extends BaseService<string[], Tag[]> {
     });
 
     await Promise.all([
-      this.invalidateTagsCache(...removed),
-      this.invalidatePostCache(...posts),
+      this.cacheInvalidator.invalidateTagsCache(...removed),
+      this.cacheInvalidator.invalidatePostCache(...posts),
     ]);
 
     return removed;

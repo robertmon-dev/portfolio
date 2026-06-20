@@ -13,7 +13,7 @@ export class CreateTechStackService
       data,
     });
 
-    await this.invalidateTechStackCache(created);
+    await this.cacheInvalidator.invalidateTechStackCache(created);
 
     return created;
   }

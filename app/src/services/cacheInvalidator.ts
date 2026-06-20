@@ -1,4 +1,4 @@
-import {
+import type {
   Experience,
   User,
   Project,
@@ -10,11 +10,11 @@ import {
   Reaction,
   TagCategory,
 } from "@prisma/client";
-import { Invalidating } from "./types";
-import { Logging } from "../core/logger/types";
-import { Caching } from "../infrastructure/cache/types";
-import { Settings } from "../core/settings/settings";
-import { TagWithRelations } from "./tag/types";
+import type { Invalidating } from "./types";
+import type { Logging } from "../core/logger/types";
+import type { Caching } from "../infrastructure/cache/types";
+import type { Settings } from "../core/settings/settings";
+import type { TagWithRelations } from "./tag/types";
 
 export class CacheInvalidator implements Invalidating {
   public constructor(

@@ -10,7 +10,7 @@ import {
   ResetPasswordInput,
 } from "@portfolio/shared";
 import {
-  Operands,
+  Actions,
   PasswordResetting,
   PasswordResetServiceInput,
   PasswordResetServiceOutput,
@@ -26,11 +26,11 @@ export class PasswordResetService
     input: PasswordResetServiceInput,
   ): Promise<PasswordResetServiceOutput> {
     switch (input.ops) {
-      case Operands.Request:
+      case Actions.Request:
         return this.requestReset(input.input);
-      case Operands.Resend:
+      case Actions.Resend:
         return this.resendReset(input.input);
-      case Operands.Reset:
+      case Actions.Reset:
         return this.reset(input.input);
     }
   }
@@ -112,7 +112,7 @@ export class PasswordResetService
       }),
     ]);
 
-    await this.invalidateUserCache(updatedUser);
+    await this.cacheInvalidator.invalidateUserCache(updatedUser);
 
     this.logger.info(`Password reset successful for user: ${updatedUser.id}`);
 

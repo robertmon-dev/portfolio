@@ -12,8 +12,8 @@ export class DeleteGithubRepoService extends BaseService<string, GithubRepo> {
     });
 
     await Promise.all([
-      this.invalidateGithubCache(deleted),
-      this.invalidateProjectCache(deleted.project),
+      this.cacheInvalidator.invalidateGithubCache(deleted),
+      this.cacheInvalidator.invalidateProjectCache(deleted.project),
     ]);
 
     this.logger.info(

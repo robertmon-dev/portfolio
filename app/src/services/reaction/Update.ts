@@ -42,9 +42,9 @@ export class UpdateReactionService
 
     await Promise.all([
       updated.post
-        ? this.invalidatePostCache(updated.post)
-        : this.invalidateCommentsCache(updated.comment),
-      this.invalidateReactionsCache(updated),
+        ? this.cacheInvalidator.invalidatePostCache(updated.post)
+        : this.cacheInvalidator.invalidateCommentsCache(updated.comment),
+      this.cacheInvalidator.invalidateReactionsCache(updated),
     ]);
 
     return updated;

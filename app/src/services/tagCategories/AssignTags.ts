@@ -25,8 +25,8 @@ export class AssignTagsService extends AuthorizedBaseService<
     });
 
     await Promise.all([
-      this.invalidateCategoriesCache(assigned),
-      this.invalidateTagsCache(...assigned.tags),
+      this.cacheInvalidator.invalidateCategoriesCache(assigned),
+      this.cacheInvalidator.invalidateTagsCache(...assigned.tags),
     ]);
 
     return zSafeArray(TagCategorySchema).parse(assigned);

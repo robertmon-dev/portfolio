@@ -31,7 +31,7 @@ export class CreateUserService
       ...userProfileQuery,
     });
 
-    await this.invalidateUserCache(newUser);
+    await this.cacheInvalidator.invalidateUserCache(newUser);
 
     this.logger.info(`User ${newUser.id} created successfully.`);
 

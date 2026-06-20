@@ -14,7 +14,7 @@ export class DeleteUserService
       where: { id },
     });
 
-    await this.invalidateUserCache(user);
+    await this.cacheInvalidator.invalidateUserCache(user);
 
     this.logger.info(`User ${id} removed and cache invalidated.`);
   }

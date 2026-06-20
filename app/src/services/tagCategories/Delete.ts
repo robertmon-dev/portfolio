@@ -39,8 +39,8 @@ export class DeleteTagCategoriesService extends AuthorizedBaseService<
     });
 
     await Promise.all([
-      this.invalidateTagsCache(...tags),
-      this.invalidateCategoriesCache(...removed),
+      this.cacheInvalidator.invalidateTagsCache(...tags),
+      this.cacheInvalidator.invalidateCategoriesCache(...removed),
     ]);
 
     return removed;

@@ -26,9 +26,9 @@ export class CreateReactionService
 
     await Promise.all([
       postId !== null
-        ? this.invalidatePostCache(upserted.post)
-        : this.invalidateCommentsCache(upserted.comment),
-      this.invalidateReactionsCache(upserted),
+        ? this.cacheInvalidator.invalidatePostCache(upserted.post)
+        : this.cacheInvalidator.invalidateCommentsCache(upserted.comment),
+      this.cacheInvalidator.invalidateReactionsCache(upserted),
     ]);
 
     this.logger.info(`Upserted new reaction for user with ID: ${authorId}`);

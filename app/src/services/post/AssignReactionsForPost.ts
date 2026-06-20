@@ -40,7 +40,7 @@ export class AssignReactionsForPostService
         ...postWithRelationsQuery,
       });
 
-      await this.invalidatePostCache(persisted);
+      await this.cacheInvalidator.invalidatePostCache(persisted);
 
       return PostSchema.parse(updated);
     });

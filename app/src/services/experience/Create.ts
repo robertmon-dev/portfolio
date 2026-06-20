@@ -13,7 +13,7 @@ export class CreateExperienceService
       data,
     });
 
-    await this.invalidateExperienceCache(created);
+    await this.cacheInvalidator.invalidateExperienceCache(created);
 
     return created;
   }

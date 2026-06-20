@@ -17,7 +17,7 @@ export class UpdateCommitService extends BaseService<
       ...githubCommitWithRelationsQuery,
     });
 
-    this.invalidateCommitsCache(updated);
+    this.cacheInvalidator.invalidateCommitsCache(updated);
 
     return updated;
   }

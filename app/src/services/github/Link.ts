@@ -25,8 +25,11 @@ export class LinkRepoProjectService extends BaseService<
     });
 
     await Promise.all([
-      this.invalidateGithubCache(updatedRepo),
-      this.invalidateProjectCache({ id: projectId, slug: project.slug }),
+      this.cacheInvalidator.invalidateGithubCache(updatedRepo),
+      this.cacheInvalidator.invalidateProjectCache({
+        id: projectId,
+        slug: project.slug,
+      }),
     ]);
 
     return updatedRepo;

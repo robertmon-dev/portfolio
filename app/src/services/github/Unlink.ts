@@ -32,8 +32,8 @@ export class UnlinkRepoProjectService extends BaseService<String, void> {
       });
 
       await Promise.all([
-        this.invalidateGithubCache(updated),
-        this.invalidateProjectCache(targetRepo.project),
+        this.cacheInvalidator.invalidateGithubCache(updated),
+        this.cacheInvalidator.invalidateProjectCache(targetRepo.project),
       ]);
     });
   }

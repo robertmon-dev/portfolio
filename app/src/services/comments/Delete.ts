@@ -42,8 +42,8 @@ export class DeleteCommentsService
       });
 
       await Promise.all([
-        this.invalidateCommentsCache(...deleted),
-        this.invalidatePostCache(...posts),
+        this.cacheInvalidator.invalidateCommentsCache(...deleted),
+        this.cacheInvalidator.invalidatePostCache(...posts),
       ]);
 
       return z.array(CommentSchema).parse(deleted);

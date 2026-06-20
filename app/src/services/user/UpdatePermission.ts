@@ -36,7 +36,7 @@ export class UpdateUserPermissionsService
       });
     });
 
-    await this.invalidateUserCache(updated);
+    await this.cacheInvalidator.invalidateUserCache(updated);
 
     this.logger.info(`Successfully updated permissions for user ${id}`);
     return UserProfileSchema.parse(updated);

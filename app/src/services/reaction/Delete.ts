@@ -46,9 +46,9 @@ export class DeleteReactionsService
     const comments = removed.map((r) => r.comment).filter(Boolean) as Comment[];
 
     await Promise.all([
-      this.invalidatePostCache(...posts),
-      this.invalidateCommentsCache(...comments),
-      this.invalidateReactionsCache(...removed),
+      this.cacheInvalidator.invalidatePostCache(...posts),
+      this.cacheInvalidator.invalidateCommentsCache(...comments),
+      this.cacheInvalidator.invalidateReactionsCache(...removed),
     ]);
 
     return removed;
