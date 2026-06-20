@@ -60,7 +60,7 @@ export const authPrivateRouter = router({
         ctx,
       );
 
-      await authService.logout(token);
+      await authService.logout({ token });
       return { success: true };
     }),
 });
