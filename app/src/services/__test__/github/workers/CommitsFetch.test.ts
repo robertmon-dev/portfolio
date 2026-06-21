@@ -52,7 +52,7 @@ describe("GithubCommitFetchWorker", async () => {
       expect(local.listCommits).toHaveBeenNthCalledWith(idx + 1, {
         owner: ctx.mocks.settings.NICKNAME,
         repo: repo.name,
-        per_page: 5,
+        per_page: 100,
       });
     });
     expect(ctx.mocks.prisma.$transaction).toHaveBeenCalledTimes(20);
