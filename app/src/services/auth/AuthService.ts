@@ -17,7 +17,7 @@ import {
   AuthServiceInput,
   AuthServiceOutput,
   LogoutInput,
-  Operanda,
+  Actions,
 } from "./types";
 import { MAIL_ACTIONS } from "../mail/types";
 import { CodeType } from "@prisma/client";
@@ -30,16 +30,16 @@ export class AuthService
 {
   private mailQueue = MailQueueService.getInstance();
 
-  public async execute(input: AuthServiceInput): Promise<AuthServiceOutput> {
-    switch (input.ops) {
-      case Operanda.Login:
-        return await this.login(input.input);
-      case Operanda.SecondFactor:
-        return await this.verify2FA(input.input);
-      case Operanda.Resend:
-        return await this.resend2FACode(input.input);
-      case Operanda.Logout:
-        return await this.logout(input.input);
+  public async execute(data: AuthServiceInput): Promise<AuthServiceOutput> {
+    switch (data.ops) {
+      case Actions.Login:
+        return await this.login(data.input);
+      case Actions.SecondFactor:
+        return await this.verify2FA(data.input);
+      case Actions.Resend:
+        return await this.resend2FACode(data.input);
+      case Actions.Logout:
+        return await this.logout(data.input);
     }
   }
 

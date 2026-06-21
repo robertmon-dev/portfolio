@@ -92,7 +92,7 @@ export class GithubCommitFetchWorker extends BaseService<undefined, void> {
       }
     }
 
-    await this.invalidateGithubCache(...storedRepos);
+    await this.cacheInvalidator.invalidateGithubCache(...storedRepos);
 
     this.logger.info(
       `GitHub Commits Sync Worker completed in ${Date.now() - start}ms. Synced ${totalSyncedCommits} commits across ${storedRepos.length} repos.`,

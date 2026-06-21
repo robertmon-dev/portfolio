@@ -9,7 +9,7 @@ export interface Authenticating {
   login(input: LoginInput): Promise<LoginResponse>;
 }
 
-export enum Operanda {
+export enum Actions {
   Login,
   SecondFactor,
   Resend,
@@ -21,10 +21,10 @@ export interface LogoutInput {
 }
 
 export type AuthServiceInput =
-  | { ops: Operanda.Login; input: LoginInput }
-  | { ops: Operanda.Resend; input: Resend2FAInput }
-  | { ops: Operanda.SecondFactor; input: VerifyTwoFactorInput }
-  | { ops: Operanda.Logout; input: LogoutInput };
+  | { ops: Actions.Login; input: LoginInput }
+  | { ops: Actions.Resend; input: Resend2FAInput }
+  | { ops: Actions.SecondFactor; input: VerifyTwoFactorInput }
+  | { ops: Actions.Logout; input: LogoutInput };
 
 export type AuthServiceOutput =
   | Promise<LoginResponse>

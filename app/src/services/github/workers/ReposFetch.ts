@@ -110,8 +110,8 @@ export class GithubFetchWorker extends BaseService<undefined, void> {
     );
 
     await Promise.all([
-      this.invalidateGithubCache(...syncedRepos),
-      this.invalidateProjectCache(...affectedProjects),
+      this.cacheInvalidator.invalidateGithubCache(...syncedRepos),
+      this.cacheInvalidator.invalidateProjectCache(...affectedProjects),
     ]);
 
     this.logger.info(
