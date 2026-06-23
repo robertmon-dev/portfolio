@@ -34,6 +34,12 @@ export class QueueService<DataTypeOrJob, ResultType, NameType extends string> {
       },
       ...options,
     });
+
+    this.queue.on("error", async (err) => {
+      this.logger.error("Error has occured while working on queue", {
+        err: err,
+      });
+    });
   }
 
   public async close(): Promise<void> {
