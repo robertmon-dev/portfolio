@@ -26,17 +26,13 @@ export abstract class BaseService<TInput, TOutput> implements Serving<
   abstract execute(input: TInput): Promise<TOutput>;
 }
 
-export abstract class AuthorizedBaseService<
-  TInput,
-  TOutput,
-> extends BaseService<TInput, TOutput> {
-  constructor(
-    protected readonly db: PrismaClient,
-    protected readonly cache: Caching,
-    protected readonly logger: Logging,
-    protected readonly settings: Settings["config"],
-    protected readonly ctx: AuthorizedContext,
-  ) {
-    super(db, cache, logger, settings, ctx);
+export abstract class AuthorizedBaseService<TInput, TOutput>
+  extends BaseService<TInput, TOutput>
+  implements Serving<TInput, TOutput>
+{
+  constructor(protected readonly ctx: AuthorizedContext) {
+    super(ctx.db, ctx.cache, ctx.logger, ctx.settings, ctx);
   }
+
+  abstract execute(input: TInput): Promise<TOutput>;
 }
