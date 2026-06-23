@@ -23,6 +23,10 @@ export abstract class BaseWorker<
       },
       { connection, ...options },
     );
+
+    this.worker.on("error", async (err) => {
+      this.logger.error("Error has occured in worker", { err: err });
+    });
   }
 
   protected abstract process(
