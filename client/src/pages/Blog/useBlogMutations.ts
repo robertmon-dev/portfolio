@@ -43,4 +43,16 @@ export const useCommentMutations = () => {
   };
 };
 
+export const useReactionMutations = () => {
+  const createReaction = trpc.admin.reactions.create.useMutation();
+  const updateReaction = trpc.admin.reactions.update.useMutation();
+  const deleteReaction = trpc.admin.reactions.delete.useMutation();
+
+  return {
+    create: createReaction,
+    update: updateReaction,
+    remove: deleteReaction,
+  };
+};
+
 export type CommentMutations = ReturnType<typeof useCommentMutations>;
