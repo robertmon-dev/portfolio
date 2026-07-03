@@ -1,4 +1,5 @@
 import { useCommentsState } from "./useCommentsState";
+import { useReactionsState } from "./useReactionsState";
 
 export const COMMENT_ACTIONS = {
   SET_PROCESSING: "COMMENT/SET_PROCESSING",
@@ -7,12 +8,26 @@ export const COMMENT_ACTIONS = {
   CLOSE_MODALS: "COMMENT/CLOSE_MODALS",
 } as const;
 
+export const REACTION_ACTIONS = {
+  SET_PROCESSING: "REACTION/SET_PROCESSING",
+  SELECT_REACTION: "REACTION/SELECT_REACTION",
+  OPEN_MODAL: "REACTION/OPEN_MODAL",
+  CLOSE_MODALS: "REACTION/CLOSE_MODALS",
+} as const;
+
 export type CommentModalType = "CREATE" | "UPDATE" | "DELETE" | null;
+export type ReactionModalType = "CREATE" | "UPDATE" | "DELETE" | null;
 
 export interface CommentState {
   processingId: string | null;
   selectedId: string | null;
   activeModal: CommentModalType;
+}
+
+export interface ReactionState {
+  processingId: string | null;
+  selectedId: string | null;
+  activeModal: ReactionModalType;
 }
 
 export type CommentAction =
@@ -21,7 +36,19 @@ export type CommentAction =
   | { type: typeof COMMENT_ACTIONS.OPEN_MODAL; payload: CommentModalType }
   | { type: typeof COMMENT_ACTIONS.CLOSE_MODALS };
 
-export const initialState: CommentState = {
+export type ReactionAction =
+  | { type: typeof REACTION_ACTIONS.SET_PROCESSING; payload: string | null }
+  | { type: typeof REACTION_ACTIONS.SELECT_REACTION; payload: string | null }
+  | { type: typeof REACTION_ACTIONS.OPEN_MODAL; payload: ReactionModalType }
+  | { type: typeof REACTION_ACTIONS.CLOSE_MODALS };
+
+export const commentsInitialState: CommentState = {
+  processingId: null,
+  selectedId: null,
+  activeModal: null,
+};
+
+export const reactionsInitialState: ReactionState = {
   processingId: null,
   selectedId: null,
   activeModal: null,
@@ -45,4 +72,23 @@ export function commentReducer(
   }
 }
 
+export function reactionReducer(
+  state: ReactionState,
+  action: ReactionAction,
+): ReactionState {
+  switch (action.type) {
+    case REACTION_ACTIONS.SET_PROCESSING:
+      return { ...state, processingId: action.payload };
+    case REACTION_ACTIONS.SELECT_REACTION:
+      return { ...state, selectedId: action.payload };
+    case REACTION_ACTIONS.OPEN_MODAL:
+      return { ...state, activeModal: action.payload };
+    case REACTION_ACTIONS.CLOSE_MODALS:
+      return { ...state, activeModal: null };
+    default:
+      return state;
+  }
+}
+
 export type CommentActionsType = ReturnType<typeof useCommentsState>;
+export type ReactionActionsType = ReturnType<typeof useReactionsState>;
