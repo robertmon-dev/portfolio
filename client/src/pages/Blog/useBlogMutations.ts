@@ -56,3 +56,4 @@ export const useReactionMutations = () => {
 };
 
 export type CommentMutations = ReturnType<typeof useCommentMutations>;
+export type ReactionMutations = ReturnType<typeof useReactionMutations>;
