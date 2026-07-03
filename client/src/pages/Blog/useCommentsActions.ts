@@ -1,13 +1,11 @@
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 import { COMMENT_ACTIONS, type CommentAction } from "./types";
-import type { Utils } from "@/lib/trpc/types";
 import type { CreateCommentInput, UpdateCommentInput } from "@portfolio/shared";
 import type { CommentMutations } from "./useBlogMutations";
 
 export const useCommentActions = (
   mutations: CommentMutations,
-  utils: Utils,
   dispatch: React.Dispatch<CommentAction>,
 ) => {
   const { t } = useTranslation();
@@ -23,10 +21,6 @@ export const useCommentActions = (
         ),
       );
       dispatch({ type: COMMENT_ACTIONS.CLOSE_MODALS });
-
-      await utils.admin.comments.list.invalidate();
-      await utils.comments.listByPost.invalidate();
-      await utils.comments.listByParent.invalidate();
     } finally {
       dispatch({ type: COMMENT_ACTIONS.SET_PROCESSING, payload: null });
     }
@@ -43,8 +37,6 @@ export const useCommentActions = (
         ),
       );
       dispatch({ type: COMMENT_ACTIONS.CLOSE_MODALS });
-
-      await utils.admin.comments.list.invalidate();
     } finally {
       dispatch({ type: COMMENT_ACTIONS.SET_PROCESSING, payload: null });
     }
@@ -61,10 +53,6 @@ export const useCommentActions = (
         ),
       );
       dispatch({ type: COMMENT_ACTIONS.CLOSE_MODALS });
-
-      await utils.admin.comments.list.invalidate();
-      await utils.comments.listByPost.invalidate();
-      await utils.comments.listByParent.invalidate();
     } finally {
       dispatch({ type: COMMENT_ACTIONS.SET_PROCESSING, payload: null });
     }
