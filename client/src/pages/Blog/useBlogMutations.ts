@@ -11,7 +11,7 @@ export const useReaction = (id: string) => {
   );
 };
 
-export const usePostReactions = (postId: string) => {
+export const usePostReactionsQueries = (postId: string) => {
   return trpc.reactions.listByPost.useQuery(
     { id: postId },
     {
@@ -21,7 +21,7 @@ export const usePostReactions = (postId: string) => {
   );
 };
 
-export const useCommentReactions = (commentId: string) => {
+export const useCommentReactionsQueries = (commentId: string) => {
   return trpc.reactions.listByComment.useQuery(
     { id: commentId },
     {
