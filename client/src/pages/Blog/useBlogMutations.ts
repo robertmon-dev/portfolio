@@ -32,28 +32,9 @@ export const useCommentReactionsQueries = (commentId: string) => {
 };
 
 export const useCommentMutations = () => {
-  const utils = trpc.useUtils();
-
-  const createComment = trpc.admin.comments.create.useMutation({
-    onSuccess: () => {
-      utils.comments.listByPost.invalidate();
-      utils.comments.listByParent.invalidate();
-    },
-  });
-
-  const updateComment = trpc.admin.comments.update.useMutation({
-    onSuccess: (data) => {
-      utils.comments.getById.setData({ id: data.id }, data);
-    },
-  });
-
-  const deleteComment = trpc.admin.comments.delete.useMutation({
-    onSuccess: () => {
-      utils.comments.listByPost.invalidate();
-      utils.comments.listByParent.invalidate();
-      utils.admin.comments.list.invalidate();
-    },
-  });
+  const createComment = trpc.admin.comments.create.useMutation();
+  const updateComment = trpc.admin.comments.update.useMutation();
+  const deleteComment = trpc.admin.comments.delete.useMutation();
 
   return {
     create: createComment,
