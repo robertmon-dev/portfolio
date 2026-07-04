@@ -6,7 +6,7 @@ import { useAccess } from "@/hooks/useAccess";
 import { usePostReactionsQueries } from "@/pages/Blog/useBlogMutations";
 import { useReactionsState } from "@/pages/Blog/useReactionsState";
 import { REACTION_TYPE, type ReactionKind } from "@portfolio/shared";
-import { REACTION_EMOJI } from "../consts";
+import { REACTION_ICONS } from "../consts";
 import "./PostReactions.scss";
 
 export const PostReactions = ({ postId }: { postId: string }) => {
@@ -45,25 +45,27 @@ export const PostReactions = ({ postId }: { postId: string }) => {
       viewport={{ once: true }}
     >
       <div className="post-reactions__list">
-        {REACTION_TYPE.map((type) => (
-          <button
-            key={type}
-            type="button"
-            className="post-reactions__button"
-            onClick={() => void handleReact(type)}
-            disabled={!canReact || isProcessing}
-            title={
-              canReact
-                ? type
-                : t("post.reactions.loginPrompt", "Sign in to react")
-            }
-          >
-            <span className="post-reactions__emoji">
-              {REACTION_EMOJI[type]}
-            </span>
-            <span className="post-reactions__count">{counts[type]}</span>
-          </button>
-        ))}
+        {REACTION_TYPE.map((type) => {
+          const Icon = REACTION_ICONS[type];
+
+          return (
+            <button
+              key={type}
+              type="button"
+              className="post-reactions__button"
+              onClick={() => void handleReact(type)}
+              disabled={!canReact || isProcessing}
+              title={
+                canReact
+                  ? type
+                  : t("post.reactions.loginPrompt", "Sign in to react")
+              }
+            >
+              <Icon size={16} className="post-reactions__icon" />
+              <span className="post-reactions__count">{counts[type]}</span>
+            </button>
+          );
+        })}
       </div>
 
       {!canReact && (
