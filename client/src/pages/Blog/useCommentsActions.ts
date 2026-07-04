@@ -45,7 +45,7 @@ export const useCommentActions = (
   const handleDelete = async (id: string) => {
     dispatch({ type: COMMENT_ACTIONS.SET_PROCESSING, payload: id });
     try {
-      await mutations.remove.mutateAsync({ commentIds: id });
+      await mutations.remove.mutateAsync({ commentIds: [id] });
       toast.success(
         t(
           "admin.comments.notifications.delete.success",
