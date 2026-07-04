@@ -4,6 +4,7 @@
     "cancel": "Cancel",
     "edit": "Edit",
     "delete": "Delete",
+    "restore": "Restore",
     "add": "Add",
     "send": "Send",
     "settings": "Settings",
@@ -265,6 +266,9 @@
         },
         "delete": {
           "success": "Comment deleted successfully"
+        },
+        "restore": {
+          "success": "Comment restored successfully"
         }
       }
     },
@@ -340,6 +344,9 @@
       },
       "delete": {
         "success": "Post moved to trash"
+      },
+      "restore": {
+        "success": "Post restored"
       },
       "publish": {
         "success": "Post published"

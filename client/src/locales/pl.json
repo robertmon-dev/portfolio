@@ -4,6 +4,7 @@
     "cancel": "Anuluj",
     "edit": "Edytuj",
     "delete": "Usuń",
+    "restore": "Przywróć",
     "add": "Dodaj",
     "send": "Wyślij",
     "settings": "Ustawienia",
@@ -280,6 +281,9 @@
         },
         "delete": {
           "success": "Komentarz został usunięty"
+        },
+        "restore": {
+          "success": "Komentarz został przywrócony"
         }
       }
     },
@@ -361,6 +365,9 @@
       },
       "delete": {
         "success": "Wpis został przeniesiony do kosza"
+      },
+      "restore": {
+        "success": "Wpis został przywrócony"
       },
       "publish": {
         "success": "Wpis został opublikowany"
