@@ -126,6 +126,20 @@
       }
     }
   },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Notes on things I have built, broken and figured out along the way",
+    "empty": "No posts yet. Check back soon!",
+    "loadMore": "Show more posts",
+    "sections": {
+      "posts": "Latest posts"
+    },
+    "post": {
+      "defaultAuthor": "Article",
+      "views_one": "{{count}} view",
+      "views_other": "{{count}} views"
+    }
+  },
   "projects": {
     "title": "My Projects",
     "subtitle": "Some of my stuff I've created, broken, and repaired",

@@ -102,6 +102,21 @@
       "users": "Użytkownicy"
     }
   },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Notatki o rzeczach, które zbudowałem, popsułem i rozgryzłem po drodze",
+    "empty": "Nie ma jeszcze żadnych wpisów. Zajrzyj wkrótce!",
+    "loadMore": "Pokaż więcej wpisów",
+    "sections": {
+      "posts": "Najnowsze wpisy"
+    },
+    "post": {
+      "defaultAuthor": "Artykuł",
+      "views_one": "{{count}} wyświetlenie",
+      "views_few": "{{count}} wyświetlenia",
+      "views_many": "{{count}} wyświetleń"
+    }
+  },
   "projects": {
     "title": "Moje Projekty",
     "subtitle": "Trochę rzeczy, które stworzyłem, popsułem i naprawiłem",
