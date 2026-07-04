@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { BaseService } from "../service";
 import { PostSchema, ListPostsOutput } from "@portfolio/shared";
-import { postWithRelationsQuery } from "./queries";
+import { postWithRelationsQuery, mapPostRelations } from "./queries";
 import type { ListPostsServiceInput, ListingPosts } from "./types";
 
 export class ListPostsService
@@ -30,7 +30,7 @@ export class ListPostsService
       }
 
       return {
-        items: z.array(PostSchema).parse(items),
+        items: z.array(PostSchema).parse(items.map(mapPostRelations)),
         nextCursor,
       };
     });
