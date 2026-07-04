@@ -241,13 +241,17 @@
         "total_many": "{{count}} Komentarzy",
         "replies_one": "{{count}} Odpowiedź",
         "replies_few": "{{count}} Odpowiedzi",
-        "replies_many": "{{count}} Odpowiedzi"
+        "replies_many": "{{count}} Odpowiedzi",
+        "deleted_one": "{{count}} Usunięty",
+        "deleted_few": "{{count}} Usunięte",
+        "deleted_many": "{{count}} Usuniętych"
       },
       "table": {
         "comment": "Komentarz",
         "post": "Wpis",
-        "kind": "Rodzaj",
+        "status": "Status",
         "reply": "Odpowiedź",
+        "deleted": "Usunięty",
         "visibility": "Widoczność",
         "stats": "Statystyki",
         "created": "Utworzono",

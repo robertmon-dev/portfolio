@@ -227,13 +227,16 @@
         "total_one": "{{count}} Comment",
         "total_other": "{{count}} Comments",
         "replies_one": "{{count}} Reply",
-        "replies_other": "{{count}} Replies"
+        "replies_other": "{{count}} Replies",
+        "deleted_one": "{{count}} Deleted",
+        "deleted_other": "{{count}} Deleted"
       },
       "table": {
         "comment": "Comment",
         "post": "Post",
-        "kind": "Kind",
+        "status": "Status",
         "reply": "Reply",
+        "deleted": "Deleted",
         "visibility": "Visibility",
         "stats": "Stats",
         "created": "Created",
