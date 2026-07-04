@@ -16,11 +16,9 @@ export class CreatePostService
       data: {
         ...rest,
         author: { connect: { id: userId } },
-        tags: tagIds
-          ? {
-              connect: tagIds.map((id) => ({ id })),
-            }
-          : undefined,
+        tags: {
+          connect: tagIds.map((id) => ({ id })),
+        },
       },
       ...postWithRelationsQuery,
     });
