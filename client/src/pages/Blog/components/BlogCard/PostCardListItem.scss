@@ -62,10 +62,15 @@
   &__footer {
     display: flex;
     align-items: center;
+    gap: $spacing-xs;
     margin-top: $spacing-xs;
   }
 
   &__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+
     font-family: $font-stack;
     font-size: 0.75rem;
     color: $tn-orange;
@@ -75,6 +80,19 @@
     transition:
       color 0.2s ease,
       background-color 0.2s ease;
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    display: flex;
+  }
+
+  &__tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: $spacing-xs;
+    margin-top: $spacing-xs;
   }
 }
 
