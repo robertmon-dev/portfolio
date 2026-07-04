@@ -8,7 +8,6 @@ import { Arrow } from "@/components/atoms/Arrow/Arrow";
 import { LoadingBar } from "@/components/atoms/LoadingBar/LoadingBar";
 import { ErrorPage } from "@/pages/Error/Error";
 import { PostHeader } from "./sections/PostHeader";
-import { PostReactions } from "./sections/PostReactions";
 import { PostComments } from "./sections/PostComments";
 import "./Post.scss";
 
