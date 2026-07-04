@@ -1,12 +1,7 @@
 import { EntityGrid } from "@/components/molecules/EntityGrid/EntityGrid";
 import { PostCardListItem } from "../components/BlogCard/PostCardListItem";
-import type { Post } from "@portfolio/shared";
+import type { PostGridProps } from "./types";
 import "./PostGrid.scss";
-
-interface PostGridProps {
-  posts: Post[];
-  isLoading?: boolean;
-}
 
 export const PostGrid = ({ posts, isLoading }: PostGridProps) => {
   return (
