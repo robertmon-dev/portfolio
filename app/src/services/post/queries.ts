@@ -28,8 +28,32 @@ export const postWithRelationsQuery = {
   },
 } satisfies Prisma.PostDefaultArgs;
 
+export const postWithEternalRelationsQuery = {
+  include: {
+    author: {
+      ...userPublicQuery,
+    },
+    comments: {
+      include: {
+        reactions: true,
+        replies: {
+          include: {
+            reactions: true,
+          },
+        },
+      },
+    },
+    reactions: true,
+    tags: true,
+  },
+} satisfies Prisma.PostDefaultArgs;
+
 export type PostWithRelationsRow = Prisma.PostGetPayload<
   typeof postWithRelationsQuery
+>;
+
+export type PostWithEternalRelationsRow = Prisma.PostGetPayload<
+  typeof postWithEternalRelationsQuery
 >;
 
 export const mapPostRelations = (post: PostWithRelationsRow) => ({
