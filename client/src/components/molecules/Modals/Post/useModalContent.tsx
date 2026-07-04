@@ -19,7 +19,7 @@ export const usePostModalContent = (
         title: t("admin.posts.modals.create.title", "Create new post"),
         component: (
           <PostForm
-            onSubmit={(data) => actions.createPost(data)}
+            onSubmit={(data) => void actions.createPost(data)}
             onCancel={actions.closeModals}
             isLoading={isAnyProcessing}
           />
@@ -31,7 +31,7 @@ export const usePostModalContent = (
           <PostForm
             initialData={selectedPost}
             onSubmit={(data) =>
-              actions.updatePost({
+              void actions.updatePost({
                 id: selectedPost!.id,
                 viewCount: selectedPost!.viewCount,
                 deletedAt: selectedPost!.deletedAt,
@@ -55,7 +55,7 @@ export const usePostModalContent = (
             })}
             confirmText={t("common.delete", "Remove")}
             variant="danger"
-            onConfirm={() => actions.deletePost(selectedPost!.id)}
+            onConfirm={() => void actions.deletePost(selectedPost!.id)}
             onCancel={actions.closeModals}
             isLoading={isAnyProcessing}
           />
