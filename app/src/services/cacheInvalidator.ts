@@ -163,7 +163,7 @@ export class CacheInvalidator implements Invalidating {
       "comments:list:both:*",
       "comments:list:post:both:*",
       "comments:list:post:*",
-      "comments:list:parent:",
+      "comments:list:parent:*",
       "comments:list:parent:both:*",
     ]);
 
