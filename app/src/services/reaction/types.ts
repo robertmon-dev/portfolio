@@ -30,6 +30,10 @@ export interface ListingReactionsByPost {
   execute(postId: string): Promise<Reaction[]>;
 }
 
+export interface RestoringReactions {
+  execute(reactionIds: string[]): Promise<Reaction[]>;
+}
+
 export interface UpdatingReactions {
   execute(input: UpdateReactionInput): Promise<Reaction>;
 }
