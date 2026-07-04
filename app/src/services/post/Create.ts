@@ -25,6 +25,8 @@ export class CreatePostService
       ...postWithRelationsQuery,
     });
 
+    await this.cacheInvalidator.invalidatePostCache(post);
+
     return PostSchema.parse(mapPostRelations(post));
   }
 }
