@@ -44,7 +44,7 @@ export const getPostColumns = (
     render: (post) => (
       <div className="posts-table__status-col">
         {post.deletedAt ? (
-          <Tag variant="error" size="sm" icon={<Trash2 size={12} />}>
+          <Tag variant="danger" size="sm" icon={<Trash2 size={12} />}>
             {t("admin.posts.table.deleted", "Deleted")}
           </Tag>
         ) : post.publishedAt ? (
