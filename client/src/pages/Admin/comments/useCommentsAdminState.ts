@@ -63,6 +63,11 @@ export const useCommentsAdminState = () => {
         await handlers.handleDelete(id);
         await invalidate();
       },
+
+      restoreComment: async (id: string) => {
+        await handlers.handleRestore(id);
+        await invalidate();
+      },
     },
   };
 };
