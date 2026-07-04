@@ -1,0 +1,70 @@
+@use "sass:color";
+
+.comment-item {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+  padding: $spacing-sm $spacing-md;
+  border: 1px solid $border-color;
+  border-radius: $radius-md;
+  background: color.change($bg-surface, $alpha: 0.5);
+
+  &--reply {
+    background: transparent;
+    border-style: dashed;
+  }
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+    list-style: none;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-sm;
+  }
+
+  &__author {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: $text-main;
+  }
+
+  &__date {
+    font-size: 0.75rem;
+    color: $text-muted;
+  }
+
+  &__content {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: $text-main;
+    margin: 0;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  &__reactions {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    color: $text-muted;
+  }
+
+  &__replies {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+    margin: 0 0 0 $spacing-lg;
+    padding: 0;
+    list-style: none;
+  }
+}
