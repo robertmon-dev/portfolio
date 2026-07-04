@@ -26,7 +26,7 @@ export const PostForm = (props: PostFormProps) => {
   }));
 
   return (
-    <form onSubmit={handleSubmit} className="post-form">
+    <form onSubmit={(e) => void handleSubmit(e)} className="post-form">
       <div className="post-form__grid">
         <Input
           {...register("title")}
