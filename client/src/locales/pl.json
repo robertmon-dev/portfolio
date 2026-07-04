@@ -100,6 +100,8 @@
       "experience": "Doświadczenie",
       "techstack": "Tech Stack",
       "posts": "Wpisy",
+      "comments": "Komentarze",
+      "reactions": "Reakcje",
       "users": "Użytkownicy"
     }
   },
@@ -227,6 +229,94 @@
     }
   },
   "admin": {
+    "comments": {
+      "title": "Zarządzanie komentarzami",
+      "subtitle": "Moderuj dyskusję pod wpisami na blogu",
+      "tags": {
+        "total_one": "{{count}} Komentarz",
+        "total_few": "{{count}} Komentarze",
+        "total_many": "{{count}} Komentarzy",
+        "replies_one": "{{count}} Odpowiedź",
+        "replies_few": "{{count}} Odpowiedzi",
+        "replies_many": "{{count}} Odpowiedzi"
+      },
+      "table": {
+        "comment": "Komentarz",
+        "post": "Wpis",
+        "kind": "Rodzaj",
+        "reply": "Odpowiedź",
+        "visibility": "Widoczność",
+        "stats": "Statystyki",
+        "created": "Utworzono",
+        "actions": "Akcje"
+      },
+      "form": {
+        "content": {
+          "label": "Treść"
+        }
+      },
+      "modals": {
+        "edit": {
+          "title": "Edytuj komentarz"
+        },
+        "delete": {
+          "title": "Usuń komentarz",
+          "confirm": "Czy na pewno chcesz usunąć ten komentarz?"
+        }
+      },
+      "notifications": {
+        "create": {
+          "success": "Komentarz został dodany"
+        },
+        "update": {
+          "success": "Komentarz został zaktualizowany"
+        },
+        "delete": {
+          "success": "Komentarz został usunięty"
+        }
+      }
+    },
+    "reactions": {
+      "title": "Zarządzanie reakcjami",
+      "subtitle": "Przeglądaj i moderuj reakcje na wpisy i komentarze",
+      "tags": {
+        "total_one": "{{count}} Reakcja",
+        "total_few": "{{count}} Reakcje",
+        "total_many": "{{count}} Reakcji",
+        "posts_one": "{{count}} Na wpisach",
+        "posts_few": "{{count}} Na wpisach",
+        "posts_many": "{{count}} Na wpisach",
+        "comments_one": "{{count}} Na komentarzach",
+        "comments_few": "{{count}} Na komentarzach",
+        "comments_many": "{{count}} Na komentarzach"
+      },
+      "table": {
+        "type": "Typ",
+        "target": "Cel",
+        "post": "Wpis",
+        "comment": "Komentarz",
+        "author": "Autor",
+        "created": "Utworzono",
+        "actions": "Akcje"
+      },
+      "modals": {
+        "delete": {
+          "title": "Usuń reakcję",
+          "confirm": "Czy na pewno chcesz usunąć tę reakcję?"
+        }
+      },
+      "notifications": {
+        "create": {
+          "success": "Reakcja została dodana"
+        },
+        "update": {
+          "success": "Reakcja została zaktualizowana"
+        },
+        "delete": {
+          "success": "Reakcja została usunięta"
+        }
+      }
+    },
     "posts": {
       "title": "Zarządzanie wpisami",
       "subtitle": "Pisz, publikuj i zarządzaj wpisami na blogu",
