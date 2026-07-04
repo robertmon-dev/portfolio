@@ -19,7 +19,7 @@ export class UpdateCommentService
     const isStaff = ["ADMIN", "MODERATOR"].includes(actor.role);
 
     return this.db.$transaction(async (tx) => {
-      const persisted = await tx.post.findUnique({
+      const persisted = await tx.comment.findUnique({
         where: { id: commentId, authorId: isStaff ? undefined : actor.id },
         select: { id: true },
       });

@@ -22,7 +22,7 @@ export const commentWithRelationsQuery = {
     author: {
       ...userPublicQuery,
     },
-    parent: true,
+    parent: { include: { reactions: true } },
     replies: { include: { reactions: true } },
     reactions: true,
   },

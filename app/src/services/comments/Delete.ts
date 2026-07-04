@@ -31,9 +31,13 @@ export class DeleteCommentsService
         });
       }
 
-      const deleted = await tx.comment.updateManyAndReturn({
-        where: { id: { in: [...commentIds] } },
+      await tx.comment.updateMany({
+        where: { id: { in: commentIds } },
         data: { deletedAt: new Date() },
+      });
+
+      const deleted = await tx.comment.findMany({
+        where: { id: { in: commentIds } },
         ...commentWithRelationsQuery,
       });
 
