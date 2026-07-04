@@ -12,7 +12,7 @@ export class UpdatePostService
     const { id: postId } = input;
 
     return await this.db.$transaction(async (tx) => {
-      const persisted = tx.post.findUnique({
+      const persisted = await tx.post.findUnique({
         where: { id: postId },
         select: { id: true },
       });
