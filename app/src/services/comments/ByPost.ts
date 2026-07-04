@@ -13,7 +13,7 @@ export class ListCommentsByPostService
   ): Promise<ListCommentsOutput> {
     const { limit, cursor, postId, includeDeleted = false } = input;
     const prefix = includeDeleted ? "both" : "";
-    const cacheKey = `comments:list:post${prefix}:${limit}:${cursor ?? "first"}`;
+    const cacheKey = `comments:list:post:${postId}:${prefix}:${limit}:${cursor ?? "first"}`;
 
     return await this.cache.wrap(cacheKey, 3600, async () => {
       const items = await this.db.comment.findMany({

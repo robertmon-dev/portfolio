@@ -16,7 +16,7 @@ export class ListCommentsByParentService
   ): Promise<ListCommentsOutput> {
     const { limit, cursor, parentId, includeDeleted = false } = input;
     const prefix = includeDeleted ? "both" : "";
-    const cacheKey = `comments:list:parent:${prefix}:${limit}:${cursor ?? "first"}`;
+    const cacheKey = `comments:list:parent:${parentId}:${prefix}:${limit}:${cursor ?? "first"}`;
 
     return await this.cache.wrap(cacheKey, 3600, async () => {
       const items = await this.db.comment.findMany({
