@@ -8,6 +8,7 @@ import { ContactPage } from "@/pages/Contact/Contact";
 import { ProjectsPage } from "@/pages/Projects/Projects";
 import { PrivacyPolicyPage } from "./pages/PrivacyPolicy/PrivacyPolicy";
 import { ExperiencePage } from "@/pages/Experience/Experience";
+import { BlogPage } from "@/pages/Blog/Blog";
 import { GithubAdminPage } from "@/pages/Admin/repos/Repos";
 import { ProjectsAdminPage } from "@/pages/Admin/projects/Projects";
 import { TechStackAdminPage } from "@/pages/Admin/techstack/Techstack";
@@ -28,7 +29,7 @@ const App = () => {
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/experience" element={<ExperiencePage />} />
           <Route path="/contact" element={<ContactPage />} />
-          <Route path="/blog" element={<ErrorPage code="501" />} />
+          <Route path="/blog" element={<BlogPage />} />
           <Route path="/privacy" element={<PrivacyPolicyPage />} />
 
           <Route path="/demo" element={<Demo />} />
