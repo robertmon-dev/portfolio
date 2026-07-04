@@ -4,6 +4,7 @@
     "cancel": "Cancel",
     "edit": "Edit",
     "delete": "Delete",
+    "restore": "Restore",
     "add": "Add",
     "send": "Send",
     "settings": "Settings",
@@ -89,6 +90,9 @@
       "projects": "Projects",
       "experience": "Experience",
       "techstack": "Tech Stack",
+      "posts": "Posts",
+      "comments": "Comments",
+      "reactions": "Reactions",
       "users": "Users"
     }
   },
@@ -124,6 +128,40 @@
         "inProgress": "In Progress",
         "todo": "Pending"
       }
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Notes on things I have built, broken and figured out along the way",
+    "empty": "No posts yet. Check back soon!",
+    "loadMore": "Show more posts",
+    "sections": {
+      "posts": "Latest posts"
+    },
+    "post": {
+      "defaultAuthor": "Article",
+      "views_one": "{{count}} view",
+      "views_other": "{{count}} views"
+    }
+  },
+  "post": {
+    "back": "Back to blog",
+    "sections": {
+      "comments": "Comments"
+    },
+    "comments": {
+      "author": "Reader",
+      "placeholder": "Write a comment...",
+      "submit": "Post comment",
+      "reply": "Reply",
+      "replyPlaceholder": "Write a reply...",
+      "replySubmit": "Post reply",
+      "empty": "No comments yet. Be the first!",
+      "loadMore": "Show more comments",
+      "loginPrompt": "Sign in to join the discussion"
+    },
+    "reactions": {
+      "loginPrompt": "Sign in to react"
     }
   },
   "projects": {
@@ -183,6 +221,185 @@
     }
   },
   "admin": {
+    "comments": {
+      "title": "Comments Management",
+      "subtitle": "Moderate the discussion under your blog posts",
+      "tags": {
+        "total_one": "{{count}} Comment",
+        "total_other": "{{count}} Comments",
+        "replies_one": "{{count}} Reply",
+        "replies_other": "{{count}} Replies",
+        "deleted_one": "{{count}} Deleted",
+        "deleted_other": "{{count}} Deleted"
+      },
+      "table": {
+        "comment": "Comment",
+        "post": "Post",
+        "status": "Status",
+        "reply": "Reply",
+        "deleted": "Deleted",
+        "visibility": "Visibility",
+        "stats": "Stats",
+        "created": "Created",
+        "actions": "Actions"
+      },
+      "form": {
+        "content": {
+          "label": "Content"
+        }
+      },
+      "modals": {
+        "edit": {
+          "title": "Edit comment"
+        },
+        "delete": {
+          "title": "Remove comment",
+          "confirm": "Are you sure you want to remove this comment?"
+        }
+      },
+      "notifications": {
+        "create": {
+          "success": "Comment created successfully"
+        },
+        "update": {
+          "success": "Comment updated successfully"
+        },
+        "delete": {
+          "success": "Comment deleted successfully"
+        },
+        "restore": {
+          "success": "Comment restored successfully"
+        }
+      }
+    },
+    "reactions": {
+      "title": "Reactions Management",
+      "subtitle": "Review and moderate reactions across posts and comments",
+      "tags": {
+        "total_one": "{{count}} Reaction",
+        "total_other": "{{count}} Reactions",
+        "posts_one": "{{count}} On posts",
+        "posts_other": "{{count}} On posts",
+        "comments_one": "{{count}} On comments",
+        "comments_other": "{{count}} On comments"
+      },
+      "table": {
+        "type": "Type",
+        "target": "Target",
+        "post": "Post",
+        "comment": "Comment",
+        "author": "Author",
+        "created": "Created",
+        "actions": "Actions"
+      },
+      "modals": {
+        "delete": {
+          "title": "Remove reaction",
+          "confirm": "Are you sure you want to remove this reaction?"
+        }
+      },
+      "notifications": {
+        "create": {
+          "success": "Reaction added successfully"
+        },
+        "update": {
+          "success": "Reaction updated successfully"
+        },
+        "delete": {
+          "success": "Reaction deleted successfully"
+        }
+      }
+    },
+    "posts": {
+      "title": "Posts Management",
+      "subtitle": "Write, publish and manage your blog posts",
+      "actions": {
+        "add": "Add Post",
+        "publish": "Publish",
+        "unpublish": "Unpublish"
+      },
+      "tags": {
+        "total_one": "{{count}} Post",
+        "total_other": "{{count}} Posts",
+        "published_one": "{{count}} Published",
+        "published_other": "{{count}} Published",
+        "drafts_one": "{{count}} Draft",
+        "drafts_other": "{{count}} Drafts"
+      },
+      "table": {
+        "post": "Post",
+        "status": "Status",
+        "visibility": "Visibility",
+        "stats": "Stats",
+        "created": "Created",
+        "actions": "Actions",
+        "published": "Published",
+        "deleted": "Deleted"
+      },
+      "create": {
+        "success": "Post created successfully"
+      },
+      "update": {
+        "success": "Post updated successfully"
+      },
+      "delete": {
+        "success": "Post moved to trash"
+      },
+      "restore": {
+        "success": "Post restored"
+      },
+      "publish": {
+        "success": "Post published"
+      },
+      "unpublish": {
+        "success": "Post unpublished"
+      },
+      "modals": {
+        "create": {
+          "title": "Create new post"
+        },
+        "edit": {
+          "title": "Edit post"
+        },
+        "delete": {
+          "title": "Remove post",
+          "confirm": "Are you sure you want to remove \"{{title}}\"?"
+        }
+      },
+      "form": {
+        "title": {
+          "label": "Title"
+        },
+        "slug": {
+          "label": "Slug"
+        },
+        "subtitle": {
+          "label": "Subtitle"
+        },
+        "excerpt": {
+          "label": "Excerpt"
+        },
+        "content": {
+          "label": "Content"
+        },
+        "footer": {
+          "label": "Footer"
+        },
+        "coverImageUrl": {
+          "label": "Cover image URL"
+        },
+        "visibility": {
+          "label": "Visibility",
+          "options": {
+            "USER": "Everyone",
+            "VIEWER": "Viewers",
+            "MODERATOR": "Moderators",
+            "ADMIN": "Admins only"
+          }
+        },
+        "published": "Published"
+      }
+    },
     "experience": {
       "title": "Experience Management",
       "subtitle": "Manage your professional work history and education",

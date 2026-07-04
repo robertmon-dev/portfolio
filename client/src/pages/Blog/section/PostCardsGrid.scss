@@ -1,0 +1,23 @@
+@use "sass:color";
+
+.post-grid {
+  .entity-grid__skeleton {
+    height: 220px;
+    border-radius: $radius-md;
+    background: color.change($bg-surface, $alpha: 0.5);
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        color.change($primary, $alpha: 0.05),
+        transparent
+      );
+    }
+  }
+}

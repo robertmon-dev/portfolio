@@ -146,7 +146,7 @@ export class CacheInvalidator implements Invalidating {
     posts.forEach((post) => {
       if (!post) return;
       if (post.id) {
-        keys.add(`posts:id:${post.id}`);
+        keys.add(`post:id:${post.id}`);
         keys.add(`comments:post:id:${post.id}`);
       }
       if (post.slug) keys.add(`post:slug:${post.slug}`);
@@ -163,7 +163,7 @@ export class CacheInvalidator implements Invalidating {
       "comments:list:both:*",
       "comments:list:post:both:*",
       "comments:list:post:*",
-      "comments:list:parent:",
+      "comments:list:parent:*",
       "comments:list:parent:both:*",
     ]);
 

@@ -61,6 +61,24 @@ export const useLayout = () => {
       res: "techstack",
     },
     {
+      id: "admin-posts",
+      label: t("nav.admin.posts", "Posts"),
+      href: "/admin/posts",
+      res: "posts",
+    },
+    {
+      id: "admin-comments",
+      label: t("nav.admin.comments", "Comments"),
+      href: "/admin/comments",
+      res: "comments",
+    },
+    {
+      id: "admin-reactions",
+      label: t("nav.admin.reactions", "Reactions"),
+      href: "/admin/reactions",
+      res: "reactions",
+    },
+    {
       id: "admin-users",
       label: t("nav.admin.users", "Users"),
       href: "/admin/users",

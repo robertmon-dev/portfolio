@@ -2,7 +2,7 @@ import { TRPCError } from "@trpc/server";
 import { AuthorizedBaseService } from "../service";
 import { type UpdatePostInput, type Post, PostSchema } from "@portfolio/shared";
 import type { UpdatingPosts } from "./types";
-import { postWithRelationsQuery } from "./queries";
+import { postWithRelationsQuery, mapPostRelations } from "./queries";
 
 export class UpdatePostService
   extends AuthorizedBaseService<UpdatePostInput, Post>
@@ -12,7 +12,7 @@ export class UpdatePostService
     const { id: postId } = input;
 
     return await this.db.$transaction(async (tx) => {
-      const persisted = tx.post.findUnique({
+      const persisted = await tx.post.findUnique({
         where: { id: postId },
         select: { id: true },
       });
@@ -32,7 +32,7 @@ export class UpdatePostService
 
       await this.cacheInvalidator.invalidatePostCache(updated);
 
-      return PostSchema.parse(updated);
+      return PostSchema.parse(mapPostRelations(updated));
     });
   }
 }

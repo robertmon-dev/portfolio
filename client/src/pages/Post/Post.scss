@@ -1,0 +1,96 @@
+@use "sass:color";
+
+.post-page {
+  $accent-post: $primary;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: calc(100vh - 100px);
+  padding: $spacing-xl $spacing-md;
+  position: relative;
+  overflow: hidden;
+  background-color: $bg-app;
+  font-family: $font-stack;
+
+  &__container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+  }
+
+  &__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    align-self: flex-start;
+    font-size: 0.875rem;
+    color: $text-muted;
+    text-decoration: none;
+    transition: color 0.15s ease;
+
+    &:hover {
+      color: $accent-post;
+    }
+  }
+
+  &__content {
+    padding: 0 $spacing-sm;
+
+    p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: $text-main;
+      margin: 0 0 $spacing-md 0;
+      word-break: break-word;
+    }
+  }
+
+  &__footer-note {
+    padding: $spacing-sm $spacing-md;
+    border-left: 3px solid color.change($accent-post, $alpha: 0.5);
+    font-size: 0.9rem;
+    font-style: italic;
+    color: $text-muted;
+    margin: 0 $spacing-sm;
+  }
+
+  &__glow {
+    position: absolute;
+    top: -10%;
+    right: -10%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(
+      circle,
+      color.change($accent-post, $alpha: 0.1) 0%,
+      transparent 70%
+    );
+    filter: blur(100px);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: $spacing-xl;
+    padding-bottom: $spacing-lg;
+    margin-top: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .post-page {
+    padding: $spacing-lg $spacing-sm;
+
+    &__container {
+      gap: $spacing-md;
+    }
+  }
+}

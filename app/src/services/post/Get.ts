@@ -1,6 +1,6 @@
 import { Post, PostSchema } from "@portfolio/shared";
 import { BaseService } from "../service";
-import { postWithRelationsQuery } from "./queries";
+import { postWithRelationsQuery, mapPostRelations } from "./queries";
 import type { FetchingPosts } from "./types";
 
 export class GetPostService
@@ -16,7 +16,7 @@ export class GetPostService
         ...postWithRelationsQuery,
       });
 
-      return PostSchema.parse(persisted);
+      return PostSchema.parse(persisted && mapPostRelations(persisted));
     });
   }
 }

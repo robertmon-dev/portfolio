@@ -1,7 +1,7 @@
 import { AuthorizedBaseService } from "../service";
 import { type CreatePostInput, PostSchema } from "@portfolio/shared";
 import type { Post } from "@portfolio/shared";
-import { postWithRelationsQuery } from "./queries";
+import { postWithRelationsQuery, mapPostRelations } from "./queries";
 import type { CreatingPosts } from "./types";
 
 export class CreatePostService
@@ -16,15 +16,15 @@ export class CreatePostService
       data: {
         ...rest,
         author: { connect: { id: userId } },
-        tags: tagIds
-          ? {
-              connect: tagIds.map((id) => ({ id })),
-            }
-          : undefined,
+        tags: {
+          connect: tagIds.map((id) => ({ id })),
+        },
       },
       ...postWithRelationsQuery,
     });
 
-    return PostSchema.parse(post);
+    await this.cacheInvalidator.invalidatePostCache(post);
+
+    return PostSchema.parse(mapPostRelations(post));
   }
 }

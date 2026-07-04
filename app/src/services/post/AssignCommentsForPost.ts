@@ -5,7 +5,7 @@ import {
   type Post,
   PostSchema,
 } from "@portfolio/shared";
-import { postWithRelationsQuery } from "./queries";
+import { postWithRelationsQuery, mapPostRelations } from "./queries";
 import type { AssigningComments } from "./types";
 
 export class AssignCommentsForPostService
@@ -40,7 +40,7 @@ export class AssignCommentsForPostService
 
       await this.cacheInvalidator.invalidatePostCache(updated);
 
-      return PostSchema.parse(updated);
+      return PostSchema.parse(mapPostRelations(updated));
     });
   }
 }

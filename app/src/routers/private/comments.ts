@@ -11,6 +11,7 @@ import {
   zUuid,
   ListCommentsByParentSchema,
   ListCommentsByPostSchema,
+  zSafeArray,
 } from "@portfolio/shared";
 import { CreateCommentService } from "../../services/comments/Create";
 import { router } from "../../trpc/init";
@@ -21,6 +22,7 @@ import {
 } from "src/trpc/executers/base";
 import { UpdateCommentService } from "../../services/comments/Update";
 import { DeleteCommentsService } from "../../services/comments/Delete";
+import { RestoreCommentsService } from "../../services/comments/Restore";
 import { ListCommentsService } from "../../services/comments/List";
 import { GetCommentService } from "../../services/comments/Get";
 import { ListCommentsByParentService } from "../../services/comments/ByParent";
@@ -74,9 +76,27 @@ export const commentsPrivateRouter = router({
       },
     })
     .input(DeleteCommentsSchema)
-    .output(CommentSchema)
+    .output(zSafeArray(CommentSchema))
     .mutation(async ({ ctx, input }) => {
       return executeAuthorizedService(DeleteCommentsService, ctx, input);
+    }),
+
+  restore: permissionProcedure(ResourceEnum.enum.comments, FlagEnum.enum.WRITE)
+    .meta({
+      openapi: {
+        method: "PATCH",
+        path: "/admin/comments/restore",
+        tags: ["Comments"],
+        summary: "Restore comments",
+        description:
+          "Restores soft-deleted comments based on the provided input.",
+        protect: true,
+      },
+    })
+    .input(DeleteCommentsSchema)
+    .output(zSafeArray(CommentSchema))
+    .mutation(async ({ ctx, input }) => {
+      return executeAuthorizedService(RestoreCommentsService, ctx, input);
     }),
 
   list: permissionProcedure(ResourceEnum.enum.comments, FlagEnum.enum.READ)

@@ -5,7 +5,7 @@ import {
   PostSchema,
   type Post,
 } from "@portfolio/shared";
-import { postWithRelationsQuery } from "./queries";
+import { postWithRelationsQuery, mapPostRelations } from "./queries";
 import type { ChangingVisibility } from "./types";
 
 export class ChangePostVisilibityService
@@ -36,7 +36,7 @@ export class ChangePostVisilibityService
 
       await this.cacheInvalidator.invalidatePostCache(persisted);
 
-      return PostSchema.parse(updated);
+      return PostSchema.parse(mapPostRelations(updated));
     });
   }
 }

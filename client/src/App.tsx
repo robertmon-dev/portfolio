@@ -8,10 +8,15 @@ import { ContactPage } from "@/pages/Contact/Contact";
 import { ProjectsPage } from "@/pages/Projects/Projects";
 import { PrivacyPolicyPage } from "./pages/PrivacyPolicy/PrivacyPolicy";
 import { ExperiencePage } from "@/pages/Experience/Experience";
+import { BlogPage } from "@/pages/Blog/Blog";
+import { PostPage } from "@/pages/Post/Post";
 import { GithubAdminPage } from "@/pages/Admin/repos/Repos";
 import { ProjectsAdminPage } from "@/pages/Admin/projects/Projects";
 import { TechStackAdminPage } from "@/pages/Admin/techstack/Techstack";
 import { UsersAdminPage } from "./pages/Admin/users/Users";
+import { PostsAdminPage } from "./pages/Admin/posts/Posts";
+import { CommentsAdminPage } from "./pages/Admin/comments/Comments";
+import { ReactionsAdminPage } from "./pages/Admin/reactions/Reactions";
 import { ExperienceAdminPage } from "./pages/Admin/experience/Experience";
 import { Guard } from "@/components/utility/guard/Guard";
 import { ErrorPage } from "@/pages/Error/Error";
@@ -28,7 +33,8 @@ const App = () => {
           <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/experience" element={<ExperiencePage />} />
           <Route path="/contact" element={<ContactPage />} />
-          <Route path="/blog" element={<ErrorPage code="501" />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/post/:postId" element={<PostPage />} />
           <Route path="/privacy" element={<PrivacyPolicyPage />} />
 
           <Route path="/demo" element={<Demo />} />
@@ -70,6 +76,33 @@ const App = () => {
               element={
                 <Guard requiredPermission="experience:*">
                   <ExperienceAdminPage />
+                </Guard>
+              }
+            />
+
+            <Route
+              path="posts"
+              element={
+                <Guard requiredPermission="posts:*">
+                  <PostsAdminPage />
+                </Guard>
+              }
+            />
+
+            <Route
+              path="comments"
+              element={
+                <Guard requiredPermission="comments:*">
+                  <CommentsAdminPage />
+                </Guard>
+              }
+            />
+
+            <Route
+              path="reactions"
+              element={
+                <Guard requiredPermission="reactions:*">
+                  <ReactionsAdminPage />
                 </Guard>
               }
             />

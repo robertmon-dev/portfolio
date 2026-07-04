@@ -4,6 +4,7 @@
     "cancel": "Anuluj",
     "edit": "Edytuj",
     "delete": "Usuń",
+    "restore": "Przywróć",
     "add": "Dodaj",
     "send": "Wyślij",
     "settings": "Ustawienia",
@@ -99,7 +100,45 @@
       "projects": "Projekty",
       "experience": "Doświadczenie",
       "techstack": "Tech Stack",
+      "posts": "Wpisy",
+      "comments": "Komentarze",
+      "reactions": "Reakcje",
       "users": "Użytkownicy"
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Notatki o rzeczach, które zbudowałem, popsułem i rozgryzłem po drodze",
+    "empty": "Nie ma jeszcze żadnych wpisów. Zajrzyj wkrótce!",
+    "loadMore": "Pokaż więcej wpisów",
+    "sections": {
+      "posts": "Najnowsze wpisy"
+    },
+    "post": {
+      "defaultAuthor": "Artykuł",
+      "views_one": "{{count}} wyświetlenie",
+      "views_few": "{{count}} wyświetlenia",
+      "views_many": "{{count}} wyświetleń"
+    }
+  },
+  "post": {
+    "back": "Wróć na bloga",
+    "sections": {
+      "comments": "Komentarze"
+    },
+    "comments": {
+      "author": "Czytelnik",
+      "placeholder": "Napisz komentarz...",
+      "submit": "Dodaj komentarz",
+      "reply": "Odpowiedz",
+      "replyPlaceholder": "Napisz odpowiedź...",
+      "replySubmit": "Dodaj odpowiedź",
+      "empty": "Nie ma jeszcze komentarzy. Bądź pierwszy!",
+      "loadMore": "Pokaż więcej komentarzy",
+      "loginPrompt": "Zaloguj się, aby dołączyć do dyskusji"
+    },
+    "reactions": {
+      "loginPrompt": "Zaloguj się, aby zareagować"
     }
   },
   "projects": {
@@ -194,6 +233,194 @@
     }
   },
   "admin": {
+    "comments": {
+      "title": "Zarządzanie komentarzami",
+      "subtitle": "Moderuj dyskusję pod wpisami na blogu",
+      "tags": {
+        "total_one": "{{count}} Komentarz",
+        "total_few": "{{count}} Komentarze",
+        "total_many": "{{count}} Komentarzy",
+        "replies_one": "{{count}} Odpowiedź",
+        "replies_few": "{{count}} Odpowiedzi",
+        "replies_many": "{{count}} Odpowiedzi",
+        "deleted_one": "{{count}} Usunięty",
+        "deleted_few": "{{count}} Usunięte",
+        "deleted_many": "{{count}} Usuniętych"
+      },
+      "table": {
+        "comment": "Komentarz",
+        "post": "Wpis",
+        "status": "Status",
+        "reply": "Odpowiedź",
+        "deleted": "Usunięty",
+        "visibility": "Widoczność",
+        "stats": "Statystyki",
+        "created": "Utworzono",
+        "actions": "Akcje"
+      },
+      "form": {
+        "content": {
+          "label": "Treść"
+        }
+      },
+      "modals": {
+        "edit": {
+          "title": "Edytuj komentarz"
+        },
+        "delete": {
+          "title": "Usuń komentarz",
+          "confirm": "Czy na pewno chcesz usunąć ten komentarz?"
+        }
+      },
+      "notifications": {
+        "create": {
+          "success": "Komentarz został dodany"
+        },
+        "update": {
+          "success": "Komentarz został zaktualizowany"
+        },
+        "delete": {
+          "success": "Komentarz został usunięty"
+        },
+        "restore": {
+          "success": "Komentarz został przywrócony"
+        }
+      }
+    },
+    "reactions": {
+      "title": "Zarządzanie reakcjami",
+      "subtitle": "Przeglądaj i moderuj reakcje na wpisy i komentarze",
+      "tags": {
+        "total_one": "{{count}} Reakcja",
+        "total_few": "{{count}} Reakcje",
+        "total_many": "{{count}} Reakcji",
+        "posts_one": "{{count}} Na wpisach",
+        "posts_few": "{{count}} Na wpisach",
+        "posts_many": "{{count}} Na wpisach",
+        "comments_one": "{{count}} Na komentarzach",
+        "comments_few": "{{count}} Na komentarzach",
+        "comments_many": "{{count}} Na komentarzach"
+      },
+      "table": {
+        "type": "Typ",
+        "target": "Cel",
+        "post": "Wpis",
+        "comment": "Komentarz",
+        "author": "Autor",
+        "created": "Utworzono",
+        "actions": "Akcje"
+      },
+      "modals": {
+        "delete": {
+          "title": "Usuń reakcję",
+          "confirm": "Czy na pewno chcesz usunąć tę reakcję?"
+        }
+      },
+      "notifications": {
+        "create": {
+          "success": "Reakcja została dodana"
+        },
+        "update": {
+          "success": "Reakcja została zaktualizowana"
+        },
+        "delete": {
+          "success": "Reakcja została usunięta"
+        }
+      }
+    },
+    "posts": {
+      "title": "Zarządzanie wpisami",
+      "subtitle": "Pisz, publikuj i zarządzaj wpisami na blogu",
+      "actions": {
+        "add": "Dodaj wpis",
+        "publish": "Opublikuj",
+        "unpublish": "Cofnij publikację"
+      },
+      "tags": {
+        "total_one": "{{count}} Wpis",
+        "total_few": "{{count}} Wpisy",
+        "total_many": "{{count}} Wpisów",
+        "published_one": "{{count}} Opublikowany",
+        "published_few": "{{count}} Opublikowane",
+        "published_many": "{{count}} Opublikowanych",
+        "drafts_one": "{{count}} Szkic",
+        "drafts_few": "{{count}} Szkice",
+        "drafts_many": "{{count}} Szkiców"
+      },
+      "table": {
+        "post": "Wpis",
+        "status": "Status",
+        "visibility": "Widoczność",
+        "stats": "Statystyki",
+        "created": "Utworzono",
+        "actions": "Akcje",
+        "published": "Opublikowany",
+        "deleted": "Usunięty"
+      },
+      "create": {
+        "success": "Wpis został utworzony pomyślnie"
+      },
+      "update": {
+        "success": "Wpis został zaktualizowany"
+      },
+      "delete": {
+        "success": "Wpis został przeniesiony do kosza"
+      },
+      "restore": {
+        "success": "Wpis został przywrócony"
+      },
+      "publish": {
+        "success": "Wpis został opublikowany"
+      },
+      "unpublish": {
+        "success": "Publikacja wpisu została cofnięta"
+      },
+      "modals": {
+        "create": {
+          "title": "Utwórz nowy wpis"
+        },
+        "edit": {
+          "title": "Edytuj wpis"
+        },
+        "delete": {
+          "title": "Usuń wpis",
+          "confirm": "Czy na pewno chcesz usunąć \"{{title}}\"?"
+        }
+      },
+      "form": {
+        "title": {
+          "label": "Tytuł"
+        },
+        "slug": {
+          "label": "Slug"
+        },
+        "subtitle": {
+          "label": "Podtytuł"
+        },
+        "excerpt": {
+          "label": "Zajawka"
+        },
+        "content": {
+          "label": "Treść"
+        },
+        "footer": {
+          "label": "Stopka"
+        },
+        "coverImageUrl": {
+          "label": "URL okładki"
+        },
+        "visibility": {
+          "label": "Widoczność",
+          "options": {
+            "USER": "Wszyscy",
+            "VIEWER": "Widzowie",
+            "MODERATOR": "Moderatorzy",
+            "ADMIN": "Tylko administratorzy"
+          }
+        },
+        "published": "Opublikowany"
+      }
+    },
     "experience": {
       "title": "Zarządzanie doświadczeniem",
       "subtitle": "Zarządzaj swoją historią pracy zawodowej oraz edukacją",

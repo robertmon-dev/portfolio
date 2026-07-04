@@ -30,8 +30,14 @@ export abstract class AuthorizedBaseService<TInput, TOutput>
   extends BaseService<TInput, TOutput>
   implements Serving<TInput, TOutput>
 {
-  constructor(protected readonly ctx: AuthorizedContext) {
-    super(ctx.db, ctx.cache, ctx.logger, ctx.settings, ctx);
+  constructor(
+    db: PrismaClient,
+    cache: Caching,
+    logger: Logging,
+    settings: Settings["config"],
+    protected override readonly ctx: AuthorizedContext,
+  ) {
+    super(db, cache, logger, settings, ctx);
   }
 
   abstract execute(input: TInput): Promise<TOutput>;

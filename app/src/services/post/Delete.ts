@@ -1,7 +1,7 @@
 import { TRPCError } from "@trpc/server";
 import { AuthorizedBaseService } from "../service";
 import { type Post, PostSchema, DeletePostInput } from "@portfolio/shared";
-import { postWithRelationsQuery } from "./queries";
+import { postWithRelationsQuery, mapPostRelations } from "./queries";
 import type { DeletingPosts } from "./types";
 
 export class DeletePostService
@@ -30,9 +30,9 @@ export class DeletePostService
         ...postWithRelationsQuery,
       });
 
-      this.cacheInvalidator.invalidatePostCache(updated);
+      await this.cacheInvalidator.invalidatePostCache(updated);
 
-      return PostSchema.parse(updated);
+      return PostSchema.parse(mapPostRelations(updated));
     });
   }
 }

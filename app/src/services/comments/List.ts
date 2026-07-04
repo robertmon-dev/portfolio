@@ -11,7 +11,7 @@ export class ListCommentsService
   public async execute(
     input: ListCommentsServiceInput,
   ): Promise<ListCommentsOutput> {
-    const { limit, cursor, includeDeleted = false } = input;
+    const { limit, cursor, includeDeleted } = input;
     const prefix = includeDeleted ? "both" : "";
     const cacheKey = `comments:list:${prefix}:${limit}:${cursor ?? "first"}`;
 

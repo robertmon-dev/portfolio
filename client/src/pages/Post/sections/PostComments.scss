@@ -1,0 +1,63 @@
+@use "sass:color";
+
+.post-comments {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  padding: $spacing-md $spacing-sm;
+
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: $text-main;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: $spacing-md;
+
+    &::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        color.change($primary, $alpha: 0.4),
+        transparent
+      );
+    }
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+  }
+
+  &__form-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__login-prompt,
+  &__empty {
+    font-size: 0.9rem;
+    color: $text-muted;
+    font-style: italic;
+    margin: 0;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__load-more {
+    display: flex;
+    justify-content: center;
+    margin-top: $spacing-sm;
+  }
+}

@@ -42,6 +42,10 @@ export interface DeletingComments {
   execute(input: DeleteCommentsInput): Promise<CommentWithReplies[]>;
 }
 
+export interface RestoringComments {
+  execute(input: DeleteCommentsInput): Promise<CommentWithReplies[]>;
+}
+
 export interface FetchingComments {
   execute(input: GetCommentByIdServiceInput): Promise<CommentWithReplies>;
 }

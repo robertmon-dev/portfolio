@@ -27,6 +27,15 @@ export const useTechStackMutations = () => {
   };
 };
 
+export const usePostMutations = () => {
+  return {
+    create: trpc.admin.posts.create.useMutation(),
+    update: trpc.admin.posts.update.useMutation(),
+    delete: trpc.admin.posts.delete.useMutation(),
+    changeVisibility: trpc.admin.posts.changeVisibility.useMutation(),
+  };
+};
+
 export const useUserMutations = () => {
   return {
     create: trpc.admin.users.create.useMutation(),
@@ -45,6 +54,7 @@ export const useExperienceMutations = () => {
 };
 
 export type GithubMutations = ReturnType<typeof useGithubMutations>;
+export type PostMutations = ReturnType<typeof usePostMutations>;
 export type ProjectMutations = ReturnType<typeof useProjectMutations>;
 export type TechStackMutations = ReturnType<typeof useTechStackMutations>;
 export type UserMutations = ReturnType<typeof useUserMutations>;

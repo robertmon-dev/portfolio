@@ -1,0 +1,70 @@
+.reactions-management {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: $font-stack;
+
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+
+  .header {
+    padding: $spacing-xl $spacing-md $spacing-sm;
+    background: transparent;
+  }
+
+  &__loader-container {
+    height: 4px;
+    width: 100%;
+    position: relative;
+    z-index: 10;
+    padding: 0 $spacing-md;
+  }
+
+  &__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: $spacing-md;
+    width: 100%;
+
+    min-width: 0;
+    overflow-x: auto;
+  }
+}
+
+.reactions-table {
+  &__type {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: $text-main;
+  }
+
+  &__type-icon {
+    color: $primary;
+  }
+
+  &__author,
+  &__date {
+    font-size: 0.75rem;
+    color: $text-muted;
+  }
+
+  &__empty {
+    font-size: 0.75rem;
+    color: $text-muted;
+    font-style: italic;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    flex-wrap: nowrap;
+  }
+}

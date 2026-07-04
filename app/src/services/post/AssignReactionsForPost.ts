@@ -5,7 +5,7 @@ import {
   PostSchema,
   type Post,
 } from "@portfolio/shared";
-import { postWithRelationsQuery } from "./queries";
+import { postWithRelationsQuery, mapPostRelations } from "./queries";
 import type { AssigningReactions } from "./types";
 
 export class AssignReactionsForPostService
@@ -31,7 +31,7 @@ export class AssignReactionsForPostService
       const updated = await tx.post.update({
         where: { id: postId },
         data: {
-          tags: reactionIds
+          reactions: reactionIds
             ? {
                 set: reactionIds.map((id) => ({ id })),
               }
@@ -42,7 +42,7 @@ export class AssignReactionsForPostService
 
       await this.cacheInvalidator.invalidatePostCache(persisted);
 
-      return PostSchema.parse(updated);
+      return PostSchema.parse(mapPostRelations(updated));
     });
   }
 }
