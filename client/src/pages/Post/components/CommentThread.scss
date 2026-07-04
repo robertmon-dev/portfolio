@@ -1,0 +1,147 @@
+@use "sass:color";
+
+.comment-thread {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xs;
+  list-style: none;
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+    padding: $spacing-sm $spacing-md;
+    border: 1px solid $border-color;
+    border-radius: $radius-md;
+    background: color.change($bg-surface, $alpha: 0.5);
+
+    &--reply {
+      background: transparent;
+      border-style: dashed;
+    }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-sm;
+  }
+
+  &__author {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: $text-main;
+  }
+
+  &__date {
+    font-size: 0.75rem;
+    color: $text-muted;
+  }
+
+  &__content {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: $text-main;
+    margin: 0;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-sm;
+    flex-wrap: wrap;
+  }
+
+  &__reactions {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+  }
+
+  &__reaction {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.4rem;
+    border-radius: $radius-md;
+    border: 1px solid transparent;
+    background: transparent;
+    color: $text-muted;
+    font-size: 0.75rem;
+    font-family: inherit;
+    cursor: pointer;
+    transition:
+      border-color 0.15s ease,
+      background-color 0.15s ease,
+      color 0.15s ease;
+
+    &:hover:not(:disabled) {
+      border-color: color.change($primary, $alpha: 0.5);
+      background: color.change($primary, $alpha: 0.08);
+      color: $text-main;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
+  }
+
+  &__reaction-icon {
+    color: $primary;
+  }
+
+  &__reaction-count {
+    font-variant-numeric: tabular-nums;
+  }
+
+  &__reply-form {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+    margin-left: $spacing-lg;
+  }
+
+  &__reply-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: $spacing-xs;
+  }
+
+  &__children {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+    margin: 0 0 0 $spacing-lg;
+    padding: 0;
+    list-style: none;
+    border-left: 1px solid color.change($primary, $alpha: 0.15);
+    padding-left: $spacing-sm;
+
+    &--flat {
+      margin-left: 0;
+      border-left: none;
+      padding-left: 0;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .comment-thread {
+    &__children {
+      margin-left: $spacing-sm;
+    }
+
+    &__reply-form {
+      margin-left: $spacing-sm;
+    }
+  }
+}
