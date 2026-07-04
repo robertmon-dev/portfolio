@@ -5,7 +5,7 @@ import {
   PostSchema,
   type Post,
 } from "@portfolio/shared";
-import { postWithRelationsQuery } from "./queries";
+import { postWithRelationsQuery, mapPostRelations } from "./queries";
 import type { AssigningTags } from "./types";
 
 export class AssignTagsForPostService
@@ -42,7 +42,7 @@ export class AssignTagsForPostService
 
       await this.cacheInvalidator.invalidatePostCache(persisted);
 
-      return PostSchema.parse(updated);
+      return PostSchema.parse(mapPostRelations(updated));
     });
   }
 }
