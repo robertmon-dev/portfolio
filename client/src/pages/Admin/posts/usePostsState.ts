@@ -48,6 +48,7 @@ export const usePostsState = () => {
       createPost: (data: CreatePostInput) => handlers.handleCreate(data),
       updatePost: (data: UpdatePostInput) => handlers.handleUpdate(data),
       deletePost: (id: string) => handlers.handleDelete(id),
+      restorePost: (post: Post) => handlers.handleRestore(post),
       togglePublish: (post: Post) => handlers.handleTogglePublish(post),
     },
   };
