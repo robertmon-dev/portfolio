@@ -20,6 +20,7 @@ import { CreateReactionService } from "../../services/reaction/Create";
 import { UpdateReactionService } from "../../services/reaction/Update";
 import { DeleteReactionsService } from "../../services/reaction/Delete";
 import { ListReactionsService } from "../../services/reaction/List";
+import { RestoreReactionsService } from "../../services/reaction/Restore";
 import type { ListReactionsServiceInput } from "../../services/reaction/types";
 
 export const reactionsPrivateRouter = router({
@@ -74,6 +75,24 @@ export const reactionsPrivateRouter = router({
     .output(zSafeArray(ReactionSchema))
     .mutation(async ({ ctx, input }) => {
       return executeAuthorizedService(DeleteReactionsService, ctx, input.ids);
+    }),
+
+  restore: permissionProcedure(ResourceEnum.enum.reactions, FlagEnum.enum.ADMIN)
+    .meta({
+      openapi: {
+        method: "PATCH",
+        path: "/reactions/restore",
+        tags: ["Reactions"],
+        summary: "Restore deleted reactions",
+        description:
+          "Restores previously soft-deleted reactions by their UUIDs. Requires ADMIN permissions.",
+        protect: true,
+      },
+    })
+    .input(z.object({ ids: zSafeArray(zUuid) }))
+    .output(zSafeArray(ReactionSchema))
+    .mutation(async ({ ctx, input }) => {
+      return executeAuthorizedService(RestoreReactionsService, ctx, input.ids);
     }),
 
   list: permissionProcedure(ResourceEnum.enum.reactions, FlagEnum.enum.ADMIN)
