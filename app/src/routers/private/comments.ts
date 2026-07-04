@@ -11,6 +11,7 @@ import {
   zUuid,
   ListCommentsByParentSchema,
   ListCommentsByPostSchema,
+  zSafeArray,
 } from "@portfolio/shared";
 import { CreateCommentService } from "../../services/comments/Create";
 import { router } from "../../trpc/init";
@@ -74,7 +75,7 @@ export const commentsPrivateRouter = router({
       },
     })
     .input(DeleteCommentsSchema)
-    .output(CommentSchema)
+    .output(zSafeArray(CommentSchema))
     .mutation(async ({ ctx, input }) => {
       return executeAuthorizedService(DeleteCommentsService, ctx, input);
     }),
