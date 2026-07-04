@@ -33,7 +33,7 @@ export const PostCardListItem = memo(
         viewport={{ once: true }}
         transition={{ delay: (index % 5) * 0.1, duration: 0.4 }}
       >
-        <Link to={`/blog/${post.slug}`} className="post-card__wrapper">
+        <Link to={`/post/${post.id}`} className="post-card__wrapper">
           <Card
             variant="transparent"
             padding="md"
