@@ -55,7 +55,7 @@ export const CommentSchema: z.ZodType<Comment> = BaseCommentSchema.extend({
 });
 
 export const DeleteCommentsSchema = z.object({
-  commentIds: zUuid,
+  commentIds: zSafeArray(zUuid),
 });
 
 export const CreateReplySchema = BaseCommentSchema.extend({
