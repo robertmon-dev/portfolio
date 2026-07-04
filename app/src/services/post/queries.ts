@@ -11,12 +11,18 @@ export const postWithRelationsQuery = {
         reactions: true,
         replies: {
           include: {
-            reactions: true,
+            reactions: {
+              where: { deletedAt: null },
+            },
           },
         },
       },
     },
-    reactions: true,
+    reactions: {
+      where: {
+        deletedAt: null,
+      },
+    },
     tags: true,
   },
 } satisfies Prisma.PostDefaultArgs;
