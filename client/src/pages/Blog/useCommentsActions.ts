@@ -58,9 +58,26 @@ export const useCommentActions = (
     }
   };
 
+  const handleRestore = async (id: string) => {
+    dispatch({ type: COMMENT_ACTIONS.SET_PROCESSING, payload: id });
+    try {
+      await mutations.restore.mutateAsync({ commentIds: [id] });
+      toast.success(
+        t(
+          "admin.comments.notifications.restore.success",
+          "Comment restored successfully",
+        ),
+      );
+      dispatch({ type: COMMENT_ACTIONS.CLOSE_MODALS });
+    } finally {
+      dispatch({ type: COMMENT_ACTIONS.SET_PROCESSING, payload: null });
+    }
+  };
+
   return {
     handleCreate,
     handleUpdate,
     handleDelete,
+    handleRestore,
   };
 };

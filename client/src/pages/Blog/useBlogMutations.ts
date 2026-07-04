@@ -35,11 +35,13 @@ export const useCommentMutations = () => {
   const createComment = trpc.admin.comments.create.useMutation();
   const updateComment = trpc.admin.comments.update.useMutation();
   const deleteComment = trpc.admin.comments.delete.useMutation();
+  const restoreComment = trpc.admin.comments.restore.useMutation();
 
   return {
     create: createComment,
     update: updateComment,
     remove: deleteComment,
+    restore: restoreComment,
   };
 };
 
