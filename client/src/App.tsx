@@ -13,6 +13,7 @@ import { GithubAdminPage } from "@/pages/Admin/repos/Repos";
 import { ProjectsAdminPage } from "@/pages/Admin/projects/Projects";
 import { TechStackAdminPage } from "@/pages/Admin/techstack/Techstack";
 import { UsersAdminPage } from "./pages/Admin/users/Users";
+import { PostsAdminPage } from "./pages/Admin/posts/Posts";
 import { ExperienceAdminPage } from "./pages/Admin/experience/Experience";
 import { Guard } from "@/components/utility/guard/Guard";
 import { ErrorPage } from "@/pages/Error/Error";
@@ -71,6 +72,15 @@ const App = () => {
               element={
                 <Guard requiredPermission="experience:*">
                   <ExperienceAdminPage />
+                </Guard>
+              }
+            />
+
+            <Route
+              path="posts"
+              element={
+                <Guard requiredPermission="posts:*">
+                  <PostsAdminPage />
                 </Guard>
               }
             />
