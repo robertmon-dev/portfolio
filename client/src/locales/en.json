@@ -141,6 +141,23 @@
       "views_other": "{{count}} views"
     }
   },
+  "post": {
+    "back": "Back to blog",
+    "sections": {
+      "comments": "Comments"
+    },
+    "comments": {
+      "author": "Reader",
+      "placeholder": "Write a comment...",
+      "submit": "Post comment",
+      "empty": "No comments yet. Be the first!",
+      "loadMore": "Show more comments",
+      "loginPrompt": "Sign in to join the discussion"
+    },
+    "reactions": {
+      "loginPrompt": "Sign in to react"
+    }
+  },
   "projects": {
     "title": "My Projects",
     "subtitle": "Some of my stuff I've created, broken, and repaired",

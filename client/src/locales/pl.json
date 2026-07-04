@@ -118,6 +118,23 @@
       "views_many": "{{count}} wyświetleń"
     }
   },
+  "post": {
+    "back": "Wróć na bloga",
+    "sections": {
+      "comments": "Komentarze"
+    },
+    "comments": {
+      "author": "Czytelnik",
+      "placeholder": "Napisz komentarz...",
+      "submit": "Dodaj komentarz",
+      "empty": "Nie ma jeszcze komentarzy. Bądź pierwszy!",
+      "loadMore": "Pokaż więcej komentarzy",
+      "loginPrompt": "Zaloguj się, aby dołączyć do dyskusji"
+    },
+    "reactions": {
+      "loginPrompt": "Zaloguj się, aby zareagować"
+    }
+  },
   "projects": {
     "title": "Moje Projekty",
     "subtitle": "Trochę rzeczy, które stworzyłem, popsułem i naprawiłem",
