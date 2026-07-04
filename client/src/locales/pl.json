@@ -129,6 +129,9 @@
       "author": "Czytelnik",
       "placeholder": "Napisz komentarz...",
       "submit": "Dodaj komentarz",
+      "reply": "Odpowiedz",
+      "replyPlaceholder": "Napisz odpowiedź...",
+      "replySubmit": "Dodaj odpowiedź",
       "empty": "Nie ma jeszcze komentarzy. Bądź pierwszy!",
       "loadMore": "Pokaż więcej komentarzy",
       "loginPrompt": "Zaloguj się, aby dołączyć do dyskusji"
