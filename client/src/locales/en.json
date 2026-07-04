@@ -89,6 +89,7 @@
       "projects": "Projects",
       "experience": "Experience",
       "techstack": "Tech Stack",
+      "posts": "Posts",
       "users": "Users"
     }
   },
@@ -197,6 +198,93 @@
     }
   },
   "admin": {
+    "posts": {
+      "title": "Posts Management",
+      "subtitle": "Write, publish and manage your blog posts",
+      "actions": {
+        "add": "Add Post",
+        "publish": "Publish",
+        "unpublish": "Unpublish"
+      },
+      "tags": {
+        "total_one": "{{count}} Post",
+        "total_other": "{{count}} Posts",
+        "published_one": "{{count}} Published",
+        "published_other": "{{count}} Published",
+        "drafts_one": "{{count}} Draft",
+        "drafts_other": "{{count}} Drafts"
+      },
+      "table": {
+        "post": "Post",
+        "status": "Status",
+        "visibility": "Visibility",
+        "stats": "Stats",
+        "created": "Created",
+        "actions": "Actions",
+        "published": "Published",
+        "deleted": "Deleted"
+      },
+      "create": {
+        "success": "Post created successfully"
+      },
+      "update": {
+        "success": "Post updated successfully"
+      },
+      "delete": {
+        "success": "Post moved to trash"
+      },
+      "publish": {
+        "success": "Post published"
+      },
+      "unpublish": {
+        "success": "Post unpublished"
+      },
+      "modals": {
+        "create": {
+          "title": "Create new post"
+        },
+        "edit": {
+          "title": "Edit post"
+        },
+        "delete": {
+          "title": "Remove post",
+          "confirm": "Are you sure you want to remove \"{{title}}\"?"
+        }
+      },
+      "form": {
+        "title": {
+          "label": "Title"
+        },
+        "slug": {
+          "label": "Slug"
+        },
+        "subtitle": {
+          "label": "Subtitle"
+        },
+        "excerpt": {
+          "label": "Excerpt"
+        },
+        "content": {
+          "label": "Content"
+        },
+        "footer": {
+          "label": "Footer"
+        },
+        "coverImageUrl": {
+          "label": "Cover image URL"
+        },
+        "visibility": {
+          "label": "Visibility",
+          "options": {
+            "USER": "Everyone",
+            "VIEWER": "Viewers",
+            "MODERATOR": "Moderators",
+            "ADMIN": "Admins only"
+          }
+        },
+        "published": "Published"
+      }
+    },
     "experience": {
       "title": "Experience Management",
       "subtitle": "Manage your professional work history and education",

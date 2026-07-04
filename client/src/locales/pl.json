@@ -99,6 +99,7 @@
       "projects": "Projekty",
       "experience": "Doświadczenie",
       "techstack": "Tech Stack",
+      "posts": "Wpisy",
       "users": "Użytkownicy"
     }
   },
@@ -209,6 +210,96 @@
     }
   },
   "admin": {
+    "posts": {
+      "title": "Zarządzanie wpisami",
+      "subtitle": "Pisz, publikuj i zarządzaj wpisami na blogu",
+      "actions": {
+        "add": "Dodaj wpis",
+        "publish": "Opublikuj",
+        "unpublish": "Cofnij publikację"
+      },
+      "tags": {
+        "total_one": "{{count}} Wpis",
+        "total_few": "{{count}} Wpisy",
+        "total_many": "{{count}} Wpisów",
+        "published_one": "{{count}} Opublikowany",
+        "published_few": "{{count}} Opublikowane",
+        "published_many": "{{count}} Opublikowanych",
+        "drafts_one": "{{count}} Szkic",
+        "drafts_few": "{{count}} Szkice",
+        "drafts_many": "{{count}} Szkiców"
+      },
+      "table": {
+        "post": "Wpis",
+        "status": "Status",
+        "visibility": "Widoczność",
+        "stats": "Statystyki",
+        "created": "Utworzono",
+        "actions": "Akcje",
+        "published": "Opublikowany",
+        "deleted": "Usunięty"
+      },
+      "create": {
+        "success": "Wpis został utworzony pomyślnie"
+      },
+      "update": {
+        "success": "Wpis został zaktualizowany"
+      },
+      "delete": {
+        "success": "Wpis został przeniesiony do kosza"
+      },
+      "publish": {
+        "success": "Wpis został opublikowany"
+      },
+      "unpublish": {
+        "success": "Publikacja wpisu została cofnięta"
+      },
+      "modals": {
+        "create": {
+          "title": "Utwórz nowy wpis"
+        },
+        "edit": {
+          "title": "Edytuj wpis"
+        },
+        "delete": {
+          "title": "Usuń wpis",
+          "confirm": "Czy na pewno chcesz usunąć \"{{title}}\"?"
+        }
+      },
+      "form": {
+        "title": {
+          "label": "Tytuł"
+        },
+        "slug": {
+          "label": "Slug"
+        },
+        "subtitle": {
+          "label": "Podtytuł"
+        },
+        "excerpt": {
+          "label": "Zajawka"
+        },
+        "content": {
+          "label": "Treść"
+        },
+        "footer": {
+          "label": "Stopka"
+        },
+        "coverImageUrl": {
+          "label": "URL okładki"
+        },
+        "visibility": {
+          "label": "Widoczność",
+          "options": {
+            "USER": "Wszyscy",
+            "VIEWER": "Widzowie",
+            "MODERATOR": "Moderatorzy",
+            "ADMIN": "Tylko administratorzy"
+          }
+        },
+        "published": "Opublikowany"
+      }
+    },
     "experience": {
       "title": "Zarządzanie doświadczeniem",
       "subtitle": "Zarządzaj swoją historią pracy zawodowej oraz edukacją",
