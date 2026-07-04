@@ -58,7 +58,7 @@ export const PostsAdminPage = () => {
         (id) => {
           actions.openModal("DELETE", id);
         },
-        (post) => actions.togglePublish(post),
+        (post) => void actions.togglePublish(post),
         state.processingId,
       ),
     [t, actions, state.processingId],
