@@ -9,6 +9,7 @@ import {
   EyeOff,
   Send,
   Undo2,
+  RotateCcw,
   MessageCircle,
   Heart,
   Shield,
@@ -20,6 +21,7 @@ export const getPostColumns = (
   onEdit: (post: Post) => void,
   onDelete: (id: string) => void,
   onTogglePublish: (post: Post) => void,
+  onRestore: (post: Post) => void,
   processingId: string | null,
 ): Column<Post>[] => [
   {
@@ -139,17 +141,29 @@ export const getPostColumns = (
         >
           <Edit2 size={14} />
         </Button>
-        <Button
-          variant="danger"
-          size="sm"
-          isIcon
-          onClick={() => onDelete(post.id)}
-          isLoading={processingId === post.id}
-          title={t("common.delete", "Delete")}
-          disabled={!!post.deletedAt}
-        >
-          <Trash2 size={14} />
-        </Button>
+        {post.deletedAt ? (
+          <Button
+            variant="ghost"
+            size="sm"
+            isIcon
+            onClick={() => onRestore(post)}
+            isLoading={processingId === post.id}
+            title={t("common.restore", "Restore")}
+          >
+            <RotateCcw size={14} />
+          </Button>
+        ) : (
+          <Button
+            variant="danger"
+            size="sm"
+            isIcon
+            onClick={() => onDelete(post.id)}
+            isLoading={processingId === post.id}
+            title={t("common.delete", "Delete")}
+          >
+            <Trash2 size={14} />
+          </Button>
+        )}
       </div>
     ),
   },
