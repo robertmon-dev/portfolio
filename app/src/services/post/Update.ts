@@ -2,7 +2,7 @@ import { TRPCError } from "@trpc/server";
 import { AuthorizedBaseService } from "../service";
 import { type UpdatePostInput, type Post, PostSchema } from "@portfolio/shared";
 import type { UpdatingPosts } from "./types";
-import { postWithRelationsQuery } from "./queries";
+import { postWithRelationsQuery, mapPostRelations } from "./queries";
 
 export class UpdatePostService
   extends AuthorizedBaseService<UpdatePostInput, Post>
@@ -32,7 +32,7 @@ export class UpdatePostService
 
       await this.cacheInvalidator.invalidatePostCache(updated);
 
-      return PostSchema.parse(updated);
+      return PostSchema.parse(mapPostRelations(updated));
     });
   }
 }
