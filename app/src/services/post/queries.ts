@@ -17,6 +17,7 @@ export const postWithRelationsQuery = {
           },
         },
       },
+      where: { deletedAt: null },
     },
     reactions: {
       where: {
