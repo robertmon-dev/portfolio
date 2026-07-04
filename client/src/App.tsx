@@ -15,6 +15,8 @@ import { ProjectsAdminPage } from "@/pages/Admin/projects/Projects";
 import { TechStackAdminPage } from "@/pages/Admin/techstack/Techstack";
 import { UsersAdminPage } from "./pages/Admin/users/Users";
 import { PostsAdminPage } from "./pages/Admin/posts/Posts";
+import { CommentsAdminPage } from "./pages/Admin/comments/Comments";
+import { ReactionsAdminPage } from "./pages/Admin/reactions/Reactions";
 import { ExperienceAdminPage } from "./pages/Admin/experience/Experience";
 import { Guard } from "@/components/utility/guard/Guard";
 import { ErrorPage } from "@/pages/Error/Error";
@@ -83,6 +85,24 @@ const App = () => {
               element={
                 <Guard requiredPermission="posts:*">
                   <PostsAdminPage />
+                </Guard>
+              }
+            />
+
+            <Route
+              path="comments"
+              element={
+                <Guard requiredPermission="comments:*">
+                  <CommentsAdminPage />
+                </Guard>
+              }
+            />
+
+            <Route
+              path="reactions"
+              element={
+                <Guard requiredPermission="reactions:*">
+                  <ReactionsAdminPage />
                 </Guard>
               }
             />
