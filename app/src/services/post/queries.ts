@@ -8,7 +8,7 @@ export const postWithRelationsQuery = {
     },
     comments: {
       include: {
-        reactions: true,
+        reactions: { where: { deletedAt: null } },
         replies: {
           include: {
             reactions: {
