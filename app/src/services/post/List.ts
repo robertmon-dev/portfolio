@@ -9,7 +9,7 @@ export class ListPostsService
   implements ListingPosts
 {
   public async execute(input: ListPostsServiceInput): Promise<ListPostsOutput> {
-    const { limit, cursor, includeDeleted = false } = input;
+    const { limit, cursor, includeDeleted } = input;
     const prefix = includeDeleted ? "both" : "";
     const cacheKey = `posts:list:${prefix}:${limit}:${cursor ?? "first"}`;
 
