@@ -66,6 +66,35 @@ export const usePostsActions = (
     }
   };
 
+  const handleRestore = async (post: Post) => {
+    dispatch({ type: POST_ACTIONS.SET_PROCESSING, payload: post.id });
+    try {
+      await mutations.update.mutateAsync({
+        id: post.id,
+        title: post.title,
+        subtitle: post.subtitle,
+        slug: post.slug,
+        excerpt: post.excerpt,
+        content: post.content,
+        footer: post.footer,
+        coverImageUrl: post.coverImageUrl,
+        visibility: post.visibility,
+        viewCount: post.viewCount,
+        publishedAt: post.publishedAt,
+        createdAt: post.createdAt,
+        updatedAt: post.updatedAt,
+        deletedAt: null,
+      });
+      toast.success(t("admin.posts.restore.success", "Post restored"));
+
+      dispatch({ type: POST_ACTIONS.SELECT_POST, payload: null });
+
+      await invalidate();
+    } finally {
+      dispatch({ type: POST_ACTIONS.SET_PROCESSING, payload: null });
+    }
+  };
+
   const handleTogglePublish = async (post: Post) => {
     dispatch({ type: POST_ACTIONS.SET_PROCESSING, payload: post.id });
     try {
@@ -89,6 +118,7 @@ export const usePostsActions = (
     handleCreate,
     handleUpdate,
     handleDelete,
+    handleRestore,
     handleTogglePublish,
   };
 };
