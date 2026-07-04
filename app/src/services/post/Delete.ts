@@ -30,7 +30,7 @@ export class DeletePostService
         ...postWithRelationsQuery,
       });
 
-      this.cacheInvalidator.invalidatePostCache(updated);
+      await this.cacheInvalidator.invalidatePostCache(updated);
 
       return PostSchema.parse(mapPostRelations(updated));
     });
