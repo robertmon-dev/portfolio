@@ -53,8 +53,6 @@ export const PostPage = () => {
 
         {post.footer && <p className="post-page__footer-note">{post.footer}</p>}
 
-        <PostReactions postId={post.id} />
-
         <PostComments postId={post.id} />
 
         <motion.footer
