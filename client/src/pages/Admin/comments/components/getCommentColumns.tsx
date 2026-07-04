@@ -35,19 +35,26 @@ export const getCommentColumns = (
     ),
   },
   {
-    key: "kind",
-    header: t("admin.comments.table.kind", "Kind"),
+    key: "status",
+    header: t("admin.comments.table.status", "Status"),
     width: "12%",
-    render: (comment) =>
-      comment.isReply ? (
-        <Tag variant="default" size="sm" icon={<CornerDownRight size={12} />}>
-          {t("admin.comments.table.reply", "Reply")}
-        </Tag>
-      ) : (
-        <Tag variant="info" size="sm" icon={<MessageCircle size={12} />}>
-          {t("admin.comments.table.comment", "Comment")}
-        </Tag>
-      ),
+    render: (comment) => (
+      <div className="comments-table__kind-col">
+        {comment.deletedAt ? (
+          <Tag variant="danger" size="sm" icon={<Trash2 size={12} />}>
+            {t("admin.comments.table.deleted", "Deleted")}
+          </Tag>
+        ) : comment.isReply ? (
+          <Tag variant="default" size="sm" icon={<CornerDownRight size={12} />}>
+            {t("admin.comments.table.reply", "Reply")}
+          </Tag>
+        ) : (
+          <Tag variant="info" size="sm" icon={<MessageCircle size={12} />}>
+            {t("admin.comments.table.comment", "Comment")}
+          </Tag>
+        )}
+      </div>
+    ),
   },
   {
     key: "visibility",
@@ -113,6 +120,7 @@ export const getCommentColumns = (
           onClick={() => onDelete(comment.id)}
           isLoading={processingId === comment.id}
           title={t("common.delete", "Delete")}
+          disabled={!!comment.deletedAt}
         >
           <Trash2 size={14} />
         </Button>

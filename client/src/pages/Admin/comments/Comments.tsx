@@ -6,7 +6,7 @@ import { EntityTable } from "@/components/molecules/EntityTable/EntityTable";
 import { Header } from "@/components/molecules/Sections/Header/Header";
 import { LoadingBar } from "@/components/atoms/LoadingBar/LoadingBar";
 import { CommentsModals } from "@/components/molecules/Modals/Comment/Modal";
-import { MessageCircle, CornerDownRight } from "lucide-react";
+import { MessageCircle, CornerDownRight, Trash2 } from "lucide-react";
 import "./Comments.scss";
 
 export const CommentsAdminPage = () => {
@@ -16,6 +16,7 @@ export const CommentsAdminPage = () => {
   const headerTags = useMemo(() => {
     const total = state.comments.length;
     const replies = state.comments.filter((c) => c.isReply).length;
+    const deleted = state.comments.filter((c) => c.deletedAt).length;
 
     return [
       {
@@ -35,6 +36,15 @@ export const CommentsAdminPage = () => {
         }),
         variant: "default" as const,
         icon: <CornerDownRight size={12} />,
+      },
+      {
+        id: "deleted",
+        children: t("admin.comments.tags.deleted", {
+          count: deleted,
+          defaultValue: "{{count}} Deleted",
+        }),
+        variant: "danger" as const,
+        icon: <Trash2 size={12} />,
       },
     ];
   }, [state.comments, t]);
