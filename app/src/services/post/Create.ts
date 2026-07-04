@@ -1,7 +1,7 @@
 import { AuthorizedBaseService } from "../service";
 import { type CreatePostInput, PostSchema } from "@portfolio/shared";
 import type { Post } from "@portfolio/shared";
-import { postWithRelationsQuery } from "./queries";
+import { postWithRelationsQuery, mapPostRelations } from "./queries";
 import type { CreatingPosts } from "./types";
 
 export class CreatePostService
@@ -25,6 +25,6 @@ export class CreatePostService
       ...postWithRelationsQuery,
     });
 
-    return PostSchema.parse(post);
+    return PostSchema.parse(mapPostRelations(post));
   }
 }

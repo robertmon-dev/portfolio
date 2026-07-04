@@ -5,7 +5,7 @@ import {
   PostSchema,
   type Post,
 } from "@portfolio/shared";
-import { postWithRelationsQuery } from "./queries";
+import { postWithRelationsQuery, mapPostRelations } from "./queries";
 import type { AssigningReactions } from "./types";
 
 export class AssignReactionsForPostService
