@@ -57,6 +57,7 @@ export const CommentsAdminPage = () => {
         (id) => {
           actions.openModal("DELETE", id);
         },
+        (id) => void actions.restoreComment(id),
         state.processingId,
       ),
     [t, actions, state.processingId],

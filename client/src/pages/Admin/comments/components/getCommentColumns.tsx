@@ -8,6 +8,7 @@ import {
   Heart,
   MessageCircle,
   CornerDownRight,
+  RotateCcw,
   Shield,
 } from "lucide-react";
 import type { TFunction } from "i18next";
@@ -16,6 +17,7 @@ export const getCommentColumns = (
   t: TFunction,
   onEdit: (comment: Comment) => void,
   onDelete: (id: string) => void,
+  onRestore: (id: string) => void,
   processingId: string | null,
 ): Column<Comment>[] => [
   {
@@ -113,17 +115,29 @@ export const getCommentColumns = (
         >
           <Edit2 size={14} />
         </Button>
-        <Button
-          variant="danger"
-          size="sm"
-          isIcon
-          onClick={() => onDelete(comment.id)}
-          isLoading={processingId === comment.id}
-          title={t("common.delete", "Delete")}
-          disabled={!!comment.deletedAt}
-        >
-          <Trash2 size={14} />
-        </Button>
+        {comment.deletedAt ? (
+          <Button
+            variant="ghost"
+            size="sm"
+            isIcon
+            onClick={() => onRestore(comment.id)}
+            isLoading={processingId === comment.id}
+            title={t("common.restore", "Restore")}
+          >
+            <RotateCcw size={14} />
+          </Button>
+        ) : (
+          <Button
+            variant="danger"
+            size="sm"
+            isIcon
+            onClick={() => onDelete(comment.id)}
+            isLoading={processingId === comment.id}
+            title={t("common.delete", "Delete")}
+          >
+            <Trash2 size={14} />
+          </Button>
+        )}
       </div>
     ),
   },
