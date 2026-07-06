@@ -49,11 +49,13 @@ export const useReactionMutations = () => {
   const createReaction = trpc.admin.reactions.create.useMutation();
   const updateReaction = trpc.admin.reactions.update.useMutation();
   const deleteReaction = trpc.admin.reactions.delete.useMutation();
+  const restoreReaction = trpc.admin.reactions.restore.useMutation();
 
   return {
     create: createReaction,
     update: updateReaction,
     remove: deleteReaction,
+    restore: restoreReaction,
   };
 };
 

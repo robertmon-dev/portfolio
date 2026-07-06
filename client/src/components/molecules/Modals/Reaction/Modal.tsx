@@ -13,23 +13,44 @@ export const ReactionsModals = ({ state, actions }: ReactionModalsProps) => {
   };
 
   return (
-    <Modal
-      open={activeModal === "DELETE"}
-      onClose={handleClose}
-      title={t("admin.reactions.modals.delete.title", "Remove reaction")}
-      size="20vw"
-    >
-      <ConfirmDialog
-        message={t(
-          "admin.reactions.modals.delete.confirm",
-          "Are you sure you want to remove this reaction?",
-        )}
-        confirmText={t("common.delete", "Remove")}
-        variant="danger"
-        onConfirm={() => void actions.deleteReaction(selectedReaction!.id)}
-        onCancel={actions.closeModals}
-        isLoading={isAnyProcessing}
-      />
-    </Modal>
+    <>
+      <Modal
+        open={activeModal === "DELETE"}
+        onClose={handleClose}
+        title={t("admin.reactions.modals.delete.title", "Remove reaction")}
+        size="20vw"
+      >
+        <ConfirmDialog
+          message={t(
+            "admin.reactions.modals.delete.confirm",
+            "Are you sure you want to remove this reaction?",
+          )}
+          confirmText={t("common.delete", "Remove")}
+          variant="danger"
+          onConfirm={() => void actions.deleteReaction(selectedReaction!.id)}
+          onCancel={actions.closeModals}
+          isLoading={isAnyProcessing}
+        />
+      </Modal>
+
+      <Modal
+        open={activeModal === "RESTORE"}
+        onClose={handleClose}
+        title={t("admin.reactions.modals.restore.title", "Restore reaction")}
+        size="20vw"
+      >
+        <ConfirmDialog
+          message={t(
+            "admin.reactions.modals.restore.confirm",
+            "Are you sure you want to restore this reaction?",
+          )}
+          confirmText={t("common.restore", "Restore")}
+          variant="primary"
+          onConfirm={() => void actions.restoreReaction(selectedReaction!.id)}
+          onCancel={actions.closeModals}
+          isLoading={isAnyProcessing}
+        />
+      </Modal>
+    </>
   );
 };

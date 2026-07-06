@@ -16,7 +16,12 @@ export const REACTION_ACTIONS = {
 } as const;
 
 export type CommentModalType = "CREATE" | "UPDATE" | "DELETE" | null;
-export type ReactionModalType = "CREATE" | "UPDATE" | "DELETE" | null;
+export type ReactionModalType =
+  | "CREATE"
+  | "UPDATE"
+  | "DELETE"
+  | "RESTORE"
+  | null;
 
 export interface CommentState {
   processingId: string | null;

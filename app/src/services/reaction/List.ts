@@ -11,9 +11,9 @@ export class ListReactionsService
   public async execute(
     input: ListReactionsServiceInput,
   ): Promise<ListReactionsOutput> {
-    const { limit, cursor, includeDeleted = false } = input;
+    const { limit, cursor, includeDeleted } = input;
     const prefix = includeDeleted ? "both" : "";
-    const cacheKey = `comment:list:${prefix}:${limit}:${cursor ?? "first"}`;
+    const cacheKey = `reaction:list:${prefix}:${limit}:${cursor ?? "first"}`;
 
     return await this.cache.wrap(cacheKey, 3600, async () => {
       const items = await this.db.reaction.findMany({

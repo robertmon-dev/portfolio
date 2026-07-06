@@ -1,7 +1,12 @@
 import { z } from "zod";
 import { BaseService } from "../service";
 import { PostSchema, ListPostsOutput } from "@portfolio/shared";
-import { postWithRelationsQuery, mapPostRelations } from "./queries";
+import {
+  postWithRelationsQuery,
+  mapPostRelations,
+  postWithEternalRelationsQuery,
+  PostWithRelationsRow,
+} from "./queries";
 import type { ListPostsServiceInput, ListingPosts } from "./types";
 
 export class ListPostsService
@@ -9,18 +14,28 @@ export class ListPostsService
   implements ListingPosts
 {
   public async execute(input: ListPostsServiceInput): Promise<ListPostsOutput> {
-    const { limit, cursor, includeDeleted = false } = input;
+    const { limit, cursor, includeDeleted } = input;
     const prefix = includeDeleted ? "both" : "";
     const cacheKey = `posts:list:${prefix}:${limit}:${cursor ?? "first"}`;
 
     return await this.cache.wrap(cacheKey, 3600, async () => {
-      const items = await this.db.post.findMany({
-        where: { ...(includeDeleted ? {} : { deletedAt: null }) },
+      const baseArgs = {
         take: limit + 1,
         cursor: cursor ? { id: cursor } : undefined,
-        orderBy: { createdAt: "desc" },
-        ...postWithRelationsQuery,
-      });
+        orderBy: { createdAt: "desc" as const },
+      };
+
+      const items = includeDeleted
+        ? await this.db.post.findMany({
+            ...baseArgs,
+            where: {},
+            ...postWithEternalRelationsQuery,
+          })
+        : await this.db.post.findMany({
+            ...baseArgs,
+            where: { deletedAt: null },
+            ...postWithRelationsQuery,
+          });
 
       let nextCursor: string | undefined = undefined;
 
@@ -30,7 +45,9 @@ export class ListPostsService
       }
 
       return {
-        items: z.array(PostSchema).parse(items.map(mapPostRelations)),
+        items: z
+          .array(PostSchema)
+          .parse((items as PostWithRelationsRow[]).map(mapPostRelations)),
         nextCursor,
       };
     });

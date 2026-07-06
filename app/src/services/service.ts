@@ -13,7 +13,7 @@ export abstract class BaseService<TInput, TOutput> implements Serving<
 > {
   protected cacheInvalidator: Invalidating;
 
-  constructor(
+  public constructor(
     protected readonly db: PrismaClient,
     protected readonly cache: Caching,
     protected readonly logger: Logging,
@@ -30,7 +30,7 @@ export abstract class AuthorizedBaseService<TInput, TOutput>
   extends BaseService<TInput, TOutput>
   implements Serving<TInput, TOutput>
 {
-  constructor(
+  public constructor(
     db: PrismaClient,
     cache: Caching,
     logger: Logging,

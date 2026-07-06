@@ -290,12 +290,19 @@
         "comment": "Comment",
         "author": "Author",
         "created": "Created",
-        "actions": "Actions"
+        "actions": "Actions",
+        "status": "Status",
+        "deleted": "Deleted",
+        "active": "Active"
       },
       "modals": {
         "delete": {
           "title": "Remove reaction",
           "confirm": "Are you sure you want to remove this reaction?"
+        },
+        "restore": {
+          "title": "Restore reaction",
+          "confirm": "Are you sure you want to restore this reaction?"
         }
       },
       "notifications": {
@@ -307,6 +314,9 @@
         },
         "delete": {
           "success": "Reaction deleted successfully"
+        },
+        "restore": {
+          "success": "Reaction restored successfully"
         }
       }
     },

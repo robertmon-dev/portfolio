@@ -8,6 +8,33 @@ export const postWithRelationsQuery = {
     },
     comments: {
       include: {
+        reactions: { where: { deletedAt: null } },
+        replies: {
+          include: {
+            reactions: {
+              where: { deletedAt: null },
+            },
+          },
+        },
+      },
+      where: { deletedAt: null },
+    },
+    reactions: {
+      where: {
+        deletedAt: null,
+      },
+    },
+    tags: true,
+  },
+} satisfies Prisma.PostDefaultArgs;
+
+export const postWithEternalRelationsQuery = {
+  include: {
+    author: {
+      ...userPublicQuery,
+    },
+    comments: {
+      include: {
         reactions: true,
         replies: {
           include: {
@@ -23,6 +50,10 @@ export const postWithRelationsQuery = {
 
 export type PostWithRelationsRow = Prisma.PostGetPayload<
   typeof postWithRelationsQuery
+>;
+
+export type PostWithEternalRelationsRow = Prisma.PostGetPayload<
+  typeof postWithEternalRelationsQuery
 >;
 
 export const mapPostRelations = (post: PostWithRelationsRow) => ({
