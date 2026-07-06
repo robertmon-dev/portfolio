@@ -102,8 +102,6 @@ export class AuthService
       where: { id: verification.id },
     });
 
-    await this.cache.del(`2fa:${userId}`);
-
     this.logger.info(`2FA verified successfully for user`, { userId });
     return this.generateSuccessResponse(verification.user);
   }
@@ -157,8 +155,6 @@ export class AuthService
         },
       }),
     ]);
-
-    await this.cache.set(`2fa:${user.id}`, code, 300);
 
     try {
       await this.mailQueue.addJob(MAIL_ACTIONS.TWO_FACTOR_CODE, {
