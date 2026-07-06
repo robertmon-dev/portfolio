@@ -205,20 +205,15 @@ const CommentThreadInner = ({
 };
 
 export const CommentThread = memo(CommentThreadInner, (prev, next) => {
-  if (
-    prev.comment !== next.comment ||
-    prev.getChildren !== next.getChildren ||
-    prev.onReply !== next.onReply ||
-    prev.onReact !== next.onReact ||
-    prev.canComment !== next.canComment ||
-    prev.canReact !== next.canReact ||
-    prev.depth !== next.depth ||
-    prev.isCommentProcessing !== next.isCommentProcessing
-  ) {
-    return false;
-  }
-
-  const prevReacting = prev.reactionProcessingId === prev.comment.id;
-  const nextReacting = next.reactionProcessingId === next.comment.id;
-  return prevReacting === nextReacting;
+  return (
+    prev.comment === next.comment &&
+    prev.getChildren === next.getChildren &&
+    prev.onReply === next.onReply &&
+    prev.onReact === next.onReact &&
+    prev.canComment === next.canComment &&
+    prev.canReact === next.canReact &&
+    prev.depth === next.depth &&
+    prev.isCommentProcessing === next.isCommentProcessing &&
+    prev.reactionProcessingId === next.reactionProcessingId
+  );
 });

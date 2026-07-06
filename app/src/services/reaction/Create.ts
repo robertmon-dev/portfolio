@@ -16,7 +16,7 @@ export class CreateReactionService
         authorId_commentId:
           commentId !== null ? { authorId, commentId } : undefined,
       },
-      update: { type },
+      update: { type, deletedAt: null },
       create: { authorId, postId, commentId, type },
       include: {
         post: !!postId,

@@ -23,7 +23,7 @@ export const commentWithRelationsQuery = {
       ...userPublicQuery,
     },
     parent: { include: { reactions: true } },
-    replies: { include: { reactions: true } },
+    replies: { include: { reactions: { where: { deletedAt: null } } } },
     reactions: { where: { deletedAt: null } },
   },
 } satisfies Prisma.CommentDefaultArgs;
