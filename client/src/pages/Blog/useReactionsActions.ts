@@ -61,9 +61,26 @@ export const useReactionActions = (
     }
   };
 
+  const handleRestore = async (id: string) => {
+    dispatch({ type: REACTION_ACTIONS.SET_PROCESSING, payload: id });
+    try {
+      await mutations.restore.mutateAsync({ ids: [id] });
+      toast.success(
+        t(
+          "admin.reactions.notifications.restore.success",
+          "Reaction restored successfully",
+        ),
+      );
+      dispatch({ type: REACTION_ACTIONS.CLOSE_MODALS });
+    } finally {
+      dispatch({ type: REACTION_ACTIONS.SET_PROCESSING, payload: null });
+    }
+  };
+
   return {
     handleCreate,
     handleUpdate,
     handleDelete,
+    handleRestore,
   };
 };
