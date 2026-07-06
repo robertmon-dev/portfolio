@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { memo, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { UserRound, CornerDownRight, Reply } from "lucide-react";
 import {
@@ -22,12 +22,13 @@ interface CommentThreadProps {
   onReact: (commentId: string, type: ReactionKind) => Promise<void>;
   canComment: boolean;
   canReact: boolean;
-  isProcessing: boolean;
+  isCommentProcessing: boolean;
+  reactionProcessingId: string | null;
 }
 
 const MAX_INDENT_DEPTH = 4;
 
-export const CommentThread = ({
+const CommentThreadInner = ({
   comment,
   depth,
   getChildren,
@@ -35,12 +36,14 @@ export const CommentThread = ({
   onReact,
   canComment,
   canReact,
-  isProcessing,
+  isCommentProcessing,
+  reactionProcessingId,
 }: CommentThreadProps) => {
   const { t, i18n } = useTranslation();
   const [isReplying, setIsReplying] = useState(false);
   const [replyContent, setReplyContent] = useState("");
 
+  const isReacting = reactionProcessingId === comment.id;
   const children = getChildren(comment);
 
   const formattedDate = new Date(comment.createdAt).toLocaleDateString(
@@ -104,7 +107,7 @@ export const CommentThread = ({
                   type="button"
                   className="comment-thread__reaction"
                   onClick={() => void onReact(comment.id, type)}
-                  disabled={!canReact || isProcessing}
+                  disabled={!canReact || isReacting}
                   title={
                     canReact
                       ? type
@@ -127,7 +130,7 @@ export const CommentThread = ({
               variant="ghost"
               size="sm"
               onClick={() => setIsReplying((open) => !open)}
-              disabled={isProcessing}
+              disabled={isCommentProcessing}
             >
               <Reply size={14} />
               {t("post.comments.reply", "Reply")}
@@ -150,7 +153,7 @@ export const CommentThread = ({
             )}
             rows={2}
             fullWidth
-            disabled={isProcessing}
+            disabled={isCommentProcessing}
           />
           <div className="comment-thread__reply-actions">
             <Button
@@ -158,7 +161,7 @@ export const CommentThread = ({
               variant="ghost"
               size="sm"
               onClick={() => setIsReplying(false)}
-              disabled={isProcessing}
+              disabled={isCommentProcessing}
             >
               {t("common.cancel", "Cancel")}
             </Button>
@@ -166,7 +169,7 @@ export const CommentThread = ({
               type="submit"
               variant="primary"
               size="sm"
-              isLoading={isProcessing}
+              isLoading={isCommentProcessing}
               disabled={!replyContent.trim()}
             >
               {t("post.comments.replySubmit", "Post reply")}
@@ -191,7 +194,8 @@ export const CommentThread = ({
               onReact={onReact}
               canComment={canComment}
               canReact={canReact}
-              isProcessing={isProcessing}
+              isCommentProcessing={isCommentProcessing}
+              reactionProcessingId={reactionProcessingId}
             />
           ))}
         </ul>
@@ -199,3 +203,22 @@ export const CommentThread = ({
     </li>
   );
 };
+
+export const CommentThread = memo(CommentThreadInner, (prev, next) => {
+  if (
+    prev.comment !== next.comment ||
+    prev.getChildren !== next.getChildren ||
+    prev.onReply !== next.onReply ||
+    prev.onReact !== next.onReact ||
+    prev.canComment !== next.canComment ||
+    prev.canReact !== next.canReact ||
+    prev.depth !== next.depth ||
+    prev.isCommentProcessing !== next.isCommentProcessing
+  ) {
+    return false;
+  }
+
+  const prevReacting = prev.reactionProcessingId === prev.comment.id;
+  const nextReacting = next.reactionProcessingId === next.comment.id;
+  return prevReacting === nextReacting;
+});
