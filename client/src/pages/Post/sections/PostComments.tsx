@@ -53,8 +53,8 @@ export const PostComments = ({ postId }: { postId: string }) => {
   const { state: commentState, actions: commentActions } = useCommentsState();
   const { state: reactionState, actions: reactionActions } =
     useReactionsState();
-  const isProcessing =
-    !!commentState.processingId || !!reactionState.processingId;
+  const isCommentProcessing = !!commentState.processingId;
+  const reactionProcessingId = reactionState.processingId;
 
   const invalidateComments = useCallback(
     () => utils.comments.listByPost.invalidate(),
@@ -123,14 +123,14 @@ export const PostComments = ({ postId }: { postId: string }) => {
             placeholder={t("post.comments.placeholder", "Write a comment...")}
             rows={3}
             fullWidth
-            disabled={isProcessing}
+            disabled={isCommentProcessing}
           />
           <div className="post-comments__form-actions">
             <Button
               type="submit"
               variant="primary"
               size="sm"
-              isLoading={isProcessing}
+              isLoading={isCommentProcessing}
               disabled={!content.trim()}
             >
               {t("post.comments.submit", "Post comment")}
@@ -155,7 +155,8 @@ export const PostComments = ({ postId }: { postId: string }) => {
               onReact={handleReact}
               canComment={canComment}
               canReact={canReact}
-              isProcessing={isProcessing}
+              isCommentProcessing={isCommentProcessing}
+              reactionProcessingId={reactionProcessingId}
             />
           ))}
         </ul>

@@ -10,6 +10,7 @@ import {
 } from "@portfolio/shared";
 import { GetPostService } from "../../services/post/Get";
 import { ListPostsService } from "../../services/post/List";
+import { ViewPostService } from "../../services/post/View";
 
 export const postsRouter = router({
   getById: publicProcedure
@@ -27,6 +28,24 @@ export const postsRouter = router({
     .output(PostSchema)
     .query(({ ctx, input }) => {
       return executeService(GetPostService, ctx, input.id);
+    }),
+
+  view: publicProcedure
+    .meta({
+      openapi: {
+        method: "POST",
+        path: "/posts/{id}/view",
+        tags: ["Posts"],
+        summary: "Record a post view",
+        description:
+          "Increments the view counter for a post. Deduplicated per IP per hour.",
+        protect: false,
+      },
+    })
+    .input(z.object({ id: zUuid }))
+    .output(z.void())
+    .mutation(({ ctx, input }) => {
+      return executeService(ViewPostService, ctx, input.id);
     }),
 
   list: publicProcedure

@@ -14,7 +14,10 @@ export const useReactionActions = (
   const { t } = useTranslation();
 
   const handleCreate = async (data: CreateReactionInput) => {
-    dispatch({ type: REACTION_ACTIONS.SET_PROCESSING, payload: "creating" });
+    dispatch({
+      type: REACTION_ACTIONS.SET_PROCESSING,
+      payload: data.commentId ?? data.postId ?? "creating",
+    });
     try {
       await mutations.create.mutateAsync(data);
       toast.success(

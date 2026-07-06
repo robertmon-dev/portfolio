@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
 import { usePostQueries } from "./useQueries";
@@ -17,7 +18,12 @@ export const PostPage = () => {
 
   const {
     get: { data: post, isLoading, isError },
+    recordView,
   } = usePostQueries(postId ?? "");
+
+  useEffect(() => {
+    if (postId) recordView.mutate({ id: postId });
+  }, [postId]);
 
   if (isLoading) return <LoadingBar isLoading={true} />;
   if (isError || !post) return <ErrorPage code="404" />;
