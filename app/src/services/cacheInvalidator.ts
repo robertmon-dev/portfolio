@@ -185,10 +185,10 @@ export class CacheInvalidator implements Invalidating {
     ...reactions: (Partial<Reaction> | null | undefined)[]
   ): Promise<void> {
     const keys = new Set([
-      "reactions:list:*",
-      "reactions:list:both:*",
-      "reactions:list:comment:*",
-      "reactions:list:post:*",
+      "reaction:list:*",
+      "reaction:list:both:*",
+      "reaction:list:comment:*",
+      "reaction:list:post:*",
     ]);
 
     reactions.forEach((reaction) => {
