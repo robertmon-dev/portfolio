@@ -56,6 +56,9 @@ export const ReactionsAdminPage = () => {
         (id) => {
           actions.openModal("DELETE", id);
         },
+        (id) => {
+          actions.openModal("RESTORE", id);
+        },
         state.processingId,
       ),
     [t, actions, state.processingId],
