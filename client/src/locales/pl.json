@@ -308,12 +308,19 @@
         "comment": "Komentarz",
         "author": "Autor",
         "created": "Utworzono",
-        "actions": "Akcje"
+        "actions": "Akcje",
+        "status": "Status",
+        "deleted": "Usunięta",
+        "active": "Aktywna"
       },
       "modals": {
         "delete": {
           "title": "Usuń reakcję",
           "confirm": "Czy na pewno chcesz usunąć tę reakcję?"
+        },
+        "restore": {
+          "title": "Przywróć reakcję",
+          "confirm": "Czy na pewno chcesz przywrócić tę reakcję?"
         }
       },
       "notifications": {
@@ -325,6 +332,9 @@
         },
         "delete": {
           "success": "Reakcja została usunięta"
+        },
+        "restore": {
+          "success": "Reakcja została przywrócona"
         }
       }
     },
