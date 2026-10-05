@@ -2,6 +2,8 @@
 
 **portfolio** is a full-stack personal website and blog platform, built as a TypeScript monorepo with a tRPC + Prisma backend and a React + Vite frontend. It was designed for type-safety end-to-end, fast local iteration, and a self-contained Docker deployment.
 
+## Preview
+
 ## Key Features
 
 * **End-to-End Type Safety:** The `client`, `app`, and `shared` packages share Zod schemas and tRPC contracts, so request/response types flow from the database to the UI without manual syncing.
