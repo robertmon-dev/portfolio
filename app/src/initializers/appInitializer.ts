@@ -98,6 +98,10 @@ export class AppInitializer {
       this.logger.info("Scheduler jobs stopped.");
     }
 
+    if (this.workerInitializer) {
+      await this.workerInitializer.stop();
+    }
+
     await this.redisClient.close();
     this.logger.info("Redis connection closed.");
 
