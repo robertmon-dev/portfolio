@@ -100,6 +100,7 @@ export class AppInitializer {
 
     if (this.workerInitializer) {
       await this.workerInitializer.stop();
+      this.logger.info("All of the workers have been stopped");
     }
 
     await this.redisClient.close();
