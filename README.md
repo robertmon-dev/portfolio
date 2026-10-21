@@ -4,6 +4,12 @@
 
 ## Preview
 
+| | |
+|---|---|
+| ![Preview 1](docs/preview/preview_1.png) | ![Preview 2](docs/preview/preview_2.png) |
+| ![Preview 3](docs/preview/preview_3.png) | ![Preview 4](docs/preview/preview_4.png) |
+| ![Preview 5](docs/preview/preview_5.png) | ![Preview 6](docs/preview/preview_6.png) |
+
 ## Key Features
 
 * **End-to-End Type Safety:** The `client`, `app`, and `shared` packages share Zod schemas and tRPC contracts, so request/response types flow from the database to the UI without manual syncing.
